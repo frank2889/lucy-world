@@ -1,0 +1,17 @@
+{
+  "lang": "nl",
+  "dir": "ltr",
+  "strings": {
+    "nav.search": "Zoeken",
+    "nav.advanced": "Advanced (binnenkort)",
+    "nav.trends": "Trends (binnenkort)",
+    "search.title": "Keyword onderzoek",
+    "search.placeholder": "Voer een zoekwoord in (bijv. pizza bestellen)",
+    "search.button": "Zoeken",
+    "search.hint": "Gratis suggesties en trends. Resultaten verschijnen hieronder.",
+    "kpi.total_keywords": "Totaal keywords",
+    "kpi.total_volume": "Totaal volume",
+    "kpi.real_data_keywords": "Echte data keywords",
+    "kpi.avg_interest": "Gem. interesse"
+  }
+}

@@ -9,8 +9,19 @@ import argparse
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 REG_DIR = os.path.join(ROOT, 'languages', 'registry')
-LOCALES_DIR = os.path.join(ROOT, 'locales')
-EN_PATH = os.path.join(LOCALES_DIR, 'en.default.json')
+PRIMARY_LOCALES_DIR = os.path.join(ROOT, 'languages', 'locales')
+LEGACY_LOCALES_DIR = os.path.join(ROOT, 'locales')
+LOCALES_DIR = PRIMARY_LOCALES_DIR if os.path.isdir(PRIMARY_LOCALES_DIR) or not os.path.isdir(LEGACY_LOCALES_DIR) else LEGACY_LOCALES_DIR
+EN_PATH = None
+for candidate in (
+    os.path.join(PRIMARY_LOCALES_DIR, 'en.json'),
+    os.path.join(PRIMARY_LOCALES_DIR, 'en.default.json'),
+    os.path.join(LEGACY_LOCALES_DIR, 'en.json'),
+    os.path.join(LEGACY_LOCALES_DIR, 'en.default.json'),
+):
+    if candidate and os.path.exists(candidate):
+        EN_PATH = candidate
+        break
 RTL = {'ar','he','fa','ur'}
 
 def main():
@@ -19,8 +30,8 @@ def main():
     ap.add_argument('--codes', type=str, help='Comma-separated ISO 639-1 codes to generate (e.g., "es,fr,de")')
     args = ap.parse_args()
 
-    if not os.path.exists(EN_PATH):
-        raise SystemExit('Missing locales/en.default.json as the source of keys')
+    if not EN_PATH or not os.path.exists(EN_PATH):
+        raise SystemExit('Missing English locale file (en.json or en.default.json) in languages/locales or locales')
 
     with open(EN_PATH, 'r', encoding='utf-8') as f:
         en = json.load(f)
