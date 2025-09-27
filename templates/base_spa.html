@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="{{ lang }}" dir="{{ dir or 'ltr' }}">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Lucy World</title>
+    {# Canonical and hreflang links #}
+    {% if canonical_url %}
+    <link rel="canonical" href="{{ canonical_url }}" />
+    {% endif %}
+    {% for code, url in hreflangs.items() %}
+    <link rel="alternate" hreflang="{{ code }}" href="{{ url }}" />
+    {% endfor %}
+    {% if manifest and manifest_css %}
+    <link rel="stylesheet" href="{{ manifest_css }}" />
+    {% endif %}
+  </head>
+  <body>
+    <div id="root"></div>
+    {% if manifest and manifest_js %}
+    <script type="module" src="{{ manifest_js }}"></script>
+    {% else %}
+    <script type="module" src="/static/app/assets/index.js"></script>
+    {% endif %}
+  </body>
+  
+</html>

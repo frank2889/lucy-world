@@ -17,5 +17,6 @@ export default defineConfig({
   build: {
     outDir: resolve(__dirname, '../static/app'),
     emptyOutDir: true,
+    manifest: true,
   },
 });

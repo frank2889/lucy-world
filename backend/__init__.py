@@ -4,6 +4,7 @@ Backend package for Lucy World Search
 Provides a Flask app factory `create_app()` that registers routes and config.
 """
 import os
+import json
 import csv
 import io
 import logging
@@ -48,14 +49,148 @@ def create_app() -> Flask:
 		advanced_tool = None
 		free_tool = None
 
+	def _supported_langs():
+		"""Return a deduplicated list of primary language codes.
+		Use languages/languages.json as the source of truth. Fall back to registry/* only if needed, then static fallback.
+		"""
+		primary: list[str] = []
+		# Preferred: aggregated master list
+		for path in (
+			os.path.join(project_root, 'languages', 'languages.json'),
+			os.path.join(static_folder, 'i18n', 'languages.json'),
+		):
+			try:
+				with open(path, 'r', encoding='utf-8') as f:
+					data = json.load(f)
+					langs = data.get('languages') or []
+					for l in langs:
+						code = str(l).split('-')[0].lower()
+						if len(code) == 2 and code.isalpha() and code not in primary:
+							primary.append(code)
+					if primary:
+						return primary
+			except Exception:
+				continue
+		# Optional fallback: per-language registry files
+		reg_dir = os.path.join(project_root, 'languages', 'registry')
+		if os.path.isdir(reg_dir):
+			for name in sorted(os.listdir(reg_dir)):
+				if name.endswith('.json'):
+					code = name[:-5].lower()
+					if len(code) == 2 and code.isalpha() and code not in primary:
+						primary.append(code)
+			if primary:
+				return primary
+		return ['en','nl']
+
+	def _detect_lang() -> str:
+		al = request.headers.get('Accept-Language', '')
+		candidates = []
+		for part in al.split(','):
+			lang = part.split(';')[0].strip().lower()
+			if not lang:
+				continue
+			# normalize: zh-CN -> zh, en-US -> en
+			lang_primary = lang.split('-')[0]
+			candidates.append(lang_primary)
+		supported = _supported_langs()
+		for c in candidates:
+			if c in supported:
+				return c
+		return 'en'
+
+	def _detect_country() -> str:
+		"""Best-effort 2-letter country detection from standard proxy/CDN headers or Accept-Language region."""
+		# Common CDN/proxy headers for country
+		header_candidates = [
+			'CF-IPCountry',                # Cloudflare
+			'X-AppEngine-Country',         # App Engine / Google Cloud
+			'Fastly-Client-Country',       # Fastly
+			'Fly-Client-Country',          # Fly.io
+			'X-Geo-Country',               # Generic
+			'X-Country-Code',              # Generic
+			'X-Forwarded-Country',         # Non-standard
+		]
+		for h in header_candidates:
+			val = request.headers.get(h)
+			if val and isinstance(val, str):
+				cc = val.strip().upper()
+				if len(cc) == 2 and cc.isalpha():
+					return cc
+		# Derive from Accept-Language region (e.g., en-US -> US)
+		al = request.headers.get('Accept-Language', '')
+		for part in al.split(','):
+			lang = part.split(';')[0].strip()
+			if '-' in lang:
+				pieces = lang.split('-')
+				if len(pieces) >= 2:
+					cc = pieces[1].upper()
+					if len(cc) == 2 and cc.isalpha():
+						return cc
+		# Fallback
+		return 'US'
+
+	def _vite_manifest():
+		manifest_path = os.path.join(static_folder, 'app', '.vite', 'manifest.json')
+		# Vite 5 default manifest is in outDir/manifest.json
+		if not os.path.exists(manifest_path):
+			manifest_path = os.path.join(static_folder, 'app', 'manifest.json')
+		if os.path.exists(manifest_path):
+			try:
+				with open(manifest_path, 'r') as f:
+					return json.load(f)
+			except Exception:
+				return None
+		return None
+
+	def _spa_response(lang: str):
+		manifest = _vite_manifest() or {}
+		# Try to pick index.* entries
+		entry = manifest.get('index.html') or manifest.get('src/main.tsx') or {}
+		css_files = entry.get('css') if isinstance(entry, dict) else None
+		js_file = entry.get('file') if isinstance(entry, dict) else None
+		manifest_css = None
+		if css_files and len(css_files) > 0:
+			manifest_css = f"/static/app/{css_files[0]}" if not css_files[0].startswith('/static/app/') else css_files[0]
+		manifest_js = f"/static/app/{js_file}" if js_file and not str(js_file).startswith('/static/app/') else js_file
+
+		# Build hreflangs for supported languages
+		hreflangs = {}
+		for code in _supported_langs():
+			# Only expose two-letter ISO 639-1 codes in hreflang
+			c = (code or '').split('-')[0].lower()
+			if len(c) == 2 and c.isalpha():
+				hreflangs[c] = request.url_root.rstrip('/') + f"/{c}/"
+		# x-default points to root (will redirect to detected language)
+		hreflangs['x-default'] = request.url_root.rstrip('/') + '/'
+		canonical = request.url_root.rstrip('/') + f"/{lang}/"
+		# Language direction (rtl for Arabic/Hebrew/Persian/Urdu)
+		rtl_langs = {'ar','he','fa','ur'}
+		page_dir = 'rtl' if lang in rtl_langs else 'ltr'
+		return render_template(
+			'base_spa.html',
+			lang=lang,
+			dir=page_dir,
+			manifest=True if manifest else False,
+			manifest_css=manifest_css,
+			manifest_js=(manifest_js or '/static/app/assets/index.js'),
+			canonical_url=canonical,
+			hreflangs=hreflangs,
+		)
+
 	@app.route('/')
-	def index():
-		"""Hoofdpagina - Lucy World UI"""
-		# If React build exists, serve the SPA index from static/app; otherwise fallback to server-rendered template
-		build_index = os.path.join(app.static_folder or 'static', 'app', 'index.html')
-		if os.path.exists(build_index):
-			return send_from_directory(os.path.dirname(build_index), 'index.html')
-		return render_template('lucy_index.html')
+	def index_root():
+		"""Detect language and redirect to /<lang>/"""
+		lang = _detect_lang()
+		return redirect(f'/{lang}/', code=302)
+
+	@app.route('/<lang>/')
+	def index_lang(lang: str):
+		"""Language-specific entry that sets hreflang and canonical."""
+		lang = (lang or '').split('-')[0].lower()
+		if lang not in _supported_langs():
+			lang = _detect_lang()
+		return _spa_response(lang)
 
 	@app.route('/search', methods=['GET', 'POST'])
 	def search_index():
@@ -75,18 +210,230 @@ def create_app() -> Flask:
 	@app.route('/search/advanced')
 	def advanced_index():
 		"""Geavanceerde keyword research tool UI"""
-		# Voor nu: gebruik dezelfde Lucy UI; frontend kan later een aparte route tonen
-		return index()
+		return index_root()
 
 	@app.route('/search/scale')
 	def scale_index():
 		"""Scale pagina"""
-		return index()
+		return index_root()
 
 	# Serve built React assets under /app/* (convenience)
 	@app.route('/app/<path:filename>')
 	def app_assets(filename):
 		return send_from_directory(os.path.join(app.static_folder or 'static', 'app'), filename)
+
+	# ========================================================================
+	# META ENDPOINTS (/meta/*)
+	# ========================================================================
+	def _base_url() -> str:
+		# Ensure trailing slash removed
+		return request.url_root.rstrip('/')
+
+	@app.route('/meta/robots.txt')
+	def meta_robots():
+		"""Robots.txt with sitemap link"""
+		base = _base_url()
+		content = (
+			"User-agent: *\n"
+			"Allow: /\n\n"
+			f"Sitemap: {base}/meta/sitemap.xml\n"
+		)
+		return app.response_class(content, mimetype='text/plain')
+
+	@app.route('/meta/sitemap.xml')
+	def meta_sitemap():
+		"""XML sitemap with language-specific home URLs."""
+		base = _base_url()
+		now = datetime.utcnow().strftime('%Y-%m-%d')
+		langs = _supported_langs()
+		urls = [{"loc": f"{base}/{lang}/", "priority": "1.0"} for lang in langs]
+		items = "".join(
+			f"<url><loc>{u['loc']}</loc><lastmod>{now}</lastmod><changefreq>daily</changefreq><priority>{u['priority']}</priority></url>"
+			for u in urls
+		)
+		xml = (
+			"<?xml version=\"1.0\" encoding=\"UTF-8\"?>"
+			"<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">"
+			f"{items}</urlset>"
+		)
+		return app.response_class(xml, mimetype='application/xml')
+
+	@app.route('/meta/feeds.xml')
+	def meta_feed():
+		"""Minimal Atom feed"""
+		base = _base_url()
+		now = datetime.utcnow().isoformat() + 'Z'
+		feed = f"""
+		<?xml version="1.0" encoding="utf-8"?>
+		<feed xmlns="http://www.w3.org/2005/Atom">
+		  <title>Lucy World Updates</title>
+		  <id>{base}/</id>
+		  <updated>{now}</updated>
+		  <link href="{base}/" />
+		  <entry>
+		    <title>Welcome to Lucy World</title>
+		    <id>{base}/#welcome</id>
+		    <updated>{now}</updated>
+		    <link href="{base}/" />
+		    <summary>Keyword research made simple with Google data.</summary>
+		  </entry>
+		</feed>
+		""".strip()
+		return app.response_class(feed, mimetype='application/xml')
+
+	@app.route('/meta/structured.json')
+	def meta_structured():
+		"""Schema.org JSON-LD for the website and organization."""
+		base = _base_url()
+		payload = {
+			"@context": "https://schema.org",
+			"@graph": [
+				{
+					"@type": "Organization",
+					"name": "Lucy World",
+					"url": base + "/",
+					"logo": base + "/static/img/canva/logo-text.png"
+				},
+				{
+					"@type": "WebSite",
+					"name": "Lucy World",
+					"url": base + "/",
+					"potentialAction": {
+						"@type": "SearchAction",
+						"target": base + "/?q={search_term_string}",
+						"query-input": "required name=search_term_string"
+					}
+				}
+			]
+		}
+		return jsonify(payload)
+
+	@app.route('/meta/ai.json')
+	def meta_ai_manifest():
+		"""AI manifest describing available API endpoints and metadata."""
+		base = _base_url()
+		now = datetime.utcnow().isoformat() + 'Z'
+		manifest = {
+			"name": "Lucy World",
+			"description": "Keyword research tool powered by Google data (Trends, Suggest, Wikipedia).",
+			"website": base + "/",
+			"api": {
+				"auth": "none",
+				"base_url": base,
+				"endpoints": [
+					{
+						"path": "/api/free/search",
+						"method": "POST",
+						"content_type": "application/json",
+						"params": {
+							"keyword": "string (required)",
+							"language": "string, e.g., 'nl'",
+							"country": "string, e.g., 'NL'"
+						}
+					}
+				]
+			},
+			"contact": {
+				"email": "support@lucy.world"
+			},
+			"legal": {
+				"privacy_policy": base + "/privacy",
+				"terms_of_service": base + "/terms"
+			},
+			"meta": {
+				"last_updated": now,
+				"environment": os.getenv('ENV', 'production')
+			}
+		}
+		return jsonify(manifest)
+
+	@app.route('/meta/detect.json')
+	def meta_detect():
+		"""Return detected language and country for initial UI defaults."""
+		try:
+			return jsonify({
+				'language': _detect_lang(),
+				'country': _detect_country(),
+			})
+		except Exception:
+			return jsonify({'language': 'en', 'country': 'US'})
+
+	@app.route('/meta/content/<lang>.json')
+	def meta_content_lang(lang: str):
+		"""Serve UI content JSON for a given language from content/i18n."""
+		lang = (lang or '').split('-')[0].lower()
+		# Prefer languages/locales directory; also support project_root/locales for compatibility
+		locales_dir = os.path.join(project_root, 'languages', 'locales')
+		legacy_locales_dir = os.path.join(project_root, 'locales')
+		if os.path.isdir(locales_dir) or os.path.isdir(legacy_locales_dir):
+			use_dir = locales_dir if os.path.isdir(locales_dir) else legacy_locales_dir
+			content_path = os.path.join(use_dir, f'{lang}.json')
+			# Support either en.json or en.default.json as the base
+			fallback_path = os.path.join(use_dir, 'en.json')
+			if not os.path.exists(fallback_path):
+				fallback_path = os.path.join(use_dir, 'en.default.json')
+		else:
+			content_path = os.path.join(project_root, 'content', 'i18n', f'{lang}.json')
+			fallback_path = os.path.join(project_root, 'content', 'i18n', 'en.json')
+		path = content_path if os.path.exists(content_path) else fallback_path
+		try:
+			with open(path, 'r', encoding='utf-8') as f:
+				raw = json.load(f)
+			# Accept both our current shape and Shopify-style (keys at root)
+			if isinstance(raw, dict) and 'strings' in raw and isinstance(raw['strings'], dict):
+				data = raw
+			else:
+				# Treat the entire file as key->string map
+				rtl_langs = {'ar','he','fa','ur'}
+				data = { 'lang': lang, 'dir': 'rtl' if lang in rtl_langs else 'ltr', 'strings': raw if isinstance(raw, dict) else {} }
+			return jsonify(data)
+		except Exception as e:
+			return jsonify({"lang": lang, "dir": "ltr", "strings": {}}), 200
+
+	@app.route('/meta/locales.json')
+	def meta_locales():
+		"""List available locale codes from locales/ (Shopify-style), with default locale."""
+		locales_dir = os.path.join(project_root, 'languages', 'locales')
+		legacy_locales_dir = os.path.join(project_root, 'locales')
+		codes = []
+		default_code = 'en'
+		use_dir = None
+		if os.path.isdir(locales_dir):
+			use_dir = locales_dir
+		elif os.path.isdir(legacy_locales_dir):
+			use_dir = legacy_locales_dir
+		if use_dir:
+			if os.path.exists(os.path.join(use_dir, 'en.default.json')) or os.path.exists(os.path.join(use_dir, 'en.json')):
+				default_code = 'en'
+			for name in sorted(os.listdir(use_dir)):
+				if name.endswith('.json'):
+					if name.endswith('.default.json'):
+						codes.append(name.split('.default.json')[0])
+					else:
+						codes.append(name[:-5])
+		return jsonify({ 'locales': sorted(set(codes)), 'default': default_code })
+
+	@app.route('/meta/languages.json')
+	def meta_languages():
+		"""Return supported language codes from the master list (simple array)."""
+		try:
+			langs = _supported_langs()
+			return jsonify({"languages": langs})
+		except Exception:
+			return jsonify({"languages": ['en','nl']})
+
+	@app.route('/meta/countries.json')
+	def meta_countries():
+		"""Return official ISO 3166-1 alpha-2 country/territory codes."""
+		path = os.path.join(project_root, 'languages', 'countries.json')
+		try:
+			with open(path, 'r', encoding='utf-8') as f:
+				data = json.load(f)
+			codes = [str(c).upper() for c in (data.get('countries') or []) if isinstance(c, str) and len(c) == 2 and c.isalpha()]
+			return jsonify({"countries": codes})
+		except Exception:
+			# minimal fallback of common markets
+			return jsonify({"countries": ["US","GB","NL","DE","FR","ES","IT","CA","AU","IN"]})
 
 	# ========================================================================
 	# FREE KEYWORD RESEARCH ENDPOINTS
@@ -107,12 +454,15 @@ def create_app() -> Flask:
 				return jsonify({'error': 'Geen zoekwoord opgegeven'}), 400
 
 			if not language:
-				language = free_tool.default_language
+				# Prefer detected browser language; fallback to tool default
+				language = _detect_lang() or getattr(free_tool, 'default_language', 'en')
 
-			logger.info(f"Free search for keyword: {keyword}, language: {language}, country: {country or 'NL'}")
+			if not country:
+				country = _detect_country()
+			logger.info(f"Free search for keyword: {keyword}, language: {language}, country: {country}")
 
 			# Voer gratis keyword research uit
-			raw_keyword_data = free_tool.research_comprehensive(keyword, language=language, country=country or 'NL')
+			raw_keyword_data = free_tool.research_comprehensive(keyword, language=language, country=country or 'US')
 			processed_keywords = free_tool.process_keywords_with_data(
 				raw_keyword_data,
 				keyword,
@@ -129,7 +479,7 @@ def create_app() -> Flask:
 			response_data = {
 				'keyword': keyword,
 				'language': language,
-				'country': country or 'NL',
+				'country': country or 'US',
 				'categories': {},
 				'trends': {
 					'interest_over_time': interest_points,

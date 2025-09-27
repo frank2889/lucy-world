@@ -1,0 +1,3 @@
+# Registry files are generated; edit languages.json instead
+*.json
+!README.md
