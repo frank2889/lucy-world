@@ -31,3 +31,18 @@ h3{margin:0 0 6px 0;font-size:18px}
 h4{margin:0 0 10px 0;font-size:15px;color:var(--muted)}
 .pill{display:inline-block;background:#0e1217;border:1px solid var(--line);padding:6px 10px;border-radius:999px;margin:4px 6px 0 0;font-size:13px}
 .footer{padding:28px 20px;color:var(--muted);border-top:1px solid var(--line);margin-top:40px;font-size:13px}
+
+/* Responsive */
+@media (max-width: 960px) {
+	.layout{flex-direction:column}
+	.sidebar{width:100%;border-right:none;border-bottom:1px solid var(--line)}
+	.content-inner{padding:16px}
+}
+@media (max-width: 720px) {
+	.row{flex-wrap:wrap}
+	select.select{width:calc(50% - 6px)}
+	button{width:100%}
+}
+@media (max-width: 480px) {
+	select.select{width:100%}
+}

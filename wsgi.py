@@ -1,5 +1,5 @@
-# WSGI entrypoint for DigitalOcean App Platform / Gunicorn
-from app import app as application
+"""WSGI entrypoint for DigitalOcean App Platform / Gunicorn."""
+from backend import create_app
 
-# Gunicorn looks for a variable named `app` by default; keep both names
-app = application
+application = create_app()
+app = application  # gunicorn default expects `app`
