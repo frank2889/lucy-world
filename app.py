@@ -12,6 +12,7 @@ import os
 from datetime import datetime
 from advanced_keyword_tool import AdvancedKeywordTool
 from free_keyword_tool import FreeKeywordTool
+from werkzeug.middleware.proxy_fix import ProxyFix
 import logging
 
 # Configure logging for production
@@ -19,6 +20,16 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 app = Flask(__name__)
+
+# Trust proxy headers from the DigitalOcean load balancer so request.scheme is correct
+app.wsgi_app = ProxyFix(app.wsgi_app, x_for=1, x_proto=1, x_host=1, x_port=1, x_prefix=1)
+
+# Security: prefer HTTPS for generated URLs and secure cookies in production
+app.config.update(
+    PREFERRED_URL_SCHEME="https",
+    SESSION_COOKIE_SECURE=True,
+    SESSION_COOKIE_SAMESITE="Lax",
+)
 
 # Initialiseer beide keyword tools
 try:
@@ -290,6 +301,17 @@ def not_found(error):
 def internal_error(error):
     logger.error(f"Internal server error: {error}")
     return jsonify({'error': 'Interne server fout'}), 500
+
+# Add HSTS over HTTPS responses (does not affect health checks or HTTP traffic)
+@app.after_request
+def add_security_headers(response):
+    try:
+        # Only set HSTS on secure requests so we don't interfere with internal health checks
+        if request.is_secure:
+            response.headers['Strict-Transport-Security'] = 'max-age=31536000; includeSubDomains; preload'
+    except Exception:
+        pass
+    return response
 
 if __name__ == '__main__':
     # Development server
