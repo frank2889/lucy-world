@@ -70,12 +70,19 @@ export default function App() {
   }
 
   return (
-    <div>
-      <header className="header">
-        <div className="wrap brand">Lucy <span>World</span></div>
-      </header>
+    <div className="layout">
+      <aside className="sidebar">
+        <div className="sidebar-brand">Lucy <span>World</span></div>
+        <nav className="sidebar-nav">
+          <a className="nav-item active">Zoeken</a>
+          <a className="nav-item muted">Advanced (binnenkort)</a>
+          <a className="nav-item muted">Trends (binnenkort)</a>
+        </nav>
+        <div className="sidebar-footer">© {new Date().getFullYear()} Lucy World</div>
+      </aside>
 
-      <main className="wrap">
+      <div className="content">
+        <div className="content-inner">
         <section className="search-card">
           <h3>Keyword onderzoek</h3>
           <form onSubmit={onSubmit} className="row">
@@ -149,9 +156,9 @@ export default function App() {
             </section>
           </>
         )}
-      </main>
-
-      <footer className="footer">© {new Date().getFullYear()} Lucy World</footer>
+        </div>
+        
+      </div>
     </div>
   )
 }
