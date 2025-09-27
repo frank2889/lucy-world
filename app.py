@@ -32,12 +32,16 @@ except Exception as e:
 
 @app.route('/')
 def index():
-    """Hoofdpagina - redirect naar search tool"""
-    return redirect('/search')
+    """Hoofdpagina - toon gratis tool direct"""
+    return render_template('canva_index.html')
 
-@app.route('/search')
+@app.route('/search', methods=['GET', 'POST'])
 def search_index():
-    """Hoofdpagina van de search tool - redirect naar free versie"""
+    """Search pagina (GET) of gratis zoekactie (POST)."""
+    if request.method == 'POST':
+        # Reuse the free API logic so canva_index.html can POST to /search
+        return free_search_keywords()
+    # GET -> redirect to free UI
     return redirect('/search/free')
 
 @app.route('/search/free')
