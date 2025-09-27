@@ -1,0 +1,38 @@
+name: lucy-world-search
+services:
+- name: web
+  source_dir: /
+  github:
+    repo: frank2889/lucy-world
+    branch: main
+    deploy_on_push: true
+  run_command: gunicorn --config gunicorn.conf.py app:app
+  environment_slug: python
+  instance_count: 1
+  instance_size_slug: basic-xxs
+  routes:
+  - path: /
+  envs:
+  - key: FLASK_ENV
+    value: production
+  - key: PORT
+    value: "8080"
+  health_check:
+    http_path: /health
+    initial_delay_seconds: 10
+    period_seconds: 10
+    timeout_seconds: 5
+    success_threshold: 1
+    failure_threshold: 3
+
+domains:
+- domain: lucy.world
+  type: PRIMARY
+  
+# Optional: Add a database later
+# databases:
+# - engine: PG
+#   name: lucy-db
+#   num_nodes: 1
+#   size: db-s-dev-database
+#   version: "14"

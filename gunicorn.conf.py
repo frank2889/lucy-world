@@ -1,12 +1,14 @@
-# Gunicorn configuration file - Optimized for 1GB RAM / 1 vCPU droplet
-bind = "0.0.0.0:8000"
-workers = 2  # Conservative for 1GB RAM
+# Gunicorn configuration file - Optimized for DigitalOcean App Platform
+import os
+
+bind = f"0.0.0.0:{os.environ.get('PORT', 8080)}"
+workers = 2  # Good for App Platform basic tier
 worker_class = "sync"
-worker_connections = 500  # Lower connection limit for small server
-timeout = 30  # Standard timeout
-keepalive = 2  # Basic connection reuse
-max_requests = 1000  # Standard request limit
-max_requests_jitter = 100  # Standard jitter
+worker_connections = 500
+timeout = 30
+keepalive = 2
+max_requests = 1000
+max_requests_jitter = 100
 preload_app = True
 reload = False
 
