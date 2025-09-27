@@ -17,20 +17,20 @@ import re
 
 from language_validator import KeywordLanguageValidator
 
-# Google Trends
+# Google Trends (optional)
 try:
     from pytrends.request import TrendReq
     PYTRENDS_AVAILABLE = True
-except ImportError:
+except Exception:
     PYTRENDS_AVAILABLE = False
-    print("⚠️ PyTrends niet beschikbaar. Installeer met: pip install pytrends")
+    print("⚠️ PyTrends niet beschikbaar. Sla trends over of installeer met: pip install pytrends")
 
-# Wikipedia
+# Wikipedia (optional)
 try:
     import wikipedia
     wikipedia.set_lang("nl")
     WIKIPEDIA_AVAILABLE = True
-except ImportError:
+except Exception:
     WIKIPEDIA_AVAILABLE = False
     print("⚠️ Wikipedia niet beschikbaar. Installeer met: pip install wikipedia")
 
