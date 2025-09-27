@@ -3,7 +3,19 @@ import re
 from typing import TYPE_CHECKING, Iterable, List, Sequence
 
 import requests
-from wordfreq import available_languages, zipf_frequency
+
+try:
+    from wordfreq import available_languages, zipf_frequency  # type: ignore
+    WORDFREQ_AVAILABLE = True
+except Exception:  # pragma: no cover - optional dependency
+    WORDFREQ_AVAILABLE = False
+
+    def available_languages():  # type: ignore
+        return []
+
+    def zipf_frequency(word: str, language: str, minimum: float = -100):  # type: ignore
+        # Simulate missing frequency data
+        raise ValueError("wordfreq not available")
 
 if TYPE_CHECKING:  # Avoid circular imports during runtime
     from free_keyword_tool import KeywordData
@@ -22,7 +34,7 @@ class KeywordLanguageValidator:
         self.min_frequency = min_frequency
         self.min_valid_ratio = min_valid_ratio
 
-        self.supported_languages = set(available_languages())
+        self.supported_languages = set(available_languages()) if WORDFREQ_AVAILABLE else set()
         # normalized variants for ease of lookup (e.g. nl -> nl, nl-latn -> nl)
         self.language_aliases = {lang.split("_")[0]: lang for lang in self.supported_languages}
 
@@ -97,19 +109,27 @@ class KeywordLanguageValidator:
         if not words:
             return False
 
-        frequencies: List[float] = []
-        for word in words:
-            freq = self._lookup_frequency(word, language)
-            frequencies.append(freq)
+        if WORDFREQ_AVAILABLE and self.supported_languages:
+            frequencies: List[float] = []
+            for word in words:
+                freq = self._lookup_frequency(word, language)
+                frequencies.append(freq)
 
-        valid = [freq for freq in frequencies if freq >= self.min_frequency]
-        if not valid:
-            return False
+            valid = [freq for freq in frequencies if freq >= self.min_frequency]
+            if not valid:
+                return False
 
-        ratio = len(valid) / len(frequencies)
-        return ratio >= self.min_valid_ratio
+            ratio = len(valid) / len(frequencies)
+            return ratio >= self.min_valid_ratio
+        else:
+            # Fallback heuristic without wordfreq: accept if most tokens are alphabetic
+            alpha_tokens = [w for w in words if re.fullmatch(r"[a-zA-ZÀ-ÿ\-']+", w) is not None]
+            return len(alpha_tokens) / len(words) >= 0.6
 
     def _lookup_frequency(self, word: str, language: str) -> float:
+        if not WORDFREQ_AVAILABLE:
+            return -100
+
         try:
             freq = zipf_frequency(word, language, minimum=-100)
         except ValueError:
