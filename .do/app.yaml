@@ -6,7 +6,7 @@ services:
     repo: frank2889/lucy-world
     branch: main
     deploy_on_push: true
-  run_command: gunicorn --config gunicorn.conf.py app:app
+  run_command: gunicorn --config gunicorn.conf.py wsgi:app
   environment_slug: python
   instance_count: 1
   instance_size_slug: basic-xxs
@@ -21,7 +21,7 @@ services:
     http_path: /health
     initial_delay_seconds: 10
     period_seconds: 10
-    timeout_seconds: 5
+    timeout_seconds: 10
     success_threshold: 1
     failure_threshold: 3
 
