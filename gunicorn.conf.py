@@ -2,6 +2,7 @@
 import os
 
 bind = f"0.0.0.0:{os.environ.get('PORT', 8080)}"
+wsgi_app = "wsgi:app"
 workers = 2  # Good for App Platform basic tier
 worker_class = "sync"
 worker_connections = 500

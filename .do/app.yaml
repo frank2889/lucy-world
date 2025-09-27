@@ -17,6 +17,10 @@ services:
     value: production
   - key: PORT
     value: "8080"
+  - key: PYTHONUNBUFFERED
+    value: "1"
+  - key: GUNICORN_CMD_ARGS
+    value: "--config gunicorn.conf.py"
   health_check:
     http_path: /health
     initial_delay_seconds: 10
