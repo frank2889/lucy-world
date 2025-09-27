@@ -104,6 +104,10 @@ def free_search_keywords():
         trends_data = raw_keyword_data.get('trends_data', {})
         interest_points = trends_data.get('interest', [])
 
+        # Trends summary
+        avg_interest = round(sum(interest_points) / len(interest_points), 1) if interest_points else 0
+        trend_direction = trends_data.get('trend_direction', 'Stable')
+
         response_data = {
             'keyword': keyword,
             'language': language,
@@ -111,34 +115,66 @@ def free_search_keywords():
             'trends': {
                 'interest_over_time': interest_points,
                 'trending_searches': trends_data.get('trending_searches', []),
-                'related_topics': trends_data.get('related_topics', [])
+                'related_topics': trends_data.get('related_topics', []),
+                'avg_interest': avg_interest,
+                'trend_direction': trend_direction,
+                'data_points': len(interest_points)
             },
             'stats': {
                 'total_keywords': 0,
                 'categories_count': 0
+            },
+            # UI expects a summary block
+            'summary': {
+                'total_volume': 0,
+                'total_keywords': 0,
+                'real_data_keywords': 0
             },
             'timestamp': datetime.now().isoformat()
         }
 
         # Verwerk alle categorieën
         total_keywords = 0
+        total_volume = 0
+        real_data_keywords = 0
         for category, keywords in processed_keywords.items():
             if keywords:
                 category_data = []
-                for kw_data in keywords[:20]:  # Limit to top 20
-                    category_data.append({
-                        'keyword': kw_data.get('keyword', ''),
-                        'volume': kw_data.get('volume', 0),
-                        'competition': kw_data.get('competition', 'Unknown'),
-                        'trend': kw_data.get('trend', 0),
-                        'relevance': kw_data.get('relevance_score', 0)
-                    })
+                for kw in keywords[:20]:  # Limit to top 20
+                    # kw may be a dataclass object (KeywordData) or dict
+                    if hasattr(kw, 'keyword'):
+                        item = {
+                            'keyword': getattr(kw, 'keyword', ''),
+                            'search_volume': getattr(kw, 'search_volume', 0),
+                            'difficulty': getattr(kw, 'difficulty', None),
+                            'cpc': getattr(kw, 'cpc', None),
+                            'competition': getattr(kw, 'competition', 'Unknown'),
+                            'trend': getattr(kw, 'trend', trend_direction),
+                            'source': getattr(kw, 'source', None),
+                        }
+                    else:
+                        item = {
+                            'keyword': kw.get('keyword', ''),
+                            'search_volume': kw.get('search_volume', kw.get('volume', 0)),
+                            'difficulty': kw.get('difficulty'),
+                            'cpc': kw.get('cpc'),
+                            'competition': kw.get('competition', 'Unknown'),
+                            'trend': kw.get('trend', trend_direction),
+                            'source': kw.get('source')
+                        }
+                    category_data.append(item)
+                    total_volume += int(item.get('search_volume') or 0)
+                    if (item.get('source') == 'Real Data'):
+                        real_data_keywords += 1
                 
                 response_data['categories'][category] = category_data
                 total_keywords += len(category_data)
 
         response_data['stats']['total_keywords'] = total_keywords
         response_data['stats']['categories_count'] = len(response_data['categories'])
+        response_data['summary']['total_keywords'] = total_keywords
+        response_data['summary']['total_volume'] = total_volume
+        response_data['summary']['real_data_keywords'] = real_data_keywords
 
         return jsonify(response_data)
         
