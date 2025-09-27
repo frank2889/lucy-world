@@ -2,16 +2,16 @@
   "lang": "zh",
   "dir": "ltr",
   "strings": {
-    "nav.search": "Search",
-    "nav.advanced": "Advanced (soon)",
-    "nav.trends": "Trends (soon)",
-    "search.title": "Keyword research",
-    "search.placeholder": "Enter a keyword (e.g., pizza delivery)",
-    "search.button": "Search",
-    "search.hint": "Free suggestions and trends. Results appear below.",
-    "kpi.total_keywords": "Total keywords",
-    "kpi.total_volume": "Total volume",
-    "kpi.real_data_keywords": "Real data keywords",
-    "kpi.avg_interest": "Avg. interest"
+    "nav.search": "搜索",
+    "nav.advanced": "高级（即将推出）",
+    "nav.trends": "趋势（即将推出）",
+    "search.title": "关键词研究",
+    "search.placeholder": "输入关键词（例如：披萨外卖）",
+    "search.button": "搜索",
+    "search.hint": "免费的建议和趋势。结果将显示在下方。",
+    "kpi.total_keywords": "关键词总数",
+    "kpi.total_volume": "总搜索量",
+    "kpi.real_data_keywords": "真实数据关键词",
+    "kpi.avg_interest": "平均关注度"
   }
 }

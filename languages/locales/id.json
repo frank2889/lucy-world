@@ -2,16 +2,16 @@
   "lang": "id",
   "dir": "ltr",
   "strings": {
-    "nav.search": "Search",
-    "nav.advanced": "Advanced (soon)",
-    "nav.trends": "Trends (soon)",
-    "search.title": "Keyword research",
-    "search.placeholder": "Enter a keyword (e.g., pizza delivery)",
-    "search.button": "Search",
-    "search.hint": "Free suggestions and trends. Results appear below.",
-    "kpi.total_keywords": "Total keywords",
-    "kpi.total_volume": "Total volume",
-    "kpi.real_data_keywords": "Real data keywords",
-    "kpi.avg_interest": "Avg. interest"
+    "nav.search": "Cari",
+    "nav.advanced": "Lanjutan (segera)",
+    "nav.trends": "Tren (segera)",
+    "search.title": "Riset kata kunci",
+    "search.placeholder": "Masukkan kata kunci (mis. pengantaran pizza)",
+    "search.button": "Cari",
+    "search.hint": "Saran dan tren gratis. Hasil akan muncul di bawah.",
+    "kpi.total_keywords": "Total kata kunci",
+  "kpi.total_volume": "Volume total",
+    "kpi.real_data_keywords": "Kata kunci dengan data nyata",
+    "kpi.avg_interest": "Rata-rata minat"
   }
 }

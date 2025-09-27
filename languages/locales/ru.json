@@ -2,16 +2,16 @@
   "lang": "ru",
   "dir": "ltr",
   "strings": {
-    "nav.search": "Search",
-    "nav.advanced": "Advanced (soon)",
-    "nav.trends": "Trends (soon)",
-    "search.title": "Keyword research",
-    "search.placeholder": "Enter a keyword (e.g., pizza delivery)",
-    "search.button": "Search",
-    "search.hint": "Free suggestions and trends. Results appear below.",
-    "kpi.total_keywords": "Total keywords",
-    "kpi.total_volume": "Total volume",
-    "kpi.real_data_keywords": "Real data keywords",
-    "kpi.avg_interest": "Avg. interest"
+    "nav.search": "Поиск",
+    "nav.advanced": "Расширенный (скоро)",
+    "nav.trends": "Тренды (скоро)",
+    "search.title": "Исследование ключевых слов",
+    "search.placeholder": "Введите ключевое слово (например, доставка пиццы)",
+    "search.button": "Искать",
+    "search.hint": "Бесплатные подсказки и тренды. Результаты появятся ниже.",
+    "kpi.total_keywords": "Всего ключевых слов",
+    "kpi.total_volume": "Общий объём",
+    "kpi.real_data_keywords": "Ключевые слова с реальными данными",
+    "kpi.avg_interest": "Средний интерес"
   }
 }

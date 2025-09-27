@@ -2,16 +2,16 @@
   "lang": "vi",
   "dir": "ltr",
   "strings": {
-    "nav.search": "Search",
-    "nav.advanced": "Advanced (soon)",
-    "nav.trends": "Trends (soon)",
-    "search.title": "Keyword research",
-    "search.placeholder": "Enter a keyword (e.g., pizza delivery)",
-    "search.button": "Search",
-    "search.hint": "Free suggestions and trends. Results appear below.",
-    "kpi.total_keywords": "Total keywords",
-    "kpi.total_volume": "Total volume",
-    "kpi.real_data_keywords": "Real data keywords",
-    "kpi.avg_interest": "Avg. interest"
+    "nav.search": "Tìm kiếm",
+    "nav.advanced": "Nâng cao (sắp có)",
+    "nav.trends": "Xu hướng (sắp có)",
+    "search.title": "Nghiên cứu từ khóa",
+    "search.placeholder": "Nhập từ khóa (vd: giao pizza)",
+    "search.button": "Tìm kiếm",
+    "search.hint": "Gợi ý và xu hướng miễn phí. Kết quả hiển thị bên dưới.",
+    "kpi.total_keywords": "Tổng số từ khóa",
+    "kpi.total_volume": "Tổng lưu lượng",
+    "kpi.real_data_keywords": "Từ khóa có dữ liệu thực",
+    "kpi.avg_interest": "Mức quan tâm TB"
   }
 }

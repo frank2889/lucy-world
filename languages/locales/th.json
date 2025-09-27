@@ -2,16 +2,16 @@
   "lang": "th",
   "dir": "ltr",
   "strings": {
-    "nav.search": "Search",
-    "nav.advanced": "Advanced (soon)",
-    "nav.trends": "Trends (soon)",
-    "search.title": "Keyword research",
-    "search.placeholder": "Enter a keyword (e.g., pizza delivery)",
-    "search.button": "Search",
-    "search.hint": "Free suggestions and trends. Results appear below.",
-    "kpi.total_keywords": "Total keywords",
-    "kpi.total_volume": "Total volume",
-    "kpi.real_data_keywords": "Real data keywords",
-    "kpi.avg_interest": "Avg. interest"
+    "nav.search": "ค้นหา",
+    "nav.advanced": "ขั้นสูง (เร็วๆ นี้)",
+    "nav.trends": "เทรนด์ (เร็วๆ นี้)",
+    "search.title": "การวิจัยคีย์เวิร์ด",
+    "search.placeholder": "ป้อนคีย์เวิร์ด (เช่น บริการส่งพิซซ่า)",
+    "search.button": "ค้นหา",
+    "search.hint": "ข้อเสนอและเทรนด์ฟรี ผลลัพธ์จะแสดงด้านล่าง",
+    "kpi.total_keywords": "จำนวนคีย์เวิร์ดทั้งหมด",
+    "kpi.total_volume": "ปริมาณรวม",
+    "kpi.real_data_keywords": "คีย์เวิร์ดที่มีข้อมูลจริง",
+    "kpi.avg_interest": "ความสนใจเฉลี่ย"
   }
 }

@@ -2,16 +2,16 @@
   "lang": "no",
   "dir": "ltr",
   "strings": {
-    "nav.search": "Search",
-    "nav.advanced": "Advanced (soon)",
-    "nav.trends": "Trends (soon)",
-    "search.title": "Keyword research",
-    "search.placeholder": "Enter a keyword (e.g., pizza delivery)",
-    "search.button": "Search",
-    "search.hint": "Free suggestions and trends. Results appear below.",
-    "kpi.total_keywords": "Total keywords",
-    "kpi.total_volume": "Total volume",
-    "kpi.real_data_keywords": "Real data keywords",
-    "kpi.avg_interest": "Avg. interest"
+    "nav.search": "Søk",
+    "nav.advanced": "Avansert (snart)",
+    "nav.trends": "Trender (snart)",
+    "search.title": "Nøkkelordsanalyse",
+    "search.placeholder": "Skriv inn et nøkkelord (f.eks. pizzalevering)",
+    "search.button": "Søk",
+    "search.hint": "Gratis forslag og trender. Resultater vises nedenfor.",
+    "kpi.total_keywords": "Totalt antall nøkkelord",
+    "kpi.total_volume": "Totalvolum",
+    "kpi.real_data_keywords": "Nøkkelord med ekte data",
+    "kpi.avg_interest": "Gj.sn. interesse"
   }
 }

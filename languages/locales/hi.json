@@ -2,16 +2,16 @@
   "lang": "hi",
   "dir": "ltr",
   "strings": {
-    "nav.search": "Search",
-    "nav.advanced": "Advanced (soon)",
-    "nav.trends": "Trends (soon)",
-    "search.title": "Keyword research",
-    "search.placeholder": "Enter a keyword (e.g., pizza delivery)",
-    "search.button": "Search",
-    "search.hint": "Free suggestions and trends. Results appear below.",
-    "kpi.total_keywords": "Total keywords",
-    "kpi.total_volume": "Total volume",
-    "kpi.real_data_keywords": "Real data keywords",
-    "kpi.avg_interest": "Avg. interest"
+    "nav.search": "खोज",
+    "nav.advanced": "उन्नत (जल्द)",
+    "nav.trends": "रुझान (जल्द)",
+    "search.title": "कीवर्ड रिसर्च",
+    "search.placeholder": "एक कीवर्ड दर्ज करें (उदा., पिज़्ज़ा डिलीवरी)",
+    "search.button": "खोजें",
+    "search.hint": "नि:शुल्क सुझाव और रुझान। परिणाम नीचे दिखाई देंगे।",
+    "kpi.total_keywords": "कुल कीवर्ड",
+    "kpi.total_volume": "कुल वॉल्यूम",
+    "kpi.real_data_keywords": "वास्तविक डेटा वाले कीवर्ड",
+    "kpi.avg_interest": "औसत रुचि"
   }
 }
