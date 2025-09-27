@@ -11,8 +11,8 @@ import csv
 import io
 import os
 from datetime import datetime
-from advanced_keyword_tool import AdvancedKeywordTool
-from free_keyword_tool import FreeKeywordTool
+from backend.services.advanced_keyword_tool import AdvancedKeywordTool
+from backend.services.free_keyword_tool import FreeKeywordTool
 from werkzeug.middleware.proxy_fix import ProxyFix
 import logging
 
