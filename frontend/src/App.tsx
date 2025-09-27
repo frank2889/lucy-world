@@ -173,11 +173,15 @@ export default function App() {
       fetch('/meta/detect.json')
         .then(r => (r.ok ? r.json() : Promise.reject()))
         .then((det) => {
-          if (!hasSavedLang && !pathHasLangPrefix && det?.language && typeof det.language === 'string') {
-            setLanguage(String(det.language).toLowerCase())
+          const detLang = (det?.language || '').toString().toLowerCase()
+          const detCountry = (det?.country || '').toString().toUpperCase()
+          if (!hasSavedLang && !pathHasLangPrefix && detLang) {
+            setLanguage(detLang)
+            try { localStorage.setItem('lw_lang', detLang) } catch {}
           }
-          if (!hasSavedCountry && det?.country && typeof det.country === 'string' && det.country.length === 2) {
-            setCountry(String(det.country).toUpperCase())
+          if (!hasSavedCountry && detCountry && detCountry.length === 2) {
+            setCountry(detCountry)
+            try { localStorage.setItem('lw_country', detCountry) } catch {}
           }
         })
         .catch(() => { /* ignore */ })
