@@ -62,6 +62,8 @@ export default function App() {
   const [keyword, setKeyword] = useState('')
   const [language, setLanguage] = useState(() => localStorage.getItem('lw_lang') || urlLang || 'en')
   const [country, setCountry] = useState(() => localStorage.getItem('lw_country') || 'NL')
+  // Detected country (geo/IP/headers) for display; separate from user-selected country used in searches
+  const [detectedCountry, setDetectedCountry] = useState<string>('')
   const [languagesList, setLanguagesList] = useState(GOOGLE_LANGUAGES)
   const [countriesList, setCountriesList] = useState(COUNTRY_CODES)
   const [loading, setLoading] = useState(false)
@@ -169,12 +171,15 @@ export default function App() {
       const hasSavedCountry = !!localStorage.getItem('lw_country')
       // If path already starts with /xx/, we consider it authoritative for language
       const pathHasLangPrefix = typeof window !== 'undefined' && /^\/[a-z]{2}(?:\/$|\/|$)/i.test(window.location.pathname)
-      if (hasSavedLang && hasSavedCountry) return
       fetch('/meta/detect.json')
         .then(r => (r.ok ? r.json() : Promise.reject()))
         .then((det) => {
           const detLang = (det?.language || '').toString().toLowerCase()
           const detCountry = (det?.country || '').toString().toUpperCase()
+          // Always capture detected country for topbar indicator
+          if (detCountry && detCountry.length === 2) {
+            setDetectedCountry(detCountry)
+          }
           if (!hasSavedLang && !pathHasLangPrefix && detLang) {
             setLanguage(detLang)
             try { localStorage.setItem('lw_lang', detLang) } catch {}
@@ -207,7 +212,17 @@ export default function App() {
         {/* Desktop header bar */}
         <div className="desktopbar" style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '12px 14px', borderBottom: '1px solid var(--line)', position: 'sticky', top: 0, zIndex: 9, background: 'rgba(11,13,16,0.6)', backdropFilter: 'saturate(180%) blur(10px)' }}>
           <div className="brand">Lucy <span>World</span></div>
-          <div style={{ marginLeft: 'auto' }}>
+          <div style={{ marginLeft: 'auto', display: 'inline-flex', alignItems: 'center', gap: 8 }}>
+            {/* Country indicator (always shows detected country if available) */}
+            <div
+              className="country-pill"
+              title={(detectedCountry || country).toUpperCase()}
+              aria-label={`Country ${(detectedCountry || country).toUpperCase()}`}
+              style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: 'transparent', color: 'var(--text)', border: '1px solid var(--line)', padding: '8px 10px', borderRadius: 10 }}
+            >
+              <span aria-hidden style={{ fontSize: 14 }}>{flagEmoji((detectedCountry || country).toUpperCase())}</span>
+              <span style={{ fontWeight: 600 }}>{(detectedCountry || country).toUpperCase()}</span>
+            </div>
             {/* Reuse the lang switch button */}
             <button
               type="button"
@@ -240,6 +255,16 @@ export default function App() {
           <div className="brand">Lucy <span>World</span></div>
           <div className="topbar-actions" style={{ marginLeft: 'auto', display: 'inline-flex', alignItems: 'center', gap: 8 }}>
             <div className="lang-switch" style={{ position: 'relative' }}>
+              {/* Country indicator (always shows detected country if available) */}
+              <div
+                className="country-pill"
+                title={(detectedCountry || country).toUpperCase()}
+                aria-label={`Country ${(detectedCountry || country).toUpperCase()}`}
+                style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: 'transparent', color: 'var(--text)', border: '1px solid var(--line)', padding: '8px 10px', borderRadius: 10, marginRight: 8 }}
+              >
+                <span aria-hidden style={{ fontSize: 14 }}>{flagEmoji((detectedCountry || country).toUpperCase())}</span>
+                <span style={{ fontWeight: 600 }}>{(detectedCountry || country).toUpperCase()}</span>
+              </div>
               <button
                 type="button"
                 className="lang-btn"
