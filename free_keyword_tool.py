@@ -66,7 +66,7 @@ class FreeSEODataCollector:
         else:
             self.trends_available = False
     
-    def get_google_suggestions(self, keyword: str) -> List[str]:
+    def get_google_suggestions(self, keyword: str, hl: str = 'nl', gl: str = 'NL') -> List[str]:
         """
         Haalt Google autocomplete suggesties op (100% gratis!)
         """
@@ -83,8 +83,8 @@ class FreeSEODataCollector:
                 params = {
                     'client': client,
                     'q': keyword,
-                    'hl': 'nl',
-                    'gl': 'nl'
+                    'hl': hl.lower() if hl else 'nl',
+                    'gl': gl.upper() if gl else 'NL'
                 }
                 
                 response = self.session.get(url, params=params, timeout=5)
@@ -159,7 +159,7 @@ class FreeSEODataCollector:
         
         return question_patterns[:15]
     
-    def get_google_trends_data(self, keyword: str) -> Dict:
+    def get_google_trends_data(self, keyword: str, language: str = 'nl', geo: str = 'NL') -> Dict:
         """
         Haalt Google Trends data op (gratis!)
         """
@@ -168,7 +168,13 @@ class FreeSEODataCollector:
         
         try:
             # Build payload voor trends
-            self.pytrends.build_payload([keyword], cat=0, timeframe='today 12-m', geo='NL')
+            try:
+                # Probeer nieuwe sessie met gewenste taal
+                if PYTRENDS_AVAILABLE:
+                    self.pytrends = TrendReq(hl=language or 'nl', tz=360)
+            except Exception:
+                pass
+            self.pytrends.build_payload([keyword], cat=0, timeframe='today 12-m', geo=(geo or 'NL').upper())
             
             # Haal interest over time op
             interest_over_time_df = self.pytrends.interest_over_time()
@@ -209,7 +215,7 @@ class FreeSEODataCollector:
             print(f"⚠️ Google Trends fout: {e}")
             return {'interest': [], 'related_queries': [], 'trend_direction': 'Stable'}
     
-    def get_wikipedia_related_terms(self, keyword: str) -> List[str]:
+    def get_wikipedia_related_terms(self, keyword: str, language: str = 'nl') -> List[str]:
         """
         Haalt gerelateerde termen op van Wikipedia (gratis!)
         """
@@ -219,6 +225,10 @@ class FreeSEODataCollector:
         related_terms = []
         
         try:
+            try:
+                wikipedia.set_lang((language or 'nl').lower())
+            except Exception:
+                pass
             # Zoek Wikipedia pagina's
             search_results = wikipedia.search(keyword, results=5)
             
@@ -323,24 +333,25 @@ class FreeKeywordTool:
         print("🆓 FREE Keyword Research Tool geïnitialiseerd!")
         print("📊 Gebruikt: Google Trends, Google Suggest, Wikipedia")
     
-    def research_comprehensive(self, main_keyword: str, language: Optional[str] = None) -> Dict:
+    def research_comprehensive(self, main_keyword: str, language: Optional[str] = None, country: Optional[str] = None) -> Dict:
         """
         Uitgebreid keyword onderzoek met gratis bronnen
         """
         language_code = (language or self.default_language or 'nl').lower()
-        print(f"🔍 Gratis onderzoek voor: '{main_keyword}' ({language_code})")
+        country_code = (country or 'NL').upper()
+        print(f"🔍 Gratis onderzoek voor: '{main_keyword}' ({language_code}-{country_code})")
         print("⏳ Ophalen van echte data van Google, Wikipedia...")
         
-        results = {}
+        results: Dict = {}
         
         # 1. Google Suggestions (echte data!)
         print("📋 Google autocomplete suggesties...")
-        google_suggestions = self.collector.get_google_suggestions(main_keyword)
+        google_suggestions = self.collector.get_google_suggestions(main_keyword, hl=language_code, gl=country_code)
         results['google_suggestions'] = google_suggestions
         
         # 2. Google Trends data (echte data!)
         print("📈 Google Trends analyse...")
-        trends_data = self.collector.get_google_trends_data(main_keyword)
+        trends_data = self.collector.get_google_trends_data(main_keyword, language=language_code, geo=country_code)
         results['trends_data'] = trends_data
         
         # 3. Gerelateerde vragen
@@ -350,7 +361,7 @@ class FreeKeywordTool:
         
         # 4. Wikipedia termen
         print("📚 Wikipedia gerelateerde termen...")
-        wikipedia_terms = self.collector.get_wikipedia_related_terms(main_keyword)
+        wikipedia_terms = self.collector.get_wikipedia_related_terms(main_keyword, language=language_code)
         results['wikipedia_terms'] = wikipedia_terms
         
         # 5. Trends gerelateerde queries (als beschikbaar)

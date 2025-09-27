@@ -45,6 +45,7 @@ function nl(n?: number) {
 export default function App() {
   const [keyword, setKeyword] = useState('')
   const [language, setLanguage] = useState('nl')
+  const [country, setCountry] = useState('NL')
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [data, setData] = useState<FreeSearchResponse | null>(null)
@@ -60,7 +61,13 @@ export default function App() {
     setLoading(true)
     setError(null)
     try {
-      const result = await freeSearch(keyword.trim(), language)
+      const res = await fetch('/api/free/search', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ keyword: keyword.trim(), language, country })
+      })
+      if (!res.ok) throw new Error('Search failed')
+      const result = await res.json()
       setData(result)
     } catch (err: any) {
       setError(err?.message || 'Er is een fout opgetreden')
@@ -93,7 +100,16 @@ export default function App() {
               placeholder="Voer een zoekwoord in (bijv. pizza bestellen)"
               required
             />
-            <select value={language} onChange={(e) => setLanguage(e.target.value)}>
+            <select className="select" value={country} onChange={(e) => setCountry(e.target.value)}>
+              <option value="NL">Nederland</option>
+              <option value="BE">België</option>
+              <option value="DE">Duitsland</option>
+              <option value="FR">Frankrijk</option>
+              <option value="ES">Spanje</option>
+              <option value="US">United States</option>
+              <option value="GB">United Kingdom</option>
+            </select>
+            <select className="select" value={language} onChange={(e) => setLanguage(e.target.value)}>
               <option value="nl">Nederlands</option>
               <option value="en">English</option>
               <option value="de">Deutsch</option>

@@ -92,10 +92,11 @@ def free_search_keywords():
     try:
         if not free_tool:
             return jsonify({'error': 'Free keyword tool niet beschikbaar'}), 500
-            
+        
         data = request.get_json() or {}
         keyword = data.get('keyword', request.form.get('keyword', '')).strip()
         language = data.get('language', request.form.get('language', '')).strip().lower()
+        country = data.get('country', request.form.get('country', '')).strip().upper()
         
         if not keyword:
             return jsonify({'error': 'Geen zoekwoord opgegeven'}), 400
@@ -103,10 +104,10 @@ def free_search_keywords():
         if not language:
             language = free_tool.default_language
         
-        logger.info(f"Free search for keyword: {keyword}, language: {language}")
+        logger.info(f"Free search for keyword: {keyword}, language: {language}, country: {country or 'NL'}")
         
         # Voer gratis keyword research uit
-        raw_keyword_data = free_tool.research_comprehensive(keyword, language=language)
+        raw_keyword_data = free_tool.research_comprehensive(keyword, language=language, country=country or 'NL')
         processed_keywords = free_tool.process_keywords_with_data(
             raw_keyword_data,
             keyword,
@@ -123,6 +124,7 @@ def free_search_keywords():
         response_data = {
             'keyword': keyword,
             'language': language,
+            'country': country or 'NL',
             'categories': {},
             'trends': {
                 'interest_over_time': interest_points,
