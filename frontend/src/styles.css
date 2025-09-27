@@ -13,6 +13,7 @@ body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,"
 .content{flex:1;display:flex;flex-direction:column}
 .content-inner{max-width:980px;margin:0 auto;padding:24px}
 .topbar{display:none;align-items:center;gap:12px;padding:10px 12px;border-bottom:1px solid var(--line);background:rgba(11,13,16,0.6);backdrop-filter:saturate(180%) blur(10px);position:sticky;top:0;z-index:10}
+.desktopbar{display:flex}
 .hamburger{display:inline-flex;flex-direction:column;gap:4px;background:transparent;border:1px solid var(--line);padding:8px;border-radius:8px;cursor:pointer}
 .hamburger span{display:block;width:18px;height:2px;background:var(--text)}
 .brand{font-weight:700;letter-spacing:.2px}
@@ -50,6 +51,7 @@ h4{margin:0 0 10px 0;font-size:15px;color:var(--muted)}
 	.content{flex:1}
 	.content-inner{padding:16px}
 	.topbar{display:flex}
+	.desktopbar{display:none}
 }
 @media (max-width: 720px) {
 	.row{flex-wrap:wrap}

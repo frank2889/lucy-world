@@ -68,6 +68,7 @@ export default function App() {
   const [error, setError] = useState<string | null>(null)
   const [data, setData] = useState<FreeSearchResponse | null>(null)
   const [sidebarOpen, setSidebarOpen] = useState(false)
+  const [langMenuOpen, setLangMenuOpen] = useState(false)
 
   const categoryOrder = useMemo(
     () => ['google_suggestions', 'trends_related', 'related_questions', 'wikipedia_terms'],
@@ -102,7 +103,10 @@ export default function App() {
   // Close sidebar on ESC key (mobile)
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') setSidebarOpen(false)
+      if (e.key === 'Escape') {
+        setSidebarOpen(false)
+        setLangMenuOpen(false)
+      }
     }
     window.addEventListener('keydown', onKey)
     return () => window.removeEventListener('keydown', onKey)
@@ -192,6 +196,25 @@ export default function App() {
       <div className={`overlay ${sidebarOpen ? 'show' : ''}`} onClick={() => setSidebarOpen(false)} />
 
       <div className="content">
+        {/* Desktop header bar */}
+        <div className="desktopbar" style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '12px 14px', borderBottom: '1px solid var(--line)', position: 'sticky', top: 0, zIndex: 9, background: 'rgba(11,13,16,0.6)', backdropFilter: 'saturate(180%) blur(10px)' }}>
+          <div className="brand">Lucy <span>World</span></div>
+          <div style={{ marginLeft: 'auto' }}>
+            {/* Reuse the lang switch button */}
+            <button
+              type="button"
+              className="lang-btn"
+              aria-haspopup="listbox"
+              aria-expanded={langMenuOpen}
+              onClick={() => setLangMenuOpen(v => !v)}
+              style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: 'transparent', color: 'var(--text)', border: '1px solid var(--line)', padding: '8px 10px', borderRadius: 10 }}
+              title={language.toUpperCase()}
+            >
+              <span aria-hidden>🌐</span>
+              <span style={{ textTransform: 'uppercase', fontWeight: 600 }}>{language}</span>
+            </button>
+          </div>
+        </div>
         {/* Mobile top bar */}
         <div className="topbar">
           <button
@@ -207,6 +230,65 @@ export default function App() {
             <span />
           </button>
           <div className="brand">Lucy <span>World</span></div>
+          <div className="topbar-actions" style={{ marginLeft: 'auto', display: 'inline-flex', alignItems: 'center', gap: 8 }}>
+            <div className="lang-switch" style={{ position: 'relative' }}>
+              <button
+                type="button"
+                className="lang-btn"
+                aria-haspopup="listbox"
+                aria-expanded={langMenuOpen}
+                onClick={() => setLangMenuOpen(v => !v)}
+                style={{
+                  display: 'inline-flex', alignItems: 'center', gap: 8,
+                  background: 'transparent', color: 'var(--text)',
+                  border: '1px solid var(--line)', padding: '8px 10px', borderRadius: 10,
+                }}
+                title={language.toUpperCase()}
+              >
+                <span aria-hidden>🌐</span>
+                <span style={{ textTransform: 'uppercase', fontWeight: 600 }}>{language}</span>
+              </button>
+              {langMenuOpen && (
+                <div
+                  className="lang-menu"
+                  role="listbox"
+                  style={{
+                    position: 'absolute', right: 0, top: 'calc(100% + 6px)',
+                    background: '#0e1217', border: '1px solid var(--line)', borderRadius: 10,
+                    minWidth: 220, maxHeight: '50vh', overflow: 'auto', zIndex: 25,
+                  }}
+                >
+                  {languagesList.map((l) => (
+                    <button
+                      key={l.code}
+                      role="option"
+                      aria-selected={l.code === language}
+                      onClick={() => {
+                        setLangMenuOpen(false)
+                        // Persist and navigate to language route for proper i18n + SEO
+                        const newLang = l.code.toLowerCase()
+                        localStorage.setItem('lw_lang', newLang)
+                        if (typeof window !== 'undefined') {
+                          window.location.href = `/${newLang}/`
+                        } else {
+                          setLanguage(newLang)
+                        }
+                      }}
+                      className={`lang-item ${l.code === language ? 'active' : ''}`}
+                      style={{
+                        display: 'flex', width: '100%', textAlign: 'left',
+                        gap: 10, padding: '10px 12px', background: 'transparent', color: 'var(--text)',
+                        border: 0, cursor: 'pointer'
+                      }}
+                    >
+                      <span style={{ width: 22, textAlign: 'center' }}>{/* No pure language flags; show code */}</span>
+                      <span style={{ flex: 1 }}>{l.label || l.code.toUpperCase()}</span>
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
+          </div>
         </div>
         <div className="content-inner">
         <section className="search-card">
