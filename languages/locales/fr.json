@@ -2,16 +2,16 @@
   "lang": "fr",
   "dir": "ltr",
   "strings": {
-    "nav.search": "Search",
-    "nav.advanced": "Advanced (soon)",
-    "nav.trends": "Trends (soon)",
-    "search.title": "Keyword research",
-    "search.placeholder": "Enter a keyword (e.g., pizza delivery)",
-    "search.button": "Search",
-    "search.hint": "Free suggestions and trends. Results appear below.",
-    "kpi.total_keywords": "Total keywords",
-    "kpi.total_volume": "Total volume",
-    "kpi.real_data_keywords": "Real data keywords",
-    "kpi.avg_interest": "Avg. interest"
+    "nav.search": "Rechercher",
+    "nav.advanced": "Avancé (bientôt)",
+    "nav.trends": "Tendances (bientôt)",
+    "search.title": "Recherche de mots-clés",
+    "search.placeholder": "Saisissez un mot-clé (ex. livraison de pizza)",
+    "search.button": "Rechercher",
+    "search.hint": "Suggestions et tendances gratuites. Les résultats s’affichent ci‑dessous.",
+    "kpi.total_keywords": "Mots-clés totaux",
+    "kpi.total_volume": "Volume total",
+    "kpi.real_data_keywords": "Mots-clés avec données réelles",
+    "kpi.avg_interest": "Intérêt moy."
   }
 }

@@ -69,6 +69,10 @@ export default function App() {
   const [data, setData] = useState<FreeSearchResponse | null>(null)
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [langMenuOpen, setLangMenuOpen] = useState(false)
+  const currentLangLabel = useMemo(() => {
+    const match = languagesList.find(l => (l.code || '').toLowerCase() === (language || '').toLowerCase())
+    return match?.label || (language || 'en').toUpperCase()
+  }, [languagesList, language])
 
   const categoryOrder = useMemo(
     () => ['google_suggestions', 'trends_related', 'related_questions', 'wikipedia_terms'],
@@ -211,7 +215,7 @@ export default function App() {
               title={language.toUpperCase()}
             >
               <span aria-hidden>🌐</span>
-              <span style={{ textTransform: 'uppercase', fontWeight: 600 }}>{language}</span>
+              <span style={{ fontWeight: 600 }}>{currentLangLabel}</span>
             </button>
           </div>
         </div>
@@ -246,7 +250,7 @@ export default function App() {
                 title={language.toUpperCase()}
               >
                 <span aria-hidden>🌐</span>
-                <span style={{ textTransform: 'uppercase', fontWeight: 600 }}>{language}</span>
+                <span style={{ fontWeight: 600 }}>{currentLangLabel}</span>
               </button>
               {langMenuOpen && (
                 <div

@@ -2,16 +2,16 @@
   "lang": "ja",
   "dir": "ltr",
   "strings": {
-    "nav.search": "Search",
-    "nav.advanced": "Advanced (soon)",
-    "nav.trends": "Trends (soon)",
-    "search.title": "Keyword research",
-    "search.placeholder": "Enter a keyword (e.g., pizza delivery)",
-    "search.button": "Search",
-    "search.hint": "Free suggestions and trends. Results appear below.",
-    "kpi.total_keywords": "Total keywords",
-    "kpi.total_volume": "Total volume",
-    "kpi.real_data_keywords": "Real data keywords",
-    "kpi.avg_interest": "Avg. interest"
+    "nav.search": "検索",
+    "nav.advanced": "上級（近日公開）",
+    "nav.trends": "トレンド（近日公開）",
+    "search.title": "キーワード調査",
+    "search.placeholder": "キーワードを入力（例：ピザのデリバリー）",
+    "search.button": "検索",
+    "search.hint": "無料のサジェストとトレンド。結果は下に表示されます。",
+    "kpi.total_keywords": "キーワード総数",
+    "kpi.total_volume": "総ボリューム",
+    "kpi.real_data_keywords": "実データのキーワード",
+    "kpi.avg_interest": "平均関心度"
   }
 }
