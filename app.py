@@ -281,7 +281,7 @@ def health_check():
 @app.errorhandler(404)
 def not_found(error):
     return jsonify({'error': 'Endpoint niet gevonden'}), 404
-
+he
 @app.errorhandler(500)
 def internal_error(error):
     logger.error(f"Internal server error: {error}")

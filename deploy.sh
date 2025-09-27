@@ -155,9 +155,39 @@ sudo apt install -y certbot python3-certbot-nginx
 sudo certbot --nginx -d lucy.world --non-interactive --agree-tos --email frank@lucy.world
 
 echo "✅ Deployment completed successfully!"
+
+# Setup GitHub auto-deployment
+echo ""
+echo "🔧 Setting up GitHub auto-deployment..."
+
+# Install webhook service
+sudo tee /etc/systemd/system/lucy-webhook.service > /dev/null << EOL
+[Unit]
+Description=Lucy World Search Webhook Handler
+After=network.target
+
+[Service]
+User=www-data
+Group=www-data
+WorkingDirectory=$APP_DIR
+Environment="PATH=$APP_DIR/venv/bin"
+Environment="WEBHOOK_SECRET=your-webhook-secret-here"
+ExecStart=$APP_DIR/venv/bin/python webhook.py
+Restart=always
+RestartSec=3
+
+[Install]
+WantedBy=multi-user.target
+EOL
+
+# Enable webhook service
+sudo systemctl daemon-reload
+sudo systemctl enable lucy-webhook
+sudo systemctl start lucy-webhook
+
 echo ""
 echo "🌍 Your application is now available at:"
-echo "   https://search.lucy.world"
+echo "   https://lucy.world"
 echo ""
 echo "📋 Useful commands:"
 echo "   sudo systemctl status lucy-world-search    # Check app status"
