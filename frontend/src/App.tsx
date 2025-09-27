@@ -311,7 +311,18 @@ export default function App() {
                 <option key={cc} value={cc}>{flagEmoji(cc)}</option>
               ))}
             </select>
-            <select className="select" value={language} onChange={(e) => setLanguage(e.target.value)}>
+            <select
+              className="select"
+              value={language}
+              onChange={(e) => {
+                const newLang = e.target.value.toLowerCase()
+                setLanguage(newLang)
+                try { localStorage.setItem('lw_lang', newLang) } catch {}
+                if (typeof window !== 'undefined') {
+                  window.location.href = `/${newLang}/`
+                }
+              }}
+            >
               {languagesList.map((l) => (
                 <option key={l.code} value={l.code}>{l.label}</option>
               ))}
