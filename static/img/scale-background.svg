@@ -1,0 +1,39 @@
+<svg width="1920" height="1080" viewBox="0 0 1920 1080" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g clip-path="url(#clip0_1_2)">
+<rect width="1920" height="1080" fill="#1f2021"/>
+<g opacity="0.1">
+<circle cx="100" cy="100" r="200" fill="#ff0037"/>
+<circle cx="400" cy="200" r="150" fill="#ff0037"/>
+<circle cx="800" cy="150" r="100" fill="#ff0037"/>
+<circle cx="1200" cy="300" r="180" fill="#ff0037"/>
+<circle cx="1600" cy="200" r="120" fill="#ff0037"/>
+</g>
+<g opacity="0.05">
+<circle cx="200" cy="400" r="250" fill="#ff0037"/>
+<circle cx="600" cy="500" r="200" fill="#ff0037"/>
+<circle cx="1000" cy="400" r="150" fill="#ff0037"/>
+<circle cx="1400" cy="600" r="220" fill="#ff0037"/>
+<circle cx="1700" cy="500" r="160" fill="#ff0037"/>
+</g>
+<g opacity="0.08">
+<circle cx="150" cy="700" r="180" fill="#ff0037"/>
+<circle cx="500" cy="800" r="140" fill="#ff0037"/>
+<circle cx="900" cy="750" r="110" fill="#ff0037"/>
+<circle cx="1300" cy="900" r="190" fill="#ff0037"/>
+<circle cx="1650" cy="800" r="130" fill="#ff0037"/>
+</g>
+<g opacity="0.03">
+<path d="M0 0L1920 0L1920 540L0 1080Z" fill="url(#gradient1)"/>
+</g>
+<defs>
+<clipPath id="clip0_1_2">
+<rect width="1920" height="1080" fill="white"/>
+</clipPath>
+<linearGradient id="gradient1" x1="0" y1="0" x2="1920" y2="1080" gradientUnits="userSpaceOnUse">
+<stop stop-color="#ff0037" stop-opacity="0.1"/>
+<stop offset="0.5" stop-color="#e8e8e8" stop-opacity="0.05"/>
+<stop offset="1" stop-color="#1f2021" stop-opacity="0"/>
+</linearGradient>
+</defs>
+</g>
+</svg>

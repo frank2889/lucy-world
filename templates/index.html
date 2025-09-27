@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🔍 Semantic Keyword Research Tool</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 30px;
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        
+        .search-section {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+        
+        .search-form {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .search-input {
+            flex: 1;
+            padding: 15px;
+            font-size: 16px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            transition: border-color 0.3s;
+        }
+        
+        .search-input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        
+        .search-btn {
+            padding: 15px 30px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        
+        .search-btn:hover {
+            transform: translateY(-2px);
+        }
+        
+        .search-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 40px;
+            color: #667eea;
+        }
+        
+        .spinner {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #667eea;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 20px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .results {
+            display: none;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .stat-card {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-size: 2em;
+            font-weight: bold;
+            color: #667eea;
+            display: block;
+        }
+        
+        .stat-label {
+            color: #666;
+            font-size: 0.9em;
+        }
+        
+        .categories {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .category-card {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .category-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px 20px;
+            font-weight: bold;
+        }
+        
+        .category-content {
+            padding: 20px;
+        }
+        
+        .keyword-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        
+        .keyword-item:last-child {
+            border-bottom: none;
+        }
+        
+        .keyword-name {
+            font-weight: 500;
+            flex: 1;
+        }
+        
+        .keyword-metrics {
+            display: flex;
+            gap: 15px;
+            font-size: 0.9em;
+        }
+        
+        .metric {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .volume-high { color: #e74c3c; }
+        .volume-medium { color: #f39c12; }
+        .volume-low { color: #95a5a6; }
+        
+        .difficulty-low { color: #27ae60; }
+        .difficulty-medium { color: #f39c12; }
+        .difficulty-high { color: #e74c3c; }
+        
+        .opportunities {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .opportunities h3 {
+            color: #667eea;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .opp-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        
+        .opp-section h4 {
+            color: #333;
+            margin-bottom: 10px;
+            padding-bottom: 5px;
+            border-bottom: 2px solid #667eea;
+        }
+        
+        .export-section {
+            text-align: center;
+            margin-top: 20px;
+        }
+        
+        .export-btn {
+            padding: 12px 25px;
+            background: #27ae60;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background-color 0.3s;
+        }
+        
+        .export-btn:hover {
+            background: #229954;
+        }
+        
+        .error {
+            background: #e74c3c;
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+            display: none;
+        }
+        
+        @media (max-width: 768px) {
+            .search-form {
+                flex-direction: column;
+            }
+            
+            .categories {
+                grid-template-columns: 1fr;
+            }
+            
+            .keyword-metrics {
+                flex-direction: column;
+                gap: 5px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔍 Semantic Keyword Research Tool</h1>
+            <p>Ontdek semantische zoekwoorden, gerelateerde vragen en analyseer zoekvolumes</p>
+        </div>
+        
+        <div class="search-section">
+            <div class="search-form">
+                <input type="text" id="keywordInput" class="search-input" 
+                       placeholder="Voer je hoofdzoekwoord in (bijv. 'taart bestellen')" 
+                       value="taart bestellen">
+                <button id="searchBtn" class="search-btn">🔍 Onderzoek Starten</button>
+            </div>
+            <p style="color: #666; font-size: 0.9em;">
+                💡 <strong>Tip:</strong> Gebruik specifieke zoekwoorden voor betere resultaten. 
+                Bijvoorbeeld: "webdesign Amsterdam" in plaats van alleen "webdesign"
+            </p>
+        </div>
+        
+        <div id="loading" class="loading">
+            <div class="spinner"></div>
+            <p>Keyword onderzoek wordt uitgevoerd...<br>
+            <small>Dit kan 10-30 seconden duren</small></p>
+        </div>
+        
+        <div id="error" class="error"></div>
+        
+        <div id="results" class="results">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <span id="totalKeywords" class="stat-number">0</span>
+                    <span class="stat-label">Keywords Gevonden</span>
+                </div>
+                <div class="stat-card">
+                    <span id="totalVolume" class="stat-number">0</span>
+                    <span class="stat-label">Totaal Zoekvolume</span>
+                </div>
+                <div class="stat-card">
+                    <span id="avgDifficulty" class="stat-number">0</span>
+                    <span class="stat-label">Gem. Difficulty</span>
+                </div>
+                <div class="stat-card">
+                    <span id="avgVolume" class="stat-number">0</span>
+                    <span class="stat-label">Gem. Volume</span>
+                </div>
+            </div>
+            
+            <div class="opportunities">
+                <h3>🎯 Keyword Opportuniteiten</h3>
+                <div id="opportunitiesGrid" class="opp-grid"></div>
+            </div>
+            
+            <div class="categories" id="categoriesGrid"></div>
+            
+            <div class="export-section">
+                <button id="exportBtn" class="export-btn">📊 Exporteer naar CSV</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentResults = null;
+        
+        document.getElementById('searchBtn').addEventListener('click', performSearch);
+        document.getElementById('keywordInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                performSearch();
+            }
+        });
+        document.getElementById('exportBtn').addEventListener('click', exportResults);
+        
+        async function performSearch() {
+            const keyword = document.getElementById('keywordInput').value.trim();
+            if (!keyword) {
+                showError('Voer een zoekwoord in');
+                return;
+            }
+            
+            showLoading(true);
+            hideError();
+            
+            try {
+                const response = await fetch('/api/research', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ keyword: keyword })
+                });
+                
+                if (!response.ok) {
+                    throw new Error('Er is een fout opgetreden bij het ophalen van data');
+                }
+                
+                const data = await response.json();
+                currentResults = data;
+                displayResults(data);
+                
+            } catch (error) {
+                showError(error.message);
+            } finally {
+                showLoading(false);
+            }
+        }
+        
+        function displayResults(data) {
+            // Update statistieken
+            document.getElementById('totalKeywords').textContent = data.stats.total_keywords.toLocaleString();
+            document.getElementById('totalVolume').textContent = data.stats.total_volume.toLocaleString();
+            document.getElementById('avgDifficulty').textContent = data.stats.avg_difficulty + '/100';
+            document.getElementById('avgVolume').textContent = data.stats.avg_volume.toLocaleString();
+            
+            // Display opportunities
+            displayOpportunities(data.opportunities);
+            
+            // Display categories
+            displayCategories(data.categories);
+            
+            // Toon resultaten
+            document.getElementById('results').style.display = 'block';
+            document.getElementById('results').scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        function displayOpportunities(opportunities) {
+            const grid = document.getElementById('opportunitiesGrid');
+            grid.innerHTML = '';
+            
+            const oppTitles = {
+                'high_volume_keywords': '🔥 Hoog Volume',
+                'low_competition': '🟢 Lage Competitie', 
+                'commercial_intent': '💰 Commerciële Intent',
+                'question_keywords': '❓ Vraag Keywords'
+            };
+            
+            for (const [type, keywords] of Object.entries(opportunities)) {
+                if (keywords.length === 0) continue;
+                
+                const section = document.createElement('div');
+                section.className = 'opp-section';
+                section.innerHTML = `
+                    <h4>${oppTitles[type] || type}</h4>
+                    ${keywords.slice(0, 5).map(kw => `
+                        <div class="keyword-item">
+                            <span class="keyword-name">${kw.keyword}</span>
+                            <div class="keyword-metrics">
+                                <span class="metric ${getVolumeClass(kw.search_volume)}">
+                                    📈 ${kw.search_volume.toLocaleString()}
+                                </span>
+                                <span class="metric ${getDifficultyClass(kw.difficulty)}">
+                                    📊 ${kw.difficulty}/100
+                                </span>
+                            </div>
+                        </div>
+                    `).join('')}
+                `;
+                grid.appendChild(section);
+            }
+        }
+        
+        function displayCategories(categories) {
+            const grid = document.getElementById('categoriesGrid');
+            grid.innerHTML = '';
+            
+            const categoryTitles = {
+                'people_also_ask': '🙋‍♀️ Gerelateerde Vragen',
+                'related_searches': '🔍 Gerelateerde Zoekopdrachten',
+                'semantic_variants': '🔗 Semantische Varianten',
+                'long_tail': '📏 Long-tail Keywords'
+            };
+            
+            for (const [category, keywords] of Object.entries(categories)) {
+                const card = document.createElement('div');
+                card.className = 'category-card';
+                card.innerHTML = `
+                    <div class="category-header">
+                        ${categoryTitles[category] || category}
+                    </div>
+                    <div class="category-content">
+                        ${keywords.map(kw => `
+                            <div class="keyword-item">
+                                <span class="keyword-name">${kw.keyword}</span>
+                                <div class="keyword-metrics">
+                                    <span class="metric ${getVolumeClass(kw.search_volume)}">
+                                        ${getVolumeEmoji(kw.search_volume)} ${kw.search_volume.toLocaleString()}
+                                    </span>
+                                    <span class="metric ${getDifficultyClass(kw.difficulty)}">
+                                        ${getDifficultyEmoji(kw.difficulty)} ${kw.difficulty}/100
+                                    </span>
+                                    <span class="metric">
+                                        💰 €${kw.cpc}
+                                    </span>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                `;
+                grid.appendChild(card);
+            }
+        }
+        
+        function getVolumeClass(volume) {
+            if (volume > 1000) return 'volume-high';
+            if (volume > 500) return 'volume-medium';
+            return 'volume-low';
+        }
+        
+        function getDifficultyClass(difficulty) {
+            if (difficulty < 40) return 'difficulty-low';
+            if (difficulty < 70) return 'difficulty-medium';
+            return 'difficulty-high';
+        }
+        
+        function getVolumeEmoji(volume) {
+            if (volume > 1000) return '🔥';
+            if (volume > 500) return '📈';
+            return '📊';
+        }
+        
+        function getDifficultyEmoji(difficulty) {
+            if (difficulty < 40) return '🟢';
+            if (difficulty < 70) return '🟡';
+            return '🔴';
+        }
+        
+        function showLoading(show) {
+            document.getElementById('loading').style.display = show ? 'block' : 'none';
+            document.getElementById('searchBtn').disabled = show;
+            document.getElementById('results').style.display = show ? 'none' : 
+                (currentResults ? 'block' : 'none');
+        }
+        
+        function showError(message) {
+            const errorDiv = document.getElementById('error');
+            errorDiv.textContent = message;
+            errorDiv.style.display = 'block';
+        }
+        
+        function hideError() {
+            document.getElementById('error').style.display = 'none';
+        }
+        
+        async function exportResults() {
+            if (!currentResults) return;
+            
+            try {
+                const response = await fetch('/api/export', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(currentResults)
+                });
+                
+                if (!response.ok) {
+                    throw new Error('Export mislukt');
+                }
+                
+                const blob = await response.blob();
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `keyword_research_${currentResults.main_keyword.replace(/\s+/g, '_')}.csv`;
+                document.body.appendChild(a);
+                a.click();
+                window.URL.revokeObjectURL(url);
+                document.body.removeChild(a);
+                
+            } catch (error) {
+                showError('Export mislukt: ' + error.message);
+            }
+        }
+    </script>
+</body>
+</html>

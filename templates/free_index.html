@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🆓 FREE Semantic Keyword Research Tool</title>
+    <meta name="description" content="100% gratis keyword research tool met echte Google Trends data. Vind semantische zoekwoorden, gerelateerde vragen en analyseer zoekvolumes zonder kosten.">
+    <meta name="keywords" content="gratis keyword research, SEO tool, Google Trends, zoekwoorden, semantische keywords">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <!-- Hero Section -->
+    <div class="hero-section" id="heroRow">
+        <div class="hero-content">
+            <div class="hero-left">
+                <div class="hero-subtitle">
+                    <h6>Maak kennis met de FREE Keyword Research Tool, de <span class="nowrap">SEO scaling</span> company</h6>
+                </div>
+                <div class="hero-title">
+                    <h1>
+                        <div class="text-line">Scale your</div>
+                        <div class="text-line">SEO up</div>
+                    </h1>
+                </div>
+                <div class="hero-buttons">
+                    <div class="hero-buttons-group">
+                        <button id="heroSearchBtn" class="btn-primary btn-arrow">
+                            <span class="button-text">Start Gratis Onderzoek</span>
+                        </button>
+                        <a href="#searchSection" class="scroll-button">
+                            <span class="button-text">Ons verhaal</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="hero-right">
+                <div class="hero-icon">
+                    <svg width="200" height="200" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="100" cy="100" r="80" fill="#ff0037" opacity="0.1"/>
+                        <circle cx="100" cy="100" r="60" fill="#ff0037" opacity="0.2"/>
+                        <circle cx="100" cy="100" r="40" fill="#ff0037" opacity="0.3"/>
+                        <path d="M70 90 L100 120 L130 70" stroke="#ff0037" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                        <text x="100" y="150" text-anchor="middle" fill="#e8e8e8" font-size="14" font-weight="600">SEO</text>
+                    </svg>
+                </div>
+            </div>
+        </div>
+        <div class="hero-animation">
+            <svg class="hero-pulse" width="100%" height="400" viewBox="0 0 1512 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path id="animatePulse" fill-rule="evenodd" clip-rule="evenodd" 
+                      d="M-164.966 350L494.425 350C506.264 350 516.959 343.125 522.337 332.548L768.035 150C780.268 127.387 797.021 96.391 818.984 82.772C819.831 82.234 820.693 81.711 821.614 81.162L822.185 80.832C838.668 71.173 857.381 66.062 876.296 66.062C893.039 66.062 909.836 70.121 924.866 77.8C946.465 88.841 963.967 107.581 975.485 131.999L1146.63 268.811C1151.8 278.983 1161.68 285.057 1173.07 285.057C1184.45 285.057 1194.34 278.983 1199.51 268.811L1562.65 -45.8624C1581.19 -82.3395 1618.14 -105 1659.08 -105C1675.95 -105 1692.85 -100.921 1707.96 -93.2031C1733.67 -80.063 1752.74 -57.6741 1761.66 -30.1546C1770.58 -2.635 1768.27 26.7215 1755.17 52.5028L1269.25 408.8C1256.15 434.58 1233.81 453.71 1206.37 462.65C1195.47 466.2 1184.2 468 1172.88 468C1156.05 468 1139.12 463.9 1123.94 456.14C1101.61 444.73 1088.91 430.74 1071.66 398.56L904.242 269.043C898.786 258.303 888.351 251.894 876.335 251.894C864.314 251.894 853.879 258.303 848.423 269.043L674.076 412.15C654.939 449.82 620.276 467.36 564.988 467.36L-164.966 467.36C-224.538 467.36 -273 418.76 -273 359.03C-273 299.298 -224.538 350 -164.966 350Z" 
+                      fill="url(#paint0_linear_hero)" opacity="0.6"/>
+                <defs>
+                    <linearGradient id="paint0_linear_hero" x1="1626.3" y1="100" x2="665.286" y2="400" gradientUnits="userSpaceOnUse">
+                        <stop stop-color="#ff0037"/>
+                        <stop offset="1" stop-color="#1f2021"/>
+                    </linearGradient>
+                </defs>
+            </svg>
+        </div>
+    </div>
+
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Data Sources Bar -->
+        <div class="data-sources-bar">
+            <div class="free-badge">🆓 100% GRATIS</div>
+            <div class="data-sources">
+                <strong>📊 Data Bronnen:</strong> Google Trends • Google Autocomplete • Wikipedia
+            </div>
+        </div>
+
+        <!-- Cost Display -->
+        <div class="cost-display">
+            💰 Kosten: €0,00 - Alle data is 100% gratis!
+        </div>
+        
+        <!-- Search Section -->
+        <div class="search-section" id="searchSection">
+            <div class="search-form">
+                <input type="text" id="keywordInput" class="search-input" 
+                       placeholder="Voer je hoofdzoekwoord in (bijv. 'pizza bestellen')" 
+                       value="pizza bestellen">
+                <button id="searchBtn" class="search-btn">🔍 Gratis Onderzoek</button>
+            </div>
+            <p style="color: #666; font-size: 0.9em;">
+                💡 <strong>Gratis Data:</strong> Google Trends geeft echte populariteitsdata, 
+                Google Autocomplete toont wat mensen echt zoeken!
+            </p>
+        </div>
+        
+        <!-- Loading State -->
+        <div id="loading" class="loading">
+            <div class="spinner"></div>
+            <p>Gratis data wordt opgehaald van Google...<br>
+            <small>Dit kan 15-30 seconden duren voor de beste resultaten</small></p>
+        </div>
+        
+        <!-- Error Display -->
+        <div id="error" class="error"></div>
+        
+        <!-- Results Section -->
+        <div id="results" class="results">
+            <!-- Trends Info -->
+            <div id="trendsInfo" class="trends-info" style="display: none;">
+                <h3>📈 Google Trends Data</h3>
+                <div id="trendsContent"></div>
+            </div>
+            
+            <!-- Statistics Grid -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <span id="totalKeywords" class="stat-number">0</span>
+                    <span class="stat-label">Totaal Keywords</span>
+                </div>
+                <div class="stat-card">
+                    <span id="realDataKeywords" class="stat-number">0</span>
+                    <span class="stat-label">Echte Data Keywords</span>
+                    <div class="free-indicator">GRATIS</div>
+                </div>
+                <div class="stat-card">
+                    <span id="totalVolume" class="stat-number">0</span>
+                    <span class="stat-label">Totaal Volume</span>
+                </div>
+                <div class="stat-card">
+                    <span id="avgDifficulty" class="stat-number">0</span>
+                    <span class="stat-label">Gem. Difficulty</span>
+                </div>
+            </div>
+            
+            <!-- Opportunities Section -->
+            <div class="opportunities">
+                <h3>🎯 Gratis Keyword Opportuniteiten</h3>
+                <div id="opportunitiesGrid" class="opp-grid"></div>
+            </div>
+            
+            <!-- Categories Grid -->
+            <div class="categories" id="categoriesGrid"></div>
+            
+            <!-- Export Section -->
+            <div class="export-section">
+                <button id="exportBtn" class="export-btn">📊 Gratis CSV Export</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+</html>

@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SCALE - Keyword Research Tool</title>
+    <meta name="description" content="Professionele keyword research tool - Scale your SEO success">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/scale-style.css') }}">
+</head>
+<body>
+    <!-- Exact Canva Layout Recreation -->
+    <div class="canva-container">
+        
+        <!-- Top Left Image -->
+        <div class="image-placeholder top-left">
+            <div class="placeholder-content"></div>
+        </div>
+        
+        <!-- Top Center Image (smaller) -->
+        <div class="image-placeholder top-center">
+            <div class="placeholder-content small"></div>
+        </div>
+        
+        <!-- Top Right Image -->
+        <div class="image-placeholder top-right">
+            <div class="placeholder-content"></div>
+        </div>
+        
+        <!-- Main SCALE Text - Left -->
+        <div class="scale-main">
+            <h1>SCALE</h1>
+        </div>
+        
+        <!-- Center Search Area -->
+        <div class="search-area">
+            <div class="search-box">
+                <input type="text" id="keywordInput" placeholder="Voer je zoekwoord in..." value="pizza bestellen">
+                <button id="searchBtn">ONDERZOEK</button>
+            </div>
+        </div>
+        
+        <!-- Small SCALE Text - Right -->
+        <div class="scale-small">
+            <h2>SCALE</h2>
+        </div>
+        
+        <!-- Bottom Left Image -->
+        <div class="image-placeholder bottom-left">
+            <div class="placeholder-content medium"></div>
+        </div>
+        
+        <!-- Bottom Right Image -->
+        <div class="image-placeholder bottom-right">
+            <div class="placeholder-content"></div>
+        </div>
+        
+        <!-- Bottom Text -->
+        <div class="bottom-text">
+            <div class="left-text">AI features in Klaviyo</div>
+            <div class="right-text">
+                <span>Terms & Support</span>
+                <span>Designed with Canva</span>
+            </div>
+        </div>
+        
+    </div>
+
+    <!-- Loading State -->
+    <div id="loading" class="loading" style="display: none;">
+        <div class="spinner"></div>
+        <p>Data wordt opgehaald...</p>
+    </div>
+    
+    <!-- Error Display -->
+    <div id="error" class="error" style="display: none;"></div>
+    
+    <!-- Results Section -->
+    <div id="results" class="results" style="display: none;">
+        <!-- Statistics Grid -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <span id="totalKeywords" class="stat-number">0</span>
+                <span class="stat-label">Totaal Keywords</span>
+            </div>
+            <div class="stat-card">
+                <span id="realDataKeywords" class="stat-number">0</span>
+                <span class="stat-label">Echte Data</span>
+                <div class="free-indicator">GRATIS</div>
+            </div>
+            <div class="stat-card">
+                <span id="totalVolume" class="stat-number">0</span>
+                <span class="stat-label">Totaal Volume</span>
+            </div>
+            <div class="stat-card">
+                <span id="avgDifficulty" class="stat-number">0</span>
+                <span class="stat-label">Difficulty</span>
+            </div>
+        </div>
+        
+        <!-- Opportunities Section -->
+        <div class="opportunities">
+            <h3>🎯 Keyword Opportuniteiten</h3>
+            <div id="opportunitiesGrid" class="opp-grid"></div>
+        </div>
+        
+        <!-- Categories Grid -->
+        <div class="categories" id="categoriesGrid"></div>
+        
+        <!-- Export Section -->
+        <div class="export-section">
+            <button id="exportBtn" class="export-btn">📊 CSV Export</button>
+        </div>
+    </div>
+
+    <!-- Loading State -->
+    <div id="loading" class="loading" style="display: none;">
+        <div class="spinner"></div>
+        <p>Data wordt opgehaald...</p>
+    </div>
+    
+    <!-- Error Display -->
+    <div id="error" class="error" style="display: none;"></div>
+    
+    <!-- Results Section -->
+    <div id="results" class="results" style="display: none;">
+        <!-- Statistics Grid -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <span id="totalKeywords" class="stat-number">0</span>
+                <span class="stat-label">Totaal Keywords</span>
+            </div>
+            <div class="stat-card">
+                <span id="realDataKeywords" class="stat-number">0</span>
+                <span class="stat-label">Echte Data</span>
+                <div class="free-indicator">GRATIS</div>
+            </div>
+            <div class="stat-card">
+                <span id="totalVolume" class="stat-number">0</span>
+                <span class="stat-label">Totaal Volume</span>
+            </div>
+            <div class="stat-card">
+                <span id="avgDifficulty" class="stat-number">0</span>
+                <span class="stat-label">Difficulty</span>
+            </div>
+        </div>
+        
+        <!-- Opportunities Section -->
+        <div class="opportunities">
+            <h3>🎯 Keyword Opportuniteiten</h3>
+            <div id="opportunitiesGrid" class="opp-grid"></div>
+        </div>
+        
+        <!-- Categories Grid -->
+        <div class="categories" id="categoriesGrid"></div>
+        
+        <!-- Export Section -->
+        <div class="export-section">
+            <button id="exportBtn" class="export-btn">📊 CSV Export</button>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+</html>

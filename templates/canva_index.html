@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="nl" data-lt-installed="true" class="adaptive light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nederlandse Zoekwoordenonderzoek Tool - Gratis Semantische Zoekwoorden</title>
+    <meta name="description" content="Gratis Nederlandse zoekwoordenonderzoek tool. Vind semantische zoekwoorden, gerelateerde vragen en zoekvolumes voor je SEO strategie.">
+    <meta name="keywords" content="zoekwoorden, SEO, Nederland, semantisch onderzoek, zoekvolume, gratis">
+    
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/canva_layout.css') }}">
+</head>
+<body>
+    <main class="hero">
+        <img class="hero__background" src="{{ url_for('static', filename='img/canva/background.jpg') }}" alt="Canva achtergrond">
+        <img class="hero__glow glow--left" src="{{ url_for('static', filename='img/canva/light-shape.png') }}" alt="Lichtaccent links">
+        <img class="hero__glow glow--right" src="{{ url_for('static', filename='img/canva/light-shape.png') }}" alt="Lichtaccent rechts">
+
+        <div class="hero__content">
+
+            <div class="search-card">
+                <h2>Zoekwoord onderzoek</h2>
+                <form class="search-form" id="searchForm">
+                    <div class="search-input-group">
+                        <input
+                            type="text"
+                            id="keyword"
+                            name="keyword"
+                            class="search-input"
+                            placeholder="Voer je zoekwoord in..."
+                            required
+                            autocomplete="off"
+                        >
+                    </div>
+                    <input type="hidden" name="language" id="language" value="nl">
+                    <button type="submit" class="search-button" id="searchButton">
+                        Zoeken
+                    </button>
+                </form>
+            </div>
+
+            <div class="hero__footer">
+                <span>Semantic keyword research</span>
+                <img src="{{ url_for('static', filename='img/canva/logo-text.png') }}" alt="Scale logotype">
+            </div>
+        </div>
+    </main>
+
+    <div class="results-container" id="resultsContainer">
+        <div class="results-content">
+            <button class="close-results" onclick="closeResults()">&times;</button>
+            <h2>Zoekresultaten voor: <span id="searchedKeyword"></span></h2>
+                <div class="results-summary" id="resultsSummary"></div>
+            <div class="results-grid" id="resultsGrid"></div>
+        </div>
+    </div>
+
+    <script>
+        // Search functionality
+        document.getElementById('searchForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const keyword = document.getElementById('keyword').value.trim();
+            if (!keyword) return;
+
+            const languageField = document.getElementById('language');
+            const language = languageField ? (languageField.value || 'nl').toLowerCase() : 'nl';
+            
+            const button = document.getElementById('searchButton');
+            button.classList.add('loading');
+            button.disabled = true;
+            button.textContent = 'Zoeken...';
+            
+            try {
+                const response = await fetch('/search', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: `keyword=${encodeURIComponent(keyword)}&language=${encodeURIComponent(language)}`
+                });
+                
+                if (!response.ok) {
+                    throw new Error('Search failed');
+                }
+                
+                const data = await response.json();
+                if (data.language && languageField) {
+                    languageField.value = data.language;
+                }
+                displayResults(keyword, data);
+                
+            } catch (error) {
+                console.error('Search error:', error);
+                alert('Er is een fout opgetreden bij het zoeken. Probeer het opnieuw.');
+            } finally {
+        button.classList.remove('loading');
+        button.disabled = false;
+        button.textContent = 'Zoeken';
+            }
+        });
+        
+        function displayResults(keyword, data) {
+            document.getElementById('searchedKeyword').textContent = keyword;
+            const resultsGrid = document.getElementById('resultsGrid');
+            const resultsSummary = document.getElementById('resultsSummary');
+
+            resultsGrid.innerHTML = '';
+            resultsSummary.innerHTML = '';
+
+            if (data.summary || data.trends) {
+                resultsSummary.style.display = 'grid';
+                resultsSummary.appendChild(createSummaryCard(data.summary, data.trends));
+            } else {
+                resultsSummary.style.display = 'none';
+            }
+
+            const categories = data.categories || {};
+            const categoryLabels = {
+                google_suggestions: 'Google suggesties (echte data)',
+                trends_related: 'Google trends gerelateerd (echte data)',
+                related_questions: 'Veelgestelde vragen',
+                wikipedia_terms: 'Wikipedia termen'
+            };
+
+            const categoryOrder = Object.keys(categoryLabels);
+            const renderedCategories = new Set();
+            let hasResults = false;
+
+            categoryOrder.forEach(category => {
+                const items = categories[category];
+                if (items && items.length) {
+                    const section = createResultSection(categoryLabels[category], items);
+                    resultsGrid.appendChild(section);
+                    renderedCategories.add(category);
+                    hasResults = true;
+                }
+            });
+
+            Object.keys(categories).forEach(category => {
+                if (!renderedCategories.has(category) && categories[category]?.length) {
+                    const prettyName = category.replace(/_/g, ' ') || 'Categorie';
+                    const section = createResultSection(prettyName, categories[category]);
+                    resultsGrid.appendChild(section);
+                    hasResults = true;
+                }
+            });
+
+            if (!hasResults) {
+                const emptyState = document.createElement('div');
+                emptyState.className = 'results-empty';
+                emptyState.textContent = 'Geen gratis keyword data gevonden voor dit zoekwoord. Probeer een andere term.';
+                resultsGrid.appendChild(emptyState);
+            }
+
+            document.getElementById('resultsContainer').style.display = 'block';
+        }
+
+        function createSummaryCard(summary = {}, trends = {}) {
+            const card = document.createElement('div');
+            card.className = 'summary-card';
+
+            const totalVolume = summary.total_volume ? formatNumber(summary.total_volume) : '—';
+            const totalKeywords = summary.total_keywords || 0;
+            const realDataKeywords = summary.real_data_keywords || 0;
+
+            const avgInterest = trends.avg_interest ? `${Math.round(trends.avg_interest)} / 100` : 'Geen data';
+            const trendDirection = trends.trend_direction || 'Onbekend';
+            const dataPoints = trends.data_points || 0;
+
+            card.innerHTML = `
+                <div class="summary-header">
+                    <span class="summary-eyebrow">Overzicht</span>
+                    <h3>${totalKeywords} gratis keywords gevonden</h3>
+                    <p>${realDataKeywords} gebaseerd op echte Google data</p>
+                </div>
+                <div class="summary-metrics">
+                    ${createMetric('Totaal geschat volume', totalVolume)}
+                    ${createMetric('Gemiddelde interesse', avgInterest)}
+                    ${createMetric('Trend richting', trendDirection)}
+                    ${createMetric('Google Trends datapunten', dataPoints)}
+                </div>
+            `;
+
+            return card;
+        }
+
+        function createMetric(label, value) {
+            return `
+                <div class="metric">
+                    <span class="metric-label">${label}</span>
+                    <span class="metric-value">${value}</span>
+                </div>
+            `;
+        }
+
+        function createResultSection(title, items) {
+            const section = document.createElement('div');
+            section.className = 'result-section';
+
+            const heading = document.createElement('h3');
+            heading.textContent = title;
+            section.appendChild(heading);
+
+            items.forEach(item => {
+                const keywordItem = document.createElement('div');
+                keywordItem.className = 'keyword-item';
+
+                keywordItem.innerHTML = `
+                    <div class="keyword-main">
+                        <span class="keyword-term">${item.keyword}</span>
+                        <span class="keyword-source">${item.source || 'Gratis bron'}</span>
+                    </div>
+                    <div class="keyword-metrics">
+                        ${renderMetricBlock('Zoekvolume', item.search_volume ? formatNumber(item.search_volume) : '—')}
+                        ${renderMetricBlock('Difficulty', item.difficulty !== undefined ? item.difficulty : '—')}
+                        ${renderMetricBlock('CPC', item.cpc !== undefined ? formatCurrency(item.cpc) : '—')}
+                        ${renderMetricBlock('Trend', item.trend || '—')}
+                    </div>
+                `;
+
+                section.appendChild(keywordItem);
+            });
+
+            return section;
+        }
+
+        function renderMetricBlock(label, value) {
+            return `
+                <div class="keyword-metric">
+                    <span class="keyword-metric-label">${label}</span>
+                    <span class="keyword-metric-value">${value}</span>
+                </div>
+            `;
+        }
+
+        function formatNumber(number) {
+            if (Number.isNaN(Number(number))) return number;
+            return Number(number).toLocaleString('nl-NL');
+        }
+
+        function formatCurrency(value) {
+            if (Number.isNaN(Number(value))) return value;
+            return `€ ${Number(value).toFixed(2)}`;
+        }
+        
+        function closeResults() {
+            document.getElementById('resultsContainer').style.display = 'none';
+        }
+        
+        // Close results on Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeResults();
+            }
+        });
+        
+        // Close results when clicking outside
+        document.getElementById('resultsContainer').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeResults();
+            }
+        });
+    </script>
+</body>
+</html>
