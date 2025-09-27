@@ -190,3 +190,32 @@ Vragen of problemen? Open een [issue](../../issues) of stuur een email.
 ---
 
 **Made with ❤️ for the SEO community**
+ 
+---
+
+## Frontend (React) — Development & Build
+
+This project includes an optional React single-page app (Vite + React + TypeScript) located in `frontend/`.
+
+Development:
+
+1. Start the Flask backend (port 5000)
+2. In another terminal, start the React dev server:
+
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+The Vite dev server proxies API calls (`/api/*`, `/search`, `/health`) to `http://localhost:5000`.
+
+Build for production:
+
+```bash
+cd frontend
+npm install
+npm run build
+```
+
+The build outputs to `static/app`. In production, Flask will automatically serve `/` from `static/app/index.html` if it exists. Otherwise, it falls back to `templates/lucy_index.html`.

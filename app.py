@@ -5,6 +5,7 @@ Hoofd applicatie die alle keyword tools combineert voor deployment
 """
 
 from flask import Flask, render_template, request, jsonify, send_file, redirect, url_for
+from flask import send_from_directory
 import json
 import csv
 import io
@@ -43,8 +44,17 @@ except Exception as e:
 
 @app.route('/')
 def index():
-    """Hoofdpagina - toon gratis tool direct"""
-    return render_template('canva_index.html')
+    """Hoofdpagina - Lucy World UI"""
+    # If React build exists, serve the SPA index from static/app; otherwise fallback to server-rendered template
+    build_index = os.path.join(app.static_folder or 'static', 'app', 'index.html')
+    if os.path.exists(build_index):
+        return send_from_directory(os.path.dirname(build_index), 'index.html')
+    return render_template('lucy_index.html')
+
+# Serve built React assets under /static/app/* (handled automatically by Flask static), plus convenience route /app/* if needed
+@app.route('/app/<path:filename>')
+def app_assets(filename):
+    return send_from_directory(os.path.join(app.static_folder or 'static', 'app'), filename)
 
 @app.route('/search', methods=['GET', 'POST'])
 def search_index():
@@ -53,22 +63,24 @@ def search_index():
         # Reuse the free API logic so canva_index.html can POST to /search
         return free_search_keywords()
     # GET -> redirect to free UI
-    return redirect('/search/free')
+    return redirect('/')
 
 @app.route('/search/free')
 def free_index():
     """Gratis keyword research tool"""
-    return render_template('canva_index.html')
+    # Toon de nieuwe Lucy World UI i.p.v. de oude Canva pagina
+    return render_template('lucy_index.html')
 
 @app.route('/search/advanced')
 def advanced_index():
-    """Geavanceerde keyword research tool"""
-    return render_template('index.html')
+    """Geavanceerde keyword research tool UI"""
+    # Voor nu: gebruik dezelfde Lucy UI; frontend kan later een aparte route tonen
+    return index()
 
 @app.route('/search/scale')
 def scale_index():
     """Scale pagina"""
-    return render_template('scale_index.html')
+    return index()
 
 # ============================================================================
 # FREE KEYWORD RESEARCH ENDPOINTS
