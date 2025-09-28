@@ -4,6 +4,12 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Lucy World</title>
+    {# Basic SEO metas; per-locale description/keywords can be extended later #}
+    <meta name="description" content="Keyword research made simple with Google data: suggestions, trends, and insights." />
+    <meta name="keywords" content="keyword research, SEO, Google Trends, suggestions, search volume" />
+    <meta name="robots" content="index, follow" />
+    <meta name="author" content="Lucy World" />
+    <meta name="publisher" content="Lucy World" />
     {# Canonical and hreflang links #}
     {% if canonical_url %}
     <link rel="canonical" href="{{ canonical_url }}" />
@@ -13,6 +19,33 @@
     {% endfor %}
     {% if manifest and manifest_css %}
     <link rel="stylesheet" href="{{ manifest_css }}" />
+    {% endif %}
+    {# Inline JSON-LD structured data (localized URL and language) #}
+    {% if canonical_url %}
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "Organization",
+          "name": "Lucy World",
+          "url": "{{ request.url_root.rstrip('/') }}/",
+          "logo": "{{ request.url_root.rstrip('/') }}/static/img/canva/logo-text.png"
+        },
+        {
+          "@type": "WebSite",
+          "name": "Lucy World",
+          "url": "{{ canonical_url }}",
+          "inLanguage": "{{ lang }}",
+          "potentialAction": {
+            "@type": "SearchAction",
+            "target": "{{ canonical_url }}?q={search_term_string}",
+            "query-input": "required name=search_term_string"
+          }
+        }
+      ]
+    }
+    </script>
     {% endif %}
   </head>
   <body>
