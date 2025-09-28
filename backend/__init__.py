@@ -15,6 +15,8 @@ from werkzeug.middleware.proxy_fix import ProxyFix
 
 from backend.services.advanced_keyword_tool import AdvancedKeywordTool
 from backend.services.free_keyword_tool import FreeKeywordTool
+from .extensions import db
+from .routes_projects import bp as projects_bp
 
 
 def create_app() -> Flask:
@@ -28,6 +30,17 @@ def create_app() -> Flask:
 	logger = logging.getLogger(__name__)
 
 	app = Flask(__name__, static_folder=static_folder, template_folder=templates_folder)
+
+	# Database setup (SQLite by default; can be overridden with DATABASE_URL)
+	db_url = os.getenv('DATABASE_URL') or os.getenv('DB_URL')
+	if not db_url:
+		db_path = os.path.join(project_root, 'lucy.sqlite3')
+		db_url = f"sqlite:///{db_path}"
+	app.config.update(
+		SQLALCHEMY_DATABASE_URI=db_url,
+		SQLALCHEMY_TRACK_MODIFICATIONS=False,
+	)
+	db.init_app(app)
 
 	# Trust proxy headers from the DigitalOcean load balancer so request.scheme is correct
 	app.wsgi_app = ProxyFix(app.wsgi_app, x_for=1, x_proto=1, x_host=1, x_port=1, x_prefix=1)
@@ -743,6 +756,17 @@ def create_app() -> Flask:
 		except Exception:
 			pass
 		return response
+
+	# Register blueprints
+	app.register_blueprint(projects_bp)
+
+	# Create database tables if not exist
+	with app.app_context():
+		try:
+			from . import models  # noqa: F401
+			db.create_all()
+		except Exception:
+			pass
 
 	return app
 
