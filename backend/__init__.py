@@ -231,6 +231,77 @@ def create_app() -> Flask:
 		# Language direction (rtl for Arabic/Hebrew/Persian/Urdu)
 		rtl_langs = {'ar','he','fa','ur'}
 		page_dir = 'rtl' if lang in rtl_langs else 'ltr'
+
+		# Load per-locale structured data (for meta + inline JSON-LD)
+		def _load_structured(lang_code: str):
+			# Prefer on-disk override
+			override = _lang_asset_path(lang_code, 'structured.json')
+			if override:
+				try:
+					with open(override, 'r', encoding='utf-8') as f:
+						return json.load(f)
+				except Exception:
+					pass
+			# Fallback: default payload similar to /meta/structured.json but localized
+			base = request.url_root.rstrip('/')
+			home = f"{base}/{lang_code}/"
+			return {
+				"@context": "https://schema.org",
+				"@graph": [
+					{
+						"@type": "Organization",
+						"name": "Lucy World",
+						"url": base + "/",
+						"logo": base + "/static/img/canva/logo-text.png"
+					},
+					{
+						"@type": "WebSite",
+						"name": "Lucy World",
+						"url": home,
+						"inLanguage": lang_code,
+						"description": "Keyword research made simple with Google data: suggestions, trends, and insights.",
+						"keywords": "keyword research, SEO, Google Trends, suggestions, search volume",
+						"publisher": { "@type": "Organization", "name": "Lucy World" },
+						"author": { "@type": "Organization", "name": "Lucy World" },
+						"potentialAction": {
+							"@type": "SearchAction",
+							"target": home + "?q={search_term_string}",
+							"query-input": "required name=search_term_string"
+						}
+					},
+					{
+						"@type": "WebPage",
+						"name": "Lucy World",
+						"url": home,
+						"inLanguage": lang_code,
+						"isPartOf": { "@type": "WebSite", "url": home },
+						"description": "Keyword research made simple with Google data: suggestions, trends, and insights.",
+						"keywords": "keyword research, SEO, Google Trends, suggestions, search volume"
+					}
+				]
+			}
+
+		structured = _load_structured(lang)
+		# Extract meta fields from structured data
+		meta_title = "Lucy World"
+		meta_description = None
+		meta_keywords = None
+		meta_robots = 'index, follow'
+		try:
+			graph = structured.get('@graph') if isinstance(structured, dict) else None
+			if isinstance(graph, list):
+				for node in graph:
+					if isinstance(node, dict) and node.get('@type') in ('WebPage','WebSite'):
+						meta_title = node.get('name') or meta_title
+						meta_description = node.get('description') or meta_description
+						mk = node.get('keywords')
+						if isinstance(mk, list):
+							meta_keywords = ", ".join([str(x) for x in mk])
+						elif isinstance(mk, str):
+							meta_keywords = mk
+		except Exception:
+			pass
+
 		return render_template(
 			'base_spa.html',
 			lang=lang,
@@ -240,6 +311,11 @@ def create_app() -> Flask:
 			manifest_js=(manifest_js or '/static/app/assets/index.js'),
 			canonical_url=canonical,
 			hreflangs=hreflangs,
+			structured_json=structured,
+			meta_title=meta_title,
+			meta_description=meta_description,
+			meta_keywords=meta_keywords,
+			meta_robots=meta_robots,
 		)
 
 	def _lang_asset_path(lang: str, filename: str) -> str | None:

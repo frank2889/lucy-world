@@ -47,11 +47,24 @@ DEFAULT_STRUCTURED = {
             "name": "Lucy World",
             "url": None,  # filled per-lang
             "inLanguage": None,  # filled per-lang
+            "description": "Keyword research made simple with Google data: suggestions, trends, and insights.",
+            "keywords": "keyword research, SEO, Google Trends, suggestions, search volume",
+            "publisher": {"@type": "Organization", "name": "Lucy World"},
+            "author": {"@type": "Organization", "name": "Lucy World"},
             "potentialAction": {
                 "@type": "SearchAction",
                 "target": None,  # filled per-lang
                 "query-input": "required name=search_term_string",
             },
+        },
+        {
+            "@type": "WebPage",
+            "name": "Lucy World",
+            "url": None,  # filled per-lang
+            "inLanguage": None,  # filled per-lang
+            "isPartOf": {"@type": "WebSite", "url": None},  # filled per-lang
+            "description": "Keyword research made simple with Google data: suggestions, trends, and insights.",
+            "keywords": "keyword research, SEO, Google Trends, suggestions, search volume"
         },
     ],
 }
@@ -90,6 +103,9 @@ def generate_for_lang(lang: str, force: bool = False):
     structured["@graph"][1]["url"] = home
     structured["@graph"][1]["inLanguage"] = lang
     structured["@graph"][1]["potentialAction"]["target"] = home + "?q={search_term_string}"
+    structured["@graph"][2]["url"] = home
+    structured["@graph"][2]["inLanguage"] = lang
+    structured["@graph"][2]["isPartOf"]["url"] = home
 
     changed = False
     changed |= write_if_missing(out_dir / 'robots.txt', robots + "\n", force)
