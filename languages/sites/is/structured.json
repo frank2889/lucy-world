@@ -12,11 +12,33 @@
       "name": "Lucy World",
       "url": "https://lucy.world/is/",
       "inLanguage": "is",
+      "description": "Keyword research made simple with Google data: suggestions, trends, and insights.",
+      "keywords": "keyword research, SEO, Google Trends, suggestions, search volume",
+      "publisher": {
+        "@type": "Organization",
+        "name": "Lucy World"
+      },
+      "author": {
+        "@type": "Organization",
+        "name": "Lucy World"
+      },
       "potentialAction": {
         "@type": "SearchAction",
         "target": "https://lucy.world/is/?q={search_term_string}",
         "query-input": "required name=search_term_string"
       }
+    },
+    {
+      "@type": "WebPage",
+      "name": "Lucy World",
+      "url": "https://lucy.world/is/",
+      "inLanguage": "is",
+      "isPartOf": {
+        "@type": "WebSite",
+        "url": "https://lucy.world/is/"
+      },
+      "description": "Keyword research made simple with Google data: suggestions, trends, and insights.",
+      "keywords": "keyword research, SEO, Google Trends, suggestions, search volume"
     }
   ]
 }
