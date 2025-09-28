@@ -27,8 +27,8 @@ Je hebt nu een **complete, productie-klare keyword research applicatie** die bes
 1. **Maak DigitalOcean Droplet** (Ubuntu 22.04, $6/maand)
 2. **Upload bestanden** naar server
 3. **Run deployment script**: `./deploy.sh`
-4. **Setup DNS**: `search.lucy.world` → je droplet IP
-5. **Done!** → https://search.lucy.world
+4. **Setup DNS**: `lucy.world` (root) → je droplet IP
+5. **Done!** → <https://lucy.world>
 
 ### Bestanden klaar voor upload:
 ```
@@ -80,10 +80,10 @@ Je hebt nu een **complete, productie-klare keyword research applicatie** die bes
 
 ## 🔗 Live URLs (na deployment):
 
-- **Main Site**: https://search.lucy.world
-- **Free Tool**: https://search.lucy.world/free  
-- **Advanced Tool**: https://search.lucy.world/advanced
-- **Health Check**: https://search.lucy.world/health
+- **Main Site**: <https://lucy.world>
+- **Free Tool**: <https://lucy.world/free>  
+- **Advanced Tool**: <https://lucy.world/advanced>
+- **Health Check**: <https://lucy.world/health>
 
 ---
 
@@ -91,4 +91,4 @@ Je hebt nu een **complete, productie-klare keyword research applicatie** die bes
 
 Alle API's werken, de interface is geoptimaliseerd, en de deployment is volledig geautomatiseerd. 
 
-**Succes met je launch op search.lucy.world!** 🌟
+**Succes met je launch op lucy.world!** 🌟

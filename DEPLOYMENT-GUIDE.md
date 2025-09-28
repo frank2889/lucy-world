@@ -13,12 +13,12 @@
 
 2. **Noteer het IP-adres** van je droplet
 
-## Stap 2: DNS Configuratie
+## Stap 2: DNS Configuratie (root domein)
 
 1. **Ga naar je domain provider** (waar lucy.world geregistreerd is)
-2. **Voeg een A-record toe**:
+2. **Voeg een A-record toe voor het hoofddomein (root)**:
    ```
-   Name: search
+   Name: @ (root)
    Type: A
    Value: [JE_DROPLET_IP_ADRES]
    TTL: 300
@@ -80,12 +80,12 @@ git clone [JE_GIT_REPO_URL] /var/www/lucy-world-search
 
 2. **Test de website**:
    ```bash
-   curl http://search.lucy.world/health
+   curl http://lucy.world/health
    ```
 
 3. **Open in browser**:
-   - Http: `http://search.lucy.world`
-   - Https: `https://search.lucy.world` (na SSL setup)
+   - Http: `http://lucy.world`
+   - Https: `https://lucy.world` (na SSL setup)
 
 ## Stap 6: SSL Certificaat (Automatisch)
 
@@ -93,7 +93,7 @@ Het deployment script installeert automatisch een SSL certificaat via Let's Encr
 
 Als dit niet werkt, run handmatig:
 ```bash
-sudo certbot --nginx -d search.lucy.world --email frank@lucy.world --agree-tos --non-interactive
+sudo certbot --nginx -d lucy.world --email frank@lucy.world --agree-tos --non-interactive
 ```
 
 ## 🔧 Handige Commando's
@@ -132,7 +132,7 @@ sudo netstat -tlnp
 
 Na succesvolle deployment heb je:
 
-✅ **Live website**: https://search.lucy.world  
+✅ **Live website**: <https://lucy.world>  
 ✅ **SSL certificaat**: Automatisch via Let's Encrypt  
 ✅ **Nginx reverse proxy**: Voor performance en security  
 ✅ **Systemd service**: Automatische restart bij crashes  

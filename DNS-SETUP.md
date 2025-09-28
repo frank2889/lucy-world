@@ -1,4 +1,4 @@
-# 🌐 DNS Setup voor search.lucy.world
+# 🌐 DNS Setup voor lucy.world (root domein)
 
 ## Stap 1: Controleer je Droplet IP
 ```bash
@@ -24,12 +24,12 @@ Value: [JE_DROPLET_IP_ADRES]
 TTL: 300 (5 minutes)
 ```
 
-### Voorbeeld configuraties:
+### Voorbeeld configuraties (root / apex)
 
 #### Cloudflare:
 ```
 Type: A
-Name: search
+Name: @
 IPv4 Address: YOUR_DROPLET_IP
 Proxy Status: DNS only (grey cloud)
 TTL: Auto
@@ -38,7 +38,7 @@ TTL: Auto
 #### Namecheap:
 ```
 Type: A Record
-Host: search
+Host: @
 Value: YOUR_DROPLET_IP
 TTL: 5 min
 ```
@@ -46,7 +46,7 @@ TTL: 5 min
 #### GoDaddy:
 ```
 Type: A
-Name: search
+Name: @
 Value: YOUR_DROPLET_IP
 TTL: 600 seconds
 ```
@@ -55,15 +55,15 @@ TTL: 600 seconds
 
 ```bash
 # Test vanaf je lokale machine
-nslookup search.lucy.world
+nslookup lucy.world
 
 # Test vanaf verschillende locaties
-dig search.lucy.world @8.8.8.8
-dig search.lucy.world @1.1.1.1
+dig lucy.world @8.8.8.8
+dig lucy.world @1.1.1.1
 
 # Online DNS checker
 # Ga naar: https://www.whatsmydns.net/
-# Enter: search.lucy.world
+# Enter: lucy.world
 ```
 
 ## Stap 4: SSL Certificaat Setup
@@ -77,7 +77,7 @@ sudo apt update
 sudo apt install -y certbot python3-certbot-nginx
 
 # Krijg SSL certificaat
-sudo certbot --nginx -d search.lucy.world --email frank@lucy.world --agree-tos --non-interactive
+sudo certbot --nginx -d lucy.world --email frank@lucy.world --agree-tos --non-interactive
 
 # Test automatische renewal
 sudo certbot renew --dry-run
@@ -94,7 +94,7 @@ sudo nano /etc/nginx/sites-available/lucy-world-search
 Het zou er zo uit moeten zien:
 ```nginx
 server {
-    server_name search.lucy.world;
+    server_name lucy.world;
     
     location / {
         proxy_pass http://127.0.0.1:8000;
@@ -110,19 +110,19 @@ server {
     }
 
     listen 443 ssl; # managed by Certbot
-    ssl_certificate /etc/letsencrypt/live/search.lucy.world/fullchain.pem;
-    ssl_certificate_key /etc/letsencrypt/live/search.lucy.world/privkey.pem;
+    ssl_certificate /etc/letsencrypt/live/lucy.world/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/lucy.world/privkey.pem;
     include /etc/letsencrypt/options-ssl-nginx.conf;
     ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem;
 }
 
 server {
-    if ($host = search.lucy.world) {
+    if ($host = lucy.world) {
         return 301 https://$host$request_uri;
     }
 
     listen 80;
-    server_name search.lucy.world;
+    server_name lucy.world;
     return 404;
 }
 ```
@@ -131,13 +131,13 @@ server {
 
 ```bash
 # Test HTTP redirect naar HTTPS
-curl -I http://search.lucy.world
+curl -I http://lucy.world
 
 # Test HTTPS
-curl -I https://search.lucy.world
+curl -I https://lucy.world
 
 # Test health endpoint
-curl https://search.lucy.world/health
+curl https://lucy.world/health
 ```
 
 ## 🚨 Troubleshooting
@@ -145,11 +145,11 @@ curl https://search.lucy.world/health
 ### DNS werkt niet:
 ```bash
 # Check of de A record bestaat
-dig search.lucy.world
+dig lucy.world
 
 # Check vanaf verschillende DNS servers
-dig search.lucy.world @8.8.8.8
-dig search.lucy.world @1.1.1.1
+dig lucy.world @8.8.8.8
+dig lucy.world @1.1.1.1
 ```
 
 ### SSL certificaat problemen:
@@ -158,7 +158,7 @@ dig search.lucy.world @1.1.1.1
 sudo certbot certificates
 
 # Force renewal
-sudo certbot renew --force-renewal -d search.lucy.world
+sudo certbot renew --force-renewal -d lucy.world
 
 # Check nginx syntax
 sudo nginx -t
@@ -188,12 +188,12 @@ sudo tail -f /var/log/nginx/error.log
 ## ✅ Success Checklist
 
 - [ ] A Record toegevoegd bij domain provider
-- [ ] DNS propagation check: `nslookup search.lucy.world`
+- [ ] DNS propagation check: `nslookup lucy.world`
 - [ ] SSL certificaat geïnstalleerd
 - [ ] HTTPS redirect werkt
-- [ ] Website bereikbaar op https://search.lucy.world
-- [ ] Health check werkt: https://search.lucy.world/health
+- [ ] Website bereikbaar op <https://lucy.world>
+- [ ] Health check werkt: <https://lucy.world/health>
 
 ---
 
-**Na deze stappen is search.lucy.world live! 🎉**
+Na deze stappen is lucy.world live! 🎉
