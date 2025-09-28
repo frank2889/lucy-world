@@ -18,8 +18,9 @@ bp = Blueprint('auth', __name__, url_prefix='/api/auth')
 @bp.route('/request', methods=['POST'])
 def request_magic_link():
     data = request.get_json(silent=True) or {}
-    email = (data.get('email') or '').strip().lower()
-    name = (data.get('name') or '').strip() or None
+    # Accept JSON, form, or query param
+    email = (data.get('email') or request.form.get('email') or request.values.get('email') or '').strip().lower()
+    name = (data.get('name') or request.form.get('name') or request.values.get('name') or '').strip() or None
     if not email:
         return jsonify({'error': 'email required'}), 400
     # Create or get user without password
