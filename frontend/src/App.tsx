@@ -60,6 +60,8 @@ export default function App() {
     })
   }, [urlLang])
   const [keyword, setKeyword] = useState('')
+  // Language used for fetching search results (does NOT change UI language)
+  const [searchLanguage, setSearchLanguage] = useState(() => localStorage.getItem('lw_search_lang') || (localStorage.getItem('lw_lang') || urlLang || 'en'))
   const [language, setLanguage] = useState(() => localStorage.getItem('lw_lang') || urlLang || 'en')
   const [country, setCountry] = useState(() => localStorage.getItem('lw_country') || 'NL')
   // Detected country (geo/IP/headers) for display; separate from user-selected country used in searches
@@ -107,7 +109,7 @@ export default function App() {
       const res = await fetch('/api/free/search', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ keyword: keyword.trim(), language, country })
+        body: JSON.stringify({ keyword: keyword.trim(), language: searchLanguage, country })
       })
       if (!res.ok) throw new Error('Search failed')
       const result = await res.json()
@@ -119,7 +121,8 @@ export default function App() {
     }
   }
 
-  // persist language/country
+  // persist search language / UI language / country
+  useEffect(() => { try { localStorage.setItem('lw_search_lang', searchLanguage) } catch {} }, [searchLanguage])
   useEffect(() => { localStorage.setItem('lw_lang', language) }, [language])
   useEffect(() => { localStorage.setItem('lw_country', country) }, [country])
 
@@ -184,7 +187,8 @@ export default function App() {
   // Initialize language/country from server-side detection if user has no saved preferences
   useEffect(() => {
     try {
-      const hasSavedLang = !!localStorage.getItem('lw_lang')
+  const hasSavedLang = !!localStorage.getItem('lw_lang')
+  const hasSavedSearchLang = !!localStorage.getItem('lw_search_lang')
       const hasSavedCountry = !!localStorage.getItem('lw_country')
       // If path already starts with /xx/, we consider it authoritative for language
       const pathHasLangPrefix = typeof window !== 'undefined' && /^\/[a-z]{2}(?:\/$|\/|$)/i.test(window.location.pathname)
@@ -200,6 +204,10 @@ export default function App() {
           if (!hasSavedLang && !pathHasLangPrefix && detLang) {
             setLanguage(detLang)
             try { localStorage.setItem('lw_lang', detLang) } catch {}
+          }
+          if (!hasSavedSearchLang && detLang) {
+            setSearchLanguage(detLang)
+            try { localStorage.setItem('lw_search_lang', detLang) } catch {}
           }
           if (!hasSavedCountry && detCountry && detCountry.length === 2) {
             setCountry(detCountry)
@@ -363,14 +371,11 @@ export default function App() {
             </select>
             <select
               className="select"
-              value={language}
+              value={searchLanguage}
               onChange={(e) => {
                 const newLang = e.target.value.toLowerCase()
-                setLanguage(newLang)
-                try { localStorage.setItem('lw_lang', newLang) } catch {}
-                if (typeof window !== 'undefined') {
-                  window.location.href = `/${newLang}/`
-                }
+                setSearchLanguage(newLang)
+                try { localStorage.setItem('lw_search_lang', newLang) } catch {}
               }}
             >
               {languagesList.map((l) => (
