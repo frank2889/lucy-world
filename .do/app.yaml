@@ -23,6 +23,8 @@ services:
     value: "--config gunicorn.conf.py"
   - key: PUBLIC_BASE_URL
     value: "https://lucy.world"
+  - key: DATABASE_URL
+    value: ""
   # SMTP envs can be configured in the DO dashboard; if left empty, emails log to stdout
   - key: SMTP_HOST
     value: ""

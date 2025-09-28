@@ -34,12 +34,23 @@ def create_app() -> Flask:
 
 	# Database setup (SQLite by default; can be overridden with DATABASE_URL)
 	db_url = os.getenv('DATABASE_URL') or os.getenv('DB_URL')
+	# Normalize DATABASE_URL for SQLAlchemy (postgres:// -> postgresql://)
+	if db_url and db_url.startswith('postgres://'):
+		db_url = 'postgresql://' + db_url[len('postgres://'):]
+	# Ensure sslmode=require for Postgres if not present (DigitalOcean default)
+	if db_url and db_url.startswith('postgresql://') and 'sslmode=' not in db_url:
+		sep = '&' if '?' in db_url else '?'
+		db_url = f"{db_url}{sep}sslmode=require"
 	if not db_url:
 		db_path = os.path.join(project_root, 'lucy.sqlite3')
 		db_url = f"sqlite:///{db_path}"
 	app.config.update(
 		SQLALCHEMY_DATABASE_URI=db_url,
 		SQLALCHEMY_TRACK_MODIFICATIONS=False,
+		SQLALCHEMY_ENGINE_OPTIONS={
+			'pool_pre_ping': True,
+			'pool_recycle': 300,
+		}
 	)
 	db.init_app(app)
 

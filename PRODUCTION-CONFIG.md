@@ -100,3 +100,14 @@ sudo tail -f /var/log/nginx/access.log | grep -E "(POST|GET)"
 - Process 10,000+ keyword searches/day
 - Handle traffic spikes without downtime
 - Professional image for lucy.world brand
+
+## Environment variables
+
+- FLASK_ENV=production
+- PUBLIC_BASE_URL=https://lucy.world
+- DATABASE_URL=postgresql://USER:PASSWORD@HOST:PORT/DBNAME?sslmode=require
+- SMTP_HOST=...
+- SMTP_PORT=587
+- SMTP_USERNAME=...
+- SMTP_PASSWORD=...
+- SMTP_FROM=no-reply@lucy.world
