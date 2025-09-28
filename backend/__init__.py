@@ -17,6 +17,7 @@ from backend.services.advanced_keyword_tool import AdvancedKeywordTool
 from backend.services.free_keyword_tool import FreeKeywordTool
 from .extensions import db
 from .routes_projects import bp as projects_bp
+from .routes_auth import bp as auth_bp
 
 
 def create_app() -> Flask:
@@ -759,6 +760,7 @@ def create_app() -> Flask:
 
 	# Register blueprints
 	app.register_blueprint(projects_bp)
+	app.register_blueprint(auth_bp)
 
 	# Create database tables if not exist
 	with app.app_context():

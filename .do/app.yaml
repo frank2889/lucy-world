@@ -21,6 +21,19 @@ services:
     value: "1"
   - key: GUNICORN_CMD_ARGS
     value: "--config gunicorn.conf.py"
+  - key: PUBLIC_BASE_URL
+    value: "https://lucy.world"
+  # SMTP envs can be configured in the DO dashboard; if left empty, emails log to stdout
+  - key: SMTP_HOST
+    value: ""
+  - key: SMTP_PORT
+    value: "587"
+  - key: SMTP_USERNAME
+    value: ""
+  - key: SMTP_PASSWORD
+    value: ""
+  - key: SMTP_FROM
+    value: "no-reply@lucy.world"
   health_check:
     http_path: /health
     initial_delay_seconds: 10

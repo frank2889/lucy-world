@@ -44,3 +44,14 @@ class Project(db.Model):
         db.session.add(proj)
         db.session.commit()
         return proj
+
+
+class LoginToken(db.Model):
+    __tablename__ = 'login_tokens'
+    id = db.Column(db.Integer, primary_key=True)
+    email = db.Column(db.String(255), index=True, nullable=False)
+    token = db.Column(db.String(128), unique=True, index=True, nullable=False)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
+    expires_at = db.Column(db.DateTime, nullable=False)
+    used = db.Column(db.Boolean, default=False, nullable=False)
+
