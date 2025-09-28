@@ -76,6 +76,23 @@ export default function App() {
     return match?.label || (language || 'en').toUpperCase()
   }, [languagesList, language])
 
+  // Localized country display name for the topbar pill
+  const displayCountryName = useMemo(() => {
+    try {
+      const cc = (detectedCountry || country || 'US').toUpperCase()
+      const langCode = (ui?.lang || language || 'en').toLowerCase()
+      const ctor: any = (Intl as any).DisplayNames
+      if (ctor) {
+        const dn = new ctor([langCode], { type: 'region' })
+        const name = dn?.of?.(cc)
+        return name || cc
+      }
+      return cc
+    } catch {
+      return (detectedCountry || country || 'US').toUpperCase()
+    }
+  }, [detectedCountry, country, ui?.lang, language])
+
   const categoryOrder = useMemo(
     () => ['google_suggestions', 'trends_related', 'related_questions', 'wikipedia_terms'],
     []
@@ -221,7 +238,7 @@ export default function App() {
               style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: 'transparent', color: 'var(--text)', border: '1px solid var(--line)', padding: '8px 10px', borderRadius: 10 }}
             >
               <span aria-hidden style={{ fontSize: 14 }}>{flagEmoji((detectedCountry || country).toUpperCase())}</span>
-              <span style={{ fontWeight: 600 }}>{(detectedCountry || country).toUpperCase()}</span>
+              <span style={{ fontWeight: 600 }}>{displayCountryName}</span>
             </div>
             {/* Reuse the lang switch button */}
             <button
@@ -263,7 +280,7 @@ export default function App() {
                 style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: 'transparent', color: 'var(--text)', border: '1px solid var(--line)', padding: '8px 10px', borderRadius: 10, marginRight: 8 }}
               >
                 <span aria-hidden style={{ fontSize: 14 }}>{flagEmoji((detectedCountry || country).toUpperCase())}</span>
-                <span style={{ fontWeight: 600 }}>{(detectedCountry || country).toUpperCase()}</span>
+                <span style={{ fontWeight: 600 }}>{displayCountryName}</span>
               </div>
               <button
                 type="button"
