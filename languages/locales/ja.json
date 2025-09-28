@@ -12,6 +12,9 @@
     "kpi.total_keywords": "キーワード総数",
     "kpi.total_volume": "総ボリューム",
     "kpi.real_data_keywords": "実データのキーワード",
-    "kpi.avg_interest": "平均関心度"
+    "kpi.avg_interest": "平均関心度",
+    "meta.title": "Lucy World",
+    "meta.description": "Keyword research made simple with Google data: suggestions, trends, and insights.",
+    "meta.keywords": "keyword research, SEO, Google Trends, suggestions, search volume"
   }
 }

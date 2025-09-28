@@ -12,6 +12,9 @@
     "kpi.total_keywords": "Avainsanoja yhteensä",
     "kpi.total_volume": "Kokonaisvolyymi",
     "kpi.real_data_keywords": "Avainsanat oikeilla tiedoilla",
-    "kpi.avg_interest": "Keskim. kiinnostus"
+    "kpi.avg_interest": "Keskim. kiinnostus",
+    "meta.title": "Lucy World",
+    "meta.description": "Keyword research made simple with Google data: suggestions, trends, and insights.",
+    "meta.keywords": "keyword research, SEO, Google Trends, suggestions, search volume"
   }
 }

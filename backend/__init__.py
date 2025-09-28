@@ -239,13 +239,15 @@ def create_app() -> Flask:
 			if override:
 				try:
 					with open(override, 'r', encoding='utf-8') as f:
-						return json.load(f)
+						structured = json.load(f)
 				except Exception:
-					pass
+					structured = None
+			else:
+				structured = None
 			# Fallback: default payload similar to /meta/structured.json but localized
 			base = request.url_root.rstrip('/')
 			home = f"{base}/{lang_code}/"
-			return {
+			default_structured = {
 				"@context": "https://schema.org",
 				"@graph": [
 					{
@@ -280,6 +282,43 @@ def create_app() -> Flask:
 					}
 				]
 			}
+
+			# If no override structured file, start from default
+			if not structured:
+				structured = default_structured
+
+			# Try to load locales meta strings and merge into structured nodes
+			try:
+				locales_dir = os.path.join(project_root, 'languages', 'locales')
+				locale_path = os.path.join(locales_dir, f"{lang_code}.json")
+				meta_title = None
+				meta_description = None
+				meta_keywords = None
+				if os.path.exists(locale_path):
+					with open(locale_path, 'r', encoding='utf-8') as lf:
+						ld = json.load(lf)
+						strings = ld.get('strings') if isinstance(ld, dict) else None
+						if isinstance(strings, dict):
+							meta_title = strings.get('meta.title') or strings.get('meta_title')
+							meta_description = strings.get('meta.description') or strings.get('meta_description')
+							meta_keywords = strings.get('meta.keywords') or strings.get('meta_keywords')
+				# Patch structured graph with locale meta when provided
+				graph = structured.get('@graph') if isinstance(structured, dict) else None
+				if isinstance(graph, list):
+					for node in graph:
+						if not isinstance(node, dict):
+							continue
+						if node.get('@type') in ('WebSite', 'WebPage'):
+							if meta_title:
+								node['name'] = meta_title
+							if meta_description:
+								node['description'] = meta_description
+							if meta_keywords:
+								node['keywords'] = meta_keywords
+			except Exception:
+				pass
+
+			return structured
 
 		structured = _load_structured(lang)
 		# Extract meta fields from structured data

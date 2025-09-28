@@ -10,8 +10,11 @@
     "search.button": "Cari",
     "search.hint": "Saran dan tren gratis. Hasil akan muncul di bawah.",
     "kpi.total_keywords": "Total kata kunci",
-  "kpi.total_volume": "Volume total",
+    "kpi.total_volume": "Volume total",
     "kpi.real_data_keywords": "Kata kunci dengan data nyata",
-    "kpi.avg_interest": "Rata-rata minat"
+    "kpi.avg_interest": "Rata-rata minat",
+    "meta.title": "Lucy World",
+    "meta.description": "Keyword research made simple with Google data: suggestions, trends, and insights.",
+    "meta.keywords": "keyword research, SEO, Google Trends, suggestions, search volume"
   }
 }

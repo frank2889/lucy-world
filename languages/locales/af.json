@@ -12,6 +12,9 @@
     "kpi.total_keywords": "Totaal sleutelwoorde",
     "kpi.total_volume": "Totale volume",
     "kpi.real_data_keywords": "Werklike data-sleutelwoorde",
-    "kpi.avg_interest": "Gem. belangstelling"
+    "kpi.avg_interest": "Gem. belangstelling",
+    "meta.title": "Lucy World",
+    "meta.description": "Keyword research made simple with Google data: suggestions, trends, and insights.",
+    "meta.keywords": "keyword research, SEO, Google Trends, suggestions, search volume"
   }
 }

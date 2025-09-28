@@ -12,6 +12,9 @@
     "kpi.total_keywords": "Totalt antall nøkkelord",
     "kpi.total_volume": "Totalvolum",
     "kpi.real_data_keywords": "Nøkkelord med ekte data",
-    "kpi.avg_interest": "Gj.sn. interesse"
+    "kpi.avg_interest": "Gj.sn. interesse",
+    "meta.title": "Lucy World",
+    "meta.description": "Keyword research made simple with Google data: suggestions, trends, and insights.",
+    "meta.keywords": "keyword research, SEO, Google Trends, suggestions, search volume"
   }
 }

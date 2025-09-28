@@ -12,6 +12,9 @@
     "kpi.total_keywords": "Всего ключевых слов",
     "kpi.total_volume": "Общий объём",
     "kpi.real_data_keywords": "Ключевые слова с реальными данными",
-    "kpi.avg_interest": "Средний интерес"
+    "kpi.avg_interest": "Средний интерес",
+    "meta.title": "Lucy World",
+    "meta.description": "Keyword research made simple with Google data: suggestions, trends, and insights.",
+    "meta.keywords": "keyword research, SEO, Google Trends, suggestions, search volume"
   }
 }

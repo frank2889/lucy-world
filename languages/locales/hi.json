@@ -12,6 +12,9 @@
     "kpi.total_keywords": "कुल कीवर्ड",
     "kpi.total_volume": "कुल वॉल्यूम",
     "kpi.real_data_keywords": "वास्तविक डेटा वाले कीवर्ड",
-    "kpi.avg_interest": "औसत रुचि"
+    "kpi.avg_interest": "औसत रुचि",
+    "meta.title": "Lucy World",
+    "meta.description": "Keyword research made simple with Google data: suggestions, trends, and insights.",
+    "meta.keywords": "keyword research, SEO, Google Trends, suggestions, search volume"
   }
 }

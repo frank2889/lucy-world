@@ -12,6 +12,9 @@
     "kpi.total_keywords": "关键词总数",
     "kpi.total_volume": "总搜索量",
     "kpi.real_data_keywords": "真实数据关键词",
-    "kpi.avg_interest": "平均关注度"
+    "kpi.avg_interest": "平均关注度",
+    "meta.title": "Lucy World",
+    "meta.description": "Keyword research made simple with Google data: suggestions, trends, and insights.",
+    "meta.keywords": "keyword research, SEO, Google Trends, suggestions, search volume"
   }
 }

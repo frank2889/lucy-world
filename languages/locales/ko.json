@@ -12,6 +12,9 @@
     "kpi.total_keywords": "키워드 합계",
     "kpi.total_volume": "총 검색량",
     "kpi.real_data_keywords": "실제 데이터 키워드",
-    "kpi.avg_interest": "평균 관심도"
+    "kpi.avg_interest": "평균 관심도",
+    "meta.title": "Lucy World",
+    "meta.description": "Keyword research made simple with Google data: suggestions, trends, and insights.",
+    "meta.keywords": "keyword research, SEO, Google Trends, suggestions, search volume"
   }
 }

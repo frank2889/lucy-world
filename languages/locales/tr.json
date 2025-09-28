@@ -12,6 +12,9 @@
     "kpi.total_keywords": "Toplam anahtar kelime",
     "kpi.total_volume": "Toplam hacim",
     "kpi.real_data_keywords": "Gerçek verili anahtar kelimeler",
-    "kpi.avg_interest": "Ort. ilgi"
+    "kpi.avg_interest": "Ort. ilgi",
+    "meta.title": "Lucy World",
+    "meta.description": "Keyword research made simple with Google data: suggestions, trends, and insights.",
+    "meta.keywords": "keyword research, SEO, Google Trends, suggestions, search volume"
   }
 }

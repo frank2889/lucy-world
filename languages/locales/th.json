@@ -12,6 +12,9 @@
     "kpi.total_keywords": "จำนวนคีย์เวิร์ดทั้งหมด",
     "kpi.total_volume": "ปริมาณรวม",
     "kpi.real_data_keywords": "คีย์เวิร์ดที่มีข้อมูลจริง",
-    "kpi.avg_interest": "ความสนใจเฉลี่ย"
+    "kpi.avg_interest": "ความสนใจเฉลี่ย",
+    "meta.title": "Lucy World",
+    "meta.description": "Keyword research made simple with Google data: suggestions, trends, and insights.",
+    "meta.keywords": "keyword research, SEO, Google Trends, suggestions, search volume"
   }
 }

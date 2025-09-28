@@ -12,6 +12,9 @@
     "kpi.total_keywords": "Total de palavras‑chave",
     "kpi.total_volume": "Volume total",
     "kpi.real_data_keywords": "Palavras‑chave com dados reais",
-    "kpi.avg_interest": "Interesse méd."
+    "kpi.avg_interest": "Interesse méd.",
+    "meta.title": "Lucy World",
+    "meta.description": "Keyword research made simple with Google data: suggestions, trends, and insights.",
+    "meta.keywords": "keyword research, SEO, Google Trends, suggestions, search volume"
   }
 }

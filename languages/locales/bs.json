@@ -12,6 +12,9 @@
     "kpi.total_keywords": "Ukupno ključnih riječi",
     "kpi.total_volume": "Ukupan volumen",
     "kpi.real_data_keywords": "Ključne riječi s pravim podacima",
-    "kpi.avg_interest": "Prosj. interes"
+    "kpi.avg_interest": "Prosj. interes",
+    "meta.title": "Lucy World",
+    "meta.description": "Keyword research made simple with Google data: suggestions, trends, and insights.",
+    "meta.keywords": "keyword research, SEO, Google Trends, suggestions, search volume"
   }
 }

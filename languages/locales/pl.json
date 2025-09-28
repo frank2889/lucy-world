@@ -12,6 +12,9 @@
     "kpi.total_keywords": "Łączna liczba słów kluczowych",
     "kpi.total_volume": "Łączny wolumen",
     "kpi.real_data_keywords": "Słowa kluczowe z prawdziwymi danymi",
-    "kpi.avg_interest": "Śr. zainteresowanie"
+    "kpi.avg_interest": "Śr. zainteresowanie",
+    "meta.title": "Lucy World",
+    "meta.description": "Keyword research made simple with Google data: suggestions, trends, and insights.",
+    "meta.keywords": "keyword research, SEO, Google Trends, suggestions, search volume"
   }
 }

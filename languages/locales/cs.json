@@ -12,6 +12,9 @@
     "kpi.total_keywords": "Celkem klíčových slov",
     "kpi.total_volume": "Celkový objem",
     "kpi.real_data_keywords": "Klíčová slova se skutečnými daty",
-    "kpi.avg_interest": "Prům. zájem"
+    "kpi.avg_interest": "Prům. zájem",
+    "meta.title": "Lucy World",
+    "meta.description": "Keyword research made simple with Google data: suggestions, trends, and insights.",
+    "meta.keywords": "keyword research, SEO, Google Trends, suggestions, search volume"
   }
 }

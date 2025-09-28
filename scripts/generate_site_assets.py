@@ -107,6 +107,42 @@ def generate_for_lang(lang: str, force: bool = False):
     structured["@graph"][2]["inLanguage"] = lang
     structured["@graph"][2]["isPartOf"]["url"] = home
 
+    # Merge meta from locales/<lang>.json if available
+    def load_locale_meta(l: str):
+        fp = LOCALES_DIR / f"{l}.json"
+        if not fp.exists():
+            return None
+        try:
+            data = json.loads(fp.read_text(encoding='utf-8'))
+            strings = data.get('strings') if isinstance(data, dict) else None
+            if not isinstance(strings, dict):
+                return None
+            title = strings.get('meta.title') or strings.get('meta_title')
+            desc = strings.get('meta.description') or strings.get('meta_description')
+            kw = strings.get('meta.keywords') or strings.get('meta_keywords')
+            # Normalize keywords to comma-separated string
+            if isinstance(kw, list):
+                kw = ", ".join(str(x) for x in kw)
+            elif kw is not None:
+                kw = str(kw)
+            return {
+                'title': title,
+                'description': desc,
+                'keywords': kw,
+            }
+        except Exception:
+            return None
+
+    meta = load_locale_meta(lang) or {}
+    for idx in (1, 2):  # WebSite and WebPage nodes
+        node = structured["@graph"][idx]
+        if meta.get('title'):
+            node['name'] = meta['title']
+        if meta.get('description'):
+            node['description'] = meta['description']
+        if meta.get('keywords'):
+            node['keywords'] = meta['keywords']
+
     changed = False
     changed |= write_if_missing(out_dir / 'robots.txt', robots + "\n", force)
     changed |= write_if_missing(out_dir / 'sitemap.xml', sitemap + "\n", force)
@@ -118,11 +154,15 @@ def main():
     parser = argparse.ArgumentParser(description='Generate per-locale site assets')
     parser.add_argument('--force', action='store_true', help='Overwrite existing files')
     parser.add_argument('--langs', nargs='*', help='Limit to specific languages (e.g., en nl de)')
+    parser.add_argument('--exclude', nargs='*', default=[], help='Exclude languages (e.g., en nl)')
     args = parser.parse_args()
 
     ensure_dir(SITES_DIR)
 
     locales = args.langs if args.langs else get_locales()
+    if args.exclude:
+        excludes = set(args.exclude)
+        locales = [l for l in locales if l not in excludes]
     if not locales:
         print('No locales found in languages/locales; nothing to do.')
         return 0

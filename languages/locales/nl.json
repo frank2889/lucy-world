@@ -12,8 +12,10 @@
     "kpi.total_keywords": "Totaal keywords",
     "kpi.total_volume": "Totaal volume",
     "kpi.real_data_keywords": "Echte data keywords",
-    "kpi.avg_interest": "Gem. interesse"
-    ,
-    "hint.site_vs_search": "Bovenbalk toont je huidige site-locatie en UI-taal. De selecties hierboven bepalen zoekland en zoektaal."
+    "kpi.avg_interest": "Gem. interesse",
+    "hint.site_vs_search": "Bovenbalk toont je huidige site-locatie en UI-taal. De selecties hierboven bepalen zoekland en zoektaal.",
+    "meta.title": "Lucy World",
+    "meta.description": "Keyword research made simple with Google data: suggestions, trends, and insights.",
+    "meta.keywords": "keyword research, SEO, Google Trends, suggestions, search volume"
   }
 }

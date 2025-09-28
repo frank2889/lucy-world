@@ -12,6 +12,9 @@
     "kpi.total_keywords": "Totalt antal sökord",
     "kpi.total_volume": "Total volym",
     "kpi.real_data_keywords": "Sökord med verkliga data",
-    "kpi.avg_interest": "Genomsn. intresse"
+    "kpi.avg_interest": "Genomsn. intresse",
+    "meta.title": "Lucy World",
+    "meta.description": "Keyword research made simple with Google data: suggestions, trends, and insights.",
+    "meta.keywords": "keyword research, SEO, Google Trends, suggestions, search volume"
   }
 }
