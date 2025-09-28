@@ -49,7 +49,7 @@ def request_magic_link():
 
 @bp.route('/verify', methods=['GET', 'POST'])
 def verify_magic_link():
-    token = request.args.get('token') or (request.get_json() or {}).get('token')
+    token = request.args.get('token') or ((request.get_json() or {}).get('token') if request.is_json else None)
     if not token:
         return jsonify({'error': 'token required'}), 400
     lt = LoginToken.query.filter_by(token=token).first()
@@ -64,5 +64,34 @@ def verify_magic_link():
     # Mark token used
     lt.used = True
     db.session.commit()
-    # Return the API token for client to store
-    return jsonify({'id': user.id, 'email': user.email, 'name': user.name, 'token': user.api_token})
+
+    # If the client expects JSON (e.g., API call), return JSON
+    accept = (request.headers.get('Accept') or '').lower()
+    if 'application/json' in accept or request.method == 'POST':
+        return jsonify({'id': user.id, 'email': user.email, 'name': user.name, 'token': user.api_token})
+    else:
+        # Otherwise return a small HTML page that stores token then redirects to /<lang>/
+        # The page reads lw_lang from localStorage to pick the UI language.
+        page = """
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Signing you in…</title>
+</head><body style="font-family: system-ui, -apple-system, Segoe UI, Roboto; padding: 24px;">
+  <h3>Signing you in…</h3>
+  <p>You can close this tab if it doesn't redirect automatically.</p>
+  <script>
+    try {
+      localStorage.setItem('lw_token', '__TOKEN__');
+      var lang = (localStorage.getItem('lw_lang') || 'en').toLowerCase();
+      if (!/^[a-z]{2}$/.test(lang)) lang = 'en';
+      location.replace('/' + lang + '/');
+    } catch (e) {
+      location.replace('/');
+    }
+  </script>
+</body></html>
+        """
+        page = page.replace('__TOKEN__', user.api_token)
+        return page, 200, {'Content-Type': 'text/html; charset=utf-8'}

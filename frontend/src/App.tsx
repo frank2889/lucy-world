@@ -83,6 +83,11 @@ export default function App() {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [data, setData] = useState<FreeSearchResponse | null>(null)
+  const [token, setToken] = useState<string | null>(() => {
+    try { return localStorage.getItem('lw_token') } catch { return null }
+  })
+  const [showSignin, setShowSignin] = useState(false)
+  const [signinEmail, setSigninEmail] = useState('')
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [langMenuOpen, setLangMenuOpen] = useState(false)
   const currentLangLabel = useMemo(() => {
@@ -130,6 +135,59 @@ export default function App() {
       setError(err?.message || 'Er is een fout opgetreden')
     } finally {
       setLoading(false)
+    }
+  }
+
+  const requestMagicLink = async (e: React.FormEvent) => {
+    e.preventDefault()
+    const email = signinEmail.trim().toLowerCase()
+    if (!email) return
+    try {
+      const res = await fetch('/api/auth/request', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email })
+      })
+      if (!res.ok) throw new Error('Failed to send sign-in link')
+      alert('Check your email for a sign-in link. After clicking it, you will be redirected back here and signed in automatically.')
+      setShowSignin(false)
+    } catch (err: any) {
+      alert(err?.message || 'Unable to send sign-in link')
+    }
+  }
+
+  useEffect(() => {
+    // capture token from localStorage changes on return from magic link verify
+    const t = localStorage.getItem('lw_token')
+    if (t && t !== token) setToken(t)
+  }, [])
+
+  const saveProject = async () => {
+    try {
+      const t = token || localStorage.getItem('lw_token')
+      if (!t) {
+        setShowSignin(true)
+        return
+      }
+      if (!data) {
+        alert('Run a search first before saving a project')
+        return
+      }
+      const res = await fetch('/api/projects', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${t}` },
+        body: JSON.stringify({
+          name: `${data.keyword} (${searchLanguage}-${country})`,
+          description: 'Saved from Lucy World',
+          language: searchLanguage,
+          country,
+          data
+        })
+      })
+      if (!res.ok) throw new Error('Failed to save project')
+      const j = await res.json()
+      alert(`Project saved (id ${j.id})`)
+    } catch (err: any) {
+      alert(err?.message || 'Save failed')
     }
   }
 
@@ -260,6 +318,21 @@ export default function App() {
               <span aria-hidden style={{ fontSize: 14 }}>{flagEmoji((detectedCountry || 'US').toUpperCase())}</span>
               <span style={{ fontWeight: 600 }}>{displayCountryName}</span>
             </div>
+            {/* Save project / Sign-in */}
+            <button
+              type="button"
+              onClick={saveProject}
+              style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: 'transparent', color: 'var(--text)', border: '1px solid var(--line)', padding: '8px 10px', borderRadius: 10 }}
+            >
+              💾 Save project
+            </button>
+            <button
+              type="button"
+              onClick={() => setShowSignin(true)}
+              style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: 'transparent', color: 'var(--text)', border: '1px solid var(--line)', padding: '8px 10px', borderRadius: 10 }}
+            >
+              {token ? 'Signed in' : 'Sign in'}
+            </button>
             {/* Reuse the lang switch button */}
             <button
               type="button"
@@ -361,6 +434,18 @@ export default function App() {
           </div>
         </div>
         <div className="content-inner">
+        {showSignin && (
+          <div style={{ position: 'fixed', inset: 0 as any, background: 'rgba(0,0,0,0.5)', display: 'grid', placeItems: 'center', zIndex: 50 }} onClick={() => setShowSignin(false)}>
+            <div style={{ background: '#0e1217', border: '1px solid var(--line)', borderRadius: 12, padding: 16, width: 'min(420px, 92vw)' }} onClick={e => e.stopPropagation()}>
+              <h3 style={{ marginTop: 0 }}>Sign in</h3>
+              <p>Enter your email to get a one-time sign-in link. No password needed.</p>
+              <form onSubmit={requestMagicLink} style={{ display: 'flex', gap: 8 }}>
+                <input type="email" placeholder="you@example.com" value={signinEmail} onChange={e => setSigninEmail(e.target.value)} required />
+                <button type="submit">Send link</button>
+              </form>
+            </div>
+          </div>
+        )}
         <section className="search-card">
           <h3>{ui?.strings['search.title'] || 'Keyword research'}</h3>
           <form onSubmit={onSubmit} className="row">
