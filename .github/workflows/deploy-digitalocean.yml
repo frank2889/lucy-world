@@ -36,12 +36,11 @@ jobs:
           else
             echo "Creating new App from spec (.do/app.yaml)"
             APP_JSON=$(doctl apps create --spec .do/app.yaml -o json)
-            echo "APP_JSON<<EOF" >> $GITHUB_ENV
-            echo "$APP_JSON" >> $GITHUB_ENV
-            echo "EOF" >> $GITHUB_ENV
-            NEW_ID=$(echo "$APP_JSON" | jq -r '.[0].id')
+            # Try parsing as object, then as array; support both response shapes
+            NEW_ID=$(echo "$APP_JSON" | jq -r '.id // .[0].id // empty')
             if [ -z "$NEW_ID" ] || [ "$NEW_ID" = "null" ]; then
               echo "Failed to parse new App ID from DigitalOcean response" >&2
+              echo "$APP_JSON" | jq '.' || echo "$APP_JSON"
               exit 1
             fi
             echo "Created App with ID: $NEW_ID"
@@ -55,7 +54,12 @@ jobs:
           set -e
           echo "Triggering deployment for App: ${APP_ID}"
           DEPLOY_JSON=$(doctl apps create-deployment "$APP_ID" -o json)
-          DEPLOY_ID=$(echo "$DEPLOY_JSON" | jq -r '.[0].id')
+          DEPLOY_ID=$(echo "$DEPLOY_JSON" | jq -r '.id // .[0].id // empty')
+          if [ -z "$DEPLOY_ID" ] || [ "$DEPLOY_ID" = "null" ]; then
+            echo "Failed to parse deployment ID from DigitalOcean response" >&2
+            echo "$DEPLOY_JSON" | jq '.' || echo "$DEPLOY_JSON"
+            exit 1
+          fi
           echo "Deployment created: $DEPLOY_ID"
           echo "DEPLOY_ID=${DEPLOY_ID}" >> $GITHUB_ENV
 
