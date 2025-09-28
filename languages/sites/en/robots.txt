@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+
+# This file overrides the default robots.txt for English if present.
+# If removed, the backend serves a generated robots pointing to /en/sitemap.xml
+Sitemap: https://lucy.world/en/sitemap.xml

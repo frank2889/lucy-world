@@ -1,0 +1,128 @@
+#!/usr/bin/env python3
+"""
+Generate per-locale site assets (robots.txt, sitemap.xml, structured.json)
+under languages/sites/<lang> for all available locales from languages/locales/.
+If an asset already exists, it will be left untouched unless --force is used.
+"""
+import argparse
+import datetime as dt
+import json
+import os
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[1]
+LOCALES_DIR = ROOT / 'languages' / 'locales'
+SITES_DIR = ROOT / 'languages' / 'sites'
+BASE_URL = os.environ.get('BASE_URL', 'https://lucy.world')
+TODAY = dt.date.today().isoformat()
+
+DEFAULT_ROBOTS = """User-agent: *
+Allow: /
+
+Sitemap: {base}/{lang}/sitemap.xml
+""".strip()
+
+DEFAULT_SITEMAP = """<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>{base}/{lang}/</loc>
+    <lastmod>{today}</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+  </url>
+</urlset>
+""".strip()
+
+DEFAULT_STRUCTURED = {
+    "@context": "https://schema.org",
+    "@graph": [
+        {
+            "@type": "Organization",
+            "name": "Lucy World",
+            "url": f"{BASE_URL}/",
+            "logo": f"{BASE_URL}/static/img/canva/logo-text.png",
+        },
+        {
+            "@type": "WebSite",
+            "name": "Lucy World",
+            "url": None,  # filled per-lang
+            "inLanguage": None,  # filled per-lang
+            "potentialAction": {
+                "@type": "SearchAction",
+                "target": None,  # filled per-lang
+                "query-input": "required name=search_term_string",
+            },
+        },
+    ],
+}
+
+
+def get_locales():
+    if not LOCALES_DIR.is_dir():
+        return []
+    return sorted(p.stem for p in LOCALES_DIR.glob('*.json'))
+
+
+def ensure_dir(path: Path):
+    path.mkdir(parents=True, exist_ok=True)
+
+
+def write_if_missing(path: Path, content: str, force: bool):
+    if path.exists() and not force:
+        return False
+    path.write_text(content, encoding='utf-8')
+    return True
+
+
+def generate_for_lang(lang: str, force: bool = False):
+    out_dir = SITES_DIR / lang
+    ensure_dir(out_dir)
+
+    robots = DEFAULT_ROBOTS.format(base=BASE_URL, lang=lang)
+    sitemap = DEFAULT_SITEMAP.format(base=BASE_URL, lang=lang, today=TODAY)
+
+    structured = DEFAULT_STRUCTURED.copy()
+    # Deep copy and fill fields
+    import copy
+
+    structured = copy.deepcopy(DEFAULT_STRUCTURED)
+    home = f"{BASE_URL}/{lang}/"
+    structured["@graph"][1]["url"] = home
+    structured["@graph"][1]["inLanguage"] = lang
+    structured["@graph"][1]["potentialAction"]["target"] = home + "?q={search_term_string}"
+
+    changed = False
+    changed |= write_if_missing(out_dir / 'robots.txt', robots + "\n", force)
+    changed |= write_if_missing(out_dir / 'sitemap.xml', sitemap + "\n", force)
+    changed |= write_if_missing(out_dir / 'structured.json', json.dumps(structured, ensure_ascii=False, indent=2) + "\n", force)
+    return changed
+
+
+def main():
+    parser = argparse.ArgumentParser(description='Generate per-locale site assets')
+    parser.add_argument('--force', action='store_true', help='Overwrite existing files')
+    parser.add_argument('--langs', nargs='*', help='Limit to specific languages (e.g., en nl de)')
+    args = parser.parse_args()
+
+    ensure_dir(SITES_DIR)
+
+    locales = args.langs if args.langs else get_locales()
+    if not locales:
+        print('No locales found in languages/locales; nothing to do.')
+        return 0
+
+    total_changed = 0
+    for lang in locales:
+        if len(lang) != 2 or not lang.isalpha():
+            continue
+        changed = generate_for_lang(lang, force=args.force)
+        if changed:
+            total_changed += 1
+            print(f"Generated/updated assets for {lang}")
+
+    print(f"Done. Languages processed: {len(locales)}; changes: {total_changed}")
+    return 0
+
+
+if __name__ == '__main__':
+    raise SystemExit(main())

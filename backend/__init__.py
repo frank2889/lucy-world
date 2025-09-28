@@ -242,6 +242,17 @@ def create_app() -> Flask:
 			hreflangs=hreflangs,
 		)
 
+	def _lang_asset_path(lang: str, filename: str) -> str | None:
+		"""Return absolute path to optional per-locale asset file if it exists.
+		Looks under languages/sites/<lang>/<filename>.
+		"""
+		lang = (lang or '').split('-')[0].lower()
+		if not lang:
+			return None
+		dir_path = os.path.join(project_root, 'languages', 'sites', lang)
+		path = os.path.join(dir_path, filename)
+		return path if os.path.exists(path) else None
+
 	@app.route('/')
 	def index_root():
 		"""Detect language and redirect to /<lang>/"""
@@ -262,6 +273,85 @@ def create_app() -> Flask:
 		if not available or lang not in available:
 			abort(404)
 		return _spa_response(lang)
+
+	# --------------------------------------------------------------------
+	# Per-locale SEO endpoints under /<lang>/*
+	# If languages/sites/<lang>/{robots.txt,sitemap.xml,structured.json} exist,
+	# serve those; otherwise generate localized defaults.
+	# --------------------------------------------------------------------
+	@app.route('/<lang>/robots.txt')
+	def robots_lang(lang: str):
+		lang = (lang or '').split('-')[0].lower()
+		available = set(_available_locales())
+		if not available or lang not in available:
+			abort(404)
+		override = _lang_asset_path(lang, 'robots.txt')
+		base = _base_url()
+		if override:
+			return send_file(override, mimetype='text/plain')
+		content = (
+			"User-agent: *\n"
+			"Allow: /\n\n"
+			f"Sitemap: {base}/{lang}/sitemap.xml\n"
+		)
+		return app.response_class(content, mimetype='text/plain')
+
+	@app.route('/<lang>/sitemap.xml')
+	def sitemap_lang(lang: str):
+		lang = (lang or '').split('-')[0].lower()
+		available = set(_available_locales())
+		if not available or lang not in available:
+			abort(404)
+		override = _lang_asset_path(lang, 'sitemap.xml')
+		if override:
+			return send_file(override, mimetype='application/xml')
+		# Default: include the localized homepage for this language
+		base = _base_url()
+		now = datetime.utcnow().strftime('%Y-%m-%d')
+		loc = f"{base}/{lang}/"
+		xml = (
+			"<?xml version=\"1.0\" encoding=\"UTF-8\"?>"
+			"<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">"
+			f"<url><loc>{loc}</loc><lastmod>{now}</lastmod><changefreq>daily</changefreq><priority>1.0</priority></url>"
+			"</urlset>"
+		)
+		return app.response_class(xml, mimetype='application/xml')
+
+	@app.route('/<lang>/structured.json')
+	def structured_lang(lang: str):
+		lang = (lang or '').split('-')[0].lower()
+		available = set(_available_locales())
+		if not available or lang not in available:
+			abort(404)
+		override = _lang_asset_path(lang, 'structured.json')
+		if override:
+			return send_file(override, mimetype='application/json')
+		# Default: localized website JSON-LD referencing the language homepage
+		base = _base_url()
+		home = f"{base}/{lang}/"
+		payload = {
+			"@context": "https://schema.org",
+			"@graph": [
+				{
+					"@type": "Organization",
+					"name": "Lucy World",
+					"url": base + "/",
+					"logo": base + "/static/img/canva/logo-text.png"
+				},
+				{
+					"@type": "WebSite",
+					"name": "Lucy World",
+					"url": home,
+					"inLanguage": lang,
+					"potentialAction": {
+						"@type": "SearchAction",
+						"target": home + "?q={search_term_string}",
+						"query-input": "required name=search_term_string"
+					}
+				}
+			]
+		}
+		return jsonify(payload)
 
 	# Catch-all for SPA routes under a valid language prefix; lets client-side routing work
 	@app.route('/<lang>/<path:subpath>')

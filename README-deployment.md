@@ -87,7 +87,7 @@ sudo tail -f /var/log/nginx/error.log
 
 ### Health Check
 ```bash
-curl https://search.lucy.world/health
+curl https://lucy.world/health
 ```
 
 ## 🔄 Updates
@@ -208,4 +208,4 @@ Voor vragen of problemen, check de logs of neem contact op met het development t
 
 ---
 
-**Live URL**: https://search.lucy.world
+**Live URL**: <https://lucy.world>

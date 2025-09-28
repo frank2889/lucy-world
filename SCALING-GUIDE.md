@@ -39,7 +39,7 @@ sudo systemctl status lucy-world-search
 ### Stap 2: Update Gunicorn Config
 ```bash
 # SSH naar je server
-ssh root@search.lucy.world
+ssh root@lucy.world
 
 # Edit Gunicorn config
 sudo nano /var/www/lucy-world-search/gunicorn.conf.py

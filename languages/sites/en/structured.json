@@ -1,0 +1,22 @@
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "name": "Lucy World",
+      "url": "https://lucy.world/",
+      "logo": "https://lucy.world/static/img/canva/logo-text.png"
+    },
+    {
+      "@type": "WebSite",
+      "name": "Lucy World",
+      "url": "https://lucy.world/en/",
+      "inLanguage": "en",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https://lucy.world/en/?q={search_term_string}",
+        "query-input": "required name=search_term_string"
+      }
+    }
+  ]
+}
