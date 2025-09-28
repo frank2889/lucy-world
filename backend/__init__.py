@@ -32,6 +32,12 @@ def create_app() -> Flask:
 
 	app = Flask(__name__, static_folder=static_folder, template_folder=templates_folder)
 
+	# Accept both trailing and non-trailing slash variants for all routes
+	try:
+		app.url_map.strict_slashes = False
+	except Exception:
+		pass
+
 	# Database setup (SQLite by default; can be overridden with DATABASE_URL)
 	db_url = os.getenv('DATABASE_URL') or os.getenv('DB_URL')
 	# Normalize DATABASE_URL for SQLAlchemy (postgres:// -> postgresql://)
@@ -242,6 +248,12 @@ def create_app() -> Flask:
 		lang = _detect_lang()
 		return redirect(f'/{lang}/', code=302)
 
+	# Redirect '/<lang>' (no trailing slash) to '/<lang>/'
+	@app.route('/<lang>')
+	def index_lang_redirect(lang: str):
+		lang = (lang or '').split('-')[0].lower()
+		return redirect(f'/{lang}/', code=301)
+
 	@app.route('/<lang>/')
 	def index_lang(lang: str):
 		"""Language-specific entry that sets hreflang and canonical; require exact locale."""
@@ -249,6 +261,16 @@ def create_app() -> Flask:
 		available = set(_available_locales())
 		if not available or lang not in available:
 			abort(404)
+		return _spa_response(lang)
+
+	# Catch-all for SPA routes under a valid language prefix; lets client-side routing work
+	@app.route('/<lang>/<path:subpath>')
+	def index_lang_catch_all(lang: str, subpath: str):
+		lang = (lang or '').split('-')[0].lower()
+		available = set(_available_locales())
+		if not available or lang not in available:
+			abort(404)
+		# Allow the SPA to handle any sub-routes under the language prefix
 		return _spa_response(lang)
 
 	@app.route('/search', methods=['GET', 'POST'])
@@ -266,14 +288,27 @@ def create_app() -> Flask:
 		# Toon de nieuwe Lucy World UI i.p.v. de oude Canva pagina
 		return render_template('lucy_index.html')
 
+	# Convenience shortcuts for legacy links
+	@app.route('/free')
+	def free_shortcut():
+		return index_root()
+
 	@app.route('/search/advanced')
 	def advanced_index():
 		"""Geavanceerde keyword research tool UI"""
 		return index_root()
 
+	@app.route('/advanced')
+	def advanced_shortcut():
+		return index_root()
+
 	@app.route('/search/scale')
 	def scale_index():
 		"""Scale pagina"""
+		return index_root()
+
+	@app.route('/scale')
+	def scale_shortcut():
 		return index_root()
 
 	# Serve built React assets under /app/* (convenience)
@@ -299,6 +334,12 @@ def create_app() -> Flask:
 		)
 		return app.response_class(content, mimetype='text/plain')
 
+	# Standard robots.txt alias at the root
+	@app.route('/robots.txt')
+	@app.route('/robots.txt/')
+	def robots_root():
+		return meta_robots()
+
 	@app.route('/meta/sitemap.xml')
 	def meta_sitemap():
 		"""XML sitemap with language-specific home URLs (only available locales)."""
@@ -316,6 +357,22 @@ def create_app() -> Flask:
 			f"{items}</urlset>"
 		)
 		return app.response_class(xml, mimetype='application/xml')
+
+	# Standard sitemap.xml alias at the root
+	@app.route('/sitemap.xml')
+	@app.route('/sitemap.xml/')
+	def sitemap_root():
+		return meta_sitemap()
+
+	# Favicon (avoid 404s); serve project logo as fallback
+	@app.route('/favicon.ico')
+	def favicon():
+		try:
+			return send_from_directory(os.path.join(app.static_folder or 'static', 'img', 'canva'), 'logo-text.png')
+		except Exception:
+			# 1x1 transparent gif
+			gif = b"GIF89a\x01\x00\x01\x00\x80\x00\x00\x00\x00\x00\xff\xff\xff!\xf9\x04\x01\x00\x00\x00\x00,\x00\x00\x00\x00\x01\x00\x01\x00\x00\x02\x02D\x01\x00;"
+			return send_file(io.BytesIO(gif), mimetype='image/gif')
 
 	@app.route('/meta/feeds.xml')
 	def meta_feed():
@@ -405,6 +462,23 @@ def create_app() -> Flask:
 			}
 		}
 		return jsonify(manifest)
+
+	# ------------------------------------------------------------------------
+	# Basic legal pages (minimal HTML) referenced by meta_structured
+	# ------------------------------------------------------------------------
+	@app.route('/privacy')
+	def privacy_page():
+		try:
+			return render_template('privacy.html')
+		except Exception:
+			return app.response_class('<!doctype html><title>Privacy Policy</title><h1>Privacy Policy</h1><p>We respect your privacy. No personal data is sold or shared. Contact support@lucy.world for questions.</p>', mimetype='text/html')
+
+	@app.route('/terms')
+	def terms_page():
+		try:
+			return render_template('terms.html')
+		except Exception:
+			return app.response_class('<!doctype html><title>Terms of Service</title><h1>Terms of Service</h1><p>Use Lucy World at your own risk. No warranties. Contact support@lucy.world for details.</p>', mimetype='text/html')
 
 	@app.route('/meta/detect.json')
 	def meta_detect():
