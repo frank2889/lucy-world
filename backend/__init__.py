@@ -358,21 +358,13 @@ def create_app() -> Flask:
 		)
 
 	def _lang_asset_path(lang: str, filename: str) -> str | None:
-		"""Return absolute path to optional per-locale asset file if it exists.
-		Prefers languages/<lang>/<filename>, then falls back to languages/sites/<lang>/<filename>.
-		"""
+		"""Return absolute path to per-locale asset file if it exists under languages/<lang>/<filename>."""
 		lang = (lang or '').split('-')[0].lower()
 		if not lang:
 			return None
-		# New layout
-		new_dir = os.path.join(project_root, 'languages', lang)
-		new_path = os.path.join(new_dir, filename)
-		if os.path.exists(new_path):
-			return new_path
-		# Legacy layout
-		legacy_dir = os.path.join(project_root, 'languages', 'sites', lang)
-		legacy_path = os.path.join(legacy_dir, filename)
-		return legacy_path if os.path.exists(legacy_path) else None
+		dir_path = os.path.join(project_root, 'languages', lang)
+		path = os.path.join(dir_path, filename)
+		return path if os.path.exists(path) else None
 
 	@app.route('/')
 	def index_root():
@@ -397,7 +389,7 @@ def create_app() -> Flask:
 
 	# --------------------------------------------------------------------
 	# Per-locale SEO endpoints under /<lang>/*
-	# If languages/sites/<lang>/{robots.txt,sitemap.xml,structured.json} exist,
+	# If languages/<lang>/{robots.txt,sitemap.xml,structured.json} exist,
 	# serve those; otherwise generate localized defaults.
 	# --------------------------------------------------------------------
 	@app.route('/<lang>/robots.txt')
