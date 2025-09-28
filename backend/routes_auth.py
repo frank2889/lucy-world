@@ -17,7 +17,7 @@ bp = Blueprint('auth', __name__, url_prefix='/api/auth')
 
 @bp.route('/request', methods=['POST'])
 def request_magic_link():
-    data = request.get_json() or {}
+    data = request.get_json(silent=True) or {}
     email = (data.get('email') or '').strip().lower()
     name = (data.get('name') or '').strip() or None
     if not email:
@@ -49,7 +49,7 @@ def request_magic_link():
 
 @bp.route('/verify', methods=['GET', 'POST'])
 def verify_magic_link():
-    token = request.args.get('token') or ((request.get_json() or {}).get('token') if request.is_json else None)
+    token = request.args.get('token') or ((request.get_json(silent=True) or {}).get('token') if request.is_json else None)
     if not token:
         return jsonify({'error': 'token required'}), 400
     lt = LoginToken.query.filter_by(token=token).first()

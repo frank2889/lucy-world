@@ -742,6 +742,11 @@ def create_app() -> Flask:
 	def not_found(error):
 		return jsonify({'error': 'Endpoint niet gevonden'}), 404
 
+	@app.errorhandler(400)
+	def bad_request(error):
+		# Return JSON for APIs rather than HTML default
+		return jsonify({'error': 'Bad request'}), 400
+
 	@app.errorhandler(500)
 	def internal_error(error):
 		logger.error(f"Internal server error: {error}")
