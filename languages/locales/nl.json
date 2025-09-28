@@ -13,5 +13,7 @@
     "kpi.total_volume": "Totaal volume",
     "kpi.real_data_keywords": "Echte data keywords",
     "kpi.avg_interest": "Gem. interesse"
+    ,
+    "hint.site_vs_search": "Bovenbalk toont je huidige site-locatie en UI-taal. De selecties hierboven bepalen zoekland en zoektaal."
   }
 }

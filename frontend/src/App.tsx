@@ -44,11 +44,23 @@ function nl(n?: number) {
 }
 
 export default function App() {
-  // Detect UI language from URL prefix: /<lang>/ ... fallback to 'nl'
-  const urlLang = (typeof window !== 'undefined' ? window.location.pathname.split('/').filter(Boolean)[0] : '') || 'en'
+  // Detect UI language from URL prefix: /<lang>/ ... fallback to saved preference, then 'en'
+  const urlLang = (typeof window !== 'undefined' ? window.location.pathname.split('/').filter(Boolean)[0] : '')
   const [ui, setUi] = useState<{ lang: string; dir: 'ltr' | 'rtl'; strings: Record<string,string> } | null>(null)
   useEffect(() => {
-    const lang = (urlLang || 'en').split('-')[0]
+    // Prefer URL language when present; otherwise prefer saved UI language; else 'en'
+    let lang = (urlLang || '').split('-')[0].toLowerCase()
+    if (!lang || !/^[a-z]{2}$/i.test(lang)) {
+      try {
+        const saved = localStorage.getItem('lw_lang') || ''
+        if (saved && /^[a-z]{2}$/i.test(saved)) {
+          lang = saved.toLowerCase()
+        }
+      } catch {
+        /* ignore */
+      }
+    }
+    if (!lang) lang = 'en'
     fetch(`/meta/content/${lang}.json`).then(r => r.json()).then((data) => {
       setUi(data)
       if (typeof document !== 'undefined') {
