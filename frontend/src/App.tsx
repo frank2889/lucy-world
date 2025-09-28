@@ -81,7 +81,7 @@ export default function App() {
   // Localized country display name for the topbar pill
   const displayCountryName = useMemo(() => {
     try {
-      const cc = (detectedCountry || country || 'US').toUpperCase()
+      const cc = (detectedCountry || 'US').toUpperCase()
       const langCode = (ui?.lang || language || 'en').toLowerCase()
       const ctor: any = (Intl as any).DisplayNames
       if (ctor) {
@@ -91,9 +91,9 @@ export default function App() {
       }
       return cc
     } catch {
-      return (detectedCountry || country || 'US').toUpperCase()
+      return (detectedCountry || 'US').toUpperCase()
     }
-  }, [detectedCountry, country, ui?.lang, language])
+  }, [detectedCountry, ui?.lang, language])
 
   const categoryOrder = useMemo(
     () => ['google_suggestions', 'trends_related', 'related_questions', 'wikipedia_terms'],
@@ -238,14 +238,14 @@ export default function App() {
         <div className="desktopbar" style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '12px 14px', borderBottom: '1px solid var(--line)', position: 'sticky', top: 0, zIndex: 9, background: 'rgba(11,13,16,0.6)', backdropFilter: 'saturate(180%) blur(10px)' }}>
           <div className="brand">Lucy <span>World</span></div>
           <div style={{ marginLeft: 'auto', display: 'inline-flex', alignItems: 'center', gap: 8 }}>
-            {/* Country indicator (always shows detected country if available) */}
+            {/* Country indicator (always shows current detected location; independent from search settings) */}
             <div
               className="country-pill"
-              title={(detectedCountry || country).toUpperCase()}
-              aria-label={`Country ${(detectedCountry || country).toUpperCase()}`}
+              title={(detectedCountry || 'US').toUpperCase()}
+              aria-label={`Country ${(detectedCountry || 'US').toUpperCase()}`}
               style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: 'transparent', color: 'var(--text)', border: '1px solid var(--line)', padding: '8px 10px', borderRadius: 10 }}
             >
-              <span aria-hidden style={{ fontSize: 14 }}>{flagEmoji((detectedCountry || country).toUpperCase())}</span>
+              <span aria-hidden style={{ fontSize: 14 }}>{flagEmoji((detectedCountry || 'US').toUpperCase())}</span>
               <span style={{ fontWeight: 600 }}>{displayCountryName}</span>
             </div>
             {/* Reuse the lang switch button */}
@@ -280,14 +280,14 @@ export default function App() {
           <div className="brand">Lucy <span>World</span></div>
           <div className="topbar-actions" style={{ marginLeft: 'auto', display: 'inline-flex', alignItems: 'center', gap: 8 }}>
             <div className="lang-switch" style={{ position: 'relative' }}>
-              {/* Country indicator (always shows detected country if available) */}
+              {/* Country indicator (always shows current detected location; independent from search settings) */}
               <div
                 className="country-pill"
-                title={(detectedCountry || country).toUpperCase()}
-                aria-label={`Country ${(detectedCountry || country).toUpperCase()}`}
+                title={(detectedCountry || 'US').toUpperCase()}
+                aria-label={`Country ${(detectedCountry || 'US').toUpperCase()}`}
                 style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: 'transparent', color: 'var(--text)', border: '1px solid var(--line)', padding: '8px 10px', borderRadius: 10, marginRight: 8 }}
               >
-                <span aria-hidden style={{ fontSize: 14 }}>{flagEmoji((detectedCountry || country).toUpperCase())}</span>
+                <span aria-hidden style={{ fontSize: 14 }}>{flagEmoji((detectedCountry || 'US').toUpperCase())}</span>
                 <span style={{ fontWeight: 600 }}>{displayCountryName}</span>
               </div>
               <button
@@ -387,6 +387,10 @@ export default function App() {
             </button>
           </form>
           <div className="hint">{ui?.strings['search.hint'] || 'Free suggestions and trends. Results appear below.'}</div>
+          <div className="hint" style={{opacity:0.8}}>
+            {/* Clarify UX distinction between site locale and search settings */}
+            {(ui?.strings['hint.site_vs_search'] || 'Top bar shows your current site location and UI language. The selects above control search country and search language.')}
+          </div>
           {error && <div className="error">{error}</div>}
         </section>
 
