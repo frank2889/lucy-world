@@ -12,7 +12,8 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 LOCALES_DIR = ROOT / 'languages' / 'locales'
-SITES_DIR = ROOT / 'languages' / 'sites'
+SITES_DIR_LEGACY = ROOT / 'languages' / 'sites'
+SITES_DIR_NEW = ROOT / 'languages'
 BASE_URL = os.environ.get('BASE_URL', 'https://lucy.world')
 TODAY = dt.date.today().isoformat()
 
@@ -87,8 +88,8 @@ def write_if_missing(path: Path, content: str, force: bool):
     return True
 
 
-def generate_for_lang(lang: str, force: bool = False):
-    out_dir = SITES_DIR / lang
+def generate_for_lang(lang: str, force: bool = False, layout: str = 'new'):
+    out_dir = (SITES_DIR_NEW / lang) if layout == 'new' else (SITES_DIR_LEGACY / lang)
     ensure_dir(out_dir)
 
     robots = DEFAULT_ROBOTS.format(base=BASE_URL, lang=lang)
@@ -155,9 +156,11 @@ def main():
     parser.add_argument('--force', action='store_true', help='Overwrite existing files')
     parser.add_argument('--langs', nargs='*', help='Limit to specific languages (e.g., en nl de)')
     parser.add_argument('--exclude', nargs='*', default=[], help='Exclude languages (e.g., en nl)')
+    parser.add_argument('--layout', choices=['new','legacy'], default='new', help='Output layout: languages/<lang>/* or languages/sites/<lang>/*')
     args = parser.parse_args()
 
-    ensure_dir(SITES_DIR)
+    ensure_dir(SITES_DIR_NEW)
+    ensure_dir(SITES_DIR_LEGACY)
 
     locales = args.langs if args.langs else get_locales()
     if args.exclude:
@@ -171,7 +174,7 @@ def main():
     for lang in locales:
         if len(lang) != 2 or not lang.isalpha():
             continue
-        changed = generate_for_lang(lang, force=args.force)
+        changed = generate_for_lang(lang, force=args.force, layout=args.layout)
         if changed:
             total_changed += 1
             print(f"Generated/updated assets for {lang}")
