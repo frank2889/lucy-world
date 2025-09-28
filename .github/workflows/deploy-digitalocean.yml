@@ -1,0 +1,74 @@
+name: Deploy to DigitalOcean App Platform
+
+on:
+  push:
+    branches: [ main ]
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install doctl
+        uses: digitalocean/action-doctl@v2
+        with:
+          token: ${{ secrets.DO_API_TOKEN }}
+
+      - name: Install jq
+        run: sudo apt-get update && sudo apt-get install -y jq
+
+      - name: Create or update App from spec
+        id: do-app
+        env:
+          DO_APP_ID: ${{ secrets.DO_APP_ID }}
+        run: |
+          set -e
+          if [ -n "${DO_APP_ID}" ]; then
+            echo "Updating existing App: ${DO_APP_ID}"
+            doctl apps update "${DO_APP_ID}" --spec .do/app.yaml
+            echo "APP_ID=${DO_APP_ID}" >> $GITHUB_ENV
+          else
+            echo "Creating new App from spec (.do/app.yaml)"
+            APP_JSON=$(doctl apps create --spec .do/app.yaml -o json)
+            echo "APP_JSON<<EOF" >> $GITHUB_ENV
+            echo "$APP_JSON" >> $GITHUB_ENV
+            echo "EOF" >> $GITHUB_ENV
+            NEW_ID=$(echo "$APP_JSON" | jq -r '.[0].id')
+            if [ -z "$NEW_ID" ] || [ "$NEW_ID" = "null" ]; then
+              echo "Failed to parse new App ID from DigitalOcean response" >&2
+              exit 1
+            fi
+            echo "Created App with ID: $NEW_ID"
+            echo "APP_ID=${NEW_ID}" >> $GITHUB_ENV
+          fi
+
+      - name: Trigger deployment
+        env:
+          APP_ID: ${{ env.APP_ID }}
+        run: |
+          set -e
+          echo "Triggering deployment for App: ${APP_ID}"
+          DEPLOY_JSON=$(doctl apps create-deployment "$APP_ID" -o json)
+          DEPLOY_ID=$(echo "$DEPLOY_JSON" | jq -r '.[0].id')
+          echo "Deployment created: $DEPLOY_ID"
+          echo "DEPLOY_ID=${DEPLOY_ID}" >> $GITHUB_ENV
+
+      - name: Show deployment status (non-blocking)
+        env:
+          APP_ID: ${{ env.APP_ID }}
+          DEPLOY_ID: ${{ env.DEPLOY_ID }}
+        run: |
+          echo "Fetch latest deployment status for $APP_ID / $DEPLOY_ID"
+          doctl apps deployments get "$APP_ID" "$DEPLOY_ID" -o json | jq '.'
+
+      - name: Summary
+        run: |
+          echo "DigitalOcean App deployment triggered." >> $GITHUB_STEP_SUMMARY
+          echo "App ID: ${APP_ID}" >> $GITHUB_STEP_SUMMARY
+          echo "Deployment ID: ${DEPLOY_ID}" >> $GITHUB_STEP_SUMMARY
