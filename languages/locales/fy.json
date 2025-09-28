@@ -1,0 +1,17 @@
+{
+  "lang": "fy",
+  "dir": "ltr",
+  "strings": {
+    "nav.search": "Search",
+    "nav.advanced": "Advanced (soon)",
+    "nav.trends": "Trends (soon)",
+    "search.title": "Keyword research",
+    "search.placeholder": "Enter a keyword (e.g., pizza delivery)",
+    "search.button": "Search",
+    "search.hint": "Free suggestions and trends. Results appear below.",
+    "kpi.total_keywords": "Total keywords",
+    "kpi.total_volume": "Total volume",
+    "kpi.real_data_keywords": "Real data keywords",
+    "kpi.avg_interest": "Avg. interest"
+  }
+}

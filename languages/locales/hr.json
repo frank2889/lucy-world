@@ -1,0 +1,17 @@
+{
+  "lang": "hr",
+  "dir": "ltr",
+  "strings": {
+    "nav.search": "Pretraga",
+    "nav.advanced": "Napredno (uskoro)",
+    "nav.trends": "Trendovi (uskoro)",
+    "search.title": "Istraživanje ključnih riječi",
+    "search.placeholder": "Unesite ključnu riječ (npr. dostava pizze)",
+    "search.button": "Traži",
+    "search.hint": "Besplatni prijedlozi i trendovi. Rezultati se prikazuju ispod.",
+    "kpi.total_keywords": "Ukupno ključnih riječi",
+    "kpi.total_volume": "Ukupan volumen",
+    "kpi.real_data_keywords": "Ključne riječi s pravim podacima",
+    "kpi.avg_interest": "Prosj. interes"
+  }
+}

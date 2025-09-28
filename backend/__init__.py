@@ -9,7 +9,7 @@ import csv
 import io
 import logging
 from datetime import datetime
-from flask import Flask, render_template, request, jsonify, send_file, redirect
+from flask import Flask, render_template, request, jsonify, send_file, redirect, abort
 from flask import send_from_directory
 from werkzeug.middleware.proxy_fix import ProxyFix
 
@@ -82,6 +82,25 @@ def create_app() -> Flask:
 			if primary:
 				return primary
 		return ['en','nl']
+
+	def _available_locales() -> list[str]:
+		"""Return the exact language codes that have real UI locale files."""
+		locales_dir = os.path.join(project_root, 'languages', 'locales')
+		legacy_locales_dir = os.path.join(project_root, 'locales')
+		codes: list[str] = []
+		use_dir = None
+		if os.path.isdir(locales_dir):
+			use_dir = locales_dir
+		elif os.path.isdir(legacy_locales_dir):
+			use_dir = legacy_locales_dir
+		if use_dir:
+			for name in sorted(os.listdir(use_dir)):
+				if name.endswith('.json'):
+					if name.endswith('.default.json'):
+						codes.append(name.split('.default.json')[0])
+					else:
+						codes.append(name[:-5])
+		return sorted(set(codes))
 
 	def _detect_lang() -> str:
 		al = request.headers.get('Accept-Language', '')
@@ -168,9 +187,9 @@ def create_app() -> Flask:
 			manifest_css = f"/static/app/{css_files[0]}" if not css_files[0].startswith('/static/app/') else css_files[0]
 		manifest_js = f"/static/app/{js_file}" if js_file and not str(js_file).startswith('/static/app/') else js_file
 
-		# Build hreflangs for supported languages
+		# Build hreflangs for available locales (no fallback)
 		hreflangs = {}
-		for code in _supported_langs():
+		for code in (_available_locales() or _supported_langs()):
 			# Only expose two-letter ISO 639-1 codes in hreflang
 			c = (code or '').split('-')[0].lower()
 			if len(c) == 2 and c.isalpha():
@@ -200,10 +219,11 @@ def create_app() -> Flask:
 
 	@app.route('/<lang>/')
 	def index_lang(lang: str):
-		"""Language-specific entry that sets hreflang and canonical."""
+		"""Language-specific entry that sets hreflang and canonical; require exact locale."""
 		lang = (lang or '').split('-')[0].lower()
-		if lang not in _supported_langs():
-			lang = _detect_lang()
+		available = set(_available_locales())
+		if not available or lang not in available:
+			abort(404)
 		return _spa_response(lang)
 
 	@app.route('/search', methods=['GET', 'POST'])
@@ -256,10 +276,10 @@ def create_app() -> Flask:
 
 	@app.route('/meta/sitemap.xml')
 	def meta_sitemap():
-		"""XML sitemap with language-specific home URLs."""
+		"""XML sitemap with language-specific home URLs (only available locales)."""
 		base = _base_url()
 		now = datetime.utcnow().strftime('%Y-%m-%d')
-		langs = _supported_langs()
+		langs = _available_locales() or _supported_langs()
 		urls = [{"loc": f"{base}/{lang}/", "priority": "1.0"} for lang in langs]
 		items = "".join(
 			f"<url><loc>{u['loc']}</loc><lastmod>{now}</lastmod><changefreq>daily</changefreq><priority>{u['priority']}</priority></url>"
@@ -374,24 +394,19 @@ def create_app() -> Flask:
 
 	@app.route('/meta/content/<lang>.json')
 	def meta_content_lang(lang: str):
-		"""Serve UI content JSON for a given language from content/i18n."""
+		"""Serve UI content JSON only for exact available locales; no fallback."""
 		lang = (lang or '').split('-')[0].lower()
-		# Prefer languages/locales directory; also support project_root/locales for compatibility
+		# Determine locales directory
 		locales_dir = os.path.join(project_root, 'languages', 'locales')
 		legacy_locales_dir = os.path.join(project_root, 'locales')
-		if os.path.isdir(locales_dir) or os.path.isdir(legacy_locales_dir):
-			use_dir = locales_dir if os.path.isdir(locales_dir) else legacy_locales_dir
-			content_path = os.path.join(use_dir, f'{lang}.json')
-			# Support either en.json or en.default.json as the base
-			fallback_path = os.path.join(use_dir, 'en.json')
-			if not os.path.exists(fallback_path):
-				fallback_path = os.path.join(use_dir, 'en.default.json')
-		else:
-			content_path = os.path.join(project_root, 'content', 'i18n', f'{lang}.json')
-			fallback_path = os.path.join(project_root, 'content', 'i18n', 'en.json')
-		path = content_path if os.path.exists(content_path) else fallback_path
+		use_dir = locales_dir if os.path.isdir(locales_dir) else (legacy_locales_dir if os.path.isdir(legacy_locales_dir) else None)
+		if not use_dir:
+			abort(404)
+		content_path = os.path.join(use_dir, f'{lang}.json')
+		if not os.path.exists(content_path):
+			abort(404)
 		try:
-			with open(path, 'r', encoding='utf-8') as f:
+			with open(content_path, 'r', encoding='utf-8') as f:
 				raw = json.load(f)
 			# Accept both our current shape and Shopify-style (keys at root)
 			if isinstance(raw, dict) and 'strings' in raw and isinstance(raw['strings'], dict):
@@ -401,8 +416,8 @@ def create_app() -> Flask:
 				rtl_langs = {'ar','he','fa','ur'}
 				data = { 'lang': lang, 'dir': 'rtl' if lang in rtl_langs else 'ltr', 'strings': raw if isinstance(raw, dict) else {} }
 			return jsonify(data)
-		except Exception as e:
-			return jsonify({"lang": lang, "dir": "ltr", "strings": {}}), 200
+		except Exception:
+			abort(404)
 
 	@app.route('/meta/locales.json')
 	def meta_locales():
@@ -429,12 +444,12 @@ def create_app() -> Flask:
 
 	@app.route('/meta/languages.json')
 	def meta_languages():
-		"""Return supported language codes from the master list (simple array)."""
+		"""Return only languages that have real locale files available."""
 		try:
-			langs = _supported_langs()
+			langs = _available_locales()
 			return jsonify({"languages": langs})
 		except Exception:
-			return jsonify({"languages": ['en','nl']})
+			return jsonify({"languages": ['en']})
 
 	@app.route('/meta/countries.json')
 	def meta_countries():
