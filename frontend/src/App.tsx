@@ -88,6 +88,8 @@ export default function App() {
   })
   const [showSignin, setShowSignin] = useState(false)
   const [signinEmail, setSigninEmail] = useState('')
+  const [showProjects, setShowProjects] = useState(false)
+  const [projects, setProjects] = useState<Array<{ id: number; name: string; description?: string | null; language?: string | null; country?: string | null; updated_at?: string }>>([])
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [langMenuOpen, setLangMenuOpen] = useState(false)
   const currentLangLabel = useMemo(() => {
@@ -160,6 +162,75 @@ export default function App() {
     const t = localStorage.getItem('lw_token')
     if (t && t !== token) setToken(t)
   }, [])
+
+  const loadProjects = async () => {
+    try {
+      const t = token || localStorage.getItem('lw_token')
+      if (!t) {
+        setShowSignin(true)
+        return
+      }
+      const res = await fetch('/api/projects', { headers: { 'Authorization': `Bearer ${t}` } })
+      if (!res.ok) throw new Error('Failed to load projects')
+      const j = await res.json()
+      setProjects(Array.isArray(j) ? j : [])
+      setShowProjects(true)
+    } catch (err: any) {
+      alert(err?.message || 'Could not load projects')
+    }
+  }
+
+  const openProject = async (pid: number) => {
+    try {
+      const t = token || localStorage.getItem('lw_token')
+      if (!t) { setShowSignin(true); return }
+      const res = await fetch(`/api/projects/${pid}`, { headers: { 'Authorization': `Bearer ${t}` } })
+      if (!res.ok) throw new Error('Failed to open project')
+      const j = await res.json()
+      // Restore search context
+      if (j.language) setSearchLanguage(String(j.language))
+      if (j.country) setCountry(String(j.country))
+      if (j.data) setData(j.data)
+      setShowProjects(false)
+    } catch (err: any) {
+      alert(err?.message || 'Open failed')
+    }
+  }
+
+  const renameProject = async (pid: number) => {
+    const newName = prompt('New project name:')
+    if (!newName) return
+    try {
+      const t = token || localStorage.getItem('lw_token')
+      if (!t) { setShowSignin(true); return }
+      const res = await fetch(`/api/projects/${pid}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${t}` },
+        body: JSON.stringify({ name: newName.trim() })
+      })
+      if (!res.ok) throw new Error('Rename failed')
+      // update locally
+      setProjects(prev => prev.map(p => p.id === pid ? { ...p, name: newName.trim() } : p))
+    } catch (err: any) {
+      alert(err?.message || 'Rename failed')
+    }
+  }
+
+  const deleteProject = async (pid: number) => {
+    if (!confirm('Delete this project?')) return
+    try {
+      const t = token || localStorage.getItem('lw_token')
+      if (!t) { setShowSignin(true); return }
+      const res = await fetch(`/api/projects/${pid}`, {
+        method: 'DELETE',
+        headers: { 'Authorization': `Bearer ${t}` }
+      })
+      if (!res.ok) throw new Error('Delete failed')
+      setProjects(prev => prev.filter(p => p.id !== pid))
+    } catch (err: any) {
+      alert(err?.message || 'Delete failed')
+    }
+  }
 
   const saveProject = async () => {
     try {
@@ -318,6 +389,13 @@ export default function App() {
               <span aria-hidden style={{ fontSize: 14 }}>{flagEmoji((detectedCountry || 'US').toUpperCase())}</span>
               <span style={{ fontWeight: 600 }}>{displayCountryName}</span>
             </div>
+            <button
+              type="button"
+              onClick={loadProjects}
+              style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: 'transparent', color: 'var(--text)', border: '1px solid var(--line)', padding: '8px 10px', borderRadius: 10 }}
+            >
+              📁 My projects
+            </button>
             {/* Save project / Sign-in */}
             <button
               type="button"
@@ -443,6 +521,36 @@ export default function App() {
                 <input type="email" placeholder="you@example.com" value={signinEmail} onChange={e => setSigninEmail(e.target.value)} required />
                 <button type="submit">Send link</button>
               </form>
+            </div>
+          </div>
+        )}
+
+        {showProjects && (
+          <div style={{ position: 'fixed', inset: 0 as any, background: 'rgba(0,0,0,0.5)', display: 'grid', placeItems: 'center', zIndex: 50 }} onClick={() => setShowProjects(false)}>
+            <div style={{ background: '#0e1217', border: '1px solid var(--line)', borderRadius: 12, padding: 16, width: 'min(720px, 92vw)' }} onClick={e => e.stopPropagation()}>
+              <div style={{ display: 'flex', alignItems: 'center' }}>
+                <h3 style={{ margin: 0, flex: 1 }}>My projects</h3>
+                <button onClick={() => setShowProjects(false)} aria-label="Close" style={{ background: 'transparent', border: 0, color: 'var(--text)', fontSize: 20 }}>✕</button>
+              </div>
+              {projects.length === 0 ? (
+                <p style={{ marginTop: 12 }}>No projects yet. Run a search and click "Save project" to create one.</p>
+              ) : (
+                <div style={{ marginTop: 12, display: 'grid', gap: 8 }}>
+                  {projects.map((p) => (
+                    <div key={p.id} style={{ display: 'flex', alignItems: 'center', gap: 10, border: '1px solid var(--line)', borderRadius: 10, padding: '10px 12px' }}>
+                      <div style={{ flex: 1, minWidth: 0 }}>
+                        <div style={{ fontWeight: 600, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{p.name}</div>
+                        <div style={{ opacity: 0.7, fontSize: 12 }}>{[(p.language || '').toUpperCase(), p.country]?.filter(Boolean).join(' • ')}{p.updated_at ? ` • ${new Date(p.updated_at).toLocaleString()}` : ''}</div>
+                      </div>
+                      <div style={{ display: 'inline-flex', gap: 8 }}>
+                        <button onClick={() => openProject(p.id)} title="Open" style={{ background: 'transparent', border: '1px solid var(--line)', borderRadius: 8, color: 'var(--text)', padding: '6px 10px' }}>Open</button>
+                        <button onClick={() => renameProject(p.id)} title="Rename" style={{ background: 'transparent', border: '1px solid var(--line)', borderRadius: 8, color: 'var(--text)', padding: '6px 10px' }}>Rename</button>
+                        <button onClick={() => deleteProject(p.id)} title="Delete" style={{ background: 'transparent', border: '1px solid var(--line)', borderRadius: 8, color: 'var(--text)', padding: '6px 10px' }}>Delete</button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
           </div>
         )}
