@@ -36,7 +36,9 @@ button[disabled]{opacity:.6;cursor:progress}
 h3{margin:0 0 6px 0;font-size:18px}
 h4{margin:0 0 10px 0;font-size:15px;color:var(--muted)}
 .pill{display:inline-block;background:#0e1217;border:1px solid var(--line);padding:6px 10px;border-radius:999px;margin:4px 6px 0 0;font-size:13px}
-.footer{padding:28px 20px;color:var(--muted);border-top:1px solid var(--line);margin-top:40px;font-size:13px}
+.footer{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:28px 20px;color:var(--muted);border-top:1px solid var(--line);margin-top:40px;font-size:13px;flex-wrap:wrap}
+.footer-signin{background:transparent;color:var(--accent);border:1px solid var(--line);padding:10px 16px;border-radius:999px;font-size:13px;font-weight:600;cursor:pointer;transition:background .2s ease,color .2s ease}
+.footer-signin:hover,.footer-signin:focus{background:var(--accent);color:#062a20;outline:none}
 
 /* overlay for mobile sidebar */
 .overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);opacity:0;pointer-events:none;transition:opacity .2s ease;z-index:15}

@@ -657,6 +657,17 @@ export default function App() {
             </section>
           </>
         )}
+
+        <footer className="footer">
+          <span>© {new Date().getFullYear()} Lucy World</span>
+          <button
+            type="button"
+            className="footer-signin"
+            onClick={() => setShowSignin(true)}
+          >
+            {ui?.strings['footer.signin'] || 'Sign in for Premium'}
+          </button>
+        </footer>
         </div>
         
       </div>
