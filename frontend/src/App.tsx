@@ -63,12 +63,22 @@ export default function App() {
     if (!lang) lang = 'en'
     fetch(`/meta/content/${lang}.json`).then(r => r.json()).then((data) => {
       setUi(data)
+      const resolvedLang = (data?.lang || lang || 'en').toLowerCase()
+      setLanguage(prev => {
+        const prevLower = (prev || '').toLowerCase()
+        return prevLower !== resolvedLang ? resolvedLang : prev
+      })
       if (typeof document !== 'undefined') {
         document.documentElement.lang = data.lang || lang
         document.documentElement.dir = data.dir || 'ltr'
       }
     }).catch(() => {
-      setUi({ lang: lang, dir: 'ltr', strings: {} })
+      setUi({ lang, dir: 'ltr', strings: {} })
+      setLanguage(prev => {
+        const prevLower = (prev || '').toLowerCase()
+        const resolved = (lang || 'en').toLowerCase()
+        return prevLower !== resolved ? resolved : prev
+      })
     })
   }, [urlLang])
   const [keyword, setKeyword] = useState('')
