@@ -380,7 +380,15 @@ export default function App() {
           <a className="nav-item muted" onClick={() => setSidebarOpen(false)}>{ui?.strings['nav.advanced'] || 'Advanced (soon)'}</a>
           <a className="nav-item muted" onClick={() => setSidebarOpen(false)}>{ui?.strings['nav.trends'] || 'Trends (soon)'}</a>
         </nav>
-        <div className="sidebar-footer">© {new Date().getFullYear()} Lucy World</div>
+        <div className="sidebar-footer">
+          <span>© {new Date().getFullYear()} Lucy World</span>
+          <button
+            type="button"
+            onClick={() => setShowSignin(true)}
+          >
+            {ui?.strings['footer.signin'] || 'Sign in for Premium'}
+          </button>
+        </div>
       </aside>
       <div className={`overlay ${sidebarOpen ? 'show' : ''}`} onClick={() => setSidebarOpen(false)} />
 
@@ -659,14 +667,7 @@ export default function App() {
         )}
 
         <footer className="footer">
-          <span>© {new Date().getFullYear()} Lucy World</span>
-          <button
-            type="button"
-            className="footer-signin"
-            onClick={() => setShowSignin(true)}
-          >
-            {ui?.strings['footer.signin'] || 'Sign in for Premium'}
-          </button>
+          © {new Date().getFullYear()} Lucy World
         </footer>
         </div>
         
