@@ -101,7 +101,16 @@ export default function App() {
   const [showProjects, setShowProjects] = useState(false)
   const [projects, setProjects] = useState<Array<{ id: number; name: string; description?: string | null; language?: string | null; country?: string | null; updated_at?: string }>>([])
   const [sidebarOpen, setSidebarOpen] = useState(false)
-  const [langMenuOpen, setLangMenuOpen] = useState(false)
+  const [langMenuAnchor, setLangMenuAnchor] = useState<'desktop' | 'mobile' | 'sidebar' | null>(null)
+
+  const isSignedIn = !!token
+
+  const toggleLangMenu = (anchor: 'desktop' | 'mobile' | 'sidebar') => {
+    setLangMenuAnchor(prev => (prev === anchor ? null : anchor))
+  }
+
+  const closeLangMenu = () => setLangMenuAnchor(null)
+
   const currentLangLabel = useMemo(() => {
     const match = languagesList.find(l => (l.code || '').toLowerCase() === (language || '').toLowerCase())
     return match?.label || (language || 'en').toUpperCase()
@@ -282,7 +291,7 @@ export default function App() {
     const onKey = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
         setSidebarOpen(false)
-        setLangMenuOpen(false)
+        closeLangMenu()
       }
     }
     window.addEventListener('keydown', onKey)
@@ -381,22 +390,81 @@ export default function App() {
           <a className="nav-item muted" onClick={() => setSidebarOpen(false)}>{ui?.strings['nav.trends'] || 'Trends (soon)'}</a>
         </nav>
         <div className="sidebar-footer">
-          <span>© {new Date().getFullYear()} Lucy World</span>
-          <button
-            type="button"
-            onClick={() => setShowSignin(true)}
-          >
-            {ui?.strings['footer.signin'] || 'Sign in for Premium'}
-          </button>
+          <span className="sidebar-footer-copy">© {new Date().getFullYear()} Lucy World</span>
+          <div className="sidebar-footer-actions">
+            <button
+              type="button"
+              className="sidebar-signin"
+              disabled={isSignedIn}
+              onClick={() => {
+                if (!isSignedIn) {
+                  setShowSignin(true)
+                }
+              }}
+            >
+              {isSignedIn ? (ui?.strings['footer.premium'] || 'Premium account') : (ui?.strings['footer.signin'] || 'Sign in for Premium')}
+            </button>
+            <div className="sidebar-lang-switch" style={{ position: 'relative' }}>
+              <button
+                type="button"
+                className="sidebar-lang-btn"
+                aria-haspopup="listbox"
+                aria-expanded={langMenuAnchor === 'sidebar'}
+                onClick={() => toggleLangMenu('sidebar')}
+              >
+                <span aria-hidden>🌐</span>
+                <span style={{ fontWeight: 600 }}>{currentLangLabel}</span>
+              </button>
+              {langMenuAnchor === 'sidebar' && (
+                <div
+                  className="lang-menu"
+                  role="listbox"
+                  style={{
+                    position: 'absolute', right: 0, bottom: 'calc(100% + 6px)',
+                    background: '#0e1217', border: '1px solid var(--line)', borderRadius: 10,
+                    minWidth: 220, maxHeight: '50vh', overflow: 'auto', zIndex: 25,
+                  }}
+                >
+                  {languagesList.map((l) => (
+                    <button
+                      key={l.code}
+                      role="option"
+                      aria-selected={l.code === language}
+                      onClick={() => {
+                        closeLangMenu()
+                        const newLang = l.code.toLowerCase()
+                        localStorage.setItem('lw_lang', newLang)
+                        if (typeof window !== 'undefined') {
+                          window.location.href = `/${newLang}/`
+                        } else {
+                          setLanguage(newLang)
+                        }
+                      }}
+                      className={`lang-item ${l.code === language ? 'active' : ''}`}
+                      style={{
+                        display: 'flex', width: '100%', textAlign: 'left',
+                        gap: 10, padding: '10px 12px', background: 'transparent', color: 'var(--text)',
+                        border: 0, cursor: 'pointer'
+                      }}
+                    >
+                      <span style={{ width: 22, textAlign: 'center' }}>{/* No pure language flags; show code */}</span>
+                      <span style={{ flex: 1 }}>{l.label || l.code.toUpperCase()}</span>
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
+          </div>
         </div>
       </aside>
       <div className={`overlay ${sidebarOpen ? 'show' : ''}`} onClick={() => setSidebarOpen(false)} />
 
       <div className="content">
-        {/* Desktop header bar */}
+        {/* Desktop header bar (only for signed-in users who have project features) */}
+        {isSignedIn && (
         <div className="desktopbar" style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '12px 14px', borderBottom: '1px solid var(--line)', position: 'sticky', top: 0, zIndex: 9, background: 'rgba(11,13,16,0.6)', backdropFilter: 'saturate(180%) blur(10px)' }}>
           <div className="brand">Lucy <span>World</span></div>
-          <div style={{ marginLeft: 'auto', display: 'inline-flex', alignItems: 'center', gap: 8 }}>
+          <div style={{ marginLeft: 'auto', display: 'inline-flex', alignItems: 'center', gap: 8, position: 'relative' }}>
             {/* Country indicator (always shows current detected location; independent from search settings) */}
             <div
               className="country-pill"
@@ -422,28 +490,60 @@ export default function App() {
             >
               💾 Save project
             </button>
-            <button
-              type="button"
-              onClick={() => setShowSignin(true)}
-              style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: 'transparent', color: 'var(--text)', border: '1px solid var(--line)', padding: '8px 10px', borderRadius: 10 }}
-            >
-              {token ? 'Signed in' : 'Sign in'}
-            </button>
             {/* Reuse the lang switch button */}
             <button
               type="button"
               className="lang-btn"
               aria-haspopup="listbox"
-              aria-expanded={langMenuOpen}
-              onClick={() => setLangMenuOpen(v => !v)}
+              aria-expanded={langMenuAnchor === 'desktop'}
+              onClick={() => toggleLangMenu('desktop')}
               style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: 'transparent', color: 'var(--text)', border: '1px solid var(--line)', padding: '8px 10px', borderRadius: 10 }}
               title={language.toUpperCase()}
             >
               <span aria-hidden>🌐</span>
               <span style={{ fontWeight: 600 }}>{currentLangLabel}</span>
             </button>
+            {langMenuAnchor === 'desktop' && (
+              <div
+                className="lang-menu"
+                role="listbox"
+                style={{
+                  position: 'absolute', right: 0, top: 'calc(100% + 6px)',
+                  background: '#0e1217', border: '1px solid var(--line)', borderRadius: 10,
+                  minWidth: 220, maxHeight: '50vh', overflow: 'auto', zIndex: 25,
+                }}
+              >
+                {languagesList.map((l) => (
+                  <button
+                    key={l.code}
+                    role="option"
+                    aria-selected={l.code === language}
+                    onClick={() => {
+                      closeLangMenu()
+                      const newLang = l.code.toLowerCase()
+                      localStorage.setItem('lw_lang', newLang)
+                      if (typeof window !== 'undefined') {
+                        window.location.href = `/${newLang}/`
+                      } else {
+                        setLanguage(newLang)
+                      }
+                    }}
+                    className={`lang-item ${l.code === language ? 'active' : ''}`}
+                    style={{
+                      display: 'flex', width: '100%', textAlign: 'left',
+                      gap: 10, padding: '10px 12px', background: 'transparent', color: 'var(--text)',
+                      border: 0, cursor: 'pointer'
+                    }}
+                  >
+                    <span style={{ width: 22, textAlign: 'center' }}>{/* No pure language flags; show code */}</span>
+                    <span style={{ flex: 1 }}>{l.label || l.code.toUpperCase()}</span>
+                  </button>
+                ))}
+              </div>
+            )}
           </div>
         </div>
+        )}
         {/* Mobile top bar */}
         <div className="topbar">
           <button
@@ -475,8 +575,8 @@ export default function App() {
                 type="button"
                 className="lang-btn"
                 aria-haspopup="listbox"
-                aria-expanded={langMenuOpen}
-                onClick={() => setLangMenuOpen(v => !v)}
+                aria-expanded={langMenuAnchor === 'mobile'}
+                onClick={() => toggleLangMenu('mobile')}
                 style={{
                   display: 'inline-flex', alignItems: 'center', gap: 8,
                   background: 'transparent', color: 'var(--text)',
@@ -487,7 +587,7 @@ export default function App() {
                 <span aria-hidden>🌐</span>
                 <span style={{ fontWeight: 600 }}>{currentLangLabel}</span>
               </button>
-              {langMenuOpen && (
+              {langMenuAnchor === 'mobile' && (
                 <div
                   className="lang-menu"
                   role="listbox"
@@ -503,7 +603,7 @@ export default function App() {
                       role="option"
                       aria-selected={l.code === language}
                       onClick={() => {
-                        setLangMenuOpen(false)
+                        closeLangMenu()
                         // Persist and navigate to language route for proper i18n + SEO
                         const newLang = l.code.toLowerCase()
                         localStorage.setItem('lw_lang', newLang)
