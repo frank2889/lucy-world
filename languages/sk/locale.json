@@ -1,0 +1,21 @@
+{
+  "lang": "sk",
+  "dir": "ltr",
+  "strings": {
+    "nav.search": "Hľadať",
+    "nav.advanced": "Pokročilé (čoskoro)",
+    "nav.trends": "Trendy (čoskoro)",
+    "search.title": "Výskum kľúčových slov",
+    "search.placeholder": "Zadajte kľúčové slovo (napr. donáška pizze)",
+    "search.button": "Hľadať",
+    "search.hint": "Bezplatné návrhy a trendy. Výsledky sa objavia nižšie.",
+    "kpi.total_keywords": "Celkovo kľúčových slov",
+    "kpi.total_volume": "Celkový objem",
+    "kpi.real_data_keywords": "Kľúčové slová so skutočnými údajmi",
+    "kpi.avg_interest": "Priemerný záujem",
+    "meta.title": "Lucy World – Lokálna analýza vyhľadávania pre Slovensko",
+    "meta.description": "Preskúmajte slovenské Google údaje s návrhmi, trendmi a AI analýzou, ktoré posilňujú rozhodnutia o obsahu a rast lokálneho podnikania.",
+    "meta.keywords": "slovenské kľúčové slová, SEO Slovensko, Google Trends, objem vyhľadávania, AI analýza, lokálna stratégia obsahu",
+    "hint.site_vs_search": "Použite selektory vyššie na výber krajiny a jazyka vyhľadávania. Zmeňte jazyk rozhrania z bočného menu."
+  }
+}

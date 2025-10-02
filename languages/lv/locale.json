@@ -1,0 +1,21 @@
+{
+  "lang": "lv",
+  "dir": "ltr",
+  "strings": {
+    "nav.search": "Meklēt",
+    "nav.advanced": "Uzlabotie (drīzumā)",
+    "nav.trends": "Tendences (drīzumā)",
+    "search.title": "Atslēgvārdu pētījumi",
+    "search.placeholder": "Ievadiet atslēgvārdu (piem., picas piegāde)",
+    "search.button": "Meklēt",
+    "search.hint": "Bezmaksas ieteikumi un tendences. Rezultāti parādīsies zemāk.",
+    "kpi.total_keywords": "Kopā atslēgvārdu",
+    "kpi.total_volume": "Kopējais apjoms",
+    "kpi.real_data_keywords": "Reālo datu atslēgvārdi",
+    "kpi.avg_interest": "Vid. interese",
+    "meta.title": "Lucy World – Vietējā meklēšanas analīze Latvijai",
+    "meta.description": "Izpētiet latviešu Google datus ar ieteikumiem, tendencēm un AI analīzi, kas pastiprina satura lēmumus un biznesa izaugsmi.",
+    "meta.keywords": "latviešu atslēgvārdi, SEO Latvija, Google tendences, meklēšanas apjoms, AI analīze, vietējā satura stratēģija",
+    "hint.site_vs_search": "Izmantojiet augšējās izvēles iespējas, lai izvēlētos meklēšanas valsti un valodu. Mainiet saskarnes valodu no sānjoslas izvēlnes."
+  }
+}

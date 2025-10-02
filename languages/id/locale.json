@@ -1,0 +1,21 @@
+{
+  "lang": "id",
+  "dir": "ltr",
+  "strings": {
+    "nav.search": "Cari",
+    "nav.advanced": "Lanjutan (segera)",
+    "nav.trends": "Tren (segera)",
+    "search.title": "Riset kata kunci",
+    "search.placeholder": "Masukkan kata kunci (mis. pengantaran pizza)",
+    "search.button": "Cari",
+    "search.hint": "Saran dan tren gratis. Hasil akan muncul di bawah.",
+    "kpi.total_keywords": "Total kata kunci",
+    "kpi.total_volume": "Volume total",
+    "kpi.real_data_keywords": "Kata kunci dengan data nyata",
+    "kpi.avg_interest": "Rata-rata minat",
+    "meta.title": "Lucy World – Analisis pencarian lokal untuk Indonesia",
+    "meta.description": "Temukan data Google Indonesia dengan saran, tren, dan analisis AI yang memperkuat keputusan konten dan pertumbuhan bisnis.",
+    "meta.keywords": "kata kunci Indonesia, SEO Indonesia, tren Google, volume pencarian, analisis AI, strategi konten lokal",
+    "hint.site_vs_search": "Gunakan pemilih di atas untuk memilih negara dan bahasa pencarian. Ubah bahasa antarmuka dari menu samping."
+  }
+}

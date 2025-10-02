@@ -1,0 +1,21 @@
+{
+  "lang": "yo",
+  "dir": "ltr",
+  "strings": {
+    "nav.search": "Wa",
+    "nav.advanced": "Ti o ga (laipe)",
+    "nav.trends": "Awọn ọna ọrọ (laipe)",
+    "search.title": "Iwadi ọrọ-koko",
+    "search.placeholder": "Fi ọrọ-koko sii (bi apeere, ifijiṣẹ pizza)",
+    "search.button": "Wa",
+    "search.hint": "Awọn iṣeduro ati awọn aṣa ọfẹ. Awọn abajade yoo han ni isalẹ.",
+    "kpi.total_keywords": "Lapapọ awọn ọrọ-koko",
+    "kpi.total_volume": "Lapapọ iwọn",
+    "kpi.real_data_keywords": "Awọn ọrọ-koko data gidi",
+    "kpi.avg_interest": "Anfani aarin",
+    "meta.title": "Iwadi ọrọ-koko - Lucy World",
+    "meta.description": "Iwadi ọrọ-koko fun ọja Yoruba ati awọn data Google. Awọn ọna, awọn oye ati SEO fun ede Yoruba ni Naijiriya.",
+    "meta.keywords": "iwadi ọrọ-koko, SEO Yoruba, Google Trends, awọn iṣeduro, iwọn wiwa",
+    "hint.site_vs_search": "Lo awọn asayan ti o wa loke lati yan orilẹ-ede ati ede wiwa. Yi ede wiwo aaye pada lati menu ẹgbẹ."
+  }
+}

@@ -219,3 +219,4 @@ npm run build
 ```
 
 The build outputs to `static/app`. In production, Flask will automatically serve `/` from `static/app/index.html` if it exists. Otherwise, it falls back to `templates/lucy_index.html`.
+

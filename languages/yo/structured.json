@@ -37,8 +37,16 @@
         "@type": "WebSite",
         "url": "https://lucy.world/yo/"
       },
-      "description": "Keyword research made simple with Google data: suggestions, trends, and insights.",
-      "keywords": "keyword research, SEO, Google Trends, suggestions, search volume"
+      "description": "Iwadi ọrọ-koko fun ọja Yoruba ati awọn data Google. Awọn ọna, awọn oye ati SEO fun ede Yoruba ni Naijiriya ati awọn agbegbe miran.",
+      "keywords": "iwadi ọrọ-koko, SEO Yoruba, Google Trends, awọn iṣeduro, iwọn wiwa, Naijiriya",
+      "aiSemantic": [
+        "Google.com.ng SEO Yoruba",
+        "Iwadi ọja Naijiriya",
+        "Awọn ọna wiwa Yoruba",
+        "Iwadi ọrọ-koko ede Yoruba",
+        "SEO West Africa",
+        "Yoruba dijitali maaketi"
+      ]
     }
   ]
 }

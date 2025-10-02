@@ -1,0 +1,21 @@
+{
+  "lang": "vi",
+  "dir": "ltr",
+  "strings": {
+    "nav.search": "Tìm kiếm",
+    "nav.advanced": "Nâng cao (sắp có)",
+    "nav.trends": "Xu hướng (sắp có)",
+    "search.title": "Nghiên cứu từ khóa",
+    "search.placeholder": "Nhập từ khóa (vd: giao pizza)",
+    "search.button": "Tìm kiếm",
+    "search.hint": "Gợi ý và xu hướng miễn phí. Kết quả hiển thị bên dưới.",
+    "kpi.total_keywords": "Tổng số từ khóa",
+    "kpi.total_volume": "Tổng lưu lượng",
+    "kpi.real_data_keywords": "Từ khóa có dữ liệu thực",
+    "kpi.avg_interest": "Mức quan tâm TB",
+    "meta.title": "Nghiên cứu từ khóa - Lucy World",
+    "meta.description": "Nghiên cứu từ khóa cho thị trường Việt Nam. Dữ liệu Google, xu hướng và phân tích SEO tối ưu cho Google.com.vn.",
+    "meta.keywords": "nghiên cứu từ khóa, SEO Việt Nam, Google Trends, gợi ý, lưu lượng tìm kiếm",
+    "hint.site_vs_search": "Sử dụng các bộ chọn ở trên để chọn quốc gia và ngôn ngữ tìm kiếm. Thay đổi ngôn ngữ giao diện trang từ menu thanh bên."
+  }
+}

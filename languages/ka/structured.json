@@ -12,8 +12,16 @@
       "name": "Lucy World",
       "url": "https://lucy.world/ka/",
       "inLanguage": "ka",
-      "description": "Keyword research made simple with Google data: suggestions, trends, and insights.",
-      "keywords": "keyword research, SEO, Google Trends, suggestions, search volume",
+      "description": "აღმოაჩინეთ ქართული Google მონაცემები შეთავაზებებით, ტენდენციებით და AI ანალიზით, რომლებიც აძლიერებს კონტენტის გადაწყვეტილებებს და ბიზნეს ზრდას.",
+      "keywords": "ქართული საკვანძო სიტყვები, SEO საქართველო 2025, Google ტენდენციები, ძიების მოცულობა, AI ანალიზი, ადგილობრივი ციფრული მარკეტინგი, კონტენტის სტრატეგია",
+      "aiSemantic": [
+        "რომელი ქართული საკვანძო სიტყვები ყველაზე მეტად იძიება 2025 წელს?",
+        "როგორ შევაერთოთ Google მონაცემები ქართული SEO-სთვის?",
+        "AI ინსტრუმენტები ადგილობრივი საკვანძო სიტყვების კვლევისთვის საქართველოში",
+        "ქართული ელექტრონული კომერციისა და მარკეტინგის ტენდენციები 2025",
+        "ადგილობრივი SEO სტრატეგიები ქართული კომპანიებისთვის",
+        "თბილისი vs ბათუმი – ადგილობრივი ძიების მოდელები და ტენდენციები"
+      ],
       "publisher": {
         "@type": "Organization",
         "name": "Lucy World"
@@ -37,8 +45,8 @@
         "@type": "WebSite",
         "url": "https://lucy.world/ka/"
       },
-      "description": "Keyword research made simple with Google data: suggestions, trends, and insights.",
-      "keywords": "keyword research, SEO, Google Trends, suggestions, search volume"
+      "description": "აღმოაჩინეთ ქართული Google მონაცემები შეთავაზებებით, ტენდენციებით და AI ანალიზით, რომლებიც აძლიერებს კონტენტის გადაწყვეტილებებს და ბიზნეს ზრდას.",
+      "keywords": "ქართული საკვანძო სიტყვები, SEO საქართველო 2025, Google ტენდენციები, ძიების მოცულობა, AI ანალიზი, ადგილობრივი ციფრული მარკეტინგი, კონტენტის სტრატეგია"
     }
   ]
 }

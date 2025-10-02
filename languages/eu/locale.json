@@ -1,0 +1,21 @@
+{
+  "lang": "eu",
+  "dir": "ltr",
+  "strings": {
+    "nav.search": "Bilatu",
+    "nav.advanced": "Aurreratua (laster)",
+    "nav.trends": "Joerak (laster)",
+    "search.title": "Gako-hitzen ikerketa",
+    "search.placeholder": "Sartu gako-hitz bat (adib., pizza banaketa)",
+    "search.button": "Bilatu",
+    "search.hint": "Iradokizun eta joera doakoak. Emaitzak behean agertuko dira.",
+    "kpi.total_keywords": "Gako-hitz orotara",
+    "kpi.total_volume": "Bolumen osoa",
+    "kpi.real_data_keywords": "Datu errealeko gako-hitzak",
+    "kpi.avg_interest": "Batez besteko interesa",
+    "meta.title": "Lucy World – Euskal Herriko bilaketa-analisia",
+    "meta.description": "Aurkitu euskal Google datuk iradokizunekin, joerekin eta AI analisiarekin, eduki-erabakiak eta negozio-hazkuntza indartzen dituztenak.",
+    "meta.keywords": "euskal gako-hitzak, SEO Euskadi, Google joerak, bilaketa-bolumena, AI analisia, tokiko eduki-estrategia",
+    "hint.site_vs_search": "Erabili goiko hautatzaileak bilaketa-herrialdea eta hizkuntza aukeratzeko. Aldatu gunearen interfaze-hizkuntza albo-menutik."
+  }
+}

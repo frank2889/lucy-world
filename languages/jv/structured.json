@@ -12,8 +12,16 @@
       "name": "Lucy World",
       "url": "https://lucy.world/jv/",
       "inLanguage": "jv",
-      "description": "Keyword research made simple with Google data: suggestions, trends, and insights.",
-      "keywords": "keyword research, SEO, Google Trends, suggestions, search volume",
+      "description": "Temokna data Google Jawa kanthi saran, tren, lan analisis AI sing nguatake keputusan konten lan pertumbuhan bisnis.",
+      "keywords": "tembung kunci Jawa, SEO Indonesia 2025, tren Google, volume panelusuran, analisis AI, pemasaran digital lokal, strategi konten",
+      "aiSemantic": [
+        "Tembung kunci Jawa apa sing paling akeh digoleki ing 2025?",
+        "Kepiye cara nggabungake data Google kanggo SEO Jawa?",
+        "Piranti AI kanggo riset tembung kunci lokal ing Jawa",
+        "Tren e-commerce lan marketing Jawa 2025",
+        "Strategi SEO lokal kanggo bisnis Jawa",
+        "Jakarta vs Surabaya - pola panelusuran lokal lan tren"
+      ],
       "publisher": {
         "@type": "Organization",
         "name": "Lucy World"
@@ -37,8 +45,8 @@
         "@type": "WebSite",
         "url": "https://lucy.world/jv/"
       },
-      "description": "Keyword research made simple with Google data: suggestions, trends, and insights.",
-      "keywords": "keyword research, SEO, Google Trends, suggestions, search volume"
+      "description": "Temokna data Google Jawa kanthi saran, tren, lan analisis AI sing nguatake keputusan konten lan pertumbuhan bisnis.",
+      "keywords": "tembung kunci Jawa, SEO Indonesia 2025, tren Google, volume panelusuran, analisis AI, pemasaran digital lokal, strategi konten"
     }
   ]
 }

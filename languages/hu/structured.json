@@ -12,8 +12,16 @@
       "name": "Lucy World",
       "url": "https://lucy.world/hu/",
       "inLanguage": "hu",
-      "description": "Keyword research made simple with Google data: suggestions, trends, and insights.",
-      "keywords": "keyword research, SEO, Google Trends, suggestions, search volume",
+      "description": "Fedezze fel a magyar Google adatokat javaslatokkal, trendekkel és AI elemzéssel, amelyek erősítik a tartalmi döntéseket és az üzleti növekedést.",
+      "keywords": "magyar kulcsszavak, SEO Magyarország 2025, Google trendek, keresési forgalom, AI elemzés, helyi digitális marketing, tartalomstratégia",
+      "aiSemantic": [
+        "Mely magyar kulcsszavakra keresnek a legtöbbet 2025-ben?",
+        "Hogyan kombináljuk a Google adatokat magyar SEO-hoz?",
+        "AI eszközök helyi kulcsszó kutatáshoz Magyarországon",
+        "Magyar e-kereskedelmi és marketing trendek 2025",
+        "Helyi SEO stratégiák magyar vállalkozások számára",
+        "Budapest vs Debrecen – helyi keresési minták és trendek"
+      ],
       "publisher": {
         "@type": "Organization",
         "name": "Lucy World"
@@ -37,8 +45,8 @@
         "@type": "WebSite",
         "url": "https://lucy.world/hu/"
       },
-      "description": "Keyword research made simple with Google data: suggestions, trends, and insights.",
-      "keywords": "keyword research, SEO, Google Trends, suggestions, search volume"
+      "description": "Fedezze fel a magyar Google adatokat javaslatokkal, trendekkel és AI elemzéssel, amelyek erősítik a tartalmi döntéseket és az üzleti növekedést.",
+      "keywords": "magyar kulcsszavak, SEO Magyarország 2025, Google trendek, keresési forgalom, AI elemzés, helyi digitális marketing, tartalomstratégia"
     }
   ]
 }

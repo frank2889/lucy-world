@@ -12,8 +12,16 @@
       "name": "Lucy World",
       "url": "https://lucy.world/ky/",
       "inLanguage": "ky",
-      "description": "Keyword research made simple with Google data: suggestions, trends, and insights.",
-      "keywords": "keyword research, SEO, Google Trends, suggestions, search volume",
+      "description": "Google кыргыз маалыматтарын сунуштар, тенденциялар жана AI анализи менен табып, мазмун чечимдерин жана бизнес өсүшүн күчөтүңүз.",
+      "keywords": "кыргыз негизги сөздөр, SEO Кыргызстан 2025, Google тенденциялары, издөө көлөмү, AI анализи, жергиликтүү санариптик маркетинг, мазмун стратегиясы",
+      "aiSemantic": [
+        "2025-жылы эң көп издөөгө алынган кыргыз негизги сөздөр кайсылар?",
+        "Кыргыз SEO үчүн Google маалыматтарын кантип бириктирүү керек?",
+        "Кыргызстандагы жергиликтүү негизги сөздөрдү изилдөө үчүн AI куралдары",
+        "Кыргыз электрондук соода жана маркетинг тенденциялары 2025",
+        "Кыргыз бизнеси үчүн жергиликтүү SEO стратегиялары",
+        "Бишкек vs Ош – жергиликтүү издөө үлгүлөрү жана тенденциялар"
+      ],
       "publisher": {
         "@type": "Organization",
         "name": "Lucy World"
@@ -37,8 +45,8 @@
         "@type": "WebSite",
         "url": "https://lucy.world/ky/"
       },
-      "description": "Keyword research made simple with Google data: suggestions, trends, and insights.",
-      "keywords": "keyword research, SEO, Google Trends, suggestions, search volume"
+      "description": "Google кыргыз маалыматтарын сунуштар, тенденциялар жана AI анализи менен табып, мазмун чечимдерин жана бизнес өсүшүн күчөтүңүз.",
+      "keywords": "кыргыз негизги сөздөр, SEO Кыргызстан 2025, Google тенденциялары, издөө көлөмү, AI анализи, жергиликтүү санариптик маркетинг, мазмун стратегиясы"
     }
   ]
 }

@@ -1,0 +1,21 @@
+{
+  "lang": "ca",
+  "dir": "ltr",
+  "strings": {
+    "nav.search": "Cerca",
+    "nav.advanced": "Avançat (aviat)",
+    "nav.trends": "Tendències (aviat)",
+    "search.title": "Recerca de paraules clau",
+    "search.placeholder": "Introdueix una paraula clau (ex.: repartiment de pizza)",
+    "search.button": "Cerca",
+    "search.hint": "Suggeriments i tendències gratuïts. Els resultats apareixen a continuació.",
+    "kpi.total_keywords": "Total de paraules clau",
+    "kpi.total_volume": "Volum total",
+    "kpi.real_data_keywords": "Paraules clau amb dades reals",
+    "kpi.avg_interest": "Interès mitjà",
+    "meta.title": "Lucy World – Intel·ligència de cerca local per a Catalunya",
+    "meta.description": "Descobreix dades catalanes de Google i Bing amb suggeriments, tendències i anàlisi amb IA que impulsen decisions de contingut i el creixement del teu negoci.",
+    "meta.keywords": "paraules clau catalanes, SEO Catalunya, tendències Google, cerca Bing, anàlisi IA, estratègia de contingut local",
+    "hint.site_vs_search": "Utilitza els selectors superiors per triar el país i l'idioma de la cerca. Canvia l'idioma del lloc des del menú lateral."
+  }
+}

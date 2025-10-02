@@ -12,8 +12,16 @@
       "name": "Lucy World",
       "url": "https://lucy.world/de/",
       "inLanguage": "de",
-      "description": "Keyword research made simple with Google data: suggestions, trends, and insights.",
-      "keywords": "keyword research, SEO, Google Trends, suggestions, search volume",
+      "description": "Entdecken Sie deutsche Google-Daten mit Vorschlägen, Trends und KI-Analyse, die Inhaltsentscheidungen und Unternehmenswachstum stärken.",
+      "keywords": "deutsche Keywords, SEO Deutschland 2025, Google Trends, Suchvolumen, KI-Analyse, digitales Marketing lokal, Content-Strategie",
+      "aiSemantic": [
+        "Welche deutschen Keywords haben 2025 die meisten Suchanfragen?",
+        "Wie kombiniert man Google-Daten für deutsches SEO?",
+        "KI-Tools für lokale Keyword-Recherche in Deutschland",
+        "Deutsche E-Commerce und Marketing-Trends 2025",
+        "Lokale SEO-Strategien für deutsche Unternehmen",
+        "Berlin vs München – lokale Suchmuster und Trends"
+      ],
       "publisher": {
         "@type": "Organization",
         "name": "Lucy World"
@@ -37,8 +45,8 @@
         "@type": "WebSite",
         "url": "https://lucy.world/de/"
       },
-      "description": "Keyword research made simple with Google data: suggestions, trends, and insights.",
-      "keywords": "keyword research, SEO, Google Trends, suggestions, search volume"
+      "description": "Entdecken Sie deutsche Google-Daten mit Vorschlägen, Trends und KI-Analyse, die Inhaltsentscheidungen und Unternehmenswachstum stärken.",
+      "keywords": "deutsche Keywords, SEO Deutschland 2025, Google Trends, Suchvolumen, KI-Analyse, digitales Marketing lokal, Content-Strategie"
     }
   ]
 }

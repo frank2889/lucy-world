@@ -12,8 +12,16 @@
       "name": "Lucy World",
       "url": "https://lucy.world/ga/",
       "inLanguage": "ga",
-      "description": "Keyword research made simple with Google data: suggestions, trends, and insights.",
-      "keywords": "keyword research, SEO, Google Trends, suggestions, search volume",
+      "description": "Faigh amach sonraí Gaeilge Google le moltaí, treochtaí agus anailís AI a neartaíonn cinntí ábhair agus fás gnó.",
+      "keywords": "eochairfhocail Gaeilge, SEO Éire 2025, treochtaí Google, toirt cuardaigh, anailís AI, margaíocht dhigiteach áitiúil, straitéis ábhair",
+      "aiSemantic": [
+        "Cad iad na heochairfhocail Ghaeilge is mó cuardach sa bhliain 2025?",
+        "Conas sonraí Google a chomhcheangal le haghaidh SEO Gaeilge?",
+        "Uirlisí AI do thaighde eochairfhocal áitiúil in Éirinn",
+        "Treochtaí ríomhthráchtála agus margaíochta Gaeilge 2025",
+        "Straitéisí SEO áitiúla do ghnólachtaí Éireannacha",
+        "Baile Átha Cliath vs Corcaigh – patrúin chuardaigh áitiúla"
+      ],
       "publisher": {
         "@type": "Organization",
         "name": "Lucy World"
@@ -37,8 +45,8 @@
         "@type": "WebSite",
         "url": "https://lucy.world/ga/"
       },
-      "description": "Keyword research made simple with Google data: suggestions, trends, and insights.",
-      "keywords": "keyword research, SEO, Google Trends, suggestions, search volume"
+      "description": "Faigh amach sonraí Gaeilge Google le moltaí, treochtaí agus anailís AI a neartaíonn cinntí ábhair agus fás gnó.",
+      "keywords": "eochairfhocail Gaeilge, SEO Éire 2025, treochtaí Google, toirt cuardaigh, anailís AI, margaíocht dhigiteach áitiúil, straitéis ábhair"
     }
   ]
 }

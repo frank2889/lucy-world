@@ -1,0 +1,21 @@
+{
+  "lang": "fy",
+  "dir": "ltr",
+  "strings": {
+    "nav.search": "Sykje",
+    "nav.advanced": "Avansearre (ynkoarten)",
+    "nav.trends": "Trends (ynkoarten)",
+    "search.title": "Trefwurd-ûndersyk",
+    "search.placeholder": "Fier in trefwurd yn (b.g., pizza-bestelding)",
+    "search.button": "Sykje",
+    "search.hint": "Fergese suggestjes en trends. Resultaten ferskine hjirûnder.",
+    "kpi.total_keywords": "Totaal trefwurden",
+    "kpi.total_volume": "Totaal folume",
+    "kpi.real_data_keywords": "Trefwurden mei echte data",
+    "kpi.avg_interest": "Gem. ynteresse",
+    "meta.title": "Lucy World – Lokale sykanalyse foar Fryslân",
+    "meta.description": "Untdek Fryske Google-gegevens mei suggestjes, trends en AI-analyze dy't ynhâldsbesluiten en bedriuwsgroei fersterkje.",
+    "meta.keywords": "Fryske trefwurden, SEO Fryslân, Google-trends, sykfolume, AI-analyze, lokale ynhâldsstrategy",
+    "hint.site_vs_search": "Brûk de selektors hjirboppe om it syklân en de taal te kiezen. Feroarje de taal fan de ynterface út it sydmenu."
+  }
+}

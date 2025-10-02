@@ -1,0 +1,21 @@
+{
+  "lang": "jv",
+  "dir": "ltr",
+  "strings": {
+    "nav.search": "Golèk",
+    "nav.advanced": "Lanjut (arep teka)",
+    "nav.trends": "Tren (arep teka)",
+    "search.title": "Riset tembung kunci",
+    "search.placeholder": "Lebokna tembung kunci (tuladha, kiriman pizza)",
+    "search.button": "Golèk",
+    "search.hint": "Saran lan tren gratis. Asil bakal katon ing ngisor.",
+    "kpi.total_keywords": "Gunggung tembung kunci",
+    "kpi.total_volume": "Volume kabèh",
+    "kpi.real_data_keywords": "Tembung kunci karo data nyata",
+    "kpi.avg_interest": "Kapentingan rata-rata",
+    "meta.title": "Lucy World – Analisis panelusuran lokal kanggo Jawa",
+    "meta.description": "Temokna data Google Jawa kanthi saran, tren, lan analisis AI sing nguatake keputusan konten lan pertumbuhan bisnis.",
+    "meta.keywords": "tembung kunci Jawa, SEO Indonesia, tren Google, volume panelusuran, analisis AI, strategi konten lokal",
+    "hint.site_vs_search": "Gunakna pemilih ing ndhuwur kanggo milih negara lan basa panelusuran. Ganti basa antarmuka saka menu sisih."
+  }
+}

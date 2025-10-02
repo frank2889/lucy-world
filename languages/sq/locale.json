@@ -1,0 +1,21 @@
+{
+  "lang": "sq",
+  "dir": "ltr",
+  "strings": {
+    "nav.search": "Kërko",
+    "nav.advanced": "Të avancuara (së shpejti)",
+    "nav.trends": "Tendencat (së shpejti)",
+    "search.title": "Kërkimi i fjalëve kyçe",
+    "search.placeholder": "Vendosni një fjalë kyçe (p.sh., dorëzimi i picas)",
+    "search.button": "Kërko",
+    "search.hint": "Sugjerime dhe tendenca falas. Rezultatet shfaqen më poshtë.",
+    "kpi.total_keywords": "Fjalë kyçe gjithsej",
+    "kpi.total_volume": "Volumi total",
+    "kpi.real_data_keywords": "Fjalë kyçe me të dhëna reale",
+    "kpi.avg_interest": "Interesi mesatar",
+    "meta.title": "Lucy World – Analiza e kërkimit vendor për Shqipërinë",
+    "meta.description": "Eksploroni të dhënat Google shqiptare me sugjerime, tendenca dhe analizë AI që forcojnë vendimet e përmbajtjes dhe rritjen e biznesit vendor.",
+    "meta.keywords": "fjalë kyçe shqipe, SEO Shqipëri, Google Trends, volumi i kërkimit, analiza AI, strategjia e përmbajtjes vendore",
+    "hint.site_vs_search": "Përdorni zgjedhësit e mësipërm për të zgjedhur vendin dhe gjuhën e kërkimit. Ndryshoni gjuhën e ndërfaqes nga menyja anësore."
+  }
+}

@@ -12,8 +12,16 @@
       "name": "Lucy World",
       "url": "https://lucy.world/bs/",
       "inLanguage": "bs",
-      "description": "Keyword research made simple with Google data: suggestions, trends, and insights.",
-      "keywords": "keyword research, SEO, Google Trends, suggestions, search volume",
+      "description": "Dobijte bosanskohercegovačke uvide iz Googlea i Binga uz lokalne prijedloge, trendove i AI analitiku koji ubrzavaju odluke o sadržaju i rast poslovanja.",
+      "keywords": "ključne riječi BiH, bosanski SEO, Google trendovi 2025, Bing pretraga, AI analitika, lokalni digitalni marketing, strategija sadržaja",
+      "aiSemantic": [
+        "Koje su najtraženije ključne riječi u BiH 2025?",
+        "Kako kombinovati Google i Bing podatke za bosanski SEO?",
+        "AI alati za istraživanje ključnih riječi za mala preduzeća u Sarajevu",
+        "Koji trendovi pretrage pokreću online trgovinu u Bosni i Hercegovini?",
+        "Kako pronaći lokalne ključne riječi na bosanskom i hrvatskom jeziku?",
+        "Najbolja strategija sadržaja za turističke brendove u BiH?"
+      ],
       "publisher": {
         "@type": "Organization",
         "name": "Lucy World"
@@ -37,8 +45,16 @@
         "@type": "WebSite",
         "url": "https://lucy.world/bs/"
       },
-      "description": "Keyword research made simple with Google data: suggestions, trends, and insights.",
-      "keywords": "keyword research, SEO, Google Trends, suggestions, search volume"
+      "description": "Dobijte bosanskohercegovačke uvide iz Googlea i Binga uz lokalne prijedloge, trendove i AI analitiku koji ubrzavaju odluke o sadržaju i rast poslovanja.",
+      "keywords": "ključne riječi BiH, bosanski SEO, Google trendovi 2025, Bing pretraga, AI analitika, lokalni digitalni marketing, strategija sadržaja",
+      "aiSemantic": [
+        "Koje su najtraženije ključne riječi u BiH 2025?",
+        "Kako kombinovati Google i Bing podatke za bosanski SEO?",
+        "AI alati za istraživanje ključnih riječi za mala preduzeća u Sarajevu",
+        "Koji trendovi pretrage pokreću online trgovinu u Bosni i Hercegovini?",
+        "Kako pronaći lokalne ključne riječi na bosanskom i hrvatskom jeziku?",
+        "Najbolja strategija sadržaja za turističke brendove u BiH?"
+      ]
     }
   ]
 }

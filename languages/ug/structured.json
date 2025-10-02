@@ -37,8 +37,16 @@
         "@type": "WebSite",
         "url": "https://lucy.world/ug/"
       },
-      "description": "Keyword research made simple with Google data: suggestions, trends, and insights.",
-      "keywords": "keyword research, SEO, Google Trends, suggestions, search volume"
+      "description": "ئۇيغۇر بازىرى ئۈچۈن ئاچقۇچلۇق سۆز تەتقىقاتى ۋە Google سانلىق مەلۇماتلىرى. يۆنىلىشلەر، چۈشەنچىلەر ۋە ئۇيغۇر تىلى ئۈچۈن SEO ئەلالاشتۇرۇش.",
+      "keywords": "ئاچقۇچلۇق سۆز تەتقىقاتى, ئۇيغۇر SEO, Google Trends, تەكلىپلەر, ئىزدەش كۆلىمى, شىنجاڭ",
+      "aiSemantic": [
+        "Google ئۇيغۇر SEO",
+        "ئۇيغۇر بازار تەھلىلى",
+        "ئۇيغۇر ئىزدەش يۆنىلىشلىرى",
+        "ئۇيغۇر ئاچقۇچلۇق سۆز تەتقىقاتى",
+        "غەربىي چىن SEO",
+        "ئۇيغۇر رەقەملىك مارکېتىنگ"
+      ]
     }
   ]
 }

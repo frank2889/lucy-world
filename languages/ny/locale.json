@@ -1,0 +1,21 @@
+{
+  "lang": "ny",
+  "dir": "ltr",
+  "strings": {
+    "nav.search": "Kusaka",
+    "nav.advanced": "Zapamwamba (posachedwa)",
+    "nav.trends": "Machitidwe (posachedwa)",
+    "search.title": "Kafukufuku wa makiyi mawu",
+    "search.placeholder": "Lowetsani makiyi mawu (mwachitsanzo: kutumiza pizza)",
+    "search.button": "Sakani",
+    "search.hint": "Maupangiri ndi machitidwe aulere. Zotsatira ziwoneka pansi pano.",
+    "kpi.total_keywords": "Makiyi mawu onse",
+    "kpi.total_volume": "Voliyumu yonse",
+    "kpi.real_data_keywords": "Makiyi mawu a data yeniyeni",
+    "kpi.avg_interest": "Chidwi chapakati",
+    "meta.title": "Lucy World – Kusanthula kusaka kwakomweko ku Malawi",
+    "meta.description": "Fukulani data ya Google ya Chichewa ndi maupangiri, machitidwe ndi kusanthula kwa AI komwe kumalimbikitsa ziganizo za zinthu ndi kukula kwa malonda.",
+    "meta.keywords": "makiyi mawu a Chichewa, SEO Malawi, Google Trends, voliyumu ya kusaka, kusanthula kwa AI, njira ya zinthu zakomweko",
+    "hint.site_vs_search": "Gwiritsani ntchito zosankha pamwambapa kuti musankhe dziko ndi chilankhulo cha kusaka. Sinthani chilankhulo cha interface kuchokera ku menu ya mbali."
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "lang": "cy",
+  "dir": "ltr",
+  "strings": {
+    "nav.search": "Chwilio",
+    "nav.advanced": "Uwch (yn dod yn fuan)",
+    "nav.trends": "Tueddau (yn dod yn fuan)",
+    "search.title": "Ymchwil geiriau allweddol",
+    "search.placeholder": "Nodwch air allweddol (e.e., danfon pitsa)",
+    "search.button": "Chwilio",
+    "search.hint": "Awgrymiadau a thueddiadau am ddim. Bydd canlyniadau'n ymddangos isod.",
+    "hint.site_vs_search": "Defnyddiwch y dewisyddion uchod i ddewis y wlad a'r iaith chwilio. Newidiwch iaith y rhyngwyneb o ddewislen yr ochr.",
+    "kpi.total_keywords": "Cyfanswm y geiriau allweddol",
+    "kpi.total_volume": "Cyfanswm y gyfrol",
+    "kpi.real_data_keywords": "Geiriau allweddol gyda data go iawn",
+    "kpi.avg_interest": "Diddordeb cyfartalog",
+    "meta.title": "Lucy World – Dadansoddiad chwilio lleol ar gyfer Cymru",
+    "meta.description": "Darganfyddwch ddata Cymraeg Google a Bing gydag awgrymiadau, tueddiau a dadansoddiad AI sy'n cryfhau penderfyniadau cynnwys a thwf busnes.",
+    "meta.keywords": "geiriau allweddol Cymraeg, SEO Cymru, tueddiadau Google, chwilio Bing, dadansoddiad AI, strategaeth cynnwys lleol"
+  }
+}

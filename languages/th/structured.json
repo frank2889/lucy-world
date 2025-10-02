@@ -37,8 +37,16 @@
         "@type": "WebSite",
         "url": "https://lucy.world/th/"
       },
-      "description": "Keyword research made simple with Google data: suggestions, trends, and insights.",
-      "keywords": "keyword research, SEO, Google Trends, suggestions, search volume"
+      "description": "การวิจัยคีย์เวิร์ดสำหรับตลาดไทยและข้อมูล Google เทรนด์ และข้อมูลเชิงลึกเพื่อเพิ่มประสิทธิภาพ SEO บน Google.co.th",
+      "keywords": "การวิจัยคีย์เวิร์ด, SEO ไทย, Google Trends, คำแนะนำ, ปริมาณการค้นหา, ตลาดไทย",
+      "aiSemantic": [
+        "Google.co.th การเพิ่มประสิทธิภาพ",
+        "การวิเคราะห์ตลาดไทย",
+        "เทรนด์การค้นหาไทย",
+        "การวิจัยคีย์เวิร์ดไทย",
+        "SEO เอเชียตะวันออกเฉียงใต้",
+        "การตลาดดิจิทัลไทย"
+      ]
     }
   ]
 }

@@ -1,0 +1,21 @@
+{
+  "lang": "sl",
+  "dir": "ltr",
+  "strings": {
+    "nav.search": "Iskanje",
+    "nav.advanced": "Napredno (kmalu)",
+    "nav.trends": "Trendi (kmalu)",
+    "search.title": "Raziskovanje ključnih besed",
+    "search.placeholder": "Vnesite ključno besedo (npr. dostava pice)",
+    "search.button": "Iskanje",
+    "search.hint": "Brezplačni predlogi in trendi. Rezultati se prikažejo spodaj.",
+    "kpi.total_keywords": "Skupaj ključnih besed",
+    "kpi.total_volume": "Skupni obseg",
+    "kpi.real_data_keywords": "Ključne besede z resnično podatki",
+    "kpi.avg_interest": "Povprečen interes",
+    "meta.title": "Lucy World – Lokalna analiza iskanja za Slovenijo",
+    "meta.description": "Raziščite slovenske Google podatke s predlogi, trendi in AI analizo, ki krepijo odločitve o vsebini in rast lokalnega poslovanja.",
+    "meta.keywords": "slovenske ključne besede, SEO Slovenija, Google Trends, obseg iskanja, AI analiza, lokalna strategija vsebine",
+    "hint.site_vs_search": "Uporabite selektorje zgoraj za izbiro države in jezika iskanja. Spremenite jezik vmesnika iz stranskega menija."
+  }
+}

@@ -12,8 +12,16 @@
       "name": "Lucy World",
       "url": "https://lucy.world/da/",
       "inLanguage": "da",
-      "description": "Keyword research made simple with Google data: suggestions, trends, and insights.",
-      "keywords": "keyword research, SEO, Google Trends, suggestions, search volume",
+      "description": "Opdag danske Google-data med forslag, tendenser og AI-analyse, der styrker indholdsbeslutninger og forretningsvækst.",
+      "keywords": "danske søgeord, SEO Danmark 2025, Google-tendenser, søgevolumen, AI-analyse, digital markedsføring lokal, indholdsstrategi",
+      "aiSemantic": [
+        "Hvilke danske søgeord har flest søgninger i 2025?",
+        "Hvordan kombinerer man Google-data for SEO på dansk?",
+        "AI-værktøjer til lokal søgeordsresearch i Danmark",
+        "Danske e-handel og marketing-tendenser 2025",
+        "Lokale SEO-strategier for danske virksomheder",
+        "Copenhagen vs Aarhus – lokale søgemønstre og tendenser"
+      ],
       "publisher": {
         "@type": "Organization",
         "name": "Lucy World"
@@ -37,8 +45,8 @@
         "@type": "WebSite",
         "url": "https://lucy.world/da/"
       },
-      "description": "Keyword research made simple with Google data: suggestions, trends, and insights.",
-      "keywords": "keyword research, SEO, Google Trends, suggestions, search volume"
+      "description": "Opdag danske Google-data med forslag, tendenser og AI-analyse, der styrker indholdsbeslutninger og forretningsvækst.",
+      "keywords": "danske søgeord, SEO Danmark 2025, Google-tendenser, søgevolumen, AI-analyse, digital markedsføring lokal, indholdsstrategi"
     }
   ]
 }

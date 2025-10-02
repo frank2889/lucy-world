@@ -12,8 +12,16 @@
       "name": "Lucy World",
       "url": "https://lucy.world/eo/",
       "inLanguage": "eo",
-      "description": "Keyword research made simple with Google data: suggestions, trends, and insights.",
-      "keywords": "keyword research, SEO, Google Trends, suggestions, search volume",
+      "description": "Malkovru Esperantajn Google-datenojn kun sugestoj, tendencoj kaj AI-analizo kiuj fortigas enhavo-decidojn kaj komercan kreskon.",
+      "keywords": "Esperantaj ĉefvortoj, SEO Esperantujo 2025, Google-tendencoj, serĉ-volumeno, AI-analizo, universala lingvo, enhavo-strategio",
+      "aiSemantic": [
+        "Kiuj Esperantaj ĉefvortoj havas plej multajn serĉojn en 2025?",
+        "Kiel kombini Google-datenojn por Esperanta SEO?",
+        "AI-iloj por loka Esperanta ĉefvorto-esplorado",
+        "Esperantaj komerco kaj reklamo-tendencoj 2025",
+        "Universalaj SEO-strategioj por Esperanta komunumo",
+        "Eŭropo vs Azio – lokaj Esperantaj serĉ-modeloj"
+      ],
       "publisher": {
         "@type": "Organization",
         "name": "Lucy World"
@@ -37,8 +45,8 @@
         "@type": "WebSite",
         "url": "https://lucy.world/eo/"
       },
-      "description": "Keyword research made simple with Google data: suggestions, trends, and insights.",
-      "keywords": "keyword research, SEO, Google Trends, suggestions, search volume"
+      "description": "Malkovru Esperantajn Google-datenojn kun sugestoj, tendencoj kaj AI-analizo kiuj fortigas enhavo-decidojn kaj komercan kreskon.",
+      "keywords": "Esperantaj ĉefvortoj, SEO Esperantujo 2025, Google-tendencoj, serĉ-volumeno, AI-analizo, universala lingvo, enhavo-strategio"
     }
   ]
 }

@@ -1,0 +1,21 @@
+{
+  "lang": "uz",
+  "dir": "ltr",
+  "strings": {
+    "nav.search": "Qidiruv",
+    "nav.advanced": "Kengaytirilgan (tez orada)",
+    "nav.trends": "Tendentsiyalar (tez orada)",
+    "search.title": "Kalit so'zlar tadqiqoti",
+    "search.placeholder": "Kalit so'z kiriting (masalan, pitsa yetkazib berish)",
+    "search.button": "Qidiruv",
+    "search.hint": "Bepul takliflar va tendentsiyalar. Natijalar quyida ko'rinadi.",
+    "kpi.total_keywords": "Jami kalit so'zlar",
+    "kpi.total_volume": "Umumiy hajm",
+    "kpi.real_data_keywords": "Haqiqiy ma'lumotli kalit so'zlar",
+    "kpi.avg_interest": "O'rtacha qiziqish",
+    "meta.title": "Kalit so'zlar tadqiqoti - Lucy World",
+    "meta.description": "O'zbekiston bozori uchun kalit so'zlar tadqiqoti. Google ma'lumotlari, tendentsiyalar va o'zbek tili uchun SEO optimizatsiya.",
+    "meta.keywords": "kalit so'zlar tadqiqoti, SEO o'zbek, Google Trends, takliflar, qidiruv hajmi",
+    "hint.site_vs_search": "Qidiruv mamlakatini va tilini tanlash uchun yuqoridagi selektorlardan foydalaning. Sayt interfeysi tilini yon menyudan o'zgartiring."
+  }
+}

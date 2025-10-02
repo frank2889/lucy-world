@@ -37,8 +37,16 @@
         "@type": "WebSite",
         "url": "https://lucy.world/ur/"
       },
-      "description": "Keyword research made simple with Google data: suggestions, trends, and insights.",
-      "keywords": "keyword research, SEO, Google Trends, suggestions, search volume"
+      "description": "پاکستان کے لیے مطلوبہ الفاظ کی تحقیق اور Google ڈیٹا۔ رجحانات، تجزیات اور اردو مارکیٹ کے لیے SEO بہتری۔",
+      "keywords": "مطلوبہ الفاظ کی تحقیق، SEO اردو، Google Trends، تجاویز، تلاش کا حجم، پاکستان",
+      "aiSemantic": [
+        "Google.com.pk SEO بہتری",
+        "پاکستان مارکیٹ تجزیہ",
+        "اردو تلاش کے رجحانات",
+        "اردو مطلوبہ الفاظ کی تحقیق",
+        "جنوبی ایشیا SEO",
+        "اردو ڈیجیٹل مارکیٹنگ"
+      ]
     }
   ]
 }

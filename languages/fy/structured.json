@@ -12,8 +12,16 @@
       "name": "Lucy World",
       "url": "https://lucy.world/fy/",
       "inLanguage": "fy",
-      "description": "Keyword research made simple with Google data: suggestions, trends, and insights.",
-      "keywords": "keyword research, SEO, Google Trends, suggestions, search volume",
+      "description": "Untdek Fryske Google-gegevens mei suggestjes, trends en AI-analyze dy't ynhâldsbesluiten en bedriuwsgroei fersterkje.",
+      "keywords": "Fryske trefwurden, SEO Fryslân 2025, Google-trends, sykfolume, AI-analyze, regionale marketing, ynhâldsstrategy",
+      "aiSemantic": [
+        "Hokker Fryske trefwurden hawwe de measte sykopdrachten yn 2025?",
+        "Hoe kombinearje Google-gegevens foar Frysk SEO?",
+        "AI-ark foar lokaal Frysk trefwurd-ûndersyk",
+        "Fryske e-commerce en marketing-trends 2025",
+        "Regionale SEO-strategyen foar Fryske bedriuwen",
+        "Ljouwert vs Snits – lokale sykpatroanen en trends"
+      ],
       "publisher": {
         "@type": "Organization",
         "name": "Lucy World"
@@ -37,8 +45,8 @@
         "@type": "WebSite",
         "url": "https://lucy.world/fy/"
       },
-      "description": "Keyword research made simple with Google data: suggestions, trends, and insights.",
-      "keywords": "keyword research, SEO, Google Trends, suggestions, search volume"
+      "description": "Untdek Fryske Google-gegevens mei suggestjes, trends en AI-analyze dy't ynhâldsbesluiten en bedriuwsgroei fersterkje.",
+      "keywords": "Fryske trefwurden, SEO Fryslân 2025, Google-trends, sykfolume, AI-analyze, regionale marketing, ynhâldsstrategy"
     }
   ]
 }

@@ -1,0 +1,21 @@
+{
+  "lang": "et",
+  "dir": "ltr",
+  "strings": {
+    "nav.search": "Otsing",
+    "nav.advanced": "Täpsem (peagi)",
+    "nav.trends": "Trendid (peagi)",
+    "search.title": "Märksõnauuringud",
+    "search.placeholder": "Sisestage märksõna (nt pitsa kohaletoomine)",
+    "search.button": "Otsi",
+    "search.hint": "Tasuta soovitused ja trendid. Tulemused kuvatakse allpool.",
+    "kpi.total_keywords": "Märksõnu kokku",
+    "kpi.total_volume": "Kogumaht",
+    "kpi.real_data_keywords": "Tõeliste andmetega märksõnad",
+    "kpi.avg_interest": "Keskmine huvi",
+    "meta.title": "Lucy World – Kohalik otsinguanalüüs Eesti jaoks",
+    "meta.description": "Avastage Eesti Google'i andmed soovituste, trendide ja AI analüüsiga, mis tugevdavad sisuliseid otsuseid ja ärikasvu.",
+    "meta.keywords": "eesti märksõnad, SEO Eesti, Google trendid, otsingumahud, AI analüüs, kohaliku sisu strateegia",
+    "hint.site_vs_search": "Kasutage ülalolevaid valikuid otsingu riigi ja keele valimiseks. Muutke saidi liidese keelt külgribamenüüst."
+  }
+}

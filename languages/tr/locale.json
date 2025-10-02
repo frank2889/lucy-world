@@ -1,0 +1,21 @@
+{
+  "lang": "tr",
+  "dir": "ltr",
+  "strings": {
+    "nav.search": "Ara",
+    "nav.advanced": "Gelişmiş (yakında)",
+    "nav.trends": "Trends (yakında)",
+    "search.title": "Anahtar kelime araştırması",
+    "search.placeholder": "Bir anahtar kelime girin (ör. pizza teslimat)",
+    "search.button": "Ara",
+    "search.hint": "Ücretsiz öneriler ve trendler. Sonuçlar aşağıda görünecek.",
+    "kpi.total_keywords": "Toplam anahtar kelime",
+    "kpi.total_volume": "Toplam hacim",
+    "kpi.real_data_keywords": "Gerçek verili anahtar kelimeler",
+    "kpi.avg_interest": "Ort. ilgi",
+    "meta.title": "Anahtar Kelime Araştırması - Lucy World",
+    "meta.description": "Türkiye pazarı için anahtar kelime araştırması. Google verileri, trendler ve SEO optimizasyonu için içgörüler.",
+    "meta.keywords": "anahtar kelime araştırması, SEO Türkiye, Google Trends, öneriler, arama hacmi",
+    "hint.site_vs_search": "Arama ülkesini ve dilini seçmek için yukarıdaki seçicileri kullanın. Site arayüz dilini kenar çubuğu menüsünden değiştirin."
+  }
+}

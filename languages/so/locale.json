@@ -1,0 +1,21 @@
+{
+  "lang": "so",
+  "dir": "ltr",
+  "strings": {
+    "nav.search": "Raadi",
+    "nav.advanced": "Horumarsan (dhowaan)",
+    "nav.trends": "Isbeddelka (dhowaan)",
+    "search.title": "Cilmi-baadhista ereyada muhiimka ah",
+    "search.placeholder": "Geli erey muhiim ah (tusaale: geynta pizza)",
+    "search.button": "Raadi",
+    "search.hint": "Talooyiin iyo isbeddelka bilaash ah. Natiijaduhu way ka muuqan doonaan hoosta.",
+    "kpi.total_keywords": "Wadarta ereyada muhiimka ah",
+    "kpi.total_volume": "Wadarta guud",
+    "kpi.real_data_keywords": "Ereyada muhiimka ah ee xogta dhabta ah",
+    "kpi.avg_interest": "Xiisaha celceliska ah",
+    "meta.title": "Lucy World – Falanqaynta raadinta maxalliga ah ee Soomaaliya",
+    "meta.description": "Sahami xogta Google Soomaaliyeed oo leh talooyiin, isbeddelka iyo falanqaynta AI taas oo xoojisa go'aamada waxa lagu qoro iyo kordhinta ganacsiga maxalliga ah.",
+    "meta.keywords": "ereyada muhiimka ah ee Soomaaliga, SEO Soomaaliya, Google Trends, mugga raadinta, falanqaynta AI, istaraatiijiyada waxa lagu qoro ee maxalliga ah",
+    "hint.site_vs_search": "Isticmaal xulaashada kore si aad u doorato dalka iyo luqadda raadinta. Bedel luqadda interface-ka menu-ga dhinaca."
+  }
+}

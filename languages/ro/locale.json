@@ -1,0 +1,21 @@
+{
+  "lang": "ro",
+  "dir": "ltr",
+  "strings": {
+    "nav.search": "Căutare",
+    "nav.advanced": "Avansat (în curând)",
+    "nav.trends": "Tendințe (în curând)",
+    "search.title": "Cercetare cuvinte cheie",
+    "search.placeholder": "Introduceți un cuvânt cheie (ex: livrare pizza)",
+    "search.button": "Căutați",
+    "search.hint": "Sugestii și tendințe gratuite. Rezultatele apar mai jos.",
+    "kpi.total_keywords": "Total cuvinte cheie",
+    "kpi.total_volume": "Volum total",
+    "kpi.real_data_keywords": "Cuvinte cheie cu date reale",
+    "kpi.avg_interest": "Interes mediu",
+    "meta.title": "Lucy World – Analiză de căutare locală pentru România",
+    "meta.description": "Explorați datele Google românești cu sugestii, tendințe și analiză AI care consolidează deciziile de conținut și creșterea afacerii locale.",
+    "meta.keywords": "cuvinte cheie românești, SEO România, Google Trends, volum căutare, analiză AI, strategie conținut local",
+    "hint.site_vs_search": "Folosiți selectorii de mai sus pentru a alege țara și limba de căutare. Schimbați limba interfeței din meniul lateral."
+  }
+}

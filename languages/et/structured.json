@@ -12,8 +12,16 @@
       "name": "Lucy World",
       "url": "https://lucy.world/et/",
       "inLanguage": "et",
-      "description": "Keyword research made simple with Google data: suggestions, trends, and insights.",
-      "keywords": "keyword research, SEO, Google Trends, suggestions, search volume",
+      "description": "Avastage Eesti Google'i andmed soovituste, trendide ja AI analüüsiga, mis tugevdavad sisuliseid otsuseid ja ärikasvu.",
+      "keywords": "eesti märksõnad, SEO Eesti 2025, Google trendid, otsingumahud, AI analüüs, kohalik digiturundus, sisu strateegia",
+      "aiSemantic": [
+        "Millised eesti märksõnad on 2025. aastal kõige otsingum?",
+        "Kuidas kombineerida Google'i andmeid eesti SEO jaoks?",
+        "AI tööriistad kohalikuks märksõnauuringuks Eestis",
+        "Eesti e-kaubanduse ja turunduse trendid 2025",
+        "Kohalikud SEO strateegiad Eesti ettevõtetele",
+        "Tallinn vs Tartu – kohalikud otsingumustrid ja trendid"
+      ],
       "publisher": {
         "@type": "Organization",
         "name": "Lucy World"
@@ -37,8 +45,8 @@
         "@type": "WebSite",
         "url": "https://lucy.world/et/"
       },
-      "description": "Keyword research made simple with Google data: suggestions, trends, and insights.",
-      "keywords": "keyword research, SEO, Google Trends, suggestions, search volume"
+      "description": "Avastage Eesti Google'i andmed soovituste, trendide ja AI analüüsiga, mis tugevdavad sisuliseid otsuseid ja ärikasvu.",
+      "keywords": "eesti märksõnad, SEO Eesti 2025, Google trendid, otsingumahud, AI analüüs, kohalik digiturundus, sisu strateegia"
     }
   ]
 }

@@ -37,8 +37,16 @@
         "@type": "WebSite",
         "url": "https://lucy.world/uz/"
       },
-      "description": "Keyword research made simple with Google data: suggestions, trends, and insights.",
-      "keywords": "keyword research, SEO, Google Trends, suggestions, search volume"
+      "description": "O'zbekiston bozori uchun kalit so'zlar tadqiqoti va Google ma'lumotlari. Tendentsiyalar, tahlil va o'zbek tili uchun SEO optimizatsiya.",
+      "keywords": "kalit so'zlar tadqiqoti, SEO o'zbek, Google Trends, takliflar, qidiruv hajmi, O'zbekiston",
+      "aiSemantic": [
+        "Google O'zbekiston SEO",
+        "O'zbekiston bozor tahlili",
+        "O'zbek qidiruv tendentsiyalari",
+        "O'zbek kalit so'zlar tadqiqoti",
+        "Markaziy Osiyo SEO",
+        "O'zbek raqamli marketing"
+      ]
     }
   ]
 }

@@ -1,0 +1,21 @@
+{
+  "lang": "la",
+  "dir": "ltr",
+  "strings": {
+    "nav.search": "Quaerere",
+    "nav.advanced": "Provectum (mox)",
+    "nav.trends": "Tendentiae (mox)",
+    "search.title": "Investigatio verborum clavium",
+    "search.placeholder": "Verbum clavium inscribe (e.g., pizza traditio)",
+    "search.button": "Quaerere",
+    "search.hint": "Libera consilia et tendentiae. Eventus infra apparent.",
+    "kpi.total_keywords": "Summa verborum clavium",
+    "kpi.total_volume": "Volumen totum",
+    "kpi.real_data_keywords": "Verba clavia cum datis veris",
+    "kpi.avg_interest": "Studium medium",
+    "meta.title": "Lucy World – Analysis quaestionum localium pro mundo Latino",
+    "meta.description": "Inveni data Latina Google cum consiliis, tendentiis et analysis AI quae decisiones contentus et incrementum negotii roborant.",
+    "meta.keywords": "verba clavia Latina, SEO Latinum, tendentiae Google, volumen quaestionum, analysis AI, strategia contentus localis",
+    "hint.site_vs_search": "Utere selectoribus supra ad eligendum patriam et linguam quaestionis. Muta linguam interfaciei ex menu laterali."
+  }
+}

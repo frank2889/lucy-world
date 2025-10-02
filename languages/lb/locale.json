@@ -1,0 +1,21 @@
+{
+  "lang": "lb",
+  "dir": "ltr",
+  "strings": {
+    "nav.search": "Sichen",
+    "nav.advanced": "Erweidert (geschwënn)",
+    "nav.trends": "Trends (geschwënn)",
+    "search.title": "Schlësselwuert-Recherche",
+    "search.placeholder": "Gitt e Schlësselwuert an (z.B., Pizza-Liwwerung)",
+    "search.button": "Sichen",
+    "search.hint": "Gratis Virschléi an Trends. Resultater erschéngen ënnendrënner.",
+    "kpi.total_keywords": "Total Schlësselwierder",
+    "kpi.total_volume": "Total Volume",
+    "kpi.real_data_keywords": "Schlësselwierder mat realen Donnéeën",
+    "kpi.avg_interest": "Duerchschnëttlech Interessi",
+    "meta.title": "Lucy World – Lokal Sich-Analyse fir Lëtzebuerg",
+    "meta.description": "Entdeckt lëtzebuergesch Google-Donnéeën mat Virschléi, Trends an AI-Analyse déi Inhalt-Entscheedungen a Geschäftswuesstem verstäerken.",
+    "meta.keywords": "lëtzebuergesch Schlësselwierder, SEO Lëtzebuerg, Google-Trends, Sich-Volume, AI-Analyse, lokal Inhaltsstrategie",
+    "hint.site_vs_search": "Benotzt d'Auswahlen uewen fir d'Sich-Land an d'Sprooch ze wielen. Ännert d'Interface-Sprooch aus dem Säitemmenü."
+  }
+}

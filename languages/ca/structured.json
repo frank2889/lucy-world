@@ -12,8 +12,16 @@
       "name": "Lucy World",
       "url": "https://lucy.world/ca/",
       "inLanguage": "ca",
-      "description": "Keyword research made simple with Google data: suggestions, trends, and insights.",
-      "keywords": "keyword research, SEO, Google Trends, suggestions, search volume",
+      "description": "Descobreix dades catalanes de Google i Bing amb suggeriments, tendències i anàlisi amb IA que impulsen decisions de contingut i el creixement del teu negoci.",
+      "keywords": "paraules clau catalanes, SEO Catalunya, tendències Google 2025, cerca Bing, anàlisi IA, màrqueting digital local, estratègia de contingut",
+      "aiSemantic": [
+        "Quines paraules clau catalanes tenen més cerques el 2025?",
+        "Com combinar dades de Google i Bing per al SEO en català?",
+        "Eines d'IA per investigar paraules clau locals a Barcelona",
+        "Tendències de cerca que impulsen l'e-commerce a Catalunya",
+        "Com trobar paraules clau llargues en català i castellà?",
+        "Estratègies de contingut local per a startups catalanes"
+      ],
       "publisher": {
         "@type": "Organization",
         "name": "Lucy World"
@@ -37,8 +45,16 @@
         "@type": "WebSite",
         "url": "https://lucy.world/ca/"
       },
-      "description": "Keyword research made simple with Google data: suggestions, trends, and insights.",
-      "keywords": "keyword research, SEO, Google Trends, suggestions, search volume"
+      "description": "Descobreix dades catalanes de Google i Bing amb suggeriments, tendències i anàlisi amb IA que impulsen decisions de contingut i el creixement del teu negoci.",
+      "keywords": "paraules clau catalanes, SEO Catalunya, tendències Google 2025, cerca Bing, anàlisi IA, màrqueting digital local, estratègia de contingut",
+      "aiSemantic": [
+        "Quines paraules clau catalanes tenen més cerques el 2025?",
+        "Com combinar dades de Google i Bing per al SEO en català?",
+        "Eines d'IA per investigar paraules clau locals a Barcelona",
+        "Tendències de cerca que impulsen l'e-commerce a Catalunya",
+        "Com trobar paraules clau llargues en català i castellà?",
+        "Estratègies de contingut local per a startups catalanes"
+      ]
     }
   ]
 }

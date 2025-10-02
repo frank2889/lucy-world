@@ -1,0 +1,21 @@
+{
+  "lang": "ja",
+  "dir": "ltr",
+  "strings": {
+    "nav.search": "検索",
+    "nav.advanced": "上級（近日公開）",
+    "nav.trends": "トレンド（近日公開）",
+    "search.title": "キーワード調査",
+    "search.placeholder": "キーワードを入力（例：ピザのデリバリー）",
+    "search.button": "検索",
+    "search.hint": "無料のサジェストとトレンド。結果は下に表示されます。",
+    "kpi.total_keywords": "キーワード総数",
+    "kpi.total_volume": "総ボリューム",
+    "kpi.real_data_keywords": "実データのキーワード",
+    "kpi.avg_interest": "平均関心度",
+    "meta.title": "Lucy World – 日本のローカル検索分析",
+    "meta.description": "日本のGoogleデータを提案、トレンド、AI分析で発見し、コンテンツ決定とビジネス成長を強化。",
+    "meta.keywords": "日本語キーワード, SEO日本, Googleトレンド, 検索ボリューム, AI分析, ローカルコンテンツ戦略",
+    "hint.site_vs_search": "上のセレクターを使用して検索国と言語を選択してください。サイドバーメニューからインターフェース言語を変更してください。"
+  }
+}

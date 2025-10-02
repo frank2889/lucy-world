@@ -1,0 +1,21 @@
+{
+  "lang": "gd",
+  "dir": "ltr",
+  "strings": {
+    "nav.search": "Lorg",
+    "nav.advanced": "Adhartach (a dh'aithghearr)",
+    "nav.trends": "Treandaichean (a dh'aithghearr)",
+    "search.title": "Rannsachadh prìomh-fhaclan",
+    "search.placeholder": "Cuir a-steach prìomh-fhacal (m.e., lìbhrigeadh pizza)",
+    "search.button": "Lorg",
+    "search.hint": "Molaidhean agus treandaichean an-asgaidh. Nochdaidh toraidhean gu h-ìosal.",
+    "kpi.total_keywords": "Prìomh-fhaclan gu lèir",
+    "kpi.total_volume": "Àireamh iomlan",
+    "kpi.real_data_keywords": "Prìomh-fhaclan le fìor dhàta",
+    "kpi.avg_interest": "Ùidh chuibheasach",
+    "meta.title": "Lucy World – Mion-sgrùdadh rannsachaidh ionadail airson Alba",
+    "meta.description": "Faigh a-mach dàta Gàidhlig Google le molaidhean, treandaichean agus mion-sgrùdadh AI a neartaicheas co-dhùnaidhean susbaint agus fàs gnìomhachais.",
+    "meta.keywords": "prìomh-fhaclan Gàidhlig, SEO Alba, treandaichean Google, meud rannsachaidh, mion-sgrùdadh AI, ro-innleachd susbaint ionadail",
+    "hint.site_vs_search": "Cleachd na taghaidhearan gu h-àrd gus dùthaich agus cànan rannsachaidh a thaghadh. Atharraich cànan na h-eadar-aghaidh bhon chlàr-taice taoibh."
+  }
+}

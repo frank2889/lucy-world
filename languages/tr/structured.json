@@ -37,8 +37,16 @@
         "@type": "WebSite",
         "url": "https://lucy.world/tr/"
       },
-      "description": "Keyword research made simple with Google data: suggestions, trends, and insights.",
-      "keywords": "keyword research, SEO, Google Trends, suggestions, search volume"
+      "description": "Türkiye pazarı için anahtar kelime araştırması ve Google verileri. Trendler, içgörüler ve Google.com.tr için SEO optimizasyonu.",
+      "keywords": "anahtar kelime araştırması, SEO Türkiye, Google Trends, öneriler, arama hacmi, Türk pazarı",
+      "aiSemantic": [
+        "Google.com.tr SEO optimizasyonu",
+        "Türkiye pazar analizi",
+        "Türk arama trendleri",
+        "Türkçe anahtar kelime araştırması",
+        "Anadolu SEO",
+        "Türk dijital pazarlama"
+      ]
     }
   ]
 }

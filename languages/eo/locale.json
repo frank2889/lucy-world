@@ -1,0 +1,21 @@
+{
+  "lang": "eo",
+  "dir": "ltr",
+  "strings": {
+    "nav.search": "Serĉi",
+    "nav.advanced": "Altnivela (baldaŭ)",
+    "nav.trends": "Tendencoj (baldaŭ)",
+    "search.title": "Esplorado de ĉefvortoj",
+    "search.placeholder": "Enigu ĉefvorton (ekz., pizza-liverado)",
+    "search.button": "Serĉi",
+    "search.hint": "Senpagaj sugestoj kaj tendencoj. Rezultoj aperos sube.",
+    "kpi.total_keywords": "Totalaj ĉefvortoj",
+    "kpi.total_volume": "Totala volumeno",
+    "kpi.real_data_keywords": "Ĉefvortoj kun realaj datenoj",
+    "kpi.avg_interest": "Meza intereso",
+    "meta.title": "Lucy World – Loka serĉanalizo por Esperantujo",
+    "meta.description": "Malkovru Esperantajn Google-datenojn kun sugestoj, tendencoj kaj AI-analizo kiuj fortigas enhavo-decidojn kaj komercan kreskon.",
+    "meta.keywords": "Esperantaj ĉefvortoj, SEO Esperantujo, Google-tendencoj, serĉ-volumeno, AI-analizo, loka enhavo-strategio",
+    "hint.site_vs_search": "Uzu la suprajn elektilojn por elekti serĉ-landon kaj lingvon. Ŝanĝu la interfac-lingvon de la flanka menuo."
+  }
+}

@@ -12,8 +12,16 @@
       "name": "Lucy World",
       "url": "https://lucy.world/kn/",
       "inLanguage": "kn",
-      "description": "Keyword research made simple with Google data: suggestions, trends, and insights.",
-      "keywords": "keyword research, SEO, Google Trends, suggestions, search volume",
+      "description": "Google ಕನ್ನಡ ಡೇಟಾವನ್ನು ಸಲಹೆಗಳು, ಪ್ರವೃತ್ತಿಗಳು ಮತ್ತು AI ವಿಶ್ಲೇಷಣೆಯೊಂದಿಗೆ ಕಂಡುಹಿಡಿಯಿರಿ ಅದು ವಿಷಯ ನಿರ್ಧಾರಗಳು ಮತ್ತು ವ್ಯಾಪಾರ ಬೆಳವಣಿಗೆಯನ್ನು ಬಲಪಡಿಸುತ್ತದೆ.",
+      "keywords": "ಕನ್ನಡ ಕೀವರ್ಡ್‌ಗಳು, SEO ಕರ್ನಾಟಕ 2025, Google ಪ್ರವೃತ್ತಿಗಳು, ಹುಡುಕಾಟ ಪರಿಮಾಣ, AI ವಿಶ್ಲೇಷಣೆ, ಸ್ಥಳೀಯ ಡಿಜಿಟಲ್ ಮಾರ್ಕೆಟಿಂಗ್, ವಿಷಯ ತಂತ್ರ",
+      "aiSemantic": [
+        "2025 ರಲ್ಲಿ ಯಾವ ಕನ್ನಡ ಕೀವರ್ಡ್‌ಗಳು ಹೆಚ್ಚು ಹುಡುಕಲ್ಪಡುತ್ತವೆ?",
+        "ಕನ್ನಡ SEO ಗಾಗಿ Google ಡೇಟಾವನ್ನು ಹೇಗೆ ಸಂಯೋಜಿಸುವುದು?",
+        "ಕರ್ನಾಟಕದಲ್ಲಿ ಸ್ಥಳೀಯ ಕೀವರ್ಡ್ ಸಂಶೋಧನೆಗಾಗಿ AI ಸಾಧನಗಳು",
+        "ಕನ್ನಡ ಇ-ಕಾಮರ್ಸ್ ಮತ್ತು ಮಾರ್ಕೆಟಿಂಗ್ ಪ್ರವೃತ್ತಿಗಳು 2025",
+        "ಕನ್ನಡ ವ್ಯವಸಾಯಗಳಿಗೆ ಸ್ಥಳೀಯ SEO ತಂತ್ರಗಳು",
+        "ಬೆಂಗಳೂರು vs ಮೈಸೂರು – ಸ್ಥಳೀಯ ಹುಡುಕಾಟ ಮಾದರಿಗಳು ಮತ್ತು ಪ್ರವೃತ್ತಿಗಳು"
+      ],
       "publisher": {
         "@type": "Organization",
         "name": "Lucy World"
@@ -37,8 +45,8 @@
         "@type": "WebSite",
         "url": "https://lucy.world/kn/"
       },
-      "description": "Keyword research made simple with Google data: suggestions, trends, and insights.",
-      "keywords": "keyword research, SEO, Google Trends, suggestions, search volume"
+      "description": "Google ಕನ್ನಡ ಡೇಟಾವನ್ನು ಸಲಹೆಗಳು, ಪ್ರವೃತ್ತಿಗಳು ಮತ್ತು AI ವಿಶ್ಲೇಷಣೆಯೊಂದಿಗೆ ಕಂಡುಹಿಡಿಯಿರಿ ಅದು ವಿಷಯ ನಿರ್ಧಾರಗಳು ಮತ್ತು ವ್ಯಾಪಾರ ಬೆಳವಣಿಗೆಯನ್ನು ಬಲಪಡಿಸುತ್ತದೆ.",
+      "keywords": "ಕನ್ನಡ ಕೀವರ್ಡ್‌ಗಳು, SEO ಕರ್ನಾಟಕ 2025, Google ಪ್ರವೃತ್ತಿಗಳು, ಹುಡುಕಾಟ ಪರಿಮಾಣ, AI ವಿಶ್ಲೇಷಣೆ, ಸ್ಥಳೀಯ ಡಿಜಿಟಲ್ ಮಾರ್ಕೆಟಿಂಗ್, ವಿಷಯ ತಂತ್ರ"
     }
   ]
 }

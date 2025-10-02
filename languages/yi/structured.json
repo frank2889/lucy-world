@@ -37,8 +37,16 @@
         "@type": "WebSite",
         "url": "https://lucy.world/yi/"
       },
-      "description": "Keyword research made simple with Google data: suggestions, trends, and insights.",
-      "keywords": "keyword research, SEO, Google Trends, suggestions, search volume"
+      "description": "שליסל ווערטער פארשונג פאר יידישע געמיינדע און Google דאטע. טרענדס, איינזיכטן און SEO פאר יידישע קהילות ווײַט איבער.",
+      "keywords": "שליסל ווערטער פארשונג, SEO יידיש, Google Trends, פארשלאגן, זוך כמות, יידישע געמיינדע",
+      "aiSemantic": [
+        "יידישע געמיינדע SEO",
+        "יידישע דיגיטאלע מארקעטינג",
+        "אשכנזישע זוך טרענדס",
+        "יידישע שפראך אנליטיק",
+        "חרדישע מארקט פארשונג",
+        "יידישע אינטערנעט זוכונג"
+      ]
     }
   ]
 }

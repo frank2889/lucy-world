@@ -1,0 +1,21 @@
+{
+  "lang": "az",
+  "dir": "ltr",
+  "strings": {
+    "nav.search": "Axtarış",
+    "nav.advanced": "Qabaqcıl (tezliklə)",
+    "nav.trends": "Trendlər (tezliklə)",
+    "search.title": "Açar söz araşdırması",
+    "search.placeholder": "Açar söz daxil edin (məs., pizza çatdırılma)",
+    "search.button": "Axtar",
+    "search.hint": "Ödənişsiz təkliflər və trendlər. Nəticələr aşağıda görünəcək.",
+    "kpi.total_keywords": "Ümumi açar sözlər",
+    "kpi.total_volume": "Ümumi həcm",
+    "kpi.real_data_keywords": "Real məlumatlı açar sözlər",
+    "kpi.avg_interest": "Orta maraq",
+    "meta.title": "Lucy World – Azərbaycan bazarı üçün axtarış analitikası",
+    "meta.description": "Azərbaycan bazarı üçün Google və Yandex məlumatlarına əsaslanan trendlər, təkliflər və AI analitikası ilə kontent və böyümə qərarlarınızı gücləndirin.",
+    "meta.keywords": "Azərbaycan açar söz araşdırması, Azərbaycan SEO, Google trendləri, Yandex axtarış, AI axtarış aləti, yerli kontent strategiyası",
+    "hint.site_vs_search": "Axtarış ölkəsini və dili seçmək üçün yuxarıdakı seçimlərdən istifadə edin. Saytın interfeys dilini yan menyudan dəyişin."
+  }
+}

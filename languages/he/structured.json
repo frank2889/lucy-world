@@ -12,8 +12,16 @@
       "name": "Lucy World",
       "url": "https://lucy.world/he/",
       "inLanguage": "he",
-      "description": "Keyword research made simple with Google data: suggestions, trends, and insights.",
-      "keywords": "keyword research, SEO, Google Trends, suggestions, search volume",
+      "description": "גלה נתוני Google בעברית עם הצעות, מגמות וניתוח AI המחזקים החלטות תוכן וצמיחה עסקית.",
+      "keywords": "מילות מפתח עבריות, SEO ישראל 2025, מגמות Google, נפח חיפוש, ניתוח AI, שיווק דיגיטלי מקומי, אסטרטגיית תוכן",
+      "aiSemantic": [
+        "אילו מילות מפתח עבריות הכי מחפשים ב-2025?",
+        "איך לשלב נתוני Google עבור SEO בעברית?",
+        "כלי AI למחקר מילות מפתח מקומיות בישראל",
+        "טרנדים של מסחר אלקטרוני ושיווק בעברית 2025",
+        "אסטרטגיות SEO מקומיות לעסקים ישראליים",
+        "תל אביב מול ירושלים - דפוסי חיפוש מקומיים וטרנדים"
+      ],
       "publisher": {
         "@type": "Organization",
         "name": "Lucy World"
@@ -37,8 +45,8 @@
         "@type": "WebSite",
         "url": "https://lucy.world/he/"
       },
-      "description": "Keyword research made simple with Google data: suggestions, trends, and insights.",
-      "keywords": "keyword research, SEO, Google Trends, suggestions, search volume"
+      "description": "גלה נתוני Google בעברית עם הצעות, מגמות וניתוח AI המחזקים החלטות תוכן וצמיחה עסקית.",
+      "keywords": "מילות מפתח עבריות, SEO ישראל 2025, מגמות Google, נפח חיפוש, ניתוח AI, שיווק דיגיטלי מקומי, אסטרטגיית תוכן"
     }
   ]
 }

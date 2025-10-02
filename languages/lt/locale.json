@@ -1,0 +1,21 @@
+{
+  "lang": "lt",
+  "dir": "ltr",
+  "strings": {
+    "nav.search": "Paieška",
+    "nav.advanced": "Pažangūs (netrukus)",
+    "nav.trends": "Tendencijos (netrukus)",
+    "search.title": "Raktažodžių tyrimai",
+    "search.placeholder": "Įveskite raktažodį (pvz., picos pristatymas)",
+    "search.button": "Ieškoti",
+    "search.hint": "Nemokamos rekomendacijos ir tendencijos. Rezultatai atsiras žemiau.",
+    "kpi.total_keywords": "Iš viso raktažodžių",
+    "kpi.total_volume": "Bendras kiekis",
+    "kpi.real_data_keywords": "Realių duomenų raktažodžiai",
+    "kpi.avg_interest": "Vid. susidomėjimas",
+    "meta.title": "Lucy World – Vietinė paieškos analizė Lietuvai",
+    "meta.description": "Ištirkite lietuviškus Google duomenis su rekomendacijomis, tendencijomis ir AI analize, stiprinančia turinio sprendimus ir verslo augimą.",
+    "meta.keywords": "lietuviški raktažodžiai, SEO Lietuva, Google tendencijos, paieškos kiekis, AI analizė, vietinė turinio strategija",
+    "hint.site_vs_search": "Naudokite aukščiau esančius selektorius, kad pasirinktumėte paieškos šalį ir kalbą. Keiskite sąsajos kalbą iš šoninio meniu."
+  }
+}

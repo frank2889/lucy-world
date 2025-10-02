@@ -1,0 +1,21 @@
+{
+  "lang": "es",
+  "dir": "ltr",
+  "strings": {
+    "nav.search": "Buscar",
+    "nav.advanced": "Avanzado (pronto)",
+    "nav.trends": "Tendencias (pronto)",
+    "search.title": "Investigación de palabras clave",
+    "search.placeholder": "Introduce una palabra clave (p. ej., entrega de pizza)",
+    "search.button": "Buscar",
+    "search.hint": "Sugerencias y tendencias gratis. Los resultados aparecerán abajo.",
+    "kpi.total_keywords": "Palabras clave totales",
+    "kpi.total_volume": "Volumen total",
+    "kpi.real_data_keywords": "Palabras clave con datos reales",
+    "kpi.avg_interest": "Interés prom.",
+    "meta.title": "Lucy World – Análisis de búsqueda local para España",
+    "meta.description": "Descubre datos españoles de Google con sugerencias, tendencias y análisis de IA que refuerzan las decisiones de contenido y el crecimiento empresarial.",
+    "meta.keywords": "palabras clave españolas, SEO España, tendencias Google, volumen búsqueda, análisis IA, estrategia contenido local",
+    "hint.site_vs_search": "Usa los selectores de arriba para elegir el país y el idioma de la búsqueda. Cambia el idioma de la interfaz desde el menú lateral."
+  }
+}

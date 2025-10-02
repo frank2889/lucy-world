@@ -1,0 +1,21 @@
+{
+  "lang": "rw",
+  "dir": "ltr",
+  "strings": {
+    "nav.search": "Gushakisha",
+    "nav.advanced": "Birambuye (vuba)",
+    "nav.trends": "Icyerekezo (vuba)",
+    "search.title": "Ubushakashatsi bw'amagambo fatizo",
+    "search.placeholder": "Injiza ijambo fatizo (urugero: gutanga pizza)",
+    "search.button": "Shakisha",
+    "search.hint": "Ibyifuzo n'icyerekezo kubuntu. Ibisubizo bizagaragara hasi.",
+    "kpi.total_keywords": "Amagambo fatizo yose",
+    "kpi.total_volume": "Igipimo cyose",
+    "kpi.real_data_keywords": "Amagambo fatizo n'amakuru nyayo",
+    "kpi.avg_interest": "Ubunyangamugayo bw'ikibagabaga",
+    "meta.title": "Lucy World – Isesengura ry'ishakisha mu Rwanda",
+    "meta.description": "Shakisha amakuru ya Google y'u Rwanda hamwe n'ibyifuzo, icyerekezo n'isesengura rya AI rikomeza imyanzuro y'ibirimo n'iterambere ry'ubucuruzi.",
+    "meta.keywords": "amagambo fatizo y'ikinyarwanda, SEO Rwanda, Google Trends, igipimo cy'ishakisha, isesengura rya AI, ingamba z'ibirimo byo mu gace",
+    "hint.site_vs_search": "Koresha abahitamo bari hejuru kugira ngo uhitemo igihugu n'ururimi rw'ishakisha. Hindura ururimi rw'ikurikiranyabikorwa ukurikije menu y'uruhande."
+  }
+}

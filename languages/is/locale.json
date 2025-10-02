@@ -1,0 +1,21 @@
+{
+  "lang": "is",
+  "dir": "ltr",
+  "strings": {
+    "nav.search": "Leita",
+    "nav.advanced": "Ítarlegt (bráðum)",
+    "nav.trends": "Straumar (bráðum)",
+    "search.title": "Leitarorðarannsóknir",
+    "search.placeholder": "Sláðu inn leitarorð (t.d. pizza afhending)",
+    "search.button": "Leita",
+    "search.hint": "Ókeypis tillögur og straumar. Niðurstöður birtast hér fyrir neðan.",
+    "kpi.total_keywords": "Heildar leitarorð",
+    "kpi.total_volume": "Heildarmagnstjórn",
+    "kpi.real_data_keywords": "Leitarorð með raunveruleg gögn",
+    "kpi.avg_interest": "Meðal áhugi",
+    "meta.title": "Lucy World – Staðbundin leitargreining fyrir Ísland",
+    "meta.description": "Uppgötvaðu íslensk Google gögn með tillögum, strauma og AI greiningu sem styrkir efnisákvarðanir og viðskiptavöxt.",
+    "meta.keywords": "íslensk leitarorð, SEO Ísland, Google straumar, leitarmagnstjórn, AI greining, staðbundin efnisstefna",
+    "hint.site_vs_search": "Notaðu valmöguleikana að ofan til að velja leitarland og tungumál. Breyttu viðmótstungumáli úr hliðarvalmyndinni."
+  }
+}

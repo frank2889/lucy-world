@@ -1,0 +1,21 @@
+{
+  "lang": "fi",
+  "dir": "ltr",
+  "strings": {
+    "nav.search": "Haku",
+    "nav.advanced": "Edistynyt (tulossa)",
+    "nav.trends": "Trendit (tulossa)",
+    "search.title": "Avainsanatutkimus",
+    "search.placeholder": "Syötä avainsana (esim. pizzan kotiinkuljetus)",
+    "search.button": "Hae",
+    "search.hint": "Ilmaisia ehdotuksia ja trendejä. Tulokset näkyvät alla.",
+    "kpi.total_keywords": "Avainsanoja yhteensä",
+    "kpi.total_volume": "Kokonaisvolyymi",
+    "kpi.real_data_keywords": "Avainsanat oikeilla tiedoilla",
+    "kpi.avg_interest": "Keskim. kiinnostus",
+    "meta.title": "Lucy World – Paikallinen hakuanalyysi Suomelle",
+    "meta.description": "Löydä suomalaista Google-dataa ehdotuksilla, trendeillä ja AI-analyysilla, jotka vahvistavat sisältöpäätöksiä ja liiketoiminnan kasvua.",
+    "meta.keywords": "suomalaiset avainsanat, SEO Suomi, Google-trendit, hakuvolyymi, AI-analyysi, paikallinen sisältöstrategia",
+    "hint.site_vs_search": "Käytä ylläolevia valitsimia hakumaan ja -kielen valitsemiseksi. Vaihda sivuston käyttöliittymän kieli sivupalkista."
+  }
+}

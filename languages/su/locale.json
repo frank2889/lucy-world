@@ -1,0 +1,21 @@
+{
+  "lang": "su",
+  "dir": "ltr",
+  "strings": {
+    "nav.search": "Paluruh",
+    "nav.advanced": "Canggih (moal lami)",
+    "nav.trends": "Tren (moal lami)",
+    "search.title": "Panalungtikan kecap konci",
+    "search.placeholder": "Lebetkeun kecap konci (conto: pangiriman pizza)",
+    "search.button": "Paluruh",
+    "search.hint": "Usul sareng tren gratis. Hasilna bakal muncul di handap.",
+    "kpi.total_keywords": "Jumlah kecap konci",
+    "kpi.total_volume": "Total volume",
+    "kpi.real_data_keywords": "Kecap konci sareng data nyata",
+    "kpi.avg_interest": "Minat rata-rata",
+    "meta.title": "Lucy World – Analisis paluruhan lokal pikeun Sunda",
+    "meta.description": "Jelajahi data Google Sunda sareng usul, tren sareng analisis AI anu nguatkeun kaputusan eusi sareng kamekaran bisnis lokal.",
+    "meta.keywords": "kecap konci Sunda, SEO Sunda, Google Trends, volume paluruhan, analisis AI, strategi eusi lokal",
+    "hint.site_vs_search": "Anggo pamilih di luhur pikeun milih nagara sareng basa paluruhan. Ganti basa antarmuka tina menu sisi."
+  }
+}

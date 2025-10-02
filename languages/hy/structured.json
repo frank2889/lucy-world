@@ -12,8 +12,16 @@
       "name": "Lucy World",
       "url": "https://lucy.world/hy/",
       "inLanguage": "hy",
-      "description": "Keyword research made simple with Google data: suggestions, trends, and insights.",
-      "keywords": "keyword research, SEO, Google Trends, suggestions, search volume",
+      "description": "Բացահայտեք հայկական Google տվյալները առաջարկություններով, միտումներով և AI վերլուծությամբ, որոնք ամրապնդում են բովանդակության որոշումները և բիզնեսի աճը:",
+      "keywords": "հայկական հիմնաբառեր, SEO Հայաստան 2025, Google միտումներ, որոնման ծավալ, AI վերլուծություն, տեղական թվային մարքեթինգ, բովանդակության ռազմավարություն",
+      "aiSemantic": [
+        "Որո՞նք են 2025-ին հայկական ամենաշատ որոնվող հիմնաբառերը:",
+        "Ինչպե՞ս համակցել Google տվյալները հայկական SEO-ի համար:",
+        "AI գործիքներ տեղական հիմնաբառերի հետազոտության համար Հայաստանում",
+        "Հայկական էլեկտրոնային առևտրի և մարքեթինգի միտումները 2025",
+        "Տեղական SEO ռազմավարություններ հայկական ձեռնարկությունների համար",
+        "Երևան vs Գյումրի – տեղական որոնման օրինակներ և միտումներ"
+      ],
       "publisher": {
         "@type": "Organization",
         "name": "Lucy World"
@@ -37,8 +45,8 @@
         "@type": "WebSite",
         "url": "https://lucy.world/hy/"
       },
-      "description": "Keyword research made simple with Google data: suggestions, trends, and insights.",
-      "keywords": "keyword research, SEO, Google Trends, suggestions, search volume"
+      "description": "Բացահայտեք հայկական Google տվյալները առաջարկություններով, միտումներով և AI վերլուծությամբ, որոնք ամրապնդում են բովանդակության որոշումները և բիզնեսի աճը:",
+      "keywords": "հայկական հիմնաբառեր, SEO Հայաստան 2025, Google միտումներ, որոնման ծավալ, AI վերլուծություն, տեղական թվային մարքեթինգ, բովանդակության ռազմավարություն"
     }
   ]
 }

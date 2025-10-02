@@ -12,8 +12,16 @@
       "name": "Lucy World",
       "url": "https://lucy.world/el/",
       "inLanguage": "el",
-      "description": "Keyword research made simple with Google data: suggestions, trends, and insights.",
-      "keywords": "keyword research, SEO, Google Trends, suggestions, search volume",
+      "description": "Ανακαλύψτε ελληνικά δεδομένα Google με προτάσεις, τάσεις και ανάλυση AI που ενισχύουν τις αποφάσεις περιεχομένου και την ανάπτυξη επιχειρήσεων.",
+      "keywords": "ελληνικές λέξεις-κλειδιά, SEO Ελλάδα 2025, τάσεις Google, όγκος αναζήτησης, ανάλυση AI, ψηφιακό μάρκετινγκ τοπικό, στρατηγική περιεχομένου",
+      "aiSemantic": [
+        "Ποιες ελληνικές λέξεις-κλειδιά έχουν τις περισσότερες αναζητήσεις το 2025;",
+        "Πώς να συνδυάσετε δεδομένα Google για ελληνικό SEO;",
+        "Εργαλεία AI για τοπική έρευνα λέξεων-κλειδιών στην Ελλάδα",
+        "Ελληνικές τάσεις e-commerce και μάρκετινγκ 2025",
+        "Τοπικές στρατηγικές SEO για ελληνικές επιχειρήσεις",
+        "Αθήνα vs Θεσσαλονίκη – τοπικά μοτίβα αναζήτησης και τάσεις"
+      ],
       "publisher": {
         "@type": "Organization",
         "name": "Lucy World"
@@ -37,8 +45,8 @@
         "@type": "WebSite",
         "url": "https://lucy.world/el/"
       },
-      "description": "Keyword research made simple with Google data: suggestions, trends, and insights.",
-      "keywords": "keyword research, SEO, Google Trends, suggestions, search volume"
+      "description": "Ανακαλύψτε ελληνικά δεδομένα Google με προτάσεις, τάσεις και ανάλυση AI που ενισχύουν τις αποφάσεις περιεχομένου και την ανάπτυξη επιχειρήσεων.",
+      "keywords": "ελληνικές λέξεις-κλειδιά, SEO Ελλάδα 2025, τάσεις Google, όγκος αναζήτησης, ανάλυση AI, ψηφιακό μάρκετινγκ τοπικό, στρατηγική περιεχομένου"
     }
   ]
 }

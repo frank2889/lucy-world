@@ -1,0 +1,21 @@
+{
+  "lang": "ms",
+  "dir": "ltr",
+  "strings": {
+    "nav.search": "Cari",
+    "nav.advanced": "Lanjutan (tidak lama lagi)",
+    "nav.trends": "Trend (tidak lama lagi)",
+    "search.title": "Penyelidikan kata kunci",
+    "search.placeholder": "Masukkan kata kunci (cth: penghantaran pizza)",
+    "search.button": "Cari",
+    "search.hint": "Cadangan dan trend percuma. Keputusan akan muncul di bawah.",
+    "kpi.total_keywords": "Jumlah kata kunci",
+    "kpi.total_volume": "Jumlah volum",
+    "kpi.real_data_keywords": "Kata kunci data sebenar",
+    "kpi.avg_interest": "Minat purata",
+    "meta.title": "Lucy World – Analisis carian tempatan untuk Malaysia",
+    "meta.description": "Terokai data Google Malaysia dengan cadangan, trend dan analisis AI yang mengukuhkan keputusan kandungan dan pertumbuhan perniagaan tempatan.",
+    "meta.keywords": "kata kunci Melayu, SEO Malaysia, Google Trends, volum carian, analisis AI, strategi kandungan tempatan",
+    "hint.site_vs_search": "Gunakan pemilih di atas untuk memilih negara dan bahasa carian. Tukar bahasa antara muka dari menu sisi."
+  }
+}

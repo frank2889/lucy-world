@@ -12,8 +12,16 @@
       "name": "Lucy World",
       "url": "https://lucy.world/hr/",
       "inLanguage": "hr",
-      "description": "Keyword research made simple with Google data: suggestions, trends, and insights.",
-      "keywords": "keyword research, SEO, Google Trends, suggestions, search volume",
+      "description": "Otkrijte hrvatske Google podatke s prijedlozima, trendovima i AI analizom koji jačaju odluke o sadržaju i poslovni rast.",
+      "keywords": "hrvatske ključne riječi, SEO Hrvatska 2025, Google trendovi, volumen pretrage, AI analiza, lokalni digitalni marketing, strategija sadržaja",
+      "aiSemantic": [
+        "Koje hrvatske ključne riječi imaju najviše pretraga u 2025?",
+        "Kako kombinirati Google podatke za hrvatski SEO?",
+        "AI alati za istraživanje lokalnih ključnih riječi u Hrvatskoj",
+        "Hrvatski e-commerce i marketing trendovi 2025",
+        "Lokalne SEO strategije za hrvatska poduzeća",
+        "Zagreb vs Split - lokalni obrasci pretrage i trendovi"
+      ],
       "publisher": {
         "@type": "Organization",
         "name": "Lucy World"
@@ -37,8 +45,8 @@
         "@type": "WebSite",
         "url": "https://lucy.world/hr/"
       },
-      "description": "Keyword research made simple with Google data: suggestions, trends, and insights.",
-      "keywords": "keyword research, SEO, Google Trends, suggestions, search volume"
+      "description": "Otkrijte hrvatske Google podatke s prijedlozima, trendovima i AI analizom koji jačaju odluke o sadržaju i poslovni rast.",
+      "keywords": "hrvatske ključne riječi, SEO Hrvatska 2025, Google trendovi, volumen pretrage, AI analiza, lokalni digitalni marketing, strategija sadržaja"
     }
   ]
 }

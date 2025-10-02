@@ -12,8 +12,16 @@
       "name": "Lucy World",
       "url": "https://lucy.world/ig/",
       "inLanguage": "ig",
-      "description": "Keyword research made simple with Google data: suggestions, trends, and insights.",
-      "keywords": "keyword research, SEO, Google Trends, suggestions, search volume",
+      "description": "Chọpụta data Google Igbo na aro, omume na nyocha AI nke na-eme ka mkpebi ọdịnaya na uto azụmahịa sie ike.",
+      "keywords": "okwu isi Igbo, SEO Naịjirịa 2025, omume Google, oke ọchụchọ, nyocha AI, ahịa dijitalụ mpaghara, atụmatụ ọdịnaya",
+      "aiSemantic": [
+        "Kedu okwu isi Igbo ndị kacha achọ na 2025?",
+        "Olee otu esi ejikọta data Google maka SEO Igbo?",
+        "Ngwa AI maka nyocha okwu isi mpaghara na Naịjirịa",
+        "Omume e-commerce na ahịa Igbo 2025",
+        "Atụmatụ SEO mpaghara maka azụmahịa Naịjirịa",
+        "Lagos vs Enugu – ụkpụrụ ọchụchọ mpaghara na omume"
+      ],
       "publisher": {
         "@type": "Organization",
         "name": "Lucy World"
@@ -37,8 +45,8 @@
         "@type": "WebSite",
         "url": "https://lucy.world/ig/"
       },
-      "description": "Keyword research made simple with Google data: suggestions, trends, and insights.",
-      "keywords": "keyword research, SEO, Google Trends, suggestions, search volume"
+      "description": "Chọpụta data Google Igbo na aro, omume na nyocha AI nke na-eme ka mkpebi ọdịnaya na uto azụmahịa sie ike.",
+      "keywords": "okwu isi Igbo, SEO Naịjirịa 2025, omume Google, oke ọchụchọ, nyocha AI, ahịa dijitalụ mpaghara, atụmatụ ọdịnaya"
     }
   ]
 }

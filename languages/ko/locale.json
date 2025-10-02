@@ -1,0 +1,21 @@
+{
+  "lang": "ko",
+  "dir": "ltr",
+  "strings": {
+    "nav.search": "검색",
+    "nav.advanced": "고급(곧 제공)",
+    "nav.trends": "트렌드(곧 제공)",
+    "search.title": "키워드 조사",
+    "search.placeholder": "키워드를 입력하세요 (예: 피자 배달)",
+    "search.button": "검색",
+    "search.hint": "무료 제안 및 트렌드. 결과는 아래에 표시됩니다.",
+    "kpi.total_keywords": "키워드 합계",
+    "kpi.total_volume": "총 검색량",
+    "kpi.real_data_keywords": "실제 데이터 키워드",
+    "kpi.avg_interest": "평균 관심도",
+    "meta.title": "Lucy World – 한국을 위한 로컬 검색 분석",
+    "meta.description": "제안, 트렌드, AI 분석으로 한국 Google 데이터를 발견하여 콘텐츠 결정과 비즈니스 성장을 강화하세요.",
+    "meta.keywords": "한국어 키워드, SEO 한국, Google 트렌드, 검색량, AI 분석, 로컬 콘텐츠 전략",
+    "hint.site_vs_search": "위의 선택기를 사용하여 검색 국가와 언어를 선택하세요. 사이드바 메뉴에서 인터페이스 언어를 변경하세요."
+  }
+}

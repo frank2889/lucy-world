@@ -9,9 +9,9 @@ import datetime as dt
 import json
 import os
 from pathlib import Path
+from typing import Optional, Set
 
 ROOT = Path(__file__).resolve().parents[1]
-LOCALES_DIR = ROOT / 'languages' / 'locales'
 SITES_DIR = ROOT / 'languages'
 BASE_URL = os.environ.get('BASE_URL', 'https://lucy.world')
 TODAY = dt.date.today().isoformat()
@@ -70,10 +70,31 @@ DEFAULT_STRUCTURED = {
 }
 
 
-def get_locales():
-    if not LOCALES_DIR.is_dir():
-        return []
-    return sorted(p.stem for p in LOCALES_DIR.glob('*.json'))
+def locale_json_path(lang: str) -> Optional[Path]:
+    candidate = SITES_DIR / lang / 'locale.json'
+    if candidate.exists():
+        return candidate
+    legacy = ROOT / 'languages' / 'locales' / f'{lang}.json'
+    if legacy.exists():
+        return legacy
+    very_legacy = ROOT / 'locales' / f'{lang}.json'
+    if very_legacy.exists():
+        return very_legacy
+    return None
+
+
+def get_locales() -> list[str]:
+    locales: Set[str] = set()
+    if SITES_DIR.is_dir():
+        for entry in SITES_DIR.iterdir():
+            if entry.is_dir() and (entry / 'locale.json').exists():
+                locales.add(entry.name)
+    # legacy fallback
+    legacy_dir = ROOT / 'languages' / 'locales'
+    if legacy_dir.is_dir():
+        for fp in legacy_dir.glob('*.json'):
+            locales.add(fp.stem)
+    return sorted(locales)
 
 
 def ensure_dir(path: Path):
@@ -94,6 +115,34 @@ def generate_for_lang(lang: str, force: bool = False):
     robots = DEFAULT_ROBOTS.format(base=BASE_URL, lang=lang)
     sitemap = DEFAULT_SITEMAP.format(base=BASE_URL, lang=lang, today=TODAY)
 
+    # Check if structured.json already exists and has enhanced content
+    structured_path = out_dir / 'structured.json'
+    has_enhanced_structured = False
+    
+    if structured_path.exists():
+        try:
+            existing_structured = json.loads(structured_path.read_text(encoding='utf-8'))
+            # Check if it has our enhanced aiSemantic field or localized descriptions
+            if isinstance(existing_structured, dict):
+                graph = existing_structured.get('@graph', [])
+                for node in graph:
+                    if isinstance(node, dict):
+                        # Check for aiSemantic field (our enhancement)
+                        if 'aiSemantic' in node:
+                            has_enhanced_structured = True
+                            break
+                        # Check for non-default descriptions (localized content)
+                        desc = node.get('description', '')
+                        if desc and desc != "Keyword research made simple with Google data: suggestions, trends, and insights.":
+                            has_enhanced_structured = True
+                            break
+        except Exception:
+            pass
+    
+    # Only generate structured.json if it doesn't exist or doesn't have enhanced content
+    # (unless force is used)
+    skip_structured = has_enhanced_structured and not force
+
     structured = DEFAULT_STRUCTURED.copy()
     # Deep copy and fill fields
     import copy
@@ -109,8 +158,8 @@ def generate_for_lang(lang: str, force: bool = False):
 
     # Merge meta from locales/<lang>.json if available
     def load_locale_meta(l: str):
-        fp = LOCALES_DIR / f"{l}.json"
-        if not fp.exists():
+        fp = locale_json_path(l)
+        if not fp:
             return None
         try:
             data = json.loads(fp.read_text(encoding='utf-8'))
@@ -146,7 +195,14 @@ def generate_for_lang(lang: str, force: bool = False):
     changed = False
     changed |= write_if_missing(out_dir / 'robots.txt', robots + "\n", force)
     changed |= write_if_missing(out_dir / 'sitemap.xml', sitemap + "\n", force)
-    changed |= write_if_missing(out_dir / 'structured.json', json.dumps(structured, ensure_ascii=False, indent=2) + "\n", force)
+    
+    # Only write structured.json if it doesn't have enhanced content or force is used
+    if not skip_structured:
+        changed |= write_if_missing(out_dir / 'structured.json', json.dumps(structured, ensure_ascii=False, indent=2) + "\n", force)
+    elif has_enhanced_structured and not force:
+        # Print info about preserving enhanced content
+        print(f"  Preserving enhanced structured.json for {lang} (use --force to overwrite)")
+    
     return changed
 
 

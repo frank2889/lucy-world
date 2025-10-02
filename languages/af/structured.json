@@ -9,11 +9,11 @@
     },
     {
       "@type": "WebSite",
-      "name": "Lucy World",
+      "name": "Lucy World – Plaaslike soekinsigte vir Suid-Afrika",
       "url": "https://lucy.world/af/",
       "inLanguage": "af",
-      "description": "Keyword research made simple with Google data: suggestions, trends, and insights.",
-      "keywords": "keyword research, SEO, Google Trends, suggestions, search volume",
+      "description": "Ontsluit Google- en Bing-data vir Suid-Afrikaanse markte met Afrikaans-gefokusde neigings, voorstelle en AI-analise wat beter inhoud- en groeibesluite dryf.",
+      "keywords": "Suid-Afrika sleutelwoordnavorsing, Afrikaans SEO, Google-neigings, Bing-soek, AI-soek hulpmiddel, plaaslike inhoudstrategie",
       "publisher": {
         "@type": "Organization",
         "name": "Lucy World"
@@ -30,15 +30,23 @@
     },
     {
       "@type": "WebPage",
-      "name": "Lucy World",
+      "name": "Lucy World – Plaaslike soekinsigte vir Suid-Afrika",
       "url": "https://lucy.world/af/",
       "inLanguage": "af",
       "isPartOf": {
         "@type": "WebSite",
         "url": "https://lucy.world/af/"
       },
-      "description": "Keyword research made simple with Google data: suggestions, trends, and insights.",
-      "keywords": "keyword research, SEO, Google Trends, suggestions, search volume"
+      "description": "Ontsluit Google- en Bing-data vir Suid-Afrikaanse markte met Afrikaans-gefokusde neigings, voorstelle en AI-analise wat beter inhoud- en groeibesluite dryf.",
+      "keywords": "Suid-Afrika sleutelwoordnavorsing, Afrikaans SEO, Google-neigings, Bing-soek, AI-soek hulpmiddel, plaaslike inhoudstrategie",
+      "aiSemantic": [
+        "Google.co.za Afrikaans SEO",
+        "Suid-Afrikaanse markanaliese",
+        "Afrikaanse soektendense",
+        "Kaapse Afrikaanse sleutelwoorde",
+        "Suider-Afrika SEO",
+        "Afrikaanse digitale bemarking"
+      ]
     }
   ]
 }

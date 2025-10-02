@@ -12,8 +12,16 @@
       "name": "Lucy World",
       "url": "https://lucy.world/id/",
       "inLanguage": "id",
-      "description": "Keyword research made simple with Google data: suggestions, trends, and insights.",
-      "keywords": "keyword research, SEO, Google Trends, suggestions, search volume",
+      "description": "Temukan data Google Indonesia dengan saran, tren, dan analisis AI yang memperkuat keputusan konten dan pertumbuhan bisnis.",
+      "keywords": "kata kunci Indonesia, SEO Indonesia 2025, tren Google, volume pencarian, analisis AI, pemasaran digital lokal, strategi konten",
+      "aiSemantic": [
+        "Kata kunci Indonesia mana yang paling banyak dicari di 2025?",
+        "Bagaimana menggabungkan data Google untuk SEO Indonesia?",
+        "Tools AI untuk riset kata kunci lokal di Indonesia",
+        "Tren e-commerce dan marketing Indonesia 2025",
+        "Strategi SEO lokal untuk bisnis Indonesia",
+        "Jakarta vs Surabaya – pola pencarian lokal dan tren"
+      ],
       "publisher": {
         "@type": "Organization",
         "name": "Lucy World"
@@ -37,8 +45,8 @@
         "@type": "WebSite",
         "url": "https://lucy.world/id/"
       },
-      "description": "Keyword research made simple with Google data: suggestions, trends, and insights.",
-      "keywords": "keyword research, SEO, Google Trends, suggestions, search volume"
+      "description": "Temukan data Google Indonesia dengan saran, tren, dan analisis AI yang memperkuat keputusan konten dan pertumbuhan bisnis.",
+      "keywords": "kata kunci Indonesia, SEO Indonesia 2025, tren Google, volume pencarian, analisis AI, pemasaran digital lokal, strategi konten"
     }
   ]
 }

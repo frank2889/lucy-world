@@ -12,8 +12,16 @@
       "name": "Lucy World",
       "url": "https://lucy.world/ja/",
       "inLanguage": "ja",
-      "description": "Keyword research made simple with Google data: suggestions, trends, and insights.",
-      "keywords": "keyword research, SEO, Google Trends, suggestions, search volume",
+      "description": "日本のGoogleデータを提案、トレンド、AI分析で発見し、コンテンツ決定とビジネス成長を強化。",
+      "keywords": "日本語キーワード, SEO日本 2025, Googleトレンド, 検索ボリューム, AI分析, ローカルデジタルマーケティング, コンテンツ戦略",
+      "aiSemantic": [
+        "2025年に最も検索される日本語キーワードは何ですか？",
+        "日本のSEOでGoogleデータを組み合わせる方法は？",
+        "日本でのローカルキーワード調査のためのAIツール",
+        "日本のEコマースとマーケティングトレンド2025",
+        "日本企業向けのローカルSEO戦略",
+        "東京 vs 大阪 - ローカル検索パターンとトレンド"
+      ],
       "publisher": {
         "@type": "Organization",
         "name": "Lucy World"
@@ -37,8 +45,8 @@
         "@type": "WebSite",
         "url": "https://lucy.world/ja/"
       },
-      "description": "Keyword research made simple with Google data: suggestions, trends, and insights.",
-      "keywords": "keyword research, SEO, Google Trends, suggestions, search volume"
+      "description": "日本のGoogleデータを提案、トレンド、AI分析で発見し、コンテンツ決定とビジネス成長を強化。",
+      "keywords": "日本語キーワード, SEO日本 2025, Googleトレンド, 検索ボリューム, AI分析, ローカルデジタルマーケティング, コンテンツ戦略"
     }
   ]
 }

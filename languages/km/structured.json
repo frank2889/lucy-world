@@ -12,8 +12,16 @@
       "name": "Lucy World",
       "url": "https://lucy.world/km/",
       "inLanguage": "km",
-      "description": "Keyword research made simple with Google data: suggestions, trends, and insights.",
-      "keywords": "keyword research, SEO, Google Trends, suggestions, search volume",
+      "description": "រកឃើញទិន្នន័យ Google ខ្មែរជាមួយការណែនាំ និន្នាការ និងការវិភាគ AI ដែលពង្រឹងការសម្រេចចិត្តអំពីមាតិកា និងការលូតលាស់អាជីវកម្ម។",
+      "keywords": "ពាក្យគន្លឹះខ្មែរ, SEO កម្ពុជា 2025, និន្នាការ Google, បរិមាណស្វែងរក, ការវិភាគ AI, ទីផ្សារឌីជីថលក្នុងស្រុក, យុទ្ធសាស្ត្រមាតិកា",
+      "aiSemantic": [
+        "តើពាក្យគន្លឹះខ្មែរណាមួយដែលត្រូវបានស្វែងរកច្រើនជាងគេក្នុងឆ្នាំ 2025?",
+        "របៀបរួមបញ្ចូលទិន្នន័យ Google សម្រាប់ SEO ភាសាខ្មែរ?",
+        "ឧបករណ៍ AI សម្រាប់ការស្រាវជ្រាវពាក្យគន្លឹះក្នុងស្រុកនៅកម្ពុជា",
+        "និន្នាការពាណិជ្ជកម្មអេឡិចត្រូនិក និងទីផ្សារខ្មែរ 2025",
+        "យុទ្ធសាស្ត្រ SEO ក្នុងស្រុកសម្រាប់អាជីវកម្មកម្ពុជា",
+        "ភ្នំពេញ vs សៀមរាប – លំនាំស្វែងរកក្នុងស្រុក និងនិន្នាការ"
+      ],
       "publisher": {
         "@type": "Organization",
         "name": "Lucy World"
@@ -37,8 +45,8 @@
         "@type": "WebSite",
         "url": "https://lucy.world/km/"
       },
-      "description": "Keyword research made simple with Google data: suggestions, trends, and insights.",
-      "keywords": "keyword research, SEO, Google Trends, suggestions, search volume"
+      "description": "រកឃើញទិន្នន័យ Google ខ្មែរជាមួយការណែនាំ និន្នាការ និងការវិភាគ AI ដែលពង្រឹងការសម្រេចចិត្តអំពីមាតិកា និងការលូតលាស់អាជីវកម្ម។",
+      "keywords": "ពាក្យគន្លឹះខ្មែរ, SEO កម្ពុជា 2025, និន្នាការ Google, បរិមាណស្វែងរក, ការវិភាគ AI, ទីផ្សារឌីជីថលក្នុងស្រុក, យុទ្ធសាស្ត្រមាតិកា"
     }
   ]
 }

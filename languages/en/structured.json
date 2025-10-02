@@ -12,8 +12,8 @@
       "name": "Lucy World",
       "url": "https://lucy.world/en/",
       "inLanguage": "en",
-      "description": "Keyword research made simple with Google data: suggestions, trends, and insights.",
-      "keywords": "keyword research, SEO, Google Trends, suggestions, search volume",
+  "description": "Practical insights for search and content strategies with trends, suggestions, and analysis to support better decisions and steady growth.",
+  "keywords": "keyword research, SEO, Google Trends, AI search, local search, suggestions, content strategy",
       "publisher": {
         "@type": "Organization",
         "name": "Lucy World"
@@ -37,8 +37,8 @@
         "@type": "WebSite",
         "url": "https://lucy.world/en/"
       },
-      "description": "Keyword research made simple with Google data: suggestions, trends, and insights.",
-      "keywords": "keyword research, SEO, Google Trends, suggestions, search volume"
+  "description": "Practical insights for search and content strategies with trends, suggestions, and analysis to support better decisions and steady growth.",
+  "keywords": "keyword research, SEO, Google Trends, AI search, local search, suggestions, content strategy"
     }
   ]
 }

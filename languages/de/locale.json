@@ -1,0 +1,21 @@
+{
+  "lang": "de",
+  "dir": "ltr",
+  "strings": {
+    "nav.search": "Suchen",
+    "nav.advanced": "Erweitert (bald)",
+    "nav.trends": "Trends (bald)",
+    "search.title": "Keyword-Recherche",
+    "search.placeholder": "Geben Sie ein Keyword ein (z. B. Pizzalieferung)",
+    "search.button": "Suchen",
+    "search.hint": "Kostenlose Vorschläge und Trends. Ergebnisse erscheinen unten.",
+    "kpi.total_keywords": "Gesamt-Keywords",
+    "kpi.total_volume": "Gesamtvolumen",
+    "kpi.real_data_keywords": "Keywords mit Echtdaten",
+    "kpi.avg_interest": "Durchschn. Interesse",
+    "meta.title": "Lucy World – Lokale Suchanalyse für Deutschland",
+    "meta.description": "Entdecken Sie deutsche Google-Daten mit Vorschlägen, Trends und KI-Analyse, die Inhaltsentscheidungen und Unternehmenswachstum stärken.",
+    "meta.keywords": "deutsche Keywords, SEO Deutschland, Google Trends, Suchvolumen, KI-Analyse, lokale Content-Strategie",
+    "hint.site_vs_search": "Verwenden Sie die obigen Auswahlfelder, um Suchland und -sprache zu wählen. Ändern Sie die Oberflächensprache über das Seitenmenü."
+  }
+}

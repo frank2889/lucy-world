@@ -1,0 +1,21 @@
+{
+  "lang": "sm",
+  "dir": "ltr",
+  "strings": {
+    "nav.search": "Su'e",
+    "nav.advanced": "Maualuga (lata mai)",
+    "nav.trends": "Aga (lata mai)",
+    "search.title": "Su'esu'ega o upu autu",
+    "search.placeholder": "Tu'u se upu autu (fa'ata'ita'iga: pizza delivery)",
+    "search.button": "Su'e",
+    "search.hint": "Fautuaga ma aga e leai se totogi. O taunuuga o le a fa'aalia i lalo.",
+    "kpi.total_keywords": "Upu autu atoa",
+    "kpi.total_volume": "Paleni atoa",
+    "kpi.real_data_keywords": "Upu autu ma fa'amatalaga moni",
+    "kpi.avg_interest": "Fiafia averesi",
+    "meta.title": "Lucy World – Su'esu'ega saili a le lotoifale mo Samoa",
+    "meta.description": "Su'esu'e fa'amatalaga Google Samoa ma fautuaga, aga ma su'esu'ega AI e fa'amalosia ai filifiliga o mea ma le fa'atupulaia o pisinisi a le lotoifale.",
+    "meta.keywords": "upu autu Samoa, SEO Samoa, Google Trends, paleni saili, su'esu'ega AI, ta'iala mea a le lotoifale",
+    "hint.site_vs_search": "Fa'aoga filifili i luga e filifili ai le atunu'u ma le gagana saili. Suia le gagana fesoasoani mai le lisi tafatafa."
+  }
+}

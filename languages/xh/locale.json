@@ -1,0 +1,21 @@
+{
+  "lang": "xh",
+  "dir": "ltr",
+  "strings": {
+    "nav.search": "Khangela",
+    "nav.advanced": "Ephakamileyo (kungekudala)",
+    "nav.trends": "Iitrendszi (kungekudala)",
+    "search.title": "Uphando lwamagama aphambili",
+    "search.placeholder": "Ngenisa igama eliphambili (umz., ukuhanjiswa kwepizza)",
+    "search.button": "Khangela",
+    "search.hint": "Iingcebiso zasimahla neentshukumo. Iziphumo ziya kubonakala ngezantsi.",
+    "kpi.total_keywords": "Amagama aphambili ewonke",
+    "kpi.total_volume": "Umthamo opheleleyo",
+    "kpi.real_data_keywords": "Amagama aphambili enkcukacha yokwenyani",
+    "kpi.avg_interest": "Umdla ophakathi",
+    "meta.title": "Uphando lwamagama aphambili - Lucy World",
+    "meta.description": "Uphando lwamagama aphambili kwintengiso yaseMzantsi Afrika. Iinkcukacha zeGoogle, iintshukumo kunye nokuqonda ngeSEO ngesiXhosa.",
+    "meta.keywords": "uphando lwamagama aphambili, SEO isiXhosa, Google Trends, iingcebiso, umthamo wokukhangela",
+    "hint.site_vs_search": "Sebenzisa abakhetheli abangentla ukukhetha ilizwe nolwimi lokukhangela. Tshintsha ulwimi lwejelo lewebhusayithi kwimenyu yesibongozo."
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "lang": "co",
+  "dir": "ltr",
+  "strings": {
+    "nav.search": "Ricerca",
+    "nav.advanced": "Avanzatu (prestu)",
+    "nav.trends": "Tendenze (prestu)",
+    "search.title": "Ricerca di parolle chjave",
+    "search.placeholder": "Inserite una parolla chjave (per esempiu, consegna di pizza)",
+    "search.button": "Cerca",
+    "search.hint": "Suggerimenti è tendenze gratuiti. I risultati appariscenu quì sottu.",
+    "kpi.total_keywords": "Tutale di parolle chjave",
+    "kpi.total_volume": "Volumu tutale",
+    "kpi.real_data_keywords": "Parolle chjave cun dati reali",
+    "kpi.avg_interest": "Interessu medianu",
+    "meta.title": "Lucy World – Analitica di ricerca lucale per a Corsica",
+    "meta.description": "Scopre dati lucchesi da Google è Bing cù suggerimenti lucali, tendenze è analisi d'IA chì rinfurzanu e decisioni di cuntenutu è a crescita di l'affari.",
+    "meta.keywords": "ricerca parolle chjave corsa, SEO Corsica, tendenze Google, ricerca Bing, analisi IA, strategia di cuntenutu lucale",
+    "hint.site_vs_search": "Aduprate i selectori sopra per sceglie u paese è a lingua di ricerca. Cambiate a lingua di u situ da u menù laterale."
+  }
+}

@@ -12,8 +12,16 @@
       "name": "Lucy World",
       "url": "https://lucy.world/cs/",
       "inLanguage": "cs",
-      "description": "Keyword research made simple with Google data: suggestions, trends, and insights.",
-      "keywords": "keyword research, SEO, Google Trends, suggestions, search volume",
+      "description": "Objevte česká data Google a Seznam s návrhy, trendy a AI analýzou, která posilují rozhodování o obsahu a růst vašeho podnikání.",
+      "keywords": "česká klíčová slova, SEO Česko, trendy Google 2025, vyhledávání Seznam, AI analýza, digitální marketing místní, strategie obsahu",
+      "aiSemantic": [
+        "Jaká česká klíčová slova mají nejvíce vyhledávání v roce 2025?",
+        "Jak kombinovat data Google a Seznam pro SEO v češtině?",
+        "AI nástroje pro výzkum místních klíčových slov v Praze",
+        "Trendy českého e-commerce a marketingu 2025",
+        "Seznam.cz vs Google – jaký vyhledávač používat pro český trh?",
+        "Lokální SEO strategie pro české firmy a podnikatele"
+      ],
       "publisher": {
         "@type": "Organization",
         "name": "Lucy World"
@@ -37,8 +45,8 @@
         "@type": "WebSite",
         "url": "https://lucy.world/cs/"
       },
-      "description": "Keyword research made simple with Google data: suggestions, trends, and insights.",
-      "keywords": "keyword research, SEO, Google Trends, suggestions, search volume"
+      "description": "Objevte česká data Google a Seznam s návrhy, trendy a AI analýzou, která posilují rozhodování o obsahu a růst vašeho podnikání.",
+      "keywords": "česká klíčová slova, SEO Česko, trendy Google 2025, vyhledávání Seznam, AI analýza, digitální marketing místní, strategie obsahu"
     }
   ]
 }

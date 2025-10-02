@@ -9,11 +9,11 @@
     },
     {
       "@type": "WebSite",
-      "name": "Lucy World",
+      "name": "Lucy World – Лакальныя SEO-інсайты для Беларусі",
       "url": "https://lucy.world/be/",
       "inLanguage": "be",
-      "description": "Keyword research made simple with Google data: suggestions, trends, and insights.",
-      "keywords": "keyword research, SEO, Google Trends, suggestions, search volume",
+      "description": "Атрымлівайце дакладныя беларускія інсайты з Google і Yandex: лакальныя прапановы, тэндэнцыі і AI-аналітыка, якія дапамагаюць росту кантэнту і бізнесу.",
+      "keywords": "беларуская SEO, даследаванне ключавых слоў, тэндэнцыі Google, пошук Yandex, AI-аналітыка, лакальная стратэгія кантэнту",
       "publisher": {
         "@type": "Organization",
         "name": "Lucy World"
@@ -30,15 +30,15 @@
     },
     {
       "@type": "WebPage",
-      "name": "Lucy World",
+      "name": "Lucy World – Лакальныя SEO-інсайты для Беларусі",
       "url": "https://lucy.world/be/",
       "inLanguage": "be",
       "isPartOf": {
         "@type": "WebSite",
         "url": "https://lucy.world/be/"
       },
-      "description": "Keyword research made simple with Google data: suggestions, trends, and insights.",
-      "keywords": "keyword research, SEO, Google Trends, suggestions, search volume"
+      "description": "Атрымлівайце дакладныя беларускія інсайты з Google і Yandex: лакальныя прапановы, тэндэнцыі і AI-аналітыка, якія дапамагаюць росту кантэнту і бізнесу.",
+      "keywords": "беларуская SEO, даследаванне ключавых слоў, тэндэнцыі Google, пошук Yandex, AI-аналітыка, лакальная стратэгія кантэнту"
     }
   ]
 }

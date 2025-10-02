@@ -422,7 +422,7 @@ export default function App() {
                   style={{
                     position: 'absolute', right: 0, bottom: 'calc(100% + 6px)',
                     background: '#0e1217', border: '1px solid var(--line)', borderRadius: 10,
-                    minWidth: 220, maxHeight: '50vh', overflow: 'auto', zIndex: 25,
+                    minWidth: 220, maxHeight: '50vh', overflow: 'auto', zIndex: 50,
                   }}
                 >
                   {languagesList.map((l) => (
@@ -560,7 +560,7 @@ export default function App() {
           </button>
           <div className="brand">Lucy <span>World</span></div>
           <div className="topbar-actions" style={{ marginLeft: 'auto', display: 'inline-flex', alignItems: 'center', gap: 8 }}>
-            <div className="lang-switch" style={{ position: 'relative' }}>
+            <div className="lang-switch" style={{ position: 'relative', zIndex: 30 }}>
               {/* Country indicator (always shows current detected location; independent from search settings) */}
               <div
                 className="country-pill"
@@ -594,7 +594,7 @@ export default function App() {
                   style={{
                     position: 'absolute', right: 0, top: 'calc(100% + 6px)',
                     background: '#0e1217', border: '1px solid var(--line)', borderRadius: 10,
-                    minWidth: 220, maxHeight: '50vh', overflow: 'auto', zIndex: 25,
+                    minWidth: 220, maxHeight: '50vh', overflow: 'auto', zIndex: 50,
                   }}
                 >
                   {languagesList.map((l) => (
@@ -712,7 +712,7 @@ export default function App() {
           <div className="hint">{ui?.strings['search.hint'] || 'Free suggestions and trends. Results appear below.'}</div>
           <div className="hint" style={{opacity:0.8}}>
             {/* Clarify UX distinction between site locale and search settings */}
-            {(ui?.strings['hint.site_vs_search'] || 'Top bar shows your current site location and UI language. The selects above control search country and search language.')}
+            {(ui?.strings['hint.site_vs_search'] || 'Use the selectors above to choose the search country and language. Change the site interface language from the sidebar menu.')}
           </div>
           {error && <div className="error">{error}</div>}
         </section>

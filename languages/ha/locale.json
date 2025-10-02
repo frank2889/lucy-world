@@ -1,0 +1,21 @@
+{
+  "lang": "ha",
+  "dir": "ltr",
+  "strings": {
+    "nav.search": "Bincike",
+    "nav.advanced": "Babba (nan ba da jimawa ba)",
+    "nav.trends": "Yanayin zamani (nan ba da jimawa ba)",
+    "search.title": "Binciken kalmomin muhimmi",
+    "search.placeholder": "Shigar da kalmar muhimmi (misali, isar da pizza)",
+    "search.button": "Bincika",
+    "search.hint": "Shawarwari da yanayin zamani kyauta. Sakamakon za su bayyana a kasa.",
+    "kpi.total_keywords": "Jimillar kalmomin muhimmi",
+    "kpi.total_volume": "Jimillar girma",
+    "kpi.real_data_keywords": "Kalmomin muhimmi da bayanai na gaske",
+    "kpi.avg_interest": "Matsakaicin sha'awa",
+    "meta.title": "Lucy World – Nazarin bincike na gida don Najeriya",
+    "meta.description": "Gano bayanan Hausa Google tare da shawarwari, yanayin zamani da nazarin AI da ke ƙarfafa yanke shawara game da abun ciki da ci gaban kasuwanci.",
+    "meta.keywords": "kalmomin muhimmi na Hausa, SEO Najeriya, yanayin zamani na Google, girman bincike, nazarin AI, dabarun abun ciki na gida",
+    "hint.site_vs_search": "Yi amfani da masu zaɓi na sama don zaɓar ƙasar bincike da harshe. Canza harshen dubawa daga menu na gefe."
+  }
+}

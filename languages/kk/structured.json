@@ -12,8 +12,16 @@
       "name": "Lucy World",
       "url": "https://lucy.world/kk/",
       "inLanguage": "kk",
-      "description": "Keyword research made simple with Google data: suggestions, trends, and insights.",
-      "keywords": "keyword research, SEO, Google Trends, suggestions, search volume",
+      "description": "Google қазақ деректерін ұсыныстармен, трендтермен және AI талдауымен ашып, контент шешімдері мен бизнес өсуін күшейтіңіз.",
+      "keywords": "қазақ кілт сөздері, SEO Қазақстан 2025, Google трендтері, іздеу көлемі, AI талдауы, жергілікті цифрлық маркетинг, контент стратегиясы",
+      "aiSemantic": [
+        "2025 жылы қандай қазақ кілт сөздері ең көп ізделеді?",
+        "Қазақ SEO үшін Google деректерін қалай біріктіруге болады?",
+        "Қазақстандағы жергілікті кілт сөздерді зерттеуге арналған AI құралдары",
+        "Қазақ электрондық сауда және маркетинг трендтері 2025",
+        "Қазақстандық бизнес үшін жергілікті SEO стратегиялары",
+        "Алматы vs Нұр-Сұлтан – жергілікті іздеу үлгілері мен трендтер"
+      ],
       "publisher": {
         "@type": "Organization",
         "name": "Lucy World"
@@ -37,8 +45,8 @@
         "@type": "WebSite",
         "url": "https://lucy.world/kk/"
       },
-      "description": "Keyword research made simple with Google data: suggestions, trends, and insights.",
-      "keywords": "keyword research, SEO, Google Trends, suggestions, search volume"
+      "description": "Google қазақ деректерін ұсыныстармен, трендтермен және AI талдауымен ашып, контент шешімдері мен бизнес өсуін күшейтіңіз.",
+      "keywords": "қазақ кілт сөздері, SEO Қазақстан 2025, Google трендтері, іздеу көлемі, AI талдауы, жергілікті цифрлық маркетинг, контент стратегиясы"
     }
   ]
 }

@@ -12,8 +12,16 @@
       "name": "Lucy World",
       "url": "https://lucy.world/bg/",
       "inLanguage": "bg",
-      "description": "Keyword research made simple with Google data: suggestions, trends, and insights.",
-      "keywords": "keyword research, SEO, Google Trends, suggestions, search volume",
+      "description": "Разкрийте водещи български търсения от Google и Bing с локални предложения, AI анализ и тенденции, които ускоряват съдържанието и растежа ви.",
+      "keywords": "ключови думи България, българско SEO, Google тенденции 2025, Bing търсене, AI анализ на пазара, локален дигитален маркетинг, съдържание на български",
+      "aiSemantic": [
+        "Кои са най-търсените ключови думи в България през 2025?",
+        "Как да подобря българското си SEO с Google и Bing данни?",
+        "AI инструменти за локално проучване на ключови думи в София",
+        "Какви тенденции движат онлайн пазаруването в България?",
+        "Стратегия за съдържание на български език за малък бизнес",
+        "Как да комбинирам Google Suggest и Bing за български кампании?"
+      ],
       "publisher": {
         "@type": "Organization",
         "name": "Lucy World"
@@ -37,8 +45,16 @@
         "@type": "WebSite",
         "url": "https://lucy.world/bg/"
       },
-      "description": "Keyword research made simple with Google data: suggestions, trends, and insights.",
-      "keywords": "keyword research, SEO, Google Trends, suggestions, search volume"
+      "description": "Разкрийте водещи български търсения от Google и Bing с локални предложения, AI анализ и тенденции, които ускоряват съдържанието и растежа ви.",
+      "keywords": "ключови думи България, българско SEO, Google тенденции 2025, Bing търсене, AI анализ на пазара, локален дигитален маркетинг, съдържание на български",
+      "aiSemantic": [
+        "Кои са най-търсените ключови думи в България през 2025?",
+        "Как да подобря българското си SEO с Google и Bing данни?",
+        "AI инструменти за локално проучване на ключови думи в София",
+        "Какви тенденции движат онлайн пазаруването в България?",
+        "Стратегия за съдържание на български език за малък бизнес",
+        "Как да комбинирам Google Suggest и Bing за български кампании?"
+      ]
     }
   ]
 }

@@ -1,0 +1,21 @@
+{
+  "lang": "sw",
+  "dir": "ltr",
+  "strings": {
+    "nav.search": "Tafuta",
+    "nav.advanced": "Za kina (hivi karibuni)",
+    "nav.trends": "Mitindo (hivi karibuni)",
+    "search.title": "Utafiti wa maneno muhimu",
+    "search.placeholder": "Ingiza neno muhimu (mfano, uwasilishaji pizza)",
+    "search.button": "Tafuta",
+    "search.hint": "Mapendekezo na mitindo ya bure. Matokeo yataonekana hapa chini.",
+    "kpi.total_keywords": "Maneno muhimu jumla",
+    "kpi.total_volume": "Kiwango cha jumla",
+    "kpi.real_data_keywords": "Maneno muhimu ya data halisi",
+    "kpi.avg_interest": "Wastani wa maslahi",
+    "meta.title": "Utafiti wa Maneno Muhimu - Lucy World",
+    "meta.description": "Utafiti wa maneno muhimu kwa Afrika Mashariki. Pata mapendekezo ya Google na uchambuzi wa mitindo kwa lugha ya Kiswahili.",
+    "meta.keywords": "utafiti maneno muhimu, SEO Kiswahili, Google Trends, mapendekezo, kiwango cha utafutaji",
+    "hint.site_vs_search": "Tumia vichaguzi vilivyo hapo juu kuchagua nchi ya utafutaji na lugha. Badilisha lugha ya kiolesura cha tovuti kutoka kwenye menyu ya upande."
+  }
+}

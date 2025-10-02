@@ -1,0 +1,21 @@
+{
+  "lang": "pt",
+  "dir": "ltr",
+  "strings": {
+    "nav.search": "Pesquisar",
+    "nav.advanced": "Avançado (em breve)",
+    "nav.trends": "Tendências (em breve)",
+    "search.title": "Pesquisa de palavras‑chave",
+    "search.placeholder": "Insira uma palavra‑chave (ex.: entrega de pizza)",
+    "search.button": "Pesquisar",
+    "search.hint": "Sugestões e tendências gratuitas. Os resultados aparecem abaixo.",
+    "kpi.total_keywords": "Total de palavras‑chave",
+    "kpi.total_volume": "Volume total",
+    "kpi.real_data_keywords": "Palavras‑chave com dados reais",
+    "kpi.avg_interest": "Interesse méd.",
+    "meta.title": "Lucy World – Análise de pesquisa local para Brasil e Portugal",
+    "meta.description": "Explore dados do Google em português com sugestões, tendências e análise de IA que fortalecem decisões de conteúdo e crescimento empresarial.",
+    "meta.keywords": "palavras-chave português, SEO Brasil, Google Trends, volume de pesquisa, análise IA, estratégia de conteúdo local",
+    "hint.site_vs_search": "Use os seletores acima para escolher país e idioma de pesquisa. Altere o idioma da interface pelo menu lateral."
+  }
+}

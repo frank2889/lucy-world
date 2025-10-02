@@ -1,0 +1,21 @@
+{
+  "lang": "sn",
+  "dir": "ltr",
+  "strings": {
+    "nav.search": "Kutsvaga",
+    "nav.advanced": "Kwakafambira mberi (munguva pfupi)",
+    "nav.trends": "Maitiro (munguva pfupi)",
+    "search.title": "Kutsvagisa mazwi akakosha",
+    "search.placeholder": "Isa shoko rakakosha (semuenzaniso: kuendesa pizza)",
+    "search.button": "Tsvaga",
+    "search.hint": "Mazano nemaitiro asina muripo. Mhinduro dzichaitika pazasi.",
+    "kpi.total_keywords": "Mazwi akakosha ose",
+    "kpi.total_volume": "Huwandu hwose",
+    "kpi.real_data_keywords": "Mazwi akakosha nedata yechokwadi",
+    "kpi.avg_interest": "Kufarira pakati",
+    "meta.title": "Lucy World – Ongororo yekutsvaga munharaunda yeZimbabwe",
+    "meta.description": "Ongorora data yeGoogle yechiShona nemazano, maitiro uye ongororo yeAI inokwidziridza sarudzo dzezvinyorwa nekukura kwebhizinesi munharaunda.",
+    "meta.keywords": "mazwi akakosha echiShona, SEO Zimbabwe, Google Trends, huwandu hwekutsvaga, ongororo yeAI, zvirongwa zvenyorwa dzenharaunda",
+    "hint.site_vs_search": "Shandisa vasarudzi vari pamusoro kusarudza nyika nemutauro wekutsvaga. Chinja mutauro wekubata basa kubva pamenu yekumhenderekedzo."
+  }
+}

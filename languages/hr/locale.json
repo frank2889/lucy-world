@@ -1,0 +1,21 @@
+{
+  "lang": "hr",
+  "dir": "ltr",
+  "strings": {
+    "nav.search": "Pretraga",
+    "nav.advanced": "Napredno (uskoro)",
+    "nav.trends": "Trendovi (uskoro)",
+    "search.title": "Istraživanje ključnih riječi",
+    "search.placeholder": "Unesite ključnu riječ (npr. dostava pizze)",
+    "search.button": "Traži",
+    "search.hint": "Besplatni prijedlozi i trendovi. Rezultati se prikazuju ispod.",
+    "kpi.total_keywords": "Ukupno ključnih riječi",
+    "kpi.total_volume": "Ukupan volumen",
+    "kpi.real_data_keywords": "Ključne riječi s pravim podacima",
+    "kpi.avg_interest": "Prosj. interes",
+    "meta.title": "Lucy World – Lokalna analiza pretrage za Hrvatsku",
+    "meta.description": "Otkrijte hrvatske Google podatke s prijedlozima, trendovima i AI analizom koji jačaju odluke o sadržaju i poslovni rast.",
+    "meta.keywords": "hrvatske ključne riječi, SEO Hrvatska, Google trendovi, volumen pretrage, AI analiza, strategija lokalnog sadržaja",
+    "hint.site_vs_search": "Koristite selektore iznad za odabir zemlje i jezika pretrage. Promijenite jezik sučelja iz bočnog izbornika."
+  }
+}

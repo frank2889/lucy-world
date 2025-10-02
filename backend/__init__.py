@@ -9,6 +9,7 @@ import csv
 import io
 import logging
 from datetime import datetime
+from typing import Any
 from flask import Flask, render_template, request, jsonify, send_file, redirect, abort
 from flask import send_from_directory
 from werkzeug.middleware.proxy_fix import ProxyFix
@@ -114,23 +115,43 @@ def create_app() -> Flask:
 				return primary
 		return ['en','nl']
 
+	def _locale_json_path(lang: str) -> str | None:
+		lang = (lang or '').split('-')[0].lower()
+		if not lang:
+			return None
+		lang_dir = os.path.join(project_root, 'languages', lang)
+		candidate = os.path.join(lang_dir, 'locale.json')
+		if os.path.exists(candidate):
+			return candidate
+		legacy_locales_dir = os.path.join(project_root, 'languages', 'locales')
+		legacy_candidate = os.path.join(legacy_locales_dir, f'{lang}.json')
+		if os.path.exists(legacy_candidate):
+			return legacy_candidate
+		very_legacy_dir = os.path.join(project_root, 'locales')
+		very_legacy_candidate = os.path.join(very_legacy_dir, f'{lang}.json')
+		if os.path.exists(very_legacy_candidate):
+			return very_legacy_candidate
+		return None
+
 	def _available_locales() -> list[str]:
 		"""Return the exact language codes that have real UI locale files."""
-		locales_dir = os.path.join(project_root, 'languages', 'locales')
-		legacy_locales_dir = os.path.join(project_root, 'locales')
 		codes: list[str] = []
-		use_dir = None
-		if os.path.isdir(locales_dir):
-			use_dir = locales_dir
-		elif os.path.isdir(legacy_locales_dir):
-			use_dir = legacy_locales_dir
-		if use_dir:
-			for name in sorted(os.listdir(use_dir)):
+		languages_dir = os.path.join(project_root, 'languages')
+		if os.path.isdir(languages_dir):
+			for name in sorted(os.listdir(languages_dir)):
+				path = os.path.join(languages_dir, name)
+				if not os.path.isdir(path):
+					continue
+				if name in {'registry', 'dictionaries'}:
+					continue
+				if _locale_json_path(name):
+					codes.append(name)
+		# Fall back to legacy layout if needed
+		legacy_locales_dir = os.path.join(project_root, 'languages', 'locales')
+		if os.path.isdir(legacy_locales_dir):
+			for name in sorted(os.listdir(legacy_locales_dir)):
 				if name.endswith('.json'):
-					if name.endswith('.default.json'):
-						codes.append(name.split('.default.json')[0])
-					else:
-						codes.append(name[:-5])
+					codes.append(name.split('.json')[0])
 		return sorted(set(codes))
 
 	def _detect_lang() -> str:
@@ -218,6 +239,58 @@ def create_app() -> Flask:
 			manifest_css = f"/static/app/{css_files[0]}" if not css_files[0].startswith('/static/app/') else css_files[0]
 		manifest_js = f"/static/app/{js_file}" if js_file and not str(js_file).startswith('/static/app/') else js_file
 
+		def _derive_meta_from_strings(strings: dict[str, Any] | None) -> tuple[str | None, str | None, str | None, str | None]:
+			"""Return sensible localized fallbacks for meta title/description/keywords/robots."""
+			if not isinstance(strings, dict):
+				return (None, None, None, None)
+			def _get(key: str) -> str | None:
+				val = strings.get(key)
+				if isinstance(val, str):
+					val = val.strip()
+					if val:
+						return val
+				return None
+			search_title = _get('search.title')
+			search_hint = _get('search.hint')
+			search_button = _get('search.button')
+			nav_search = _get('nav.search')
+			meta_title = _get('meta.title') or _get('meta_title')
+			meta_description = _get('meta.description') or _get('meta_description')
+			meta_keywords = _get('meta.keywords') or _get('meta_keywords')
+			meta_robots = _get('meta.robots') or _get('meta_robots')
+			if not meta_title:
+				if search_title:
+					meta_title = f"Lucy World — {search_title}"
+				else:
+					meta_title = "Lucy World"
+			if not meta_description:
+				parts: list[str] = []
+				if search_title:
+					parts.append(search_title)
+				if search_hint:
+					parts.append(search_hint)
+				else:
+					parts.append("Keyword research made simple with Google data.")
+				meta_description = " ".join([p for p in parts if p]) or "Keyword research made simple with Google data."
+			if not meta_keywords:
+				keywords: list[str] = []
+				for candidate in ("Lucy World", search_title, search_button, nav_search, "SEO", "keyword research"):
+					if candidate and candidate not in keywords:
+						keywords.append(candidate)
+				meta_keywords = ", ".join(keywords)
+			if not meta_robots:
+				meta_robots = 'index, follow'
+			# Surface derived values back onto strings so API consumers see them too
+			for key, value in (
+				('meta.title', meta_title),
+				('meta.description', meta_description),
+				('meta.keywords', meta_keywords),
+				('meta.robots', meta_robots),
+			):
+				if value and not isinstance(strings.get(key), str):
+					strings[key] = value
+			return meta_title, meta_description, meta_keywords, meta_robots
+
 		# Build hreflangs for available locales (no fallback)
 		hreflangs = {}
 		for code in (_available_locales() or _supported_langs()):
@@ -233,7 +306,7 @@ def create_app() -> Flask:
 		page_dir = 'rtl' if lang in rtl_langs else 'ltr'
 
 		# Load per-locale structured data (for meta + inline JSON-LD)
-		def _load_structured(lang_code: str):
+		def _load_structured(lang_code: str) -> tuple[Any, dict[str, str | None]]:
 			# Prefer on-disk override
 			override = _lang_asset_path(lang_code, 'structured.json')
 			if override:
@@ -288,20 +361,19 @@ def create_app() -> Flask:
 				structured = default_structured
 
 			# Try to load locales meta strings and merge into structured nodes
+			meta_title = None
+			meta_description = None
+			meta_keywords = None
+			meta_robots = None
 			try:
 				locales_dir = os.path.join(project_root, 'languages', 'locales')
 				locale_path = os.path.join(locales_dir, f"{lang_code}.json")
-				meta_title = None
-				meta_description = None
-				meta_keywords = None
+				strings = None
 				if os.path.exists(locale_path):
 					with open(locale_path, 'r', encoding='utf-8') as lf:
 						ld = json.load(lf)
 						strings = ld.get('strings') if isinstance(ld, dict) else None
-						if isinstance(strings, dict):
-							meta_title = strings.get('meta.title') or strings.get('meta_title')
-							meta_description = strings.get('meta.description') or strings.get('meta_description')
-							meta_keywords = strings.get('meta.keywords') or strings.get('meta_keywords')
+				meta_title, meta_description, meta_keywords, meta_robots = _derive_meta_from_strings(strings)
 				# Patch structured graph with locale meta when provided
 				graph = structured.get('@graph') if isinstance(structured, dict) else None
 				if isinstance(graph, list):
@@ -318,14 +390,19 @@ def create_app() -> Flask:
 			except Exception:
 				pass
 
-			return structured
+			return structured, {
+				'title': meta_title,
+				'description': meta_description,
+				'keywords': meta_keywords,
+				'robots': meta_robots,
+			}
 
-		structured = _load_structured(lang)
+		structured, meta_defaults = _load_structured(lang)
 		# Extract meta fields from structured data
-		meta_title = "Lucy World"
-		meta_description = None
-		meta_keywords = None
-		meta_robots = 'index, follow'
+		meta_title = meta_defaults.get('title') or "Lucy World"
+		meta_description = meta_defaults.get('description')
+		meta_keywords = meta_defaults.get('keywords')
+		meta_robots = meta_defaults.get('robots') or 'index, follow'
 		try:
 			graph = structured.get('@graph') if isinstance(structured, dict) else None
 			if isinstance(graph, list):
@@ -698,13 +775,7 @@ def create_app() -> Flask:
 	def meta_content_lang(lang: str):
 		"""Serve UI content JSON only for exact available locales; no fallback."""
 		lang = (lang or '').split('-')[0].lower()
-		# Determine locales directory
-		locales_dir = os.path.join(project_root, 'languages', 'locales')
-		legacy_locales_dir = os.path.join(project_root, 'locales')
-		use_dir = locales_dir if os.path.isdir(locales_dir) else (legacy_locales_dir if os.path.isdir(legacy_locales_dir) else None)
-		if not use_dir:
-			abort(404)
-		content_path = os.path.join(use_dir, f'{lang}.json')
+		content_path = _locale_json_path(lang)
 		if not os.path.exists(content_path):
 			abort(404)
 		try:
@@ -724,25 +795,19 @@ def create_app() -> Flask:
 	@app.route('/meta/locales.json')
 	def meta_locales():
 		"""List available locale codes from locales/ (Shopify-style), with default locale."""
-		locales_dir = os.path.join(project_root, 'languages', 'locales')
-		legacy_locales_dir = os.path.join(project_root, 'locales')
-		codes = []
 		default_code = 'en'
-		use_dir = None
-		if os.path.isdir(locales_dir):
-			use_dir = locales_dir
-		elif os.path.isdir(legacy_locales_dir):
-			use_dir = legacy_locales_dir
-		if use_dir:
-			if os.path.exists(os.path.join(use_dir, 'en.default.json')) or os.path.exists(os.path.join(use_dir, 'en.json')):
-				default_code = 'en'
-			for name in sorted(os.listdir(use_dir)):
-				if name.endswith('.json'):
-					if name.endswith('.default.json'):
-						codes.append(name.split('.default.json')[0])
-					else:
-						codes.append(name[:-5])
-		return jsonify({ 'locales': sorted(set(codes)), 'default': default_code })
+		codes = _available_locales()
+		if 'en' not in codes:
+			# attempt to read default from languages.json if present
+			try:
+				with open(os.path.join(project_root, 'languages', 'languages.json'), 'r', encoding='utf-8') as f:
+					data = json.load(f)
+					langs = data.get('languages')
+					if isinstance(langs, list) and langs:
+						default_code = (str(langs[0]).split('-')[0]).lower()
+			except Exception:
+				pass
+		return jsonify({ 'locales': codes, 'default': default_code })
 
 	@app.route('/meta/languages.json')
 	def meta_languages():

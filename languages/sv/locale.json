@@ -1,0 +1,21 @@
+{
+  "lang": "sv",
+  "dir": "ltr",
+  "strings": {
+    "nav.search": "Sök",
+    "nav.advanced": "Avancerat (snart)",
+    "nav.trends": "Trender (snart)",
+    "search.title": "Sökordsanalys",
+    "search.placeholder": "Ange ett sökord (t.ex. pizzaleverans)",
+    "search.button": "Sök",
+    "search.hint": "Gratis förslag och trender. Resultat visas nedan.",
+    "kpi.total_keywords": "Totalt antal sökord",
+    "kpi.total_volume": "Total volym",
+    "kpi.real_data_keywords": "Sökord med verkliga data",
+    "kpi.avg_interest": "Genomsn. intresse",
+    "meta.title": "Lucy World – Lokal sökanalys för Sverige",
+    "meta.description": "Utforska svenska Google-data med förslag, trender och AI-analys som stärker innehållsbeslut och lokal affärstillväxt.",
+    "meta.keywords": "svenska sökord, SEO Sverige, Google Trends, sökvolym, AI-analys, lokal innehållsstrategi",
+    "hint.site_vs_search": "Använd väljarna ovan för att välja sökland och språk. Ändra gränssnittsspråk från sidomenyn."
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "lang": "am",
+  "dir": "ltr",
+  "strings": {
+    "nav.search": "ፈልግ",
+    "nav.advanced": "የላቀ (በቅርቡ)",
+    "nav.trends": "ትኩስ እንቅስቃሴዎች (በቅርቡ)",
+    "search.title": "የቁልፍ ቃል ምርምር",
+    "search.placeholder": "ቁልፍ ቃል ያስገቡ (ለምሳሌ፣ ፒዛ አቅርቦት)",
+    "search.button": "ፈልግ",
+    "search.hint": "ነፃ ጥቆማዎችና ዝናዎች። ውጤቶች ከዚህ በታች ይታያሉ።",
+    "kpi.total_keywords": "ጠቅላላ ቁልፍ ቃላት",
+    "kpi.total_volume": "ጠቅላላ መጠን",
+    "kpi.real_data_keywords": "ከእውነተኛ ዳታ የተገኙ ቁልፍ ቃላት",
+    "kpi.avg_interest": "አማካይ ፍላጎት",
+    "meta.title": "Lucy World – ለኢትዮጵያ ገቢያ የተስተካከለ የፍለጋ እይታ",
+  "meta.description": "የኢትዮጵያ ገበያ ላይ ታዋቂ የGoogle እና የቢንግ ፍለጋ መለኪያዎችን በአማርኛ ትንታኔ ይውሰዱ፣ AI የቁልፍ ቃል አመካከርን እና ትኩስ ዝናዎችን በመጠቀም የይዘት ፕላንዎን ያስተካክሉ እና አካባቢያዊ ውጤትን ያመጡ።",
+  "meta.keywords": "አማርኛ ቁልፍ ቃላት, ኢትዮጵያ SEO, Google ትርኢቶች, Bing የፍለጋ ውጤት, AI ትንታኔ መሳሪያ, አዲስ አበባ ማርኬቲንግ, የይዘት ስትራቴጂ",
+    "hint.site_vs_search": "የፍለጋ አገርና ቋንቋን ለመምረጥ ከላይ ያሉትን መረጃ መምሪያዎች ይጠቀሙ። የጣቢያውን ቋንቋ ከጎን ምናሌው ይቀይሩ።"
+  }
+}

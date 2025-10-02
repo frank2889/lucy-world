@@ -1,0 +1,21 @@
+{
+  "lang": "st",
+  "dir": "ltr",
+  "strings": {
+    "nav.search": "Batla",
+    "nav.advanced": "Tsoetseng pele (hang-hang)",
+    "nav.trends": "Mekhoa (hang-hang)",
+    "search.title": "Phuputso ya mantswe a bohlokoa",
+    "search.placeholder": "Kenya lentswe le bohlokoa (mohlala: ho tlisetsa pizza)",
+    "search.button": "Batla",
+    "search.hint": "Dikeletso le mekhoa ya mahala. Diphetho di tla hlaha ka tlase.",
+    "kpi.total_keywords": "Palomoka ya mantswe a bohlokoa",
+    "kpi.total_volume": "Bongata kaofela",
+    "kpi.real_data_keywords": "Mantswe a bohlokoa a nang le data ya sebele",
+    "kpi.avg_interest": "Thahasello ya karolelano",
+    "meta.title": "Lucy World – Manollo ya patlo ya lehae bakeng sa Lesotho",
+    "meta.description": "Hlahloba lintlha tsa Google tsa Sesotho tse nang le dikeletso, mekhoa le manollo ya AI e matlafatsang diqeto tsa dikahare le kgolo ya kgwebo ya lehae.",
+    "meta.keywords": "mantswe a bohlokoa a Sesotho, SEO Lesotho, Google Trends, bongata ba patlo, manollo ya AI, leano la dikahare tsa lehae",
+    "hint.site_vs_search": "Sebedisa dikgethi tse ka hodimo ho kgetha naha le puo ya patlo. Fetola puo ya tshebetso ho tswa menong ya lehlakoreng."
+  }
+}

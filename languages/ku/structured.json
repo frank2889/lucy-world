@@ -12,8 +12,16 @@
       "name": "Lucy World",
       "url": "https://lucy.world/ku/",
       "inLanguage": "ku",
-      "description": "Keyword research made simple with Google data: suggestions, trends, and insights.",
-      "keywords": "keyword research, SEO, Google Trends, suggestions, search volume",
+      "description": "داتای کوردی Google بدۆزەرەوە بە پێشنیار، ڕەوت و شیکردنەوەی AI کە بڕیارەکانی ناوەڕۆک و گەشەکردنی بازرگانی بەهێز دەکات.",
+      "keywords": "وشە کلیلییە کوردییەکان، SEO کوردستان 2025، ڕەوتەکانی Google، قەبارەی گەڕان، شیکردنەوەی AI، بازاڕگەری دیجیتاڵی ناوخۆیی، ستراتیژی ناوەڕۆک",
+      "aiSemantic": [
+        "کام وشە کلیلییە کوردییەکان زۆرترین گەڕان دەبن لە ٢٠٢٥دا؟",
+        "چۆن داتای Google بۆ SEOی کوردی یەکبخەین؟",
+        "ئامرازەکانی AI بۆ لێکۆڵینەوەی وشە کلیلییە ناوخۆییەکان لە کوردستان",
+        "ڕەوتەکانی بازرگانی ئەلیکترۆنی و بازاڕگەری کوردی ٢٠٢٥",
+        "ستراتیژەکانی SEOی ناوخۆیی بۆ بازرگانەکانی کوردستان",
+        "هەولێر vs سلێمانی – نموونەکانی گەڕانی ناوخۆیی و ڕەوتەکان"
+      ],
       "publisher": {
         "@type": "Organization",
         "name": "Lucy World"
@@ -37,8 +45,8 @@
         "@type": "WebSite",
         "url": "https://lucy.world/ku/"
       },
-      "description": "Keyword research made simple with Google data: suggestions, trends, and insights.",
-      "keywords": "keyword research, SEO, Google Trends, suggestions, search volume"
+      "description": "داتای کوردی Google بدۆزەرەوە بە پێشنیار، ڕەوت و شیکردنەوەی AI کە بڕیارەکانی ناوەڕۆک و گەشەکردنی بازرگانی بەهێز دەکات.",
+      "keywords": "وشە کلیلییە کوردییەکان، SEO کوردستان 2025، ڕەوتەکانی Google، قەبارەی گەڕان، شیکردنەوەی AI، بازاڕگەری دیجیتاڵی ناوخۆیی، ستراتیژی ناوەڕۆک"
     }
   ]
 }

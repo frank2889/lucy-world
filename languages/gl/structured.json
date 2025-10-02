@@ -12,8 +12,16 @@
       "name": "Lucy World",
       "url": "https://lucy.world/gl/",
       "inLanguage": "gl",
-      "description": "Keyword research made simple with Google data: suggestions, trends, and insights.",
-      "keywords": "keyword research, SEO, Google Trends, suggestions, search volume",
+      "description": "Descobre datos galegos de Google con suxerencias, tendencias e análise de IA que reforzam as decisións de contido e o crecemento empresarial.",
+      "keywords": "palabras clave galegas, SEO Galicia 2025, tendencias Google, volume de busca, análise IA, marketing dixital local, estratexia de contido",
+      "aiSemantic": [
+        "Que palabras clave galegas teñen máis buscas en 2025?",
+        "Como combinar datos de Google para SEO en galego?",
+        "Ferramentas IA para investigación local de palabras clave en Galicia",
+        "Tendencias e-commerce e marketing galego 2025",
+        "Estratexias SEO locais para empresas galegas",
+        "A Coruña vs Vigo – patróns de busca locais e tendencias"
+      ],
       "publisher": {
         "@type": "Organization",
         "name": "Lucy World"
@@ -37,8 +45,8 @@
         "@type": "WebSite",
         "url": "https://lucy.world/gl/"
       },
-      "description": "Keyword research made simple with Google data: suggestions, trends, and insights.",
-      "keywords": "keyword research, SEO, Google Trends, suggestions, search volume"
+      "description": "Descobre datos galegos de Google con suxerencias, tendencias e análise de IA que reforzam as decisións de contido e o crecemento empresarial.",
+      "keywords": "palabras clave galegas, SEO Galicia 2025, tendencias Google, volume de busca, análise IA, marketing dixital local, estratexia de contido"
     }
   ]
 }

@@ -1,0 +1,21 @@
+{
+  "lang": "tk",
+  "dir": "ltr",
+  "strings": {
+    "nav.search": "Gözleg",
+    "nav.advanced": "Ösen (ýakynda)",
+    "nav.trends": "Tendensiýalar (ýakynda)",
+    "search.title": "Açar söz gözlegi",
+    "search.placeholder": "Açar söz giriziň (meselem, pizza eltip bermek)",
+    "search.button": "Gözleg",
+    "search.hint": "Mugt teklipnamalar we tendensiýalar. Netijeler aşakda görkeziler.",
+    "kpi.total_keywords": "Jemi açar sözler",
+    "kpi.total_volume": "Jemi göwrüm",
+    "kpi.real_data_keywords": "Hakyky maglumat açar sözleri",
+    "kpi.avg_interest": "Ortaça gyzyklanma",
+    "meta.title": "Açar söz gözlegi - Lucy World",
+    "meta.description": "Türkmenistan bazary üçin açar söz gözlegi. Google maglumatlary, tendensiýalar we SEO üçin düşünjeler türkmen dilinde.",
+    "meta.keywords": "açar söz gözlegi, SEO türkmen, Google Trends, teklipnamalar, gözleg göwrümi",
+    "hint.site_vs_search": "Gözleg ýurduny we dilini saýlamak üçin ýokardaky saýlawçylary ulanyň. Gapdal menýudan sahypa interfeýs dilini üýtgediň."
+  }
+}

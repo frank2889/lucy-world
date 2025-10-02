@@ -1,0 +1,21 @@
+{
+  "lang": "it",
+  "dir": "ltr",
+  "strings": {
+    "nav.search": "Cerca",
+    "nav.advanced": "Avanzato (presto)",
+    "nav.trends": "Tendenze (presto)",
+    "search.title": "Ricerca parole chiave",
+    "search.placeholder": "Inserisci una parola chiave (es. consegna pizza)",
+    "search.button": "Cerca",
+    "search.hint": "Suggerimenti e tendenze gratuiti. I risultati appaiono sotto.",
+    "kpi.total_keywords": "Parole chiave totali",
+    "kpi.total_volume": "Volume totale",
+    "kpi.real_data_keywords": "Parole chiave con dati reali",
+    "kpi.avg_interest": "Interesse medio",
+    "meta.title": "Lucy World – Analisi di ricerca locale per l'Italia",
+    "meta.description": "Scopri dati Google italiani con suggerimenti, tendenze e analisi AI che rafforzano le decisioni sui contenuti e la crescita aziendale.",
+    "meta.keywords": "parole chiave italiane, SEO Italia, tendenze Google, volume di ricerca, analisi AI, strategia contenuti locali",
+    "hint.site_vs_search": "Usa i selettori sopra per scegliere paese e lingua di ricerca. Cambia la lingua dell'interfaccia dal menu laterale."
+  }
+}

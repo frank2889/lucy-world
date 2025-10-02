@@ -37,8 +37,16 @@
         "@type": "WebSite",
         "url": "https://lucy.world/tk/"
       },
-      "description": "Keyword research made simple with Google data: suggestions, trends, and insights.",
-      "keywords": "keyword research, SEO, Google Trends, suggestions, search volume"
+      "description": "Türkmenistan bazary üçin açar söz gözlegi we Google maglumatlary. Türkmen dilinde SEO optimizasiýasy üçin tendensiýalar we düşünjeler.",
+      "keywords": "açar söz gözlegi, SEO türkmen, Google Trends, teklipnamalar, gözleg göwrümi, Türkmenistan",
+      "aiSemantic": [
+        "Google Türkmenistan SEO",
+        "Orta Aziýa bazar derňewi",
+        "Türkmen gözleg tendensiýalary",
+        "Türkmen açar sözler gözlegi",
+        "SEO Orta Aziýa",
+        "Türkmen sanly marketing"
+      ]
     }
   ]
 }

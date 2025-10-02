@@ -37,8 +37,16 @@
         "@type": "WebSite",
         "url": "https://lucy.world/sv/"
       },
-      "description": "Keyword research made simple with Google data: suggestions, trends, and insights.",
-      "keywords": "keyword research, SEO, Google Trends, suggestions, search volume"
+      "description": "Sökordsanalys för svenska marknaden med Google-data, trender och insikter. Optimera SEO för svenska sökresultat på Google.se.",
+      "keywords": "sökordsanalys, SEO Sverige, Google Trends, sökvolym, svenska nyckelord, sökoptimering",
+      "aiSemantic": [
+        "Google.se sökoptimering",
+        "Svenska SEO-verktyg",
+        "Skandinavisk marknadsanalys", 
+        "Nordiska sökord",
+        "Svensk sökvolym",
+        "Svenska trender"
+      ]
     }
   ]
 }

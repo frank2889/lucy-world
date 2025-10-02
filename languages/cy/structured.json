@@ -12,8 +12,16 @@
       "name": "Lucy World",
       "url": "https://lucy.world/cy/",
       "inLanguage": "cy",
-      "description": "Keyword research made simple with Google data: suggestions, trends, and insights.",
-      "keywords": "keyword research, SEO, Google Trends, suggestions, search volume",
+      "description": "Darganfyddwch ddata Cymraeg Google a Bing gydag awgrymiadau, tueddiau a dadansoddiad AI sy'n cryfhau penderfyniadau cynnwys a thwf busnes.",
+      "keywords": "geiriau allweddol Cymraeg, SEO Cymru 2025, tueddiadau Google, chwilio Bing, dadansoddiad AI, marchnata digidol lleol, strategaeth cynnwys",
+      "aiSemantic": [
+        "Pa eiriau allweddol Cymraeg sydd â'r mwyaf o chwiliadau yn 2025?",
+        "Sut i gyfuno data Google a Bing ar gyfer SEO yn Gymraeg?",
+        "Offer AI ar gyfer ymchwil geiriau allweddol lleol yng Nghymru",
+        "Tueddiadau e-fasnach a marchnata Cymraeg 2025",
+        "Strategaethau SEO lleol ar gyfer busnesau Cymreig",
+        "Twf cynnwys dwyieithog a marchnata Cymru gyfan"
+      ],
       "publisher": {
         "@type": "Organization",
         "name": "Lucy World"
@@ -37,8 +45,8 @@
         "@type": "WebSite",
         "url": "https://lucy.world/cy/"
       },
-      "description": "Keyword research made simple with Google data: suggestions, trends, and insights.",
-      "keywords": "keyword research, SEO, Google Trends, suggestions, search volume"
+      "description": "Darganfyddwch ddata Cymraeg Google a Bing gydag awgrymiadau, tueddiau a dadansoddiad AI sy'n cryfhau penderfyniadau cynnwys a thwf busnes.",
+      "keywords": "geiriau allweddol Cymraeg, SEO Cymru 2025, tueddiadau Google, chwilio Bing, dadansoddiad AI, marchnata digidol lleol, strategaeth cynnwys"
     }
   ]
 }

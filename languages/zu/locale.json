@@ -1,0 +1,21 @@
+{
+  "lang": "zu",
+  "dir": "ltr",
+  "strings": {
+    "nav.search": "Sesha",
+    "nav.advanced": "Okuphezulu (masinyane)",
+    "nav.trends": "Izinjalo (masinyane)",
+    "search.title": "Ucwaningo lwamagama angukhiye",
+    "search.placeholder": "Faka igama elingukhiye (isb., ukulethwa kwepizza)",
+    "search.button": "Sesha",
+    "search.hint": "Iziphakamiso zamahhala nezinjalo. Imiphumela izovela ngezansi.",
+    "kpi.total_keywords": "Amagama angukhiye ewonke",
+    "kpi.total_volume": "Umthamo ophelele",
+    "kpi.real_data_keywords": "Amagama angukhiye edatha eqinisile",
+    "kpi.avg_interest": "Intshisekelo ephakathi",
+    "meta.title": "Ucwaningo lwamagama angukhiye - Lucy World",
+    "meta.description": "Ucwaningo lwamagama angukhiye lwemakethe yaseNingizimu Afrika ngedatha kaGoogle. Izinjalo, ukuhlaziya no-SEO ngesiZulu.",
+    "meta.keywords": "ucwaningo lwamagama angukhiye, SEO isiZulu, Google Trends, iziphakamiso, umthamo wosesho",
+    "hint.site_vs_search": "Sebenzisa abakhethi abangenhla ukukhetha izwe losesho nolimi. Shintsha ulimi lwesixhumi sewebhusayithi kumenyuwana eseceleni."
+  }
+}

@@ -12,8 +12,16 @@
       "name": "Lucy World",
       "url": "https://lucy.world/gd/",
       "inLanguage": "gd",
-      "description": "Keyword research made simple with Google data: suggestions, trends, and insights.",
-      "keywords": "keyword research, SEO, Google Trends, suggestions, search volume",
+      "description": "Faigh a-mach dàta Gàidhlig Google le molaidhean, treandaichean agus mion-sgrùdadh AI a neartaicheas co-dhùnaidhean susbaint agus fàs gnìomhachais.",
+      "keywords": "prìomh-fhaclan Gàidhlig, SEO Alba 2025, treandaichean Google, meud rannsachaidh, mion-sgrùdadh AI, margaidheachd dhiditeach ionadail, ro-innleachd susbaint",
+      "aiSemantic": [
+        "Dè na prìomh-fhaclan Gàidhlig as motha rannsachadh ann an 2025?",
+        "Ciamar a cheanglaidh tu dàta Google airson SEO Gàidhlig?",
+        "Innealan AI airson rannsachadh prìomh-fhacal ionadail ann an Alba",
+        "Treandaichean malairt-d agus margaidheachd Gàidhlig 2025",
+        "Ro-innleachdan SEO ionadail airson gnìomhachasan Albannach",
+        "Dùn Èideann vs Glaschu – pàtranan rannsachaidh ionadail"
+      ],
       "publisher": {
         "@type": "Organization",
         "name": "Lucy World"
@@ -37,8 +45,8 @@
         "@type": "WebSite",
         "url": "https://lucy.world/gd/"
       },
-      "description": "Keyword research made simple with Google data: suggestions, trends, and insights.",
-      "keywords": "keyword research, SEO, Google Trends, suggestions, search volume"
+      "description": "Faigh a-mach dàta Gàidhlig Google le molaidhean, treandaichean agus mion-sgrùdadh AI a neartaicheas co-dhùnaidhean susbaint agus fàs gnìomhachais.",
+      "keywords": "prìomh-fhaclan Gàidhlig, SEO Alba 2025, treandaichean Google, meud rannsachaidh, mion-sgrùdadh AI, margaidheachd dhiditeach ionadail, ro-innleachd susbaint"
     }
   ]
 }

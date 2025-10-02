@@ -1,0 +1,21 @@
+{
+  "lang": "hu",
+  "dir": "ltr",
+  "strings": {
+    "nav.search": "Keresés",
+    "nav.advanced": "Haladó (hamarosan)",
+    "nav.trends": "Trendek (hamarosan)",
+    "search.title": "Kulcsszó kutatás",
+    "search.placeholder": "Adjon meg egy kulcsszót (pl. pizza házhozszállítás)",
+    "search.button": "Keresés",
+    "search.hint": "Ingyenes javaslatok és trendek. Az eredmények lent jelennek meg.",
+    "kpi.total_keywords": "Összes kulcsszó",
+    "kpi.total_volume": "Teljes forgalom",
+    "kpi.real_data_keywords": "Valós adatokkal rendelkező kulcsszavak",
+    "kpi.avg_interest": "Átlagos érdeklődés",
+    "meta.title": "Lucy World – Helyi keresési elemzés Magyarországnak",
+    "meta.description": "Fedezze fel a magyar Google adatokat javaslatokkal, trendekkel és AI elemzéssel, amelyek erősítik a tartalmi döntéseket és az üzleti növekedést.",
+    "meta.keywords": "magyar kulcsszavak, SEO Magyarország, Google trendek, keresési forgalom, AI elemzés, helyi tartalomstratégia",
+    "hint.site_vs_search": "Használja a fenti választókat a keresési ország és nyelv kiválasztásához. Változtassa meg a felület nyelvét az oldalsó menüből."
+  }
+}

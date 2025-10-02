@@ -1,0 +1,21 @@
+{
+  "lang": "bs",
+  "dir": "ltr",
+  "strings": {
+    "nav.search": "Pretraga",
+    "nav.advanced": "Napredno (uskoro)",
+    "nav.trends": "Trendovi (uskoro)",
+    "search.title": "Istraživanje ključnih riječi",
+    "search.placeholder": "Unesite ključnu riječ (npr. dostava pizze)",
+    "search.button": "Traži",
+    "search.hint": "Besplatni prijedlozi i trendovi. Rezultati se prikazuju ispod.",
+    "kpi.total_keywords": "Ukupno ključnih riječi",
+    "kpi.total_volume": "Ukupan volumen",
+    "kpi.real_data_keywords": "Ključne riječi s pravim podacima",
+    "kpi.avg_interest": "Prosječan interes",
+    "meta.title": "Lucy World – Lokalni SEO uvidi za Bosnu i Hercegovinu",
+    "meta.description": "Dobijte bosanskohercegovačke uvide iz Googlea i Binga uz lokalne prijedloge, trendove i AI analitiku koji ubrzavaju odluke o sadržaju i rast poslovanja.",
+    "meta.keywords": "istraživanje ključnih riječi BiH, bosanski SEO, Google trendovi, Bing pretraga, AI analitika, lokalna strategija sadržaja",
+    "hint.site_vs_search": "Koristite odabire iznad za izbor zemlje i jezika pretrage. Jezik interfejsa promijenite u bočnom meniju."
+  }
+}

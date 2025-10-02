@@ -14,7 +14,8 @@
     "kpi.real_data_keywords": "Palabras clave con datos reales",
     "kpi.avg_interest": "Interés prom.",
     "meta.title": "Lucy World",
-    "meta.description": "Keyword research made simple with Google data: suggestions, trends, and insights.",
-    "meta.keywords": "keyword research, SEO, Google Trends, suggestions, search volume"
+    "meta.description": "Investigación de palabras clave sencilla con datos de Google: sugerencias, tendencias e información.",
+    "meta.keywords": "investigación de palabras clave, SEO, Google Trends, sugerencias, volumen de búsqueda",
+    "hint.site_vs_search": "Usa los selectores de arriba para elegir el país y el idioma de la búsqueda. Cambia el idioma de la interfaz desde el menú lateral."
   }
 }

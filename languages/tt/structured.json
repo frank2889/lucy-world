@@ -37,8 +37,16 @@
         "@type": "WebSite",
         "url": "https://lucy.world/tt/"
       },
-      "description": "Keyword research made simple with Google data: suggestions, trends, and insights.",
-      "keywords": "keyword research, SEO, Google Trends, suggestions, search volume"
+      "description": "Татарстан базары өчен ачкыч сүзләр тикшеренүе һәм Google мәгълүматлары. Тенденцияләр, күзаллаулар һәм татар теле өчен SEO оптимизацияләү.",
+      "keywords": "ачкыч сүзләр тикшеренүе, SEO татар, Google Trends, тәкъдимнәр, эзләү күләме, Татарстан",
+      "aiSemantic": [
+        "Google Татарстан SEO",
+        "Татар базары анализы",
+        "Татар эзләү тенденцияләре",
+        "Татар ачкыч сүзләр тикшеренүе",
+        "Идел-Урал SEO",
+        "Татар санлы маркетинг"
+      ]
     }
   ]
 }

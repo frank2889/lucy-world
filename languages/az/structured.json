@@ -9,11 +9,11 @@
     },
     {
       "@type": "WebSite",
-      "name": "Lucy World",
+      "name": "Lucy World – Azərbaycan bazarı üçün axtarış analitikası",
       "url": "https://lucy.world/az/",
       "inLanguage": "az",
-      "description": "Keyword research made simple with Google data: suggestions, trends, and insights.",
-      "keywords": "keyword research, SEO, Google Trends, suggestions, search volume",
+      "description": "Azərbaycan bazarı üçün Google və Yandex məlumatlarına əsaslanan trendlər, təkliflər və AI analitikası ilə kontent və böyümə qərarlarınızı gücləndirin.",
+      "keywords": "Azərbaycan açar söz araşdırması, Azərbaycan SEO, Google trendləri, Yandex axtarış, AI axtarış aləti, yerli kontent strategiyası",
       "publisher": {
         "@type": "Organization",
         "name": "Lucy World"
@@ -30,15 +30,15 @@
     },
     {
       "@type": "WebPage",
-      "name": "Lucy World",
+      "name": "Lucy World – Azərbaycan bazarı üçün axtarış analitikası",
       "url": "https://lucy.world/az/",
       "inLanguage": "az",
       "isPartOf": {
         "@type": "WebSite",
         "url": "https://lucy.world/az/"
       },
-      "description": "Keyword research made simple with Google data: suggestions, trends, and insights.",
-      "keywords": "keyword research, SEO, Google Trends, suggestions, search volume"
+      "description": "Azərbaycan bazarı üçün Google və Yandex məlumatlarına əsaslanan trendlər, təkliflər və AI analitikası ilə kontent və böyümə qərarlarınızı gücləndirin.",
+      "keywords": "Azərbaycan açar söz araşdırması, Azərbaycan SEO, Google trendləri, Yandex axtarış, AI axtarış aləti, yerli kontent strategiyası"
     }
   ]
 }

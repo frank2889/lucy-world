@@ -1,0 +1,21 @@
+{
+  "lang": "mg",
+  "dir": "ltr",
+  "strings": {
+    "nav.search": "Fikarohana",
+    "nav.advanced": "Mandroso (tsy ho ela)",
+    "nav.trends": "Fironana (tsy ho ela)",
+    "search.title": "Fikarohana teny fototra",
+    "search.placeholder": "Ampidiro teny fototra (ohatra: fanaterana pizza)",
+    "search.button": "Hitady",
+    "search.hint": "Soso-kevitra sy fironana maimaim-poana. Ny valiny hiseho eto ambany.",
+    "kpi.total_keywords": "Teny fototra rehetra",
+    "kpi.total_volume": "Totalin'ny volume",
+    "kpi.real_data_keywords": "Teny fototra misy angon-drakitra marina",
+    "kpi.avg_interest": "Salan'isa fahalianana",
+    "meta.title": "Lucy World – Fanadihadiana fikarohana eo an-toerana ho an'i Madagasikara",
+    "meta.description": "Jereo ny angon-drakitra Google Malagasy miaraka amin'ny soso-kevitra, fironana ary fanadihadiana AI izay manatanjaka ny fanapahan-kevitra votoaty sy ny fitomboan'ny orinasa.",
+    "meta.keywords": "teny fototra Malagasy, SEO Madagasikara, Google Trends, habetsaky ny fikarohana, fanadihadiana AI, paikady votoaty eo an-toerana",
+    "hint.site_vs_search": "Ampiasao ireo mpifidy etsy ambony mba hisafidianana ny firenena sy ny fiteny fikarohana. Ovay ny fitenin'ny interface avy amin'ny menu sisiny."
+  }
+}

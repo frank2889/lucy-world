@@ -12,8 +12,16 @@
       "name": "Lucy World",
       "url": "https://lucy.world/is/",
       "inLanguage": "is",
-      "description": "Keyword research made simple with Google data: suggestions, trends, and insights.",
-      "keywords": "keyword research, SEO, Google Trends, suggestions, search volume",
+      "description": "Uppgötvaðu íslensk Google gögn með tillögum, strauma og AI greiningu sem styrkir efnisákvarðanir og viðskiptavöxt.",
+      "keywords": "íslensk leitarorð, SEO Ísland 2025, Google straumar, leitarmagnstjórn, AI greining, staðbundin stafræn markaðssetning, efnisstefna",
+      "aiSemantic": [
+        "Hvaða íslensk leitarorð eru mest leitað í 2025?",
+        "Hvernig á að sameina Google gögn fyrir íslenska SEO?",
+        "AI verkfæri fyrir staðbundna leitarorðarannsókn á Íslandi",
+        "Íslenskir rafviðskipti og markaðsstraumar 2025",
+        "Staðbundnar SEO aðferðir fyrir íslenska fyrirtæki",
+        "Reykjavík vs Akureyri – staðbundin leitarmynstur og straumar"
+      ],
       "publisher": {
         "@type": "Organization",
         "name": "Lucy World"
@@ -37,8 +45,8 @@
         "@type": "WebSite",
         "url": "https://lucy.world/is/"
       },
-      "description": "Keyword research made simple with Google data: suggestions, trends, and insights.",
-      "keywords": "keyword research, SEO, Google Trends, suggestions, search volume"
+      "description": "Uppgötvaðu íslensk Google gögn með tillögum, strauma og AI greiningu sem styrkir efnisákvarðanir og viðskiptavöxt.",
+      "keywords": "íslensk leitarorð, SEO Ísland 2025, Google straumar, leitarmagnstjórn, AI greining, staðbundin stafræn markaðssetning, efnisstefna"
     }
   ]
 }

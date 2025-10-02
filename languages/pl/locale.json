@@ -1,0 +1,21 @@
+{
+  "lang": "pl",
+  "dir": "ltr",
+  "strings": {
+    "nav.search": "Szukaj",
+    "nav.advanced": "Zaawansowane (wkrótce)",
+    "nav.trends": "Trendy (wkrótce)",
+    "search.title": "Badanie słów kluczowych",
+    "search.placeholder": "Wpisz słowo kluczowe (np. dostawa pizzy)",
+    "search.button": "Szukaj",
+    "search.hint": "Darmowe sugestie i trendy. Wyniki pojawią się poniżej.",
+    "kpi.total_keywords": "Łączna liczba słów kluczowych",
+    "kpi.total_volume": "Łączny wolumen",
+    "kpi.real_data_keywords": "Słowa kluczowe z prawdziwymi danymi",
+    "kpi.avg_interest": "Śr. zainteresowanie",
+    "meta.title": "Lucy World – Lokalna analiza wyszukiwania dla Polski",
+    "meta.description": "Odkryj polskie dane Google z sugestiami, trendami i analizą AI, które wzmacniają decyzje dotyczące treści i wzrost biznesu lokalnego.",
+    "meta.keywords": "polskie słowa kluczowe, SEO Polska, Google Trends, wolumen wyszukiwań, analiza AI, lokalna strategia treści",
+    "hint.site_vs_search": "Użyj selektorów powyżej, aby wybrać kraj i język wyszukiwania. Zmień język interfejsu z menu bocznego."
+  }
+}

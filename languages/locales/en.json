@@ -9,6 +9,7 @@
     "search.placeholder": "Enter a keyword (e.g., pizza delivery)",
     "search.button": "Search",
     "search.hint": "Free suggestions and trends. Results appear below.",
+    "hint.site_vs_search": "Use the selectors above to choose the search country and language. Change the site interface language from the sidebar menu.",
     "kpi.total_keywords": "Total keywords",
     "kpi.total_volume": "Total volume",
     "kpi.real_data_keywords": "Real data keywords",

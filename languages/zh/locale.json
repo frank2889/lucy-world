@@ -1,0 +1,21 @@
+{
+  "lang": "zh",
+  "dir": "ltr",
+  "strings": {
+    "nav.search": "搜索",
+    "nav.advanced": "高级（即将推出）",
+    "nav.trends": "趋势（即将推出）",
+    "search.title": "关键词研究",
+    "search.placeholder": "输入关键词（例如：披萨外卖）",
+    "search.button": "搜索",
+    "search.hint": "免费的建议和趋势。结果将显示在下方。",
+    "kpi.total_keywords": "关键词总数",
+    "kpi.total_volume": "总搜索量",
+    "kpi.real_data_keywords": "真实数据关键词",
+    "kpi.avg_interest": "平均关注度",
+    "meta.title": "关键词研究 - Lucy World",
+    "meta.description": "中文市场关键词研究和Google数据分析。为中国大陆、台湾、香港提供搜索趋势和SEO优化洞察。",
+    "meta.keywords": "关键词研究, 中文SEO, Google Trends, 建议, 搜索量",
+    "hint.site_vs_search": "使用上方的选择器来选择搜索国家和语言。从侧边栏菜单更改网站界面语言。"
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "lang": "tl",
+  "dir": "ltr",
+  "strings": {
+    "nav.search": "Maghanap",
+    "nav.advanced": "Advanced (malapit na)",
+    "nav.trends": "Mga Trend (malapit na)",
+    "search.title": "Pananaliksik ng keyword",
+    "search.placeholder": "Maglagay ng keyword (hal., pizza delivery)",
+    "search.button": "Maghanap",
+    "search.hint": "Libreng mga mungkahi at trends. Lumilitaw ang mga resulta sa ibaba.",
+    "kpi.total_keywords": "Kabuuang keywords",
+    "kpi.total_volume": "Kabuuang volume",
+    "kpi.real_data_keywords": "Real data keywords",
+    "kpi.avg_interest": "Avg. na interes",
+    "meta.title": "Pananaliksik ng Keyword - Lucy World",
+    "meta.description": "Pananaliksik ng keyword para sa Pilipinas. Google data, trends, at insights para sa SEO optimization sa Filipino market.",
+    "meta.keywords": "pananaliksik ng keyword, SEO Pilipinas, Google Trends, mga mungkahi, search volume",
+    "hint.site_vs_search": "Gamitin ang mga selector sa itaas para piliin ang bansa at wika ng paghahanap. Baguhin ang wika ng interface ng site mula sa sidebar menu."
+  }
+}

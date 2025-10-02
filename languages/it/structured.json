@@ -12,8 +12,16 @@
       "name": "Lucy World",
       "url": "https://lucy.world/it/",
       "inLanguage": "it",
-      "description": "Keyword research made simple with Google data: suggestions, trends, and insights.",
-      "keywords": "keyword research, SEO, Google Trends, suggestions, search volume",
+      "description": "Scopri dati Google italiani con suggerimenti, tendenze e analisi AI che rafforzano le decisioni sui contenuti e la crescita aziendale.",
+      "keywords": "parole chiave italiane, SEO Italia 2025, tendenze Google, volume di ricerca, analisi AI, marketing digitale locale, strategia contenuti",
+      "aiSemantic": [
+        "Quali parole chiave italiane hanno più ricerche nel 2025?",
+        "Come combinare dati Google per SEO italiano?",
+        "Strumenti AI per ricerca parole chiave locali in Italia",
+        "Tendenze e-commerce e marketing italiano 2025",
+        "Strategie SEO locali per aziende italiane",
+        "Milano vs Roma – modelli di ricerca locali e tendenze"
+      ],
       "publisher": {
         "@type": "Organization",
         "name": "Lucy World"
@@ -37,8 +45,8 @@
         "@type": "WebSite",
         "url": "https://lucy.world/it/"
       },
-      "description": "Keyword research made simple with Google data: suggestions, trends, and insights.",
-      "keywords": "keyword research, SEO, Google Trends, suggestions, search volume"
+      "description": "Scopri dati Google italiani con suggerimenti, tendenze e analisi AI che rafforzano le decisioni sui contenuti e la crescita aziendale.",
+      "keywords": "parole chiave italiane, SEO Italia 2025, tendenze Google, volume di ricerca, analisi AI, marketing digitale locale, strategia contenuti"
     }
   ]
 }

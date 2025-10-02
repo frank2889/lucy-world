@@ -1,0 +1,21 @@
+{
+  "lang": "ga",
+  "dir": "ltr",
+  "strings": {
+    "nav.search": "Cuardaigh",
+    "nav.advanced": "Ardleibhéal (go luath)",
+    "nav.trends": "Treochtaí (go luath)",
+    "search.title": "Taighde eochairfhocal",
+    "search.placeholder": "Cuir isteach eochairfhocal (m.sh., seachadadh pizza)",
+    "search.button": "Cuardaigh",
+    "search.hint": "Moltaí agus treochtaí saor in aisce. Feicfear torthaí thíos.",
+    "kpi.total_keywords": "Eochairfhocail iomlána",
+    "kpi.total_volume": "Toirt iomlán",
+    "kpi.real_data_keywords": "Eochairfhocail le sonraí fíor",
+    "kpi.avg_interest": "Meánspéis",
+    "meta.title": "Lucy World – Anailís cuardaigh áitiúil d'Éirinn",
+    "meta.description": "Faigh amach sonraí Gaeilge Google le moltaí, treochtaí agus anailís AI a neartaíonn cinntí ábhair agus fás gnó.",
+    "meta.keywords": "eochairfhocail Gaeilge, SEO Éire, treochtaí Google, toirt cuardaigh, anailís AI, straitéis ábhair áitiúil",
+    "hint.site_vs_search": "Úsáid na roghnóirí thuas chun tír agus teanga cuardaigh a roghnú. Athraigh teanga an chomhéadain ón roghchlár taoibh."
+  }
+}

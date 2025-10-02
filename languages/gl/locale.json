@@ -1,0 +1,21 @@
+{
+  "lang": "gl",
+  "dir": "ltr",
+  "strings": {
+    "nav.search": "Buscar",
+    "nav.advanced": "Avanzado (pronto)",
+    "nav.trends": "Tendencias (pronto)",
+    "search.title": "Investigación de palabras clave",
+    "search.placeholder": "Introduce unha palabra clave (ex., entrega de pizza)",
+    "search.button": "Buscar",
+    "search.hint": "Suxerencias e tendencias gratuítas. Os resultados aparecen embaixo.",
+    "kpi.total_keywords": "Palabras clave totais",
+    "kpi.total_volume": "Volume total",
+    "kpi.real_data_keywords": "Palabras clave con datos reais",
+    "kpi.avg_interest": "Interese medio",
+    "meta.title": "Lucy World – Análise de busca local para Galicia",
+    "meta.description": "Descobre datos galegos de Google con suxerencias, tendencias e análise de IA que reforzam as decisións de contido e o crecemento empresarial.",
+    "meta.keywords": "palabras clave galegas, SEO Galicia, tendencias Google, volume de busca, análise IA, estratexia de contido local",
+    "hint.site_vs_search": "Usa os selectores de arriba para escoller o país e idioma de busca. Cambia o idioma da interface desde o menú lateral."
+  }
+}

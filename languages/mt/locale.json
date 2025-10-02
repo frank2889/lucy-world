@@ -1,0 +1,21 @@
+{
+  "lang": "mt",
+  "dir": "ltr",
+  "strings": {
+    "nav.search": "Fittex",
+    "nav.advanced": "Avvanzat (dalwaqt)",
+    "nav.trends": "Trends (dalwaqt)",
+    "search.title": "Riċerka tal-keywords",
+    "search.placeholder": "Daħħal keyword (eż: konsenja tal-pizza)",
+    "search.button": "Fittex",
+    "search.hint": "Suġġerimenti u trends b'xejn. Ir-riżultati jidhru hawn taħt.",
+    "kpi.total_keywords": "Total keywords",
+    "kpi.total_volume": "Volum totali",
+    "kpi.real_data_keywords": "Keywords b'data reali",
+    "kpi.avg_interest": "Interess medju",
+    "meta.title": "Lucy World – Analiżi tat-tfittxija lokali għal Malta",
+    "meta.description": "Esplora data Google Maltija b'suġġerimenti, trends u analiżi AI li jsaħħu d-deċiżjonijiet tal-kontenut u t-tkabbir tan-negozju lokali.",
+    "meta.keywords": "keywords Maltin, SEO Malta, Google Trends, volum tat-tfittxija, analiżi AI, strateġija tal-kontenut lokali",
+    "hint.site_vs_search": "Uża s-seletturi hawn fuq biex tagħżel il-pajjiż u l-lingwa tat-tfittxija. Ibdel il-lingwa tal-interface mill-menu tal-ġenb."
+  }
+}

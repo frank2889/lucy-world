@@ -37,8 +37,16 @@
         "@type": "WebSite",
         "url": "https://lucy.world/zu/"
       },
-      "description": "Keyword research made simple with Google data: suggestions, trends, and insights.",
-      "keywords": "keyword research, SEO, Google Trends, suggestions, search volume"
+      "description": "Ucwaningo lwamagama angukhiye lwemakethe yaseNingizimu Afrika ngedatha kaGoogle. Izinjalo, ukuhlaziya no-SEO wesiZulu.",
+      "keywords": "ucwaningo lwamagama angukhiye, SEO isiZulu, Google Trends, iziphakamiso, umthamo wosesho, Ningizimu Afrika",
+      "aiSemantic": [
+        "Google.co.za SEO isiZulu",
+        "Ukuhlaziya imakethe yaseNingizimu Afrika",
+        "Izinjalo zosesho lwaseNingizimu Afrika",
+        "Ucwaningo lwamagama angukhiye ngesiZulu",
+        "SEO yaseNingizimu Afrika",
+        "Imakethe yedijithali yesiZulu"
+      ]
     }
   ]
 }

@@ -37,8 +37,16 @@
         "@type": "WebSite",
         "url": "https://lucy.world/vi/"
       },
-      "description": "Keyword research made simple with Google data: suggestions, trends, and insights.",
-      "keywords": "keyword research, SEO, Google Trends, suggestions, search volume"
+      "description": "Nghiên cứu từ khóa cho thị trường Việt Nam và dữ liệu Google. Xu hướng, phân tích và tối ưu SEO cho Google.com.vn.",
+      "keywords": "nghiên cứu từ khóa, SEO Việt Nam, Google Trends, gợi ý, lưu lượng tìm kiếm, thị trường Việt",
+      "aiSemantic": [
+        "Google.com.vn SEO tối ưu",
+        "Phân tích thị trường Việt Nam",
+        "Xu hướng tìm kiếm Việt Nam",
+        "Nghiên cứu từ khóa tiếng Việt",
+        "SEO Đông Nam Á",
+        "Marketing số Việt Nam"
+      ]
     }
   ]
 }

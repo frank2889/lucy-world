@@ -37,8 +37,16 @@
         "@type": "WebSite",
         "url": "https://lucy.world/ta/"
       },
-      "description": "Keyword research made simple with Google data: suggestions, trends, and insights.",
-      "keywords": "keyword research, SEO, Google Trends, suggestions, search volume"
+      "description": "தமிழ் சந்தைக்கான முக்கிய சொல் ஆராய்ச்சி மற்றும் Google தரவுகள். தமிழகம் மற்றும் இலங்கைக்கான SEO நுண்ணறிவுகள் மற்றும் போக்குகள்.",
+      "keywords": "முக்கிய சொல் ஆராய்ச்சி, தமிழ் SEO, Google Trends, பரிந்துரைகள், தேடல் அளவு, தமிழகம்",
+      "aiSemantic": [
+        "Google.co.in தமிழ் SEO",
+        "தமிழக சந்தை பகுப்பாய்வு",
+        "இலங்கை தேடல் போக்குகள்",
+        "தமிழ் கீவர்ட் ஆராய்ச்சி",
+        "தென்னிந்திய SEO",
+        "தமிழ் டிஜிட்டல் மார்க்கெட்டிங்"
+      ]
     }
   ]
 }

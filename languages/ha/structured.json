@@ -12,8 +12,16 @@
       "name": "Lucy World",
       "url": "https://lucy.world/ha/",
       "inLanguage": "ha",
-      "description": "Keyword research made simple with Google data: suggestions, trends, and insights.",
-      "keywords": "keyword research, SEO, Google Trends, suggestions, search volume",
+      "description": "Gano bayanan Hausa Google tare da shawarwari, yanayin zamani da nazarin AI da ke ƙarfafa yanke shawara game da abun ciki da ci gaban kasuwanci.",
+      "keywords": "kalmomin muhimmi na Hausa, SEO Najeriya 2025, yanayin zamani na Google, girman bincike, nazarin AI, tallace-tallace na dijital na gida, dabarun abun ciki",
+      "aiSemantic": [
+        "Waɗanne kalmomin muhimmi na Hausa ne ke da mafi yawan bincike a 2025?",
+        "Ta yaya za a haɗa bayanan Google don SEO na Hausa?",
+        "Kayan aiki na AI don binciken kalmomin muhimmi na gida a Najeriya",
+        "Yanayin zamani na kasuwanci da tallace-tallace na Hausa 2025",
+        "Dabarun SEO na gida don kasuwancin Najeriya",
+        "Lagos vs Kano - tsarin bincike na gida da yanayin zamani"
+      ],
       "publisher": {
         "@type": "Organization",
         "name": "Lucy World"
@@ -37,8 +45,8 @@
         "@type": "WebSite",
         "url": "https://lucy.world/ha/"
       },
-      "description": "Keyword research made simple with Google data: suggestions, trends, and insights.",
-      "keywords": "keyword research, SEO, Google Trends, suggestions, search volume"
+      "description": "Gano bayanan Hausa Google tare da shawarwari, yanayin zamani da nazarin AI da ke ƙarfafa yanke shawara game da abun ciki da ci gaban kasuwanci.",
+      "keywords": "kalmomin muhimmi na Hausa, SEO Najeriya 2025, yanayin zamani na Google, girman bincike, nazarin AI, tallace-tallace na dijital na gida, dabarun abun ciki"
     }
   ]
 }

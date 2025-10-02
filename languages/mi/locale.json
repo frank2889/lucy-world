@@ -1,0 +1,21 @@
+{
+  "lang": "mi",
+  "dir": "ltr",
+  "strings": {
+    "nav.search": "Rapu",
+    "nav.advanced": "Ara mua (a tawhiti nei)",
+    "nav.trends": "Taiao (a tawhiti nei)",
+    "search.title": "Rangahau kupu matua",
+    "search.placeholder": "Whakauru kupu matua (hei tauira: tuku pizza)",
+    "search.button": "Rapu",
+    "search.hint": "He whakataki koreutu me nga ahuatanga. Ka puta nga hua ki raro nei.",
+    "kpi.total_keywords": "Katoa o nga kupu matua",
+    "kpi.total_volume": "Tapeke katoa",
+    "kpi.real_data_keywords": "Kupu matua raraunga tuturu",
+    "kpi.avg_interest": "Whakapai toharite",
+    "meta.title": "Lucy World – Tātaritanga rapu taiao mō Aotearoa",
+    "meta.description": "Tirohia nga raraunga Google Māori me nga whakataki, ahuatanga me nga tātaritanga AI hei whakakaha i nga whakatau ihirangi me te tipu pakihi taiao.",
+    "meta.keywords": "kupu matua Māori, SEO Aotearoa, Google Trends, rahi rapu, tātaritanga AI, rautaki ihirangi taiao",
+    "hint.site_vs_search": "Whakamahia nga kaiwhakatau i runga nei hei whiriwhiri i te whenua rapu me te reo. Huringa te reo whatunga mai i te tahua taha."
+  }
+}

@@ -12,8 +12,16 @@
       "name": "Lucy World",
       "url": "https://lucy.world/es/",
       "inLanguage": "es",
-      "description": "Keyword research made simple with Google data: suggestions, trends, and insights.",
-      "keywords": "keyword research, SEO, Google Trends, suggestions, search volume",
+  "description": "Descubre datos españoles de Google con sugerencias, tendencias y análisis de IA que refuerzan las decisiones de contenido y el crecimiento empresarial.",
+  "keywords": "palabras clave españolas, SEO España 2025, tendencias Google, volumen búsqueda, análisis IA, marketing digital local, estrategia contenido",
+  "aiSemantic": [
+    "¿Qué palabras clave españolas tienen más búsquedas en 2025?",
+    "¿Cómo combinar datos de Google para SEO en español?",
+    "Herramientas IA para investigación local de palabras clave en España",
+    "Tendencias e-commerce y marketing español 2025",
+    "Estrategias SEO local para empresas españolas",
+    "Madrid vs Barcelona – patrones de búsqueda locales y tendencias"
+  ],
       "publisher": {
         "@type": "Organization",
         "name": "Lucy World"
@@ -37,8 +45,8 @@
         "@type": "WebSite",
         "url": "https://lucy.world/es/"
       },
-      "description": "Keyword research made simple with Google data: suggestions, trends, and insights.",
-      "keywords": "keyword research, SEO, Google Trends, suggestions, search volume"
+  "description": "Descubre datos españoles de Google con sugerencias, tendencias y análisis de IA que refuerzan las decisiones de contenido y el crecimiento empresarial.",
+  "keywords": "palabras clave españolas, SEO España 2025, tendencias Google, volumen búsqueda, análisis IA, marketing digital local, estrategia contenido"
     }
   ]
 }

@@ -1,0 +1,21 @@
+{
+  "lang": "af",
+  "dir": "ltr",
+  "strings": {
+    "nav.search": "Soek",
+    "nav.advanced": "Gevorderd (binnekort)",
+    "nav.trends": "Neigings (binnekort)",
+    "search.title": "Sleutelwoordnavorsing",
+    "search.placeholder": "Voer ’n sleutelwoord in (bv. pizza aflewering)",
+    "search.button": "Soek",
+    "search.hint": "Gratis voorstelle en neigings. Resultate verskyn hieronder.",
+    "kpi.total_keywords": "Totaal sleutelwoorde",
+    "kpi.total_volume": "Totale volume",
+    "kpi.real_data_keywords": "Werklike data-sleutelwoorde",
+    "kpi.avg_interest": "Gemiddelde belangstelling",
+    "meta.title": "Lucy World – Plaaslike soekinsigte vir Suid-Afrika",
+    "meta.description": "Ontsluit Google- en Bing-data vir Suid-Afrikaanse markte met Afrikaans-gefokusde neigings, voorstelle en AI-analise wat beter inhoud- en groeibesluite dryf.",
+    "meta.keywords": "Suid-Afrika sleutelwoordnavorsing, Afrikaans SEO, Google-neigings, Bing-soek, AI-soek hulpmiddel, plaaslike inhoudstrategie",
+    "hint.site_vs_search": "Gebruik die kieslyste hier bo om die soekland en taal te kies. Verander die werftaal vanuit die sybalkmenu."
+  }
+}

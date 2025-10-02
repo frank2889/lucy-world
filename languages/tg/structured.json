@@ -37,8 +37,16 @@
         "@type": "WebSite",
         "url": "https://lucy.world/tg/"
       },
-      "description": "Keyword research made simple with Google data: suggestions, trends, and insights.",
-      "keywords": "keyword research, SEO, Google Trends, suggestions, search volume"
+      "description": "Тадқиқоти калимаҳои калидӣ барои бозори Тоҷикистон ва маълумоти Google. Таҳлил ва тамоюлот барои беҳтар кардани SEO бо забони тоҷикӣ.",
+      "keywords": "тадқиқоти калимаҳои калидӣ, SEO тоҷикӣ, Google Trends, пешниҳодҳо, ҳаҷми ҷустуҷӯ, Тоҷикистон",
+      "aiSemantic": [
+        "Google Тоҷикистон SEO",
+        "Таҳлили бозори тоҷик",
+        "Тамоюлоти ҷустуҷӯии Осиёи Марказӣ",
+        "Тадқиқоти калимаҳо дар забони тоҷикӣ",
+        "SEO Осиёи Марказӣ",
+        "Маркетинги рақамии тоҷик"
+      ]
     }
   ]
 }

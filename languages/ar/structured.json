@@ -9,11 +9,11 @@
     },
     {
       "@type": "WebSite",
-      "name": "Lucy World",
+      "name": "Lucy World – رؤى بحث محلية للشرق الأوسط",
       "url": "https://lucy.world/ar/",
       "inLanguage": "ar",
-      "description": "Keyword research made simple with Google data: suggestions, trends, and insights.",
-      "keywords": "keyword research, SEO, Google Trends, suggestions, search volume",
+      "description": "احصل على رؤى عربية دقيقة من Google وBing مع اقتراحات محلية واتجاهات وتحليلات ذكاء اصطناعي تدعم محتواك ونمو أعمالك.",
+      "keywords": "الكلمات المفتاحية العربية, تحسين محركات البحث, اتجاهات جوجل, بحث Bing الخليجي, تحليل الذكاء الاصطناعي, استراتيجية محتوى محلية",
       "publisher": {
         "@type": "Organization",
         "name": "Lucy World"
@@ -30,15 +30,15 @@
     },
     {
       "@type": "WebPage",
-      "name": "Lucy World",
+      "name": "Lucy World – رؤى بحث محلية للشرق الأوسط",
       "url": "https://lucy.world/ar/",
       "inLanguage": "ar",
       "isPartOf": {
         "@type": "WebSite",
         "url": "https://lucy.world/ar/"
       },
-      "description": "Keyword research made simple with Google data: suggestions, trends, and insights.",
-      "keywords": "keyword research, SEO, Google Trends, suggestions, search volume"
+      "description": "احصل على رؤى عربية دقيقة من Google وBing مع اقتراحات محلية واتجاهات وتحليلات ذكاء اصطناعي تدعم محتواك ونمو أعمالك.",
+      "keywords": "الكلمات المفتاحية العربية, تحسين محركات البحث, اتجاهات جوجل, بحث Bing الخليجي, تحليل الذكاء الاصطناعي, استراتيجية محتوى محلية"
     }
   ]
 }

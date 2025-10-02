@@ -9,11 +9,11 @@
     },
     {
       "@type": "WebSite",
-      "name": "Lucy World",
+      "name": "Lucy World – ለኢትዮጵያ ገቢያ የተስተካከለ የፍለጋ እይታ",
       "url": "https://lucy.world/am/",
       "inLanguage": "am",
-      "description": "Keyword research made simple with Google data: suggestions, trends, and insights.",
-      "keywords": "keyword research, SEO, Google Trends, suggestions, search volume",
+      "description": "የኢትዮጵያ ገበያ ላይ ታዋቂ የGoogle እና የቢንግ ፍለጋ መለኪያዎችን በአማርኛ ትንታኔ ይውሰዱ፣ AI የቁልፍ ቃል አመካከርን እና ትኩስ ዝናዎችን በመጠቀም የይዘት ፕላንዎን ያስተካክሉ እና አካባቢያዊ ውጤትን ያመጡ።",
+      "keywords": "አማርኛ ቁልፍ ቃላት, ኢትዮጵያ SEO, Google ትርኢቶች, Bing የፍለጋ ውጤት, AI ትንታኔ መሳሪያ, አዲስ አበባ ማርኬቲንግ, የይዘት ስትራቴጂ",
       "publisher": {
         "@type": "Organization",
         "name": "Lucy World"
@@ -30,15 +30,15 @@
     },
     {
       "@type": "WebPage",
-      "name": "Lucy World",
+      "name": "Lucy World – ለኢትዮጵያ ገቢያ የተስተካከለ የፍለጋ እይታ",
       "url": "https://lucy.world/am/",
       "inLanguage": "am",
       "isPartOf": {
         "@type": "WebSite",
         "url": "https://lucy.world/am/"
       },
-      "description": "Keyword research made simple with Google data: suggestions, trends, and insights.",
-      "keywords": "keyword research, SEO, Google Trends, suggestions, search volume"
+      "description": "የኢትዮጵያ ገበያ ላይ ታዋቂ የGoogle እና የቢንግ ፍለጋ መለኪያዎችን በአማርኛ ትንታኔ ይውሰዱ፣ AI የቁልፍ ቃል አመካከርን እና ትኩስ ዝናዎችን በመጠቀም የይዘት ፕላንዎን ያስተካክሉ እና አካባቢያዊ ውጤትን ያመጡ።",
+      "keywords": "አማርኛ ቁልፍ ቃላት, ኢትዮጵያ SEO, Google ትርኢቶች, Bing የፍለጋ ውጤት, AI ትንታኔ መሳሪያ, አዲስ አበባ ማርኬቲንግ, የይዘት ስትራቴጂ"
     }
   ]
 }

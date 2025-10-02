@@ -1,0 +1,21 @@
+{
+  "lang": "nl",
+  "dir": "ltr",
+  "strings": {
+    "nav.search": "Zoeken",
+    "nav.advanced": "Geavanceerd (binnenkort)",
+    "nav.trends": "Trends (binnenkort)",
+    "search.title": "Keyword onderzoek",
+    "search.placeholder": "Voer een zoekwoord in (bijv. pizza bezorging)",
+    "search.button": "Zoeken",
+    "search.hint": "Gratis suggesties en trends. Resultaten verschijnen hieronder.",
+    "kpi.total_keywords": "Totaal keywords",
+    "kpi.total_volume": "Totaal volume",
+    "kpi.real_data_keywords": "Echte data keywords",
+    "kpi.avg_interest": "Gem. interesse",
+    "meta.title": "Lucy World – Lokale zoekanalyse voor Nederland",
+    "meta.description": "Ontdek Nederlandse Google data met suggesties, trends en AI-analyse die contentbeslissingen en bedrijfsgroei versterken.",
+    "meta.keywords": "Nederlandse keywords, SEO Nederland, Google Trends, zoekvolume, AI-analyse, lokale contentstrategie",
+    "hint.site_vs_search": "Gebruik de selectors hierboven om zoekland en -taal te kiezen. Wijzig de interface-taal via het zijmenu."
+  }
+}
