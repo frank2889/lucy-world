@@ -417,12 +417,21 @@ export default function App() {
               </button>
               {langMenuAnchor === 'sidebar' && (
                 <div
-                  className="lang-menu"
+                  className="lang-menu sidebar-lang-menu"
                   role="listbox"
                   style={{
-                    position: 'absolute', right: 0, bottom: 'calc(100% + 6px)',
-                    background: '#0e1217', border: '1px solid var(--line)', borderRadius: 10,
-                    minWidth: 220, maxHeight: '50vh', overflow: 'auto', zIndex: 50,
+                    position: 'absolute', 
+                    right: 0, 
+                    bottom: 'calc(100% + 6px)',
+                    background: '#0e1217', 
+                    border: '1px solid var(--line)', 
+                    borderRadius: 10,
+                    minWidth: 280, 
+                    maxWidth: 350,
+                    maxHeight: 'min(60vh, 400px)', 
+                    overflow: 'auto', 
+                    zIndex: 1000,
+                    boxShadow: '0 8px 32px rgba(0,0,0,0.4)'
                   }}
                 >
                   {languagesList.map((l) => (
@@ -592,9 +601,17 @@ export default function App() {
                   className="lang-menu"
                   role="listbox"
                   style={{
-                    position: 'absolute', right: 0, top: 'calc(100% + 6px)',
-                    background: '#0e1217', border: '1px solid var(--line)', borderRadius: 10,
-                    minWidth: 220, maxHeight: '50vh', overflow: 'auto', zIndex: 50,
+                    position: 'absolute', 
+                    right: 0, 
+                    top: 'calc(100% + 6px)',
+                    background: '#0e1217', 
+                    border: '1px solid var(--line)', 
+                    borderRadius: 10,
+                    minWidth: 280, 
+                    maxHeight: 'min(60vh, 400px)', 
+                    overflow: 'auto', 
+                    zIndex: 1000,
+                    boxShadow: '0 8px 32px rgba(0,0,0,0.3)'
                   }}
                 >
                   {languagesList.map((l) => (
