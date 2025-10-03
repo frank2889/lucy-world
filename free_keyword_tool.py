@@ -97,6 +97,8 @@ class KeywordData:
     trend: str = "Stable"
     source: str = "Mock"
     interest_over_time: List[int] = None
+    difficulty_score: float = 0.0
+    difficulty_reasoning: str = ""
 
 class FreeSEODataCollector:
     """Gratis data collector voor SEO keywords"""
