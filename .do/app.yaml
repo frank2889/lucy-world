@@ -25,17 +25,17 @@ services:
     value: "https://lucy.world"
   - key: DATABASE_URL
     value: ""
-  # SMTP envs can be configured in the DO dashboard; if left empty, emails log to stdout
+  # SMTP envs for Google Workspace
   - key: SMTP_HOST
-    value: ""
+    value: "smtp.gmail.com"
   - key: SMTP_PORT
     value: "587"
   - key: SMTP_USERNAME
-    value: ""
+    value: "marketing@lucy.world"
   - key: SMTP_PASSWORD
-    value: ""
+    value: ""  # Use App Password from Google
   - key: SMTP_FROM
-    value: "no-reply@lucy.world"
+    value: "marketing@lucy.world"
   health_check:
     http_path: /health
     initial_delay_seconds: 10

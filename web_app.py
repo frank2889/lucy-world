@@ -138,6 +138,28 @@ def export_csv():
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
+@app.route('/sitemap.xml')
+def sitemap():
+    """Serve the sitemap index file"""
+    try:
+        return send_file('sitemap.xml', mimetype='application/xml')
+    except Exception as e:
+        return f"Error serving sitemap: {str(e)}", 500
+
+@app.route('/robots.txt')
+def robots():
+    """Serve robots.txt with sitemap reference"""
+    robots_content = """User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://lucy.world/sitemap.xml
+
+# SEO optimizations
+Crawl-delay: 1
+"""
+    return robots_content, 200, {'Content-Type': 'text/plain'}
+
 if __name__ == '__main__':
     # Zorg ervoor dat templates directory bestaat
     if not os.path.exists('templates'):

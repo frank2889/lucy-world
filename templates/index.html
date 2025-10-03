@@ -4,6 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>🔍 Semantic Keyword Research Tool</title>
+    
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-KGMG5JTG');</script>
+    <!-- End Google Tag Manager -->
+    
     <style>
         * {
             margin: 0;
@@ -275,6 +284,11 @@
     </style>
 </head>
 <body>
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KGMG5JTG"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+    
     <div class="container">
         <div class="header">
             <h1>🔍 Semantic Keyword Research Tool</h1>
@@ -353,6 +367,12 @@
                 return;
             }
             
+            // Track keyword search
+            if (window.lucyAnalytics) {
+                window.lucyAnalytics.trackKeywordSearch(keyword, 'semantic');
+            }
+            
+            const searchStartTime = Date.now();
             showLoading(true);
             hideError();
             
@@ -373,8 +393,28 @@
                 currentResults = data;
                 displayResults(data);
                 
+                // Track successful search
+                if (window.lucyAnalytics) {
+                    const totalKeywords = Object.values(data.categories || {}).reduce((sum, cat) => sum + cat.length, 0);
+                    window.lucyAnalytics.gtmTrack('search_success', {
+                        search_keyword: keyword,
+                        total_results: totalKeywords,
+                        categories_found: Object.keys(data.categories || {}).length,
+                        response_time: Date.now() - searchStartTime
+                    });
+                }
+                
             } catch (error) {
                 showError(error.message);
+                
+                // Track search error
+                if (window.lucyAnalytics) {
+                    window.lucyAnalytics.gtmTrack('search_error', {
+                        search_keyword: keyword,
+                        error_message: error.message,
+                        response_time: Date.now() - searchStartTime
+                    });
+                }
             } finally {
                 showLoading(false);
             }
@@ -522,6 +562,11 @@
         async function exportResults() {
             if (!currentResults) return;
             
+            // Track export
+            if (window.lucyAnalytics && currentResults.keywords) {
+                window.lucyAnalytics.trackExport('csv', currentResults.keywords.length);
+            }
+            
             try {
                 const response = await fetch('/api/export', {
                     method: 'POST',
@@ -550,5 +595,8 @@
             }
         }
     </script>
+    
+    <!-- GTM Tracking -->
+    <script src="/static/js/gtm-tracking.js"></script>
 </body>
 </html>
