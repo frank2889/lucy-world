@@ -166,23 +166,11 @@ def create_app() -> Flask:
 			lang_primary = lang.split('-')[0]
 			candidates.append(lang_primary)
 		supported = _supported_langs()
-		# 1) Respect Accept-Language if it contains a supported language
+		# Accept-Language is authoritative; if none match, fall back to default without geo guesswork
 		for c in candidates:
 			if c in supported:
 				return c
-		# 2) Fallback by detected country (strong geo default)
-		country = _detect_country()
-		country_lang_map = {
-			'NL': 'nl', 'BE': 'nl', 'DE': 'de', 'AT': 'de', 'CH': 'de',
-			'FR': 'fr', 'ES': 'es', 'IT': 'it', 'PT': 'pt', 'BR': 'pt',
-			'NO': 'no', 'SE': 'sv', 'FI': 'fi', 'DK': 'da', 'PL': 'pl',
-			'RU': 'ru', 'TR': 'tr', 'JP': 'ja', 'KR': 'ko', 'CN': 'zh', 'TW': 'zh', 'HK': 'zh',
-			'IL': 'he', 'AE': 'ar', 'SA': 'ar', 'EG': 'ar'
-		}
-		geo_lang = country_lang_map.get(country)
-		if geo_lang and geo_lang in supported:
-			return geo_lang
-		# 3) Final fallback
+		# Final fallback with no geo inference
 		return 'en'
 
 	def _detect_country() -> str:
