@@ -8,8 +8,6 @@ type CategoryItem = {
   cpc?: number | null
   competition?: string
   trend?: string
-  difficulty_score?: number  // NEW: 0-100 difficulty score
-  difficulty_reasoning?: string  // NEW: explanation
 }
 
 type FreeSearchResponse = {
@@ -1013,53 +1011,11 @@ export default function App() {
                     <div key={cat} className="card" style={{ gridColumn: 'span 12' }}>
                       <h4>{title}</h4>
                       <div>
-                        {items.map((it, idx) => {
-                          // Difficulty color based on score
-                          const getDifficultyColor = (score?: number) => {
-                            if (!score) return '#666'
-                            if (score >= 80) return '#ff4444'      // Very Hard - Red
-                            if (score >= 60) return '#ff8800'      // Hard - Orange  
-                            if (score >= 40) return '#ffaa00'      // Medium - Yellow
-                            if (score >= 20) return '#88cc00'      // Low - Light Green
-                            return '#44cc44'                       // Very Low - Green
-                          }
-                          
-                          const getDifficultyLabel = (score?: number) => {
-                            if (!score) return '?'
-                            if (score >= 80) return 'Very Hard'
-                            if (score >= 60) return 'Hard'
-                            if (score >= 40) return 'Medium'
-                            if (score >= 20) return 'Low'
-                            return 'Very Low'
-                          }
-                          
-                          return (
-                            <span 
-                              key={idx} 
-                              className="pill"
-                              title={it.difficulty_reasoning || `Difficulty: ${getDifficultyLabel(it.difficulty_score)}`}
-                              style={{ position: 'relative' }}
-                            >
-                              {it.keyword} · {nl(it.search_volume)}
-                              {it.difficulty_score !== undefined && (
-                                <span 
-                                  style={{ 
-                                    marginLeft: '8px',
-                                    fontSize: '11px',
-                                    fontWeight: 'bold',
-                                    color: getDifficultyColor(it.difficulty_score),
-                                    backgroundColor: getDifficultyColor(it.difficulty_score) + '20',
-                                    padding: '2px 6px',
-                                    borderRadius: '4px',
-                                    border: `1px solid ${getDifficultyColor(it.difficulty_score)}40`
-                                  }}
-                                >
-                                  {it.difficulty_score}/100
-                                </span>
-                              )}
-                            </span>
-                          )
-                        })}
+                        {items.map((it, idx) => (
+                          <span key={idx} className="pill">
+                            {it.keyword} · {nl(it.search_volume)}
+                          </span>
+                        ))}
                       </div>
                     </div>
                   )

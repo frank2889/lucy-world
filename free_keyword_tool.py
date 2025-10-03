@@ -34,14 +34,6 @@ except Exception:
     WIKIPEDIA_AVAILABLE = False
     print("⚠️ Wikipedia niet beschikbaar. Installeer met: pip install wikipedia")
 
-# Import our keyword difficulty analyzer
-try:
-    from backend.services.keyword_difficulty import KeywordDifficultyAnalyzer
-    DIFFICULTY_ANALYZER_AVAILABLE = True
-except Exception:
-    DIFFICULTY_ANALYZER_AVAILABLE = False
-    print("⚠️ Keyword difficulty analyzer not available")
-
 @dataclass
 class KeywordData:
     """Data class voor zoekwoord informatie"""
@@ -53,52 +45,6 @@ class KeywordData:
     trend: str = "Stable"
     source: str = "Mock"
     interest_over_time: List[int] = None
-    difficulty_score: int = 0  # New: 0-100 difficulty score
-    difficulty_reasoning: str = ""  # New: explanation of difficulty
-
-import os
-import requests
-import json
-import time
-from typing import List, Dict, Tuple, Optional
-from dataclasses import dataclass
-import urllib.parse
-from bs4 import BeautifulSoup
-import random
-import re
-
-from language_validator import KeywordLanguageValidator
-
-# Google Trends (optional)
-try:
-    from pytrends.request import TrendReq
-    PYTRENDS_AVAILABLE = True
-except Exception:
-    PYTRENDS_AVAILABLE = False
-    print("⚠️ PyTrends niet beschikbaar. Sla trends over of installeer met: pip install pytrends")
-
-# Wikipedia (optional)
-try:
-    import wikipedia
-    wikipedia.set_lang("nl")
-    WIKIPEDIA_AVAILABLE = True
-except Exception:
-    WIKIPEDIA_AVAILABLE = False
-    print("⚠️ Wikipedia niet beschikbaar. Installeer met: pip install wikipedia")
-
-@dataclass
-class KeywordData:
-    """Data class voor zoekwoord informatie"""
-    keyword: str
-    search_volume: int
-    difficulty: float = 0.0
-    cpc: float = 0.0
-    competition: str = "Low"
-    trend: str = "Stable"
-    source: str = "Mock"
-    interest_over_time: List[int] = None
-    difficulty_score: float = 0.0
-    difficulty_reasoning: str = ""
 
 class FreeSEODataCollector:
     """Gratis data collector voor SEO keywords"""
@@ -119,17 +65,6 @@ class FreeSEODataCollector:
                 self.trends_available = False
         else:
             self.trends_available = False
-        
-        # Keyword Difficulty Analyzer setup
-        if DIFFICULTY_ANALYZER_AVAILABLE:
-            try:
-                self.difficulty_analyzer = KeywordDifficultyAnalyzer()
-                self.difficulty_available = True
-            except Exception as e:
-                print(f"⚠️ Keyword Difficulty Analyzer setup failed: {e}")
-                self.difficulty_available = False
-        else:
-            self.difficulty_available = False
     
     def get_google_suggestions(self, keyword: str, hl: str = 'nl', gl: str = 'NL') -> List[str]:
         """
@@ -395,22 +330,8 @@ class FreeKeywordTool:
         self.collector = FreeSEODataCollector()
         self.default_language = os.getenv('FREE_KEYWORD_LANGUAGE', 'nl')
         self.validator = KeywordLanguageValidator(default_language=self.default_language)
-        
-        # Keyword Difficulty Analyzer setup
-        if DIFFICULTY_ANALYZER_AVAILABLE:
-            try:
-                self.difficulty_analyzer = KeywordDifficultyAnalyzer()
-                self.difficulty_available = True
-            except Exception as e:
-                print(f"⚠️ Keyword Difficulty Analyzer setup failed: {e}")
-                self.difficulty_available = False
-        else:
-            self.difficulty_available = False
-            
         print("🆓 FREE Keyword Research Tool geïnitialiseerd!")
         print("📊 Gebruikt: Google Trends, Google Suggest, Wikipedia")
-        if self.difficulty_available:
-            print("🎯 Keyword Difficulty Analysis: ACTIEF")
     
     def research_comprehensive(self, main_keyword: str, language: Optional[str] = None, country: Optional[str] = None) -> Dict:
         """
@@ -438,7 +359,10 @@ class FreeKeywordTool:
         related_questions = self.collector.get_related_questions_free(main_keyword)
         results['related_questions'] = related_questions
         
-        # 4. Wikipedia REMOVED - focusing on Google data only
+        # 4. Wikipedia termen
+        print("📚 Wikipedia gerelateerde termen...")
+        wikipedia_terms = self.collector.get_wikipedia_related_terms(main_keyword, language=language_code)
+        results['wikipedia_terms'] = wikipedia_terms
         
         # 5. Trends gerelateerde queries (als beschikbaar)
         if trends_data.get('related_queries'):
@@ -490,21 +414,6 @@ class FreeKeywordTool:
                 # Trend van hoofdwoord gebruiken
                 trend = trends_data.get('trend_direction', 'Stable')
                 
-                # NEW: Get keyword difficulty analysis
-                difficulty_score = 0
-                difficulty_reasoning = ""
-                if self.difficulty_available:
-                    try:
-                        difficulty_analysis = self.difficulty_analyzer.analyze_keyword_difficulty(
-                            keyword, language_code, country_code
-                        )
-                        difficulty_score = difficulty_analysis.difficulty_score
-                        difficulty_reasoning = difficulty_analysis.reasoning
-                        # Update competition based on difficulty analysis
-                        competition = difficulty_analysis.competition_level
-                    except Exception as e:
-                        print(f"⚠️ Difficulty analysis failed for '{keyword}': {e}")
-                
                 keyword_obj = KeywordData(
                     keyword=keyword,
                     search_volume=volume,
@@ -513,9 +422,7 @@ class FreeKeywordTool:
                     competition=competition,
                     trend=trend,
                     source="Real Data" if category in ['google_suggestions', 'trends_related'] else "Generated",
-                    interest_over_time=trends_data.get('interest', []),
-                    difficulty_score=difficulty_score,
-                    difficulty_reasoning=difficulty_reasoning
+                    interest_over_time=trends_data.get('interest', [])
                 )
                 
                 category_data.append(keyword_obj)
