@@ -946,6 +946,9 @@ def create_app() -> Flask:
 								'competition': getattr(kw, 'competition', 'Unknown'),
 								'trend': getattr(kw, 'trend', trend_direction),
 								'source': getattr(kw, 'source', None),
+								# NEW: Enhanced difficulty data
+								'difficulty_score': getattr(kw, 'difficulty_score', 0),
+								'difficulty_reasoning': getattr(kw, 'difficulty_reasoning', ''),
 							}
 						else:
 							item = {
@@ -955,7 +958,10 @@ def create_app() -> Flask:
 								'cpc': kw.get('cpc'),
 								'competition': kw.get('competition', 'Unknown'),
 								'trend': kw.get('trend', trend_direction),
-								'source': kw.get('source')
+								'source': kw.get('source'),
+								# NEW: Enhanced difficulty data  
+								'difficulty_score': kw.get('difficulty_score', 0),
+								'difficulty_reasoning': kw.get('difficulty_reasoning', ''),
 							}
 						category_data.append(item)
 						total_volume += int(item.get('search_volume') or 0)
