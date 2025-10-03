@@ -141,8 +141,24 @@ export default function App() {
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     if (!keyword.trim()) return
+    
+    // GTM tracking - Search button click
+    if (typeof window !== 'undefined' && (window as any).dataLayer) {
+      (window as any).dataLayer.push({
+        event: 'search_button_click',
+        search_keyword: keyword.trim(),
+        search_language: searchLanguage,
+        country: country,
+        keyword_length: keyword.trim().length,
+        has_keyword: keyword.trim().length > 0
+      });
+      console.log('🔍 GTM: Search button clicked', keyword.trim());
+    }
+    
     setLoading(true)
     setError(null)
+    const searchStartTime = Date.now()
+    
     try {
       const res = await fetch('/api/free/search', {
         method: 'POST',
@@ -152,8 +168,34 @@ export default function App() {
       if (!res.ok) throw new Error('Search failed')
       const result = await res.json()
       setData(result)
+      
+      // GTM tracking - Search success
+      if (typeof window !== 'undefined' && (window as any).dataLayer) {
+        const totalKeywords = Object.values(result.categories || {}).reduce((sum: number, cat: any) => sum + cat.length, 0);
+        (window as any).dataLayer.push({
+          event: 'search_success',
+          search_keyword: keyword.trim(),
+          total_results: totalKeywords,
+          categories_found: Object.keys(result.categories || {}).length,
+          response_time: Date.now() - searchStartTime,
+          search_language: searchLanguage
+        });
+        console.log('✅ GTM: Search successful', totalKeywords, 'results');
+      }
+      
     } catch (err: any) {
       setError(err?.message || 'Er is een fout opgetreden')
+      
+      // GTM tracking - Search error
+      if (typeof window !== 'undefined' && (window as any).dataLayer) {
+        (window as any).dataLayer.push({
+          event: 'search_error',
+          search_keyword: keyword.trim(),
+          error_message: err?.message || 'Search failed',
+          response_time: Date.now() - searchStartTime
+        });
+        console.log('❌ GTM: Search failed', err?.message);
+      }
     } finally {
       setLoading(false)
     }
