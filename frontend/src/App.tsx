@@ -85,11 +85,13 @@ export default function App() {
   // Language used for fetching search results (does NOT change UI language)
   const [searchLanguage, setSearchLanguage] = useState(() => localStorage.getItem('lw_search_lang') || (localStorage.getItem('lw_lang') || urlLang || 'en'))
   const [language, setLanguage] = useState(() => localStorage.getItem('lw_lang') || urlLang || 'en')
-  const [country, setCountry] = useState(() => localStorage.getItem('lw_country') || 'NL')
+  const [country, setCountry] = useState(() => localStorage.getItem('lw_country') || '')
   // Detected country (geo/IP/headers) for display; separate from user-selected country used in searches
   const [detectedCountry, setDetectedCountry] = useState<string>('')
   const [languagesList, setLanguagesList] = useState(GOOGLE_LANGUAGES)
   const [countriesList, setCountriesList] = useState(COUNTRY_CODES)
+  const [countrySearchTerm, setCountrySearchTerm] = useState('')
+  const [showCountryDropdown, setShowCountryDropdown] = useState(false)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [data, setData] = useState<FreeSearchResponse | null>(null)
@@ -105,6 +107,49 @@ export default function App() {
 
   const isSignedIn = !!token
 
+  // Priority countries (mix of major regions worldwide - no bias)
+  const priorityCountries = ['US', 'GB', 'CA', 'AU', 'DE', 'FR', 'ES', 'IT', 'NL', 'BE', 'JP', 'BR', 'IN', 'MX', 'AR']
+  
+  // Filter and sort countries based on search
+  const filteredCountries = useMemo(() => {
+    if (!countrySearchTerm) {
+      // No search - show priority countries first, then rest alphabetically
+      const priority = priorityCountries.filter(cc => COUNTRY_CODES.includes(cc))
+      const others = COUNTRY_CODES.filter(cc => !priorityCountries.includes(cc)).sort()
+      return [...priority, ...others]
+    }
+    
+    // Search mode - filter by country name
+    const term = countrySearchTerm.toLowerCase()
+    return COUNTRY_CODES.filter(cc => {
+      try {
+        const ctor: any = (Intl as any).DisplayNames
+        if (ctor) {
+          const dn = new ctor(['en'], { type: 'region' })
+          const name = dn?.of?.(cc)?.toLowerCase() || cc.toLowerCase()
+          return name.includes(term) || cc.toLowerCase().includes(term)
+        }
+        return cc.toLowerCase().includes(term)
+      } catch {
+        return cc.toLowerCase().includes(term)
+      }
+    })
+  }, [countrySearchTerm])
+
+  // Get country display name
+  const getCountryName = (code: string) => {
+    try {
+      const ctor: any = (Intl as any).DisplayNames
+      if (ctor) {
+        const dn = new ctor([ui?.lang || 'en'], { type: 'region' })
+        return dn?.of?.(code) || code
+      }
+      return code
+    } catch {
+      return code
+    }
+  }
+
   const toggleLangMenu = (anchor: 'desktop' | 'mobile' | 'sidebar') => {
     setLangMenuAnchor(prev => (prev === anchor ? null : anchor))
   }
@@ -118,8 +163,12 @@ export default function App() {
 
   // Localized country display name for the topbar pill
   const displayCountryName = useMemo(() => {
+    if (!detectedCountry) {
+      // Return "Unknown location" in current UI language
+      return ui?.strings?.unknown_location || 'Unknown location'
+    }
     try {
-      const cc = (detectedCountry || 'US').toUpperCase()
+      const cc = detectedCountry.toUpperCase()
       const langCode = (ui?.lang || language || 'en').toLowerCase()
       const ctor: any = (Intl as any).DisplayNames
       if (ctor) {
@@ -129,9 +178,9 @@ export default function App() {
       }
       return cc
     } catch {
-      return (detectedCountry || 'US').toUpperCase()
+      return detectedCountry.toUpperCase()
     }
-  }, [detectedCountry, ui?.lang, language])
+  }, [detectedCountry, ui?.lang, ui?.strings, language])
 
   const categoryOrder = useMemo(
     () => ['google_suggestions', 'trends_related', 'related_questions', 'wikipedia_terms'],
@@ -141,6 +190,12 @@ export default function App() {
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     if (!keyword.trim()) return
+    
+    // Require country selection
+    if (!country) {
+      alert('Please select a country first')
+      return
+    }
     
     // GTM tracking - Search button click
     if (typeof window !== 'undefined' && (window as any).dataLayer) {
@@ -219,10 +274,28 @@ export default function App() {
   }
 
   useEffect(() => {
-    // capture token from localStorage changes on return from magic link verify
-    const t = localStorage.getItem('lw_token')
-    if (t && t !== token) setToken(t)
-  }, [])
+    // Check for auth token changes (e.g., after magic link verification)
+    const checkToken = () => {
+      const t = localStorage.getItem('lw_token')
+      if (t && t !== token) {
+        setToken(t)
+      }
+    }
+    
+    // Check immediately
+    checkToken()
+    
+    // Also listen for storage events from other tabs/windows
+    window.addEventListener('storage', checkToken)
+    
+    // Check periodically in case of timing issues
+    const interval = setInterval(checkToken, 1000)
+    
+    return () => {
+      window.removeEventListener('storage', checkToken)
+      clearInterval(interval)
+    }
+  }, [token])
 
   const loadProjects = async () => {
     try {
@@ -328,17 +401,33 @@ export default function App() {
   useEffect(() => { localStorage.setItem('lw_lang', language) }, [language])
   useEffect(() => { localStorage.setItem('lw_country', country) }, [country])
 
-  // Close sidebar on ESC key (mobile)
+    // Close sidebar on ESC key (mobile)
   useEffect(() => {
-    const onKey = (e: KeyboardEvent) => {
+    const handleEsc = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
         setSidebarOpen(false)
-        closeLangMenu()
+        setLangMenuAnchor(null)
+        setShowCountryDropdown(false)
       }
     }
-    window.addEventListener('keydown', onKey)
-    return () => window.removeEventListener('keydown', onKey)
+    document.addEventListener('keydown', handleEsc)
+    return () => document.removeEventListener('keydown', handleEsc)
   }, [])
+
+  // Close dropdowns when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (showCountryDropdown) {
+        const target = e.target as Element
+        if (!target.closest('.flag-select')) {
+          setShowCountryDropdown(false)
+          setCountrySearchTerm('')
+        }
+      }
+    }
+    document.addEventListener('click', handleClickOutside)
+    return () => document.removeEventListener('click', handleClickOutside)
+  }, [showCountryDropdown])
 
   // Load languages from backend master list (fallback to constant). If Shopify-style locales present, prefer those.
   useEffect(() => {
@@ -504,37 +593,52 @@ export default function App() {
       <div className={`overlay ${sidebarOpen ? 'show' : ''}`} onClick={() => setSidebarOpen(false)} />
 
       <div className="content">
-        {/* Desktop header bar (only for signed-in users who have project features) */}
-        {isSignedIn && (
+        {/* Desktop header bar */}
         <div className="desktopbar" style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '12px 14px', borderBottom: '1px solid var(--line)', position: 'sticky', top: 0, zIndex: 9, background: 'rgba(11,13,16,0.6)', backdropFilter: 'saturate(180%) blur(10px)' }}>
           <div className="brand">Lucy <span>World</span></div>
           <div style={{ marginLeft: 'auto', display: 'inline-flex', alignItems: 'center', gap: 8, position: 'relative' }}>
-            {/* Country indicator (always shows current detected location; independent from search settings) */}
-            <div
-              className="country-pill"
-              title={(detectedCountry || 'US').toUpperCase()}
-              aria-label={`Country ${(detectedCountry || 'US').toUpperCase()}`}
-              style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: 'transparent', color: 'var(--text)', border: '1px solid var(--line)', padding: '8px 10px', borderRadius: 10 }}
-            >
-              <span aria-hidden style={{ fontSize: 14 }}>{flagEmoji((detectedCountry || 'US').toUpperCase())}</span>
-              <span style={{ fontWeight: 600 }}>{displayCountryName}</span>
-            </div>
-            <button
-              type="button"
-              onClick={loadProjects}
-              style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: 'transparent', color: 'var(--text)', border: '1px solid var(--line)', padding: '8px 10px', borderRadius: 10 }}
-            >
-              📁 My projects
-            </button>
-            {/* Save project / Sign-in */}
-            <button
-              type="button"
-              onClick={saveProject}
-              style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: 'transparent', color: 'var(--text)', border: '1px solid var(--line)', padding: '8px 10px', borderRadius: 10 }}
-            >
-              💾 Save project
-            </button>
-            {/* Reuse the lang switch button */}
+            {/* Country indicator (shows detected location or unknown) */}
+            {detectedCountry ? (
+              <div
+                className="country-pill"
+                title={detectedCountry.toUpperCase()}
+                aria-label={`Country ${detectedCountry.toUpperCase()}`}
+                style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: 'transparent', color: 'var(--text)', border: '1px solid var(--line)', padding: '8px 10px', borderRadius: 10 }}
+              >
+                <span aria-hidden style={{ fontSize: 14 }}>{flagEmoji(detectedCountry.toUpperCase())}</span>
+                <span style={{ fontWeight: 600 }}>{displayCountryName}</span>
+              </div>
+            ) : (
+              <div
+                className="country-pill"
+                title="Location unknown"
+                aria-label="Location unknown"
+                style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: 'transparent', color: 'var(--text-secondary)', border: '1px solid var(--line)', padding: '8px 10px', borderRadius: 10 }}
+              >
+                <span aria-hidden style={{ fontSize: 14 }}>🌍</span>
+                <span style={{ fontWeight: 600 }}>{displayCountryName}</span>
+              </div>
+            )}
+            {/* Project features only for signed-in users */}
+            {isSignedIn && (
+              <>
+                <button
+                  type="button"
+                  onClick={loadProjects}
+                  style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: 'transparent', color: 'var(--text)', border: '1px solid var(--line)', padding: '8px 10px', borderRadius: 10 }}
+                >
+                  📁 My projects
+                </button>
+                <button
+                  type="button"
+                  onClick={saveProject}
+                  style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: 'transparent', color: 'var(--text)', border: '1px solid var(--line)', padding: '8px 10px', borderRadius: 10 }}
+                >
+                  💾 Save project
+                </button>
+              </>
+            )}
+            {/* Language switch button (always visible) */}
             <button
               type="button"
               className="lang-btn"
@@ -587,7 +691,6 @@ export default function App() {
             )}
           </div>
         </div>
-        )}
         {/* Mobile top bar */}
         <div className="topbar">
           <button
@@ -605,16 +708,28 @@ export default function App() {
           <div className="brand">Lucy <span>World</span></div>
           <div className="topbar-actions" style={{ marginLeft: 'auto', display: 'inline-flex', alignItems: 'center', gap: 8 }}>
             <div className="lang-switch" style={{ position: 'relative', zIndex: 30 }}>
-              {/* Country indicator (always shows current detected location; independent from search settings) */}
-              <div
-                className="country-pill"
-                title={(detectedCountry || 'US').toUpperCase()}
-                aria-label={`Country ${(detectedCountry || 'US').toUpperCase()}`}
-                style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: 'transparent', color: 'var(--text)', border: '1px solid var(--line)', padding: '8px 10px', borderRadius: 10, marginRight: 8 }}
-              >
-                <span aria-hidden style={{ fontSize: 14 }}>{flagEmoji((detectedCountry || 'US').toUpperCase())}</span>
-                <span style={{ fontWeight: 600 }}>{displayCountryName}</span>
-              </div>
+              {/* Country indicator (shows detected location or unknown) */}
+              {detectedCountry ? (
+                <div
+                  className="country-pill"
+                  title={detectedCountry.toUpperCase()}
+                  aria-label={`Country ${detectedCountry.toUpperCase()}`}
+                  style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: 'transparent', color: 'var(--text)', border: '1px solid var(--line)', padding: '8px 10px', borderRadius: 10, marginRight: 8 }}
+                >
+                  <span aria-hidden style={{ fontSize: 14 }}>{flagEmoji(detectedCountry.toUpperCase())}</span>
+                  <span style={{ fontWeight: 600 }}>{displayCountryName}</span>
+                </div>
+              ) : (
+                <div
+                  className="country-pill"
+                  title="Location unknown"
+                  aria-label="Location unknown"
+                  style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: 'transparent', color: 'var(--text-secondary)', border: '1px solid var(--line)', padding: '8px 10px', borderRadius: 10, marginRight: 8 }}
+                >
+                  <span aria-hidden style={{ fontSize: 14 }}>🌍</span>
+                  <span style={{ fontWeight: 600 }}>{displayCountryName}</span>
+                </div>
+              )}
               <button
                 type="button"
                 className="lang-btn"
@@ -734,16 +849,107 @@ export default function App() {
               placeholder={ui?.strings['search.placeholder'] || 'Enter a keyword'}
               required
             />
-            <select
-              className="select flag-select"
-              value={country}
-              onChange={(e) => setCountry(e.target.value.toUpperCase())}
-              title={country}
-            >
-              {countriesList.map((cc) => (
-                <option key={cc} value={cc}>{flagEmoji(cc)}</option>
-              ))}
-            </select>
+            {/* Enhanced country selector with search */}
+            <div style={{ position: 'relative' }}>
+              <div
+                className="select flag-select"
+                onClick={() => setShowCountryDropdown(!showCountryDropdown)}
+                style={{ 
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                  minWidth: '120px'
+                }}
+                title={country ? `${flagEmoji(country)} ${getCountryName(country)}` : 'Select country'}
+              >
+                <span>{country ? `${flagEmoji(country)} ${getCountryName(country)}` : '🌍 Select country'}</span>
+                <span style={{ marginLeft: '8px', fontSize: '12px' }}>▼</span>
+              </div>
+              
+              {showCountryDropdown && (
+                <div
+                  style={{
+                    position: 'absolute',
+                    top: '100%',
+                    left: 0,
+                    right: 0,
+                    background: '#0e1217',
+                    border: '1px solid var(--line)',
+                    borderRadius: '8px',
+                    maxHeight: '300px',
+                    overflow: 'hidden',
+                    zIndex: 1000,
+                    boxShadow: '0 4px 20px rgba(0,0,0,0.3)'
+                  }}
+                >
+                  {/* Search input */}
+                  <input
+                    type="text"
+                    placeholder="Search countries..."
+                    value={countrySearchTerm}
+                    onChange={(e) => setCountrySearchTerm(e.target.value)}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Escape') {
+                        setShowCountryDropdown(false)
+                        setCountrySearchTerm('')
+                      } else if (e.key === 'Enter' && filteredCountries.length > 0) {
+                        setCountry(filteredCountries[0])
+                        setShowCountryDropdown(false)
+                        setCountrySearchTerm('')
+                      }
+                    }}
+                    style={{
+                      width: '100%',
+                      padding: '8px 12px',
+                      background: 'transparent',
+                      border: 'none',
+                      borderBottom: '1px solid var(--line)',
+                      color: 'var(--text)',
+                      fontSize: '14px',
+                      outline: 'none'
+                    }}
+                    autoFocus
+                  />
+                  
+                  {/* Country list */}
+                  <div style={{ maxHeight: '250px', overflow: 'auto' }}>
+                    {filteredCountries.slice(0, 50).map((cc) => (
+                      <div
+                        key={cc}
+                        onClick={() => {
+                          setCountry(cc)
+                          setShowCountryDropdown(false)
+                          setCountrySearchTerm('')
+                        }}
+                        style={{
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: '8px',
+                          padding: '8px 12px',
+                          cursor: 'pointer',
+                          background: cc === country ? 'var(--accent)' : 'transparent',
+                          color: cc === country ? '#fff' : 'var(--text)',
+                          borderRadius: cc === country ? '4px' : '0',
+                          margin: cc === country ? '2px' : '0'
+                        }}
+                        onMouseEnter={(e) => e.currentTarget.style.background = cc === country ? 'var(--accent)' : 'rgba(255,255,255,0.1)'}
+                        onMouseLeave={(e) => e.currentTarget.style.background = cc === country ? 'var(--accent)' : 'transparent'}
+                      >
+                        <span style={{ fontSize: '16px' }}>{flagEmoji(cc)}</span>
+                        <span style={{ flex: 1 }}>{getCountryName(cc)}</span>
+                        <span style={{ fontSize: '12px', color: 'var(--text-secondary)' }}>{cc}</span>
+                      </div>
+                    ))}
+                    {filteredCountries.length === 0 && (
+                      <div style={{ padding: '16px', textAlign: 'center', color: 'var(--text-secondary)' }}>
+                        No countries found
+                      </div>
+                    )}
+                  </div>
+                </div>
+              )}
+            </div>
             <select
               className="select"
               value={searchLanguage}

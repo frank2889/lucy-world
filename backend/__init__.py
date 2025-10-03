@@ -8,6 +8,7 @@ import json
 import csv
 import io
 import logging
+import requests
 from datetime import datetime
 from typing import Any
 from flask import Flask, render_template, request, jsonify, send_file, redirect, abort
@@ -185,7 +186,7 @@ def create_app() -> Flask:
 		return 'en'
 
 	def _detect_country() -> str:
-		"""Best-effort 2-letter country detection from standard proxy/CDN headers or Accept-Language region."""
+		"""Simple country detection from CDN headers only - no fallbacks."""
 		# Common CDN/proxy headers for country
 		header_candidates = [
 			'CF-IPCountry',                # Cloudflare
@@ -195,6 +196,7 @@ def create_app() -> Flask:
 			'X-Geo-Country',               # Generic
 			'X-Country-Code',              # Generic
 			'X-Forwarded-Country',         # Non-standard
+			'X-Real-IP-Country',           # Some proxies
 		]
 		for h in header_candidates:
 			val = request.headers.get(h)
@@ -202,18 +204,9 @@ def create_app() -> Flask:
 				cc = val.strip().upper()
 				if len(cc) == 2 and cc.isalpha():
 					return cc
-		# Derive from Accept-Language region (e.g., en-US -> US)
-		al = request.headers.get('Accept-Language', '')
-		for part in al.split(','):
-			lang = part.split(';')[0].strip()
-			if '-' in lang:
-				pieces = lang.split('-')
-				if len(pieces) >= 2:
-					cc = pieces[1].upper()
-					if len(cc) == 2 and cc.isalpha():
-						return cc
-		# Fallback
-		return 'US'
+		
+		# No fallbacks - return empty string if unknown
+		return ''
 
 	def _vite_manifest():
 		manifest_path = os.path.join(static_folder, 'app', '.vite', 'manifest.json')
