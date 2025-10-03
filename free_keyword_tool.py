@@ -436,10 +436,7 @@ class FreeKeywordTool:
         related_questions = self.collector.get_related_questions_free(main_keyword)
         results['related_questions'] = related_questions
         
-        # 4. Wikipedia termen
-        print("📚 Wikipedia gerelateerde termen...")
-        wikipedia_terms = self.collector.get_wikipedia_related_terms(main_keyword, language=language_code)
-        results['wikipedia_terms'] = wikipedia_terms
+        # 4. Wikipedia REMOVED - focusing on Google data only
         
         # 5. Trends gerelateerde queries (als beschikbaar)
         if trends_data.get('related_queries'):
