@@ -445,9 +445,46 @@ def create_app() -> Flask:
 
 	@app.route('/')
 	def index_root():
-		"""Detect language and redirect to /<lang>/"""
+		"""Detect language and redirect to /<lang>/ with GTM tracking"""
 		lang = _detect_lang()
-		return redirect(f'/{lang}/', code=302)
+		
+		# Create a temporary page with GTM that redirects immediately
+		redirect_html = f"""<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Lucy World - Redirecting...</title>
+	<!-- Google Tag Manager -->
+	<script>(function(w,d,s,l,i){{w[l]=w[l]||[];w[l].push({{'gtm.start':
+	new Date().getTime(),event:'gtm.js'}});var f=d.getElementsByTagName(s)[0],
+	j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+	'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+	}})(window,document,'script','dataLayer','GTM-KGMG5JTG');</script>
+	<!-- End Google Tag Manager -->
+	<meta http-equiv="refresh" content="0; url=/{lang}/">
+	<script>
+		// Track root page visit
+		window.dataLayer = window.dataLayer || [];
+		window.dataLayer.push({{
+			'event': 'page_view',
+			'page_title': 'Lucy World Root Redirect',
+			'page_location': window.location.href,
+			'redirect_target': '/{lang}/'
+		}});
+		// Immediate redirect
+		window.location.href = '/{lang}/';
+	</script>
+</head>
+<body>
+	<!-- Google Tag Manager (noscript) -->
+	<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KGMG5JTG"
+	height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+	<!-- End Google Tag Manager (noscript) -->
+	<h1>Redirecting...</h1>
+	<p>You should be redirected automatically to <a href="/{lang}/">/{lang}/</a>.</p>
+</body>
+</html>"""
+		return redirect_html
 
 	# Redirect '/<lang>' (no trailing slash) to '/<lang>/'
 	@app.route('/<lang>')
