@@ -5,9 +5,39 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Lucy World — Keyword Research</title>
     <meta name="description" content="Lucy World: snelle, gratis keyword research met realtime suggesties en trends." />
+    
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-LUCY-WORLD-01"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-LUCY-WORLD-01');
+      
+      // Custom events for business tracking
+      function trackSearch(keyword, country) {
+        gtag('event', 'keyword_search', {
+          'keyword': keyword,
+          'country': country,
+          'custom_parameter_1': 'free_search'
+        });
+      }
+      
+      function trackDifficultyView(keyword, score) {
+        gtag('event', 'difficulty_viewed', {
+          'keyword': keyword,
+          'difficulty_score': score,
+          'custom_parameter_1': 'competitive_advantage'
+        });
+      }
+      
+      // Make functions available globally
+      window.trackSearch = trackSearch;
+      window.trackDifficultyView = trackDifficultyView;
+    </script>
   </head>
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
-  </html>
+</html>
