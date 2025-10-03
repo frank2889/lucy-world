@@ -393,8 +393,22 @@ class FreeKeywordTool:
         self.collector = FreeSEODataCollector()
         self.default_language = os.getenv('FREE_KEYWORD_LANGUAGE', 'nl')
         self.validator = KeywordLanguageValidator(default_language=self.default_language)
+        
+        # Keyword Difficulty Analyzer setup
+        if DIFFICULTY_ANALYZER_AVAILABLE:
+            try:
+                self.difficulty_analyzer = KeywordDifficultyAnalyzer()
+                self.difficulty_available = True
+            except Exception as e:
+                print(f"⚠️ Keyword Difficulty Analyzer setup failed: {e}")
+                self.difficulty_available = False
+        else:
+            self.difficulty_available = False
+            
         print("🆓 FREE Keyword Research Tool geïnitialiseerd!")
         print("📊 Gebruikt: Google Trends, Google Suggest, Wikipedia")
+        if self.difficulty_available:
+            print("🎯 Keyword Difficulty Analysis: ACTIEF")
     
     def research_comprehensive(self, main_keyword: str, language: Optional[str] = None, country: Optional[str] = None) -> Dict:
         """
