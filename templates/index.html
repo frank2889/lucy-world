@@ -299,7 +299,7 @@
         <div style="background: linear-gradient(45deg, #ff6b6b, #ee5a24); color: white; padding: 20px; border-radius: 10px; margin: 20px 0; text-align: center; box-shadow: 0 5px 15px rgba(0,0,0,0.2);">
             <h2 style="margin-bottom: 10px;">🆓 FREE Keyword Difficulty Analysis</h2>
             <p style="font-size: 1.1rem; margin-bottom: 15px;">✅ Save $1,068/year vs KeywordTool.io &nbsp;&nbsp; ✅ 0-100 Difficulty Scores &nbsp;&nbsp; ✅ 105 Languages</p>
-            <a href="/comparison" style="background: white; color: #ff6b6b; padding: 12px 25px; text-decoration: none; border-radius: 5px; font-weight: bold; display: inline-block; margin-right: 15px;">🏆 See Full Comparison</a>
+            <button onclick="showComparison()" style="background: white; color: #ff6b6b; padding: 12px 25px; border: none; border-radius: 5px; font-weight: bold; cursor: pointer; margin-right: 15px;">🏆 See Why We're Better</button>
             <a href="/search/free" style="border: 2px solid white; color: white; padding: 10px 25px; text-decoration: none; border-radius: 5px; font-weight: bold; display: inline-block;">🚀 Try Free Tool</a>
         </div>
         
@@ -600,6 +600,82 @@
                 
             } catch (error) {
                 showError('Export mislukt: ' + error.message);
+            }
+        }
+        
+        // COMPARISON SECTION FUNCTIONS
+        function showComparison() {
+            const existingSection = document.getElementById('comparisonSection');
+            if (existingSection) {
+                existingSection.scrollIntoView({ behavior: 'smooth' });
+                return;
+            }
+            
+            const comparisonHTML = `
+                <div id="comparisonSection" style="background: #f8f9fa; margin: 40px -20px; padding: 40px 20px; border-radius: 15px;">
+                    <div style="max-width: 1000px; margin: 0 auto;">
+                        <h2 style="text-align: center; margin-bottom: 30px; color: #333;">🏆 Lucy.world vs KeywordTool.io</h2>
+                        
+                        <div style="background: white; border-radius: 10px; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.1); margin-bottom: 30px;">
+                            <div style="background: #333; color: white; padding: 15px; text-align: center;">
+                                <h3>Feature Comparison - Why Lucy.world Wins</h3>
+                            </div>
+                            
+                            <div style="display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 0; font-weight: bold; background: #f8f9fa;">
+                                <div style="padding: 15px; border-right: 1px solid #ddd;">Feature</div>
+                                <div style="padding: 15px; border-right: 1px solid #ddd; background: #e8f5e8;">Lucy.world</div>
+                                <div style="padding: 15px; background: #fff5f5;">KeywordTool.io</div>
+                            </div>
+                            
+                            <div style="display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 0; border-bottom: 1px solid #eee;">
+                                <div style="padding: 15px; border-right: 1px solid #ddd; font-weight: 600;">💰 Pricing</div>
+                                <div style="padding: 15px; border-right: 1px solid #ddd; background: #e8f5e8; color: #28a745; font-weight: bold;">FREE Forever</div>
+                                <div style="padding: 15px; background: #fff5f5; color: #dc3545; font-weight: bold;">$89-199/month</div>
+                            </div>
+                            
+                            <div style="display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 0; border-bottom: 1px solid #eee;">
+                                <div style="padding: 15px; border-right: 1px solid #ddd; font-weight: 600;">🎯 Keyword Difficulty</div>
+                                <div style="padding: 15px; border-right: 1px solid #ddd; background: #e8f5e8; color: #28a745;">✅ 0-100 Score + Reasoning</div>
+                                <div style="padding: 15px; background: #fff5f5; color: #dc3545;">❌ Not Available</div>
+                            </div>
+                            
+                            <div style="display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 0; border-bottom: 1px solid #eee;">
+                                <div style="padding: 15px; border-right: 1px solid #ddd; font-weight: 600;">🌍 Languages</div>
+                                <div style="padding: 15px; border-right: 1px solid #ddd; background: #e8f5e8; color: #28a745;">✅ 105 Languages</div>
+                                <div style="padding: 15px; background: #fff5f5; color: #dc3545;">✅ 83 Languages</div>
+                            </div>
+                            
+                            <div style="display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 0; border-bottom: 1px solid #eee;">
+                                <div style="padding: 15px; border-right: 1px solid #ddd; font-weight: 600;">📊 SERP Analysis</div>
+                                <div style="padding: 15px; border-right: 1px solid #ddd; background: #e8f5e8; color: #28a745;">✅ Competition Intelligence</div>
+                                <div style="padding: 15px; background: #fff5f5; color: #dc3545;">❌ Basic Suggestions Only</div>
+                            </div>
+                            
+                            <div style="display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 0; background: #fff3cd;">
+                                <div style="padding: 15px; border-right: 1px solid #ddd; font-weight: bold;">💯 Total Value</div>
+                                <div style="padding: 15px; border-right: 1px solid #ddd; background: #e8f5e8; color: #28a745; font-weight: bold;">FREE + Superior Features</div>
+                                <div style="padding: 15px; background: #fff5f5; color: #dc3545; font-weight: bold;">$1,068-2,388/year</div>
+                            </div>
+                        </div>
+                        
+                        <div style="text-align: center; margin-top: 30px;">
+                            <h3 style="color: #333; margin-bottom: 20px;">🚀 Ready to Save $1,068+ This Year?</h3>
+                            <a href="/search/free" style="background: #ff6b6b; color: white; padding: 15px 30px; text-decoration: none; border-radius: 5px; font-weight: bold; margin-right: 15px; display: inline-block;">🔍 Start Free Research</a>
+                            <button onclick="hideComparison()" style="background: #6c757d; color: white; padding: 15px 30px; border: none; border-radius: 5px; font-weight: bold; cursor: pointer;">Close Comparison</button>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            const resultsSection = document.getElementById('results');
+            resultsSection.insertAdjacentHTML('afterend', comparisonHTML);
+            document.getElementById('comparisonSection').scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        function hideComparison() {
+            const section = document.getElementById('comparisonSection');
+            if (section) {
+                section.remove();
             }
         }
     </script>

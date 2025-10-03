@@ -790,6 +790,32 @@ def create_app() -> Flask:
 		except Exception:
 			return app.response_class('<!doctype html><title>Terms of Service</title><h1>Terms of Service</h1><p>Use Lucy World at your own risk. No warranties. Contact support@lucy.world for details.</p>', mimetype='text/html')
 
+	@app.route('/comparison')
+	@app.route('/comparison.html')
+	def comparison_page():
+		"""Lucy.world vs KeywordTool.io comparison page - MONEY MAKER!"""
+		try:
+			# Try to serve the comparison.html file directly
+			with open(os.path.join(app.static_folder, '..', 'comparison.html'), 'r', encoding='utf-8') as f:
+				return app.response_class(f.read(), mimetype='text/html')
+		except Exception:
+			# Fallback inline comparison page
+			return app.response_class('''
+<!DOCTYPE html>
+<html><head><title>Lucy.world vs KeywordTool.io - FREE Keyword Difficulty</title></head>
+<body>
+<h1>🆓 Lucy.world vs KeywordTool.io</h1>
+<p><strong>Save $1,068+ per year!</strong></p>
+<ul>
+<li>✅ Lucy.world: FREE keyword difficulty analysis</li>
+<li>❌ KeywordTool.io: $89/month paywall</li>
+<li>✅ Lucy.world: 105 languages supported</li>
+<li>❌ KeywordTool.io: Only 83 languages</li>
+</ul>
+<a href="/search/free">🚀 Try Lucy.world FREE Now</a>
+</body></html>
+			''', mimetype='text/html')
+
 	@app.route('/meta/detect.json')
 	def meta_detect():
 		"""Return detected language and country for initial UI defaults."""
