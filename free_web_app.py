@@ -38,6 +38,7 @@ def search_keywords():
             raw_keyword_data,
             keyword,
             language=language,
+            country=request.form.get('country', 'NL').upper() if request.form else 'NL',
         )
 
         trends_data = raw_keyword_data.get('trends_data', {})
@@ -106,6 +107,7 @@ def research_keywords_free():
             raw_keyword_data,
             main_keyword,
             language=language,
+            country=(data.get('country') or 'NL').upper() if isinstance(data, dict) else 'NL',
         )
         
         # Converteer naar JSON-serializeerbare format

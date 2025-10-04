@@ -17,6 +17,277 @@ import re
 
 from language_validator import KeywordLanguageValidator
 
+
+def _normalize_language_code(language: Optional[str]) -> str:
+    return (language or '').split('-')[0].lower() or 'en'
+
+
+LANGUAGE_PROFILES: Dict[str, Dict[str, List[str]]] = {
+    'nl': {
+        'question_templates': [
+            "wat is {keyword}",
+            "hoe werkt {keyword}",
+            "waar kan ik {keyword}",
+            "wanneer {keyword}",
+            "waarom {keyword}",
+            "welke {keyword}",
+            "hoeveel kost {keyword}",
+            "hoe duur is {keyword}",
+            "waar koop je {keyword}",
+            "wat zijn de kosten van {keyword}",
+            "hoe kies je {keyword}",
+            "wat zijn de voordelen van {keyword}",
+            "hoe lang duurt {keyword}",
+            "wat heb je nodig voor {keyword}",
+            "hoe begin je met {keyword}"
+        ],
+        'purchase_terms': ['bestellen', 'kopen'],
+        'purchase_questions': [
+            "waar kan ik {keyword} online kopen",
+            "wat zijn de bezorgkosten van {keyword}",
+            "hoe lang duurt {keyword} bezorgen",
+            "kan ik {keyword} vandaag nog krijgen"
+        ],
+        'backup_prefixes': ['beste', 'goedkope', 'professionele', 'lokale'],
+        'backup_suffixes': ['online', 'Nederland', 'kopen', 'bestellen', 'service'],
+        'backup_locations': ['Amsterdam', 'Rotterdam', 'Utrecht', 'Den Haag'],
+        'commercial_terms': ['kopen', 'bestellen', 'huren', 'boeken', 'kosten', 'prijs'],
+        'location_terms': ['amsterdam', 'rotterdam', 'utrecht', 'den haag', 'nederland'],
+        'question_prefixes': ['wat', 'hoe', 'waar', 'wanneer', 'waarom', 'welke', 'hoeveel'],
+        'informational_prefixes': ['wat is', 'hoe werkt']
+    },
+    'de': {
+        'question_templates': [
+            "was ist {keyword}",
+            "wie funktioniert {keyword}",
+            "wo kann ich {keyword} finden",
+            "wann {keyword}",
+            "warum {keyword}",
+            "welche {keyword}",
+            "wieviel kostet {keyword}",
+            "wo {keyword} kaufen",
+            "was sind die kosten für {keyword}",
+            "wie wähle ich {keyword}",
+            "was sind die vorteile von {keyword}",
+            "wie lange dauert {keyword}",
+            "was braucht man für {keyword}",
+            "wie starte ich mit {keyword}"
+        ],
+        'purchase_terms': ['kaufen', 'bestellen'],
+        'purchase_questions': [
+            "wo kann ich {keyword} online kaufen",
+            "was sind die lieferkosten für {keyword}",
+            "wie lange dauert der versand von {keyword}",
+            "kann ich {keyword} heute bekommen"
+        ],
+        'backup_prefixes': ['beste', 'günstige', 'professionelle', 'lokale'],
+        'backup_suffixes': ['online', 'Deutschland', 'kaufen', 'bestellen', 'Service'],
+        'backup_locations': ['Berlin', 'Hamburg', 'München', 'Köln', 'Frankfurt'],
+        'commercial_terms': ['kaufen', 'bestellen', 'mieten', 'buchen', 'kosten', 'preis'],
+        'location_terms': ['berlin', 'hamburg', 'münchen', 'köln', 'frankfurt', 'deutschland'],
+        'question_prefixes': ['was', 'wie', 'wo', 'wann', 'warum', 'welche', 'wieviel'],
+        'informational_prefixes': ['was ist', 'wie funktioniert']
+    },
+    'en': {
+        'question_templates': [
+            "what is {keyword}",
+            "how does {keyword} work",
+            "where can I find {keyword}",
+            "when is {keyword}",
+            "why {keyword}",
+            "which {keyword}",
+            "how much does {keyword} cost",
+            "how expensive is {keyword}",
+            "where to buy {keyword}",
+            "what are the costs of {keyword}",
+            "how to choose {keyword}",
+            "what are the benefits of {keyword}",
+            "how long does {keyword} take",
+            "what do you need for {keyword}",
+            "how to start with {keyword}"
+        ],
+        'purchase_terms': ['buy', 'purchase', 'order'],
+        'purchase_questions': [
+            "where can I buy {keyword} online",
+            "what are the shipping costs for {keyword}",
+            "how long does {keyword} shipping take",
+            "can I get {keyword} today"
+        ],
+        'backup_prefixes': ['best', 'cheap', 'professional', 'local'],
+        'backup_suffixes': ['online', 'USA', 'buy', 'near me', 'service'],
+        'backup_locations': ['New York', 'Los Angeles', 'Chicago', 'Houston'],
+        'commercial_terms': ['buy', 'order', 'hire', 'book', 'cost', 'price'],
+        'location_terms': ['new york', 'los angeles', 'chicago', 'houston', 'united states'],
+        'question_prefixes': ['what', 'how', 'where', 'when', 'why', 'which', 'who'],
+        'informational_prefixes': ['what is', 'how does']
+    },
+    'fr': {
+        'question_templates': [
+            "qu'est-ce que {keyword}",
+            "comment fonctionne {keyword}",
+            "où trouver {keyword}",
+            "quand {keyword}",
+            "pourquoi {keyword}",
+            "quel {keyword}",
+            "combien coûte {keyword}",
+            "où acheter {keyword}",
+            "quels sont les coûts de {keyword}",
+            "comment choisir {keyword}",
+            "quels sont les avantages de {keyword}",
+            "combien de temps prend {keyword}",
+            "de quoi avez-vous besoin pour {keyword}",
+            "comment commencer avec {keyword}"
+        ],
+        'purchase_terms': ['acheter', 'commander'],
+        'purchase_questions': [
+            "où puis-je acheter {keyword} en ligne",
+            "quels sont les frais de livraison pour {keyword}",
+            "combien de temps prend la livraison de {keyword}",
+            "puis-je obtenir {keyword} aujourd'hui"
+        ],
+        'backup_prefixes': ['meilleur', 'pas cher', 'professionnel', 'local'],
+        'backup_suffixes': ['en ligne', 'France', 'acheter', 'commander', 'service'],
+        'backup_locations': ['Paris', 'Lyon', 'Marseille', 'Toulouse', 'Bordeaux'],
+        'commercial_terms': ['acheter', 'commander', 'louer', 'réserver', 'coût', 'prix'],
+        'location_terms': ['paris', 'lyon', 'marseille', 'toulouse', 'bordeaux', 'france'],
+        'question_prefixes': ['qu', 'comment', 'où', 'quand', 'pourquoi', 'quel', 'combien'],
+        'informational_prefixes': ["qu'est-ce que", 'comment fonctionne']
+    },
+    'es': {
+        'question_templates': [
+            "¿qué es {keyword}",
+            "¿cómo funciona {keyword}",
+            "¿dónde encontrar {keyword}",
+            "¿cuándo {keyword}",
+            "¿por qué {keyword}",
+            "¿cuál {keyword}",
+            "¿cuánto cuesta {keyword}",
+            "¿dónde comprar {keyword}",
+            "¿cuáles son los costos de {keyword}",
+            "¿cómo elegir {keyword}",
+            "¿cuáles son los beneficios de {keyword}",
+            "¿cuánto tiempo tarda {keyword}",
+            "¿qué se necesita para {keyword}",
+            "¿cómo empezar con {keyword}"
+        ],
+        'purchase_terms': ['comprar', 'ordenar'],
+        'purchase_questions': [
+            "¿dónde puedo comprar {keyword} en línea",
+            "¿cuáles son los costos de envío de {keyword}",
+            "¿cuánto tarda el envío de {keyword}",
+            "¿puedo obtener {keyword} hoy"
+        ],
+        'backup_prefixes': ['mejor', 'barato', 'profesional', 'local'],
+        'backup_suffixes': ['en línea', 'España', 'comprar', 'ordenar', 'servicio'],
+        'backup_locations': ['Madrid', 'Barcelona', 'Valencia', 'Sevilla', 'Bilbao'],
+        'commercial_terms': ['comprar', 'ordenar', 'alquilar', 'reservar', 'costo', 'precio'],
+        'location_terms': ['madrid', 'barcelona', 'valencia', 'sevilla', 'bilbao', 'españa'],
+        'question_prefixes': ['¿qué', 'qué', '¿cómo', 'cómo', '¿dónde', 'dónde', '¿cuándo', 'cuándo', '¿por qué', 'por qué', '¿cuál', 'cuál', '¿cuánto', 'cuánto'],
+        'informational_prefixes': ['¿qué es', 'qué es', '¿cómo funciona', 'cómo funciona']
+    },
+    'it': {
+        'question_templates': [
+            "che cos'è {keyword}",
+            "come funziona {keyword}",
+            "dove trovare {keyword}",
+            "quando {keyword}",
+            "perché {keyword}",
+            "quale {keyword}",
+            "quanto costa {keyword}",
+            "dove comprare {keyword}",
+            "quali sono i costi di {keyword}",
+            "come scegliere {keyword}",
+            "quali sono i vantaggi di {keyword}",
+            "quanto tempo ci vuole per {keyword}",
+            "di cosa hai bisogno per {keyword}",
+            "come iniziare con {keyword}"
+        ],
+        'purchase_terms': ['comprare', 'ordinare', 'acquistare'],
+        'purchase_questions': [
+            "dove posso comprare {keyword} online",
+            "quali sono i costi di spedizione per {keyword}",
+            "quanto tempo richiede la spedizione di {keyword}",
+            "posso ottenere {keyword} oggi"
+        ],
+        'backup_prefixes': ['migliore', 'economico', 'professionale', 'locale'],
+        'backup_suffixes': ['online', 'Italia', 'comprare', 'ordinare', 'servizio'],
+        'backup_locations': ['Roma', 'Milano', 'Napoli', 'Torino', 'Firenze'],
+        'commercial_terms': ['comprare', 'ordinare', 'noleggiare', 'prenotare', 'costo', 'prezzo'],
+        'location_terms': ['roma', 'milano', 'napoli', 'torino', 'firenze', 'italia'],
+        'question_prefixes': ['che', 'come', 'dove', 'quando', 'perché', 'quale', 'quanto'],
+        'informational_prefixes': ["che cos'è", 'come funziona']
+    },
+    'pt': {
+        'question_templates': [
+            "o que é {keyword}",
+            "como funciona {keyword}",
+            "onde encontrar {keyword}",
+            "quando {keyword}",
+            "por que {keyword}",
+            "qual {keyword}",
+            "quanto custa {keyword}",
+            "onde comprar {keyword}",
+            "quais são os custos de {keyword}",
+            "como escolher {keyword}",
+            "quais são os benefícios de {keyword}",
+            "quanto tempo leva {keyword}",
+            "do que você precisa para {keyword}",
+            "como começar com {keyword}"
+        ],
+        'purchase_terms': ['comprar', 'encomendar'],
+        'purchase_questions': [
+            "onde posso comprar {keyword} online",
+            "quais são os custos de envio para {keyword}",
+            "quanto tempo leva a entrega de {keyword}",
+            "posso obter {keyword} hoje"
+        ],
+        'backup_prefixes': ['melhor', 'barato', 'profissional', 'local'],
+        'backup_suffixes': ['online', 'Brasil', 'comprar', 'encomendar', 'serviço'],
+        'backup_locations': ['São Paulo', 'Rio de Janeiro', 'Belo Horizonte', 'Salvador', 'Brasília'],
+        'commercial_terms': ['comprar', 'encomendar', 'alugar', 'reservar', 'custo', 'preço'],
+        'location_terms': ['são paulo', 'rio de janeiro', 'belo horizonte', 'salvador', 'brasília', 'brasil'],
+        'question_prefixes': ['o que', 'como', 'onde', 'quando', 'por que', 'qual', 'quanto'],
+        'informational_prefixes': ['o que é', 'como funciona']
+    },
+    'ja': {
+        'question_templates': [
+            "{keyword}とは何ですか",
+            "{keyword}はどのように機能しますか",
+            "{keyword}はどこで見つけられますか",
+            "{keyword}はいつですか",
+            "{keyword}はなぜですか",
+            "{keyword}はどれですか",
+            "{keyword}はいくらですか",
+            "{keyword}をどこで購入できますか",
+            "{keyword}のコストはどのくらいですか",
+            "{keyword}をどのように選びますか",
+            "{keyword}の利点は何ですか",
+            "{keyword}にはどのくらいの時間がかかりますか",
+            "{keyword}には何が必要ですか",
+            "{keyword}をどのように始めますか"
+        ],
+        'purchase_terms': ['購入', '注文'],
+        'purchase_questions': [
+            "{keyword}をオンラインで購入できる場所はどこですか",
+            "{keyword}の配送料はいくらですか",
+            "{keyword}の配送にはどのくらい時間がかかりますか",
+            "今日{keyword}を入手できますか"
+        ],
+        'backup_prefixes': ['最高', '安い', '専門的', '地元'],
+        'backup_suffixes': ['オンライン', '日本', '購入', '注文', 'サービス'],
+        'backup_locations': ['東京', '大阪', '名古屋', '札幌', '福岡'],
+        'commercial_terms': ['購入', '注文', 'レンタル', '予約', 'コスト', '価格'],
+        'location_terms': ['東京', '大阪', '名古屋', '札幌', '福岡', '日本'],
+        'question_prefixes': ['何', 'どう', 'どこ', 'いつ', 'なぜ', 'どれ', 'いくら'],
+        'informational_prefixes': ['とは', 'とは何ですか', 'はどのように']
+    }
+}
+
+
+def get_language_profile(language: Optional[str]) -> Dict[str, List[str]]:
+    code = _normalize_language_code(language)
+    return LANGUAGE_PROFILES.get(code, LANGUAGE_PROFILES['en'])
+
 # Google Trends (optional)
 try:
     from pytrends.request import TrendReq
@@ -111,53 +382,35 @@ class FreeSEODataCollector:
         
         # Backup: genereer logische varianten
         if not suggestions:
-            suggestions = self._generate_backup_suggestions(keyword)
+            suggestions = self._generate_backup_suggestions(keyword, language=hl, country=gl)
         
         return suggestions[:15]  # Limiteer tot 15
     
-    def get_related_questions_free(self, keyword: str) -> List[str]:
-        """
-        Genereert gerelateerde vragen gebaseerd op Nederlandse vraagpatronen
-        """
-        questions = []
-        
-        # Nederlandse vraagwoorden en patronen
-        question_patterns = [
-            f"wat is {keyword}",
-            f"hoe werkt {keyword}",
-            f"waar kan ik {keyword}",
-            f"wanneer {keyword}",
-            f"waarom {keyword}",
-            f"welke {keyword}",
-            f"hoeveel kost {keyword}",
-            f"hoe duur is {keyword}",
-            f"waar koop je {keyword}",
-            f"wat zijn de kosten van {keyword}",
-            f"hoe kies je {keyword}",
-            f"wat zijn de voordelen van {keyword}",
-            f"hoe lang duurt {keyword}",
-            f"wat heb je nodig voor {keyword}",
-            f"hoe begin je met {keyword}"
-        ]
-        
-        # Voeg keyword-specifieke vragen toe
-        if "bestellen" in keyword.lower():
-            question_patterns.extend([
-                f"waar kan ik {keyword} online",
-                f"wat zijn de bezorgkosten van {keyword}",
-                f"hoe lang duurt {keyword} bezorgen",
-                f"kan ik {keyword} vandaag nog"
-            ])
-        
-        if "kopen" in keyword.lower():
-            question_patterns.extend([
-                f"wat is de beste plaats om {keyword}",
-                f"waar vind ik goedkope {keyword}",
-                f"welke winkel heeft {keyword}",
-                f"wat zijn de prijzen van {keyword}"
-            ])
-        
-        return question_patterns[:15]
+    def get_related_questions_free(self, keyword: str, language: str = 'nl') -> List[str]:
+        """Genereer gerelateerde vragen op basis van taalprofielen."""
+        profile = get_language_profile(language)
+        keyword_lower = keyword.lower()
+
+        templates = profile.get('question_templates', [])
+        questions = [tpl.format(keyword=keyword).strip() for tpl in templates]
+
+        purchase_terms = profile.get('purchase_terms', [])
+        if purchase_terms and any(term in keyword_lower for term in purchase_terms):
+            extra = [tpl.format(keyword=keyword).strip() for tpl in profile.get('purchase_questions', [])]
+            questions.extend(extra)
+
+        seen = set()
+        deduped: List[str] = []
+        for q in questions:
+            if not q:
+                continue
+            norm = q.lower()
+            if norm in seen:
+                continue
+            seen.add(norm)
+            deduped.append(q)
+
+        return deduped[:15]
     
     def get_google_trends_data(self, keyword: str, language: str = 'nl', geo: str = 'NL') -> Dict:
         """
@@ -356,7 +609,7 @@ class FreeKeywordTool:
         
         # 3. Gerelateerde vragen
         print("❓ Gerelateerde vragen genereren...")
-        related_questions = self.collector.get_related_questions_free(main_keyword)
+        related_questions = self.collector.get_related_questions_free(main_keyword, language=language_code)
         results['related_questions'] = related_questions
         
         # 4. Wikipedia termen

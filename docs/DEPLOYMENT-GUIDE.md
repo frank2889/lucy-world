@@ -1,217 +1,241 @@
-# 🚀 Lucy World Search – DigitalOcean Deployment Guide
+# Lucy World Search – Deployment Guide (October 2025)
 
-## Stap 1: DigitalOcean Droplet Setup
+Lucy World Search runs as a Flask application that serves a Vite-built React SPA and exposes `/api/*` endpoints. Locale handling is done on the server—`/` redirects to `/&lt;lang&gt;/` based on `Accept-Language`—so the web server must proxy *all* non-static requests to the Flask app. The steps below describe how to get a droplet ready, ship a new release, and keep deployments repeatable.
 
-1. **Maak een nieuwe Droplet**
+> **⚠️ Heads-up:** `deploy.sh`, `auto-deploy.sh`, and `quick-deploy.sh` are legacy helpers. They still assume a `/search` homepage and refer to `requirements-prod.txt`, which no longer exists. Treat them as templates and update them before running in production.
 
-   - Ga naar DigitalOcean Dashboard
-   - Klik "Create" → "Droplets"
-   - Kies **Ubuntu 22.04 LTS**
-   - Selecteer **Basic Plan** ($6/maand - 1GB RAM, 1 vCPU, 25GB SSD)
-   - Kies **Amsterdam datacenter** (voor Nederlandse gebruikers)
-   - Voeg je **SSH Key** toe
-   - Hostname: `lucy-world-search`
+## 0. Prerequisites
 
-2. **Noteer het IP-adres** van je droplet
+- **Infrastructure**: Ubuntu 22.04 LTS droplet (1 GB RAM is fine for low traffic) + DNS `A` record pointing `lucy.world` to the droplet (see `DNS-SETUP.md`).
+- **Access**: SSH key with root or deploy-user privileges on the droplet. Avoid password auth and update the server’s `sshd_config` accordingly.
+- **Local tooling**: Node 20+, npm 10+, Python 3.11+ (project currently uses 3.13), Git, and `zip`/`rsync` if you prefer artifact deployments.
+- **Secrets**: Prepare values for `SECRET_KEY`, optional `DATABASE_URL`, and SMTP credentials if email sign-in needs to work.
 
-## Stap 2: DNS Configuratie (root domein)
+## 1. Prepare a release locally
 
-1. **Ga naar je domain provider** (waar lucy.world geregistreerd is)
-2. **Voeg een A-record toe voor het hoofddomein (root)**
+1. Install frontend dependencies and build the bundle:
 
-   ```text
-   Name: @ (root)
-   Type: A
-   Value: [JE_DROPLET_IP_ADRES]
-   TTL: 300
-   ```
+    ```bash
+    cd frontend
+    npm install
+    npm run build
+    cd ..
+    ```
 
-3. **Wacht 5-10 minuten** voor DNS propagatie
+   This writes hashed assets to `static/app`. Commit or copy these files before deploying.
+2. Run a quick syntax check on the backend:
 
-## Stap 3: Bestanden Uploaden
+    ```bash
+    /usr/local/bin/python3 -m compileall backend free_keyword_tool.py advanced_keyword_tool.py
+    ```
 
-### Optie A – Met SCP (Aanbevolen)
+3. (Optional) Create a git tag or archive for the release so you can trace what is live.
 
-```bash
-# Pak alle bestanden in een zip
-cd "/Users/Frank/Library/Mobile Documents/com~apple~CloudDocs/visualstudio/lucy world search"
-zip -r lucy-world-search.zip . -x "*.pyc" "__pycache__/*" ".venv/*"
+## 2. Ship code to the server
 
-# Upload naar server
-scp lucy-world-search.zip root@[JE_DROPLET_IP]:/tmp/
-```
-
-### Optie B – Met Git
+**Preferred:** push to GitHub (or your chosen remote) and pull on the server. The webhook service (`webhook.py`) is built for this flow.
 
 ```bash
-# Op je lokale machine
-git init
 git add .
-git commit -m "Initial deployment"
-git remote add origin [JE_GIT_REPO_URL]
-git push -u origin main
-
-# Op de server
-git clone [JE_GIT_REPO_URL] /var/www/lucy-world-search
+git commit -m "Deploy: privacy-first locale rollout"
+git push origin main
 ```
 
-## Stap 4: Server Setup
-
-1. **SSH naar je server**:
-
-   ```bash
-   ssh root@[JE_DROPLET_IP]
-   ```
-
-2. **Extract bestanden** (als je SCP gebruikt hebt):
-
-   ```bash
-   cd /var/www
-   unzip /tmp/lucy-world-search.zip -d lucy-world-search
-   cd lucy-world-search
-   ```
-
-3. **Run het deployment script**:
-
-   ```bash
-   chmod +x deploy.sh
-   ./deploy.sh
-   ```
-
-## Stap 5: Controleer of alles werkt
-
-1. **Check service status**:
-
-   ```bash
-   sudo systemctl status lucy-world-search
-   sudo systemctl status nginx
-   ```
-
-2. **Test de website**:
-
-   ```bash
-   curl http://lucy.world/health
-   ```
-
-3. **Open in browser**:
-   - Http: `http://lucy.world`
-   - Https: `https://lucy.world` (na SSL setup)
-
-## Stap 6: SSL Certificaat (Automatisch)
-
-Het deployment script installeert automatisch een SSL certificaat via Let's Encrypt.
-
-Als dit niet werkt, run handmatig:
+**Alternative:** package and copy manually.
 
 ```bash
+zip -r lucy-world-search.zip . -x "*.pyc" ".venv/*" "node_modules/*"
+scp lucy-world-search.zip root@<droplet_ip>:/var/www/
+```
+
+## 3. Bootstrap the droplet (first run)
+
+```bash
+ssh root@<droplet_ip>
+sudo apt update && sudo apt upgrade -y
+sudo apt install -y python3 python3-venv python3-pip nginx git
+
+mkdir -p /var/www/lucy-world-search
+cd /var/www/lucy-world-search
+git clone https://github.com/frank2889/lucy-world.git .  # or extract the uploaded zip
+
+python3 -m venv venv
+source venv/bin/activate
+pip install --upgrade pip
+pip install -r requirements.txt
+
+# Copy the built frontend bundle if you built locally
+# (skip if you run `npm run build` on the server)
+
+cat > .env <<'EOF'
+FLASK_ENV=production
+SECRET_KEY=<generate_with_python>
+PUBLIC_BASE_URL=https://lucy.world
+# DATABASE_URL=postgresql://...
+# SMTP_HOST=...
+# SMTP_PORT=587
+# SMTP_USERNAME=...
+# SMTP_PASSWORD=...
+# SMTP_FROM=no-reply@lucy.world
+EOF
+```
+
+### Systemd service
+
+Create `/etc/systemd/system/lucy-world-search.service`:
+
+```ini
+[Unit]
+Description=Lucy World Search
+After=network.target
+
+[Service]
+User=www-data
+Group=www-data
+WorkingDirectory=/var/www/lucy-world-search
+Environment="PATH=/var/www/lucy-world-search/venv/bin"
+EnvironmentFile=/var/www/lucy-world-search/.env
+ExecStart=/var/www/lucy-world-search/venv/bin/gunicorn --config gunicorn.conf.py wsgi:app
+Restart=always
+RestartSec=3
+
+[Install]
+WantedBy=multi-user.target
+```
+
+```bash
+sudo systemctl daemon-reload
+sudo systemctl enable lucy-world-search
+sudo systemctl start lucy-world-search
+```
+
+### Nginx reverse proxy
+
+Replace `/etc/nginx/sites-available/lucy-world-search` with:
+
+```nginx
+server {
+    listen 80;
+    server_name lucy.world;
+
+    # Redirect HTTP → HTTPS once TLS is in place
+    if ($host = lucy.world) {
+        return 301 https://$host$request_uri;
+    }
+}
+
+server {
+    listen 443 ssl http2;
+    server_name lucy.world;
+
+    ssl_certificate /etc/letsencrypt/live/lucy.world/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/lucy.world/privkey.pem;
+
+    add_header X-Content-Type-Options nosniff;
+    add_header X-Frame-Options DENY;
+    add_header Referrer-Policy strict-origin-when-cross-origin;
+
+    gzip on;
+    gzip_types text/plain text/css application/json application/javascript;
+
+    root /var/www/lucy-world-search/static;
+
+    location /static/ {
+        alias /var/www/lucy-world-search/static/;
+        try_files $uri =404;
+        expires 1y;
+        add_header Cache-Control "public, immutable";
+    }
+
+    location /app/ {
+        alias /var/www/lucy-world-search/static/app/;
+        try_files $uri =404;
+        expires 1w;
+    }
+
+    location / {
+        try_files $uri @flask;
+    }
+
+    location @flask {
+        proxy_pass http://127.0.0.1:8000;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_read_timeout 60s;
+    }
+}
+```
+
+Enable the site, request a certificate, and reload:
+
+```bash
+sudo ln -sf /etc/nginx/sites-available/lucy-world-search /etc/nginx/sites-enabled/
+sudo nginx -t
+sudo systemctl reload nginx
 sudo certbot --nginx -d lucy.world --email frank@lucy.world --agree-tos --non-interactive
 ```
 
-## 🔧 Handige Commando's
-
-### Service Management
+## 4. Verification checklist
 
 ```bash
-# Restart applicatie
-sudo systemctl restart lucy-world-search
-
-# Check logs
-sudo journalctl -u lucy-world-search -f
-
-# Check nginx logs
-sudo tail -f /var/log/nginx/access.log
+systemctl status lucy-world-search
+curl -I https://lucy.world
+curl -s https://lucy.world/meta/detect.json -H 'Accept-Language: fr'
+curl -s https://lucy.world/api/free/search -X POST -H 'Content-Type: application/json' \
+  -d '{"keyword":"marketing","language":"fr","country":"FR"}' | jq '.language'
 ```
 
-### Updates
+Confirm that `language` in the response matches the request, and that `trends.trend_direction` is present. Visit `https://lucy.world/` in a browser with Dutch and German `Accept-Language` headers to ensure the redirect and UI strings behave as expected.
 
-```bash
-# Upload nieuwe bestanden en run:
-./update.sh
-```
+## 5. Automating deployments
 
-### Monitoring
+Automation keeps production in sync with `main` after each push:
 
-```bash
-# CPU en memory gebruik
-htop
+1. **Attach the Git remote** on the droplet (once):
 
-# Disk usage
-df -h
+    ```bash
+    cd /var/www/lucy-world-search
+    git remote set-url origin https://github.com/frank2889/lucy-world.git
+    git fetch origin
+    git reset --hard origin/main
+    ```
 
-# Check welke poorten open zijn
-sudo netstat -tlnp
-```
+2. **Refresh the helper scripts**: update `deploy.sh`, `auto-deploy.sh`, and `quick-deploy.sh` to reference `requirements.txt`, drop hard-coded passwords, and call `systemctl restart lucy-world-search` at the end. Install the reviewed `auto-deploy.sh` to `/usr/local/bin/`:
 
-## 📊 Expected Results
+    ```bash
+    sudo install -m 755 auto-deploy.sh /usr/local/bin/auto-deploy-lucy
+    ```
 
-Na succesvolle deployment heb je:
+3. **Configure the webhook service**. Create `/etc/systemd/system/lucy-webhook.service`:
 
-✅ **Live website**: <https://lucy.world>  
-✅ **SSL certificaat**: Automatisch via Let's Encrypt  
-✅ **Nginx reverse proxy**: Voor performance en security  
-✅ **Systemd service**: Automatische restart bij crashes  
-✅ **Health monitoring**: `/health` endpoint  
-✅ **Log management**: Centralized logging  
+    ```ini
+    [Unit]
+    Description=Lucy World Deploy Webhook
+    After=network.target
 
-## 🚨 Troubleshooting
+    [Service]
+    WorkingDirectory=/var/www/lucy-world-search
+    Environment="WEBHOOK_SECRET=<set-this>"
+    ExecStart=/var/www/lucy-world-search/venv/bin/python webhook.py
+    Restart=on-failure
 
-### Website niet bereikbaar
+    [Install]
+    WantedBy=multi-user.target
+    ```
 
-1. Check DNS: `nslookup lucy.world`
-2. Check nginx: `sudo systemctl status nginx`
-3. Check app: `sudo systemctl status lucy-world-search`
+    Enable it with `sudo systemctl enable --now lucy-webhook`.
 
-### Performance monitoring (1GB RAM server)
+4. **Add the GitHub webhook** (repo → Settings → Webhooks): URL `https://lucy.world:9000/webhook`, content type `application/json`, secret matching the environment variable, events = push. Verify with the “Recent Deliveries” tab.
 
-```bash
-# Basic resource monitoring
-htop                    # CPU en RAM usage
-free -h                 # Memory usage
-df -h                   # Disk usage
-sudo netstat -tlnp      # Active connections
-```
+5. **Developer loop**: `git add`, `git commit`, `git push origin main`. The webhook runs `auto-deploy.sh`, pulls the new commit, reinstalls dependencies when needed, and restarts the Gunicorn service. Keep smoke-test commands in pull requests so deploy logs show what was validated upstream.
 
-### SSL problemen
+See `operations.md` for operational monitoring and scheduled maintenance once automation is live.
 
-```bash
-sudo certbot renew --dry-run
-sudo nginx -t
-sudo systemctl restart nginx
-```
+## 6. Known gaps / TODOs
 
-### Performance problemen
-
-```bash
-# Check resource usage
-htop
-iostat 1
-```
-
-### Application errors
-
-```bash
-# Detailed logs
-sudo journalctl -u lucy-world-search -f --no-pager
-```
-
-## 💡 Tips
-
-1. **Monitor resources**: Een $6 droplet heeft 1GB RAM - perfect voor deze applicatie
-2. **Backup**: Maak regelmatig DigitalOcean snapshots
-3. **Updates**: Gebruik altijd het `update.sh` script
-4. **Security**: Verander standaard SSH poort en gebruik fail2ban
-5. **Monitoring**: Setup DigitalOcean monitoring voor alerts
-
-## 🎯 Next Steps
-
-Na deployment kun je:
-
-- **Google Analytics** toevoegen voor usage tracking
-- **API rate limiting** implementeren
-- **Caching** toevoegen met Redis
-- **Database** toevoegen voor user management
-- **CDN** setup voor static files
-
----
-
-**Success!** Je Lucy World Search tool is nu live op <https://lucy.world> 🎉
+- Update `deploy.sh` and `auto-deploy.sh` to reference `requirements.txt`, respect the new locale-aware routing, and drop the password-based SSH usage in `quick-deploy.sh`.
+- Consider creating a dedicated deploy user with limited permissions instead of running everything as `root`/`www-data`.
+- Add health probes for `/meta/detect.json` and `/api/free/search` to DigitalOcean monitoring once production is cut over.
+- Document rollback steps (e.g., keep the previous git commit hash handy and restart the service after `git checkout`).

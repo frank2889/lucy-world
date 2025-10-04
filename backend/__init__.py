@@ -1094,6 +1094,7 @@ def create_app() -> Flask:
 				raw_keyword_data,
 				keyword,
 				language=language,
+				country=country or 'US',
 			)
 
 			trends_data = raw_keyword_data.get('trends_data', {})

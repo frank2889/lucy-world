@@ -1,199 +1,145 @@
-# 🌐 DNS Setup voor lucy.world (root domein)
+# 🌐 DNS setup voor lucy.world (October 2025)
 
-## Stap 1: Controleer je Droplet IP
+> Only the apex domain (`lucy.world`) is currently routed. Configure `www` when the web server has a redirect in place, otherwise keep DNS minimal to avoid stray traffic.
+
+## 1. Controleer het droplet IP
+
 ```bash
-# SSH naar je server
+# SSH naar je server en noteer het publieke IP
 ssh root@YOUR_DROPLET_IP
-
-# Check het externe IP adres
 curl -4 icanhazip.com
 ```
 
-## Stap 2: DNS Configuratie
+## 2. Configureer de apex-record
 
-### Bij je Domain Provider (waar lucy.world geregistreerd is):
+1. Log in bij je domain provider (Cloudflare, Namecheap, GoDaddy, …).
+2. Open het DNS-beheer voor `lucy.world`.
+3. Voeg of update het A-record voor het hoofddomein:
 
-1. **Login** bij je domain provider (Namecheap, GoDaddy, Cloudflare, etc.)
-2. **Ga naar DNS Management** voor lucy.world
-3. **Update/Voeg A Record toe voor hoofddomain**:
-
-```
-Type: A
-Name: @ (or leave empty for root domain)
-Value: [JE_DROPLET_IP_ADRES] 
-TTL: 300 (5 minutes)
-```
-
-### Voorbeeld configuraties (root / apex)
-
-#### Cloudflare:
-```
+```text
 Type: A
 Name: @
-IPv4 Address: YOUR_DROPLET_IP
-Proxy Status: DNS only (grey cloud)
-TTL: Auto
+Value: <DROPLET_IP>
+TTL: 300
 ```
 
-#### Namecheap:
-```
-Type: A Record
-Host: @
-Value: YOUR_DROPLET_IP
-TTL: 5 min
+### Option eel: www redirect voorbereiden
+
+Add the CNAME only if Nginx already redirects `www` → apex:
+
+```text
+Type: CNAME
+Name: www
+Value: lucy.world
+TTL: 300
 ```
 
-#### GoDaddy:
-```
-Type: A
-Name: @
-Value: YOUR_DROPLET_IP
-TTL: 600 seconds
-```
-
-## Stap 3: Test DNS Propagation
+## 3. Test DNS propagatie
 
 ```bash
-# Test vanaf je lokale machine
 nslookup lucy.world
-
-# Test vanaf verschillende locaties
 dig lucy.world @8.8.8.8
 dig lucy.world @1.1.1.1
-
-# Online DNS checker
-# Ga naar: https://www.whatsmydns.net/
-# Enter: lucy.world
 ```
 
-## Stap 4: SSL Certificaat Setup
+Use <https://www.whatsmydns.net/> for a visual check if needed.
+
+## 4. Vraag het TLS-certificaat aan
 
 ```bash
-# SSH naar je server
 ssh root@YOUR_DROPLET_IP
-
-# Install Certbot (als nog niet gedaan)
 sudo apt update
 sudo apt install -y certbot python3-certbot-nginx
-
-# Krijg SSL certificaat
 sudo certbot --nginx -d lucy.world --email frank@lucy.world --agree-tos --non-interactive
-
-# Test automatische renewal
 sudo certbot renew --dry-run
 ```
 
-## Stap 5: Update Nginx Configuratie
+> Verify the systemd timer afterwards: `systemctl list-timers | grep certbot`. Certificates expire every 90 days.
 
-Je nginx configuratie zou automatisch geüpdatet moeten zijn door certbot, maar check het:
+## 5. Controleer (of maak) de Nginx-config
 
-```bash
-sudo nano /etc/nginx/sites-available/lucy-world-search
-```
+Certbot updates the TLS bits but does not build app routes. Ensure `/etc/nginx/sites-available/lucy-world-search` contains something equivalent to:
 
-Het zou er zo uit moeten zien:
 ```nginx
 server {
-	server_name lucy.world;
-    
-	location / {
-		proxy_pass http://127.0.0.1:8000;
-		proxy_set_header Host $host;
-		proxy_set_header X-Real-IP $remote_addr;
-		proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-		proxy_set_header X-Forwarded-Proto $scheme;
-	}
-    
-	location /static {
-		alias /var/www/lucy-world-search/static;
-		expires 1y;
-	}
-
-	listen 443 ssl; # managed by Certbot
-	ssl_certificate /etc/letsencrypt/live/lucy.world/fullchain.pem;
-	ssl_certificate_key /etc/letsencrypt/live/lucy.world/privkey.pem;
-	include /etc/letsencrypt/options-ssl-nginx.conf;
-	ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem;
+    listen 80;
+    server_name lucy.world;
+    return 301 https://$host$request_uri;
 }
 
 server {
-	if ($host = lucy.world) {
-		return 301 https://$host$request_uri;
-	}
+    listen 443 ssl http2;
+    server_name lucy.world;
 
-	listen 80;
-	server_name lucy.world;
-	return 404;
-}
+    ssl_certificate /etc/letsencrypt/live/lucy.world/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/lucy.world/privkey.pem;
+
+    root /var/www/lucy-world-search/static;
+
+    location /static/ {
+        alias /var/www/lucy-world-search/static/;
+        try_files $uri =404;
+        expires 1y;
+    }
+
+    location / {
+        try_files $uri @flask;
+    }
+
+    location @flask {
+        proxy_pass http://127.0.0.1:8000;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+
 ```
 
-## Stap 6: Test de Website
+Reload Nginx and check the syntax:
 
 ```bash
-# Test HTTP redirect naar HTTPS
-curl -I http://lucy.world
-
-# Test HTTPS
-curl -I https://lucy.world
-
-# Test health endpoint
-curl https://lucy.world/health
-```
-
-## 🚨 Troubleshooting
-
-### DNS werkt niet:
-```bash
-# Check of de A record bestaat
-dig lucy.world
-
-# Check vanaf verschillende DNS servers
-dig lucy.world @8.8.8.8
-dig lucy.world @1.1.1.1
-```
-
-### SSL certificaat problemen:
-```bash
-# Check certificate status
-sudo certbot certificates
-
-# Force renewal
-sudo certbot renew --force-renewal -d lucy.world
-
-# Check nginx syntax
 sudo nginx -t
-
-# Restart nginx
-sudo systemctl restart nginx
+sudo systemctl reload nginx
 ```
 
-### Website niet bereikbaar:
+## 6. Run snelle checks
+
 ```bash
-# Check services
-sudo systemctl status lucy-world-search
-sudo systemctl status nginx
-
-# Check logs
-sudo journalctl -u lucy-world-search -f
-sudo tail -f /var/log/nginx/error.log
+curl -I http://lucy.world            # Verwacht 301 naar HTTPS
+curl -I https://lucy.world
+curl -s https://lucy.world/health
 ```
 
-## ⏱️ Timeline
+## Troubleshooting snippets
 
-- **DNS Setup**: 2-5 minuten
-- **DNS Propagation**: 5-30 minuten (wereldwijd)
-- **SSL Certificate**: 1-2 minuten
-- **Total**: 10-40 minuten tot volledig werkend
+- **DNS werkt niet**:
 
-## ✅ Success Checklist
+    ```bash
+    dig lucy.world
+    dig lucy.world @1.1.1.1
+    ```
 
-- [ ] A Record toegevoegd bij domain provider
-- [ ] DNS propagation check: `nslookup lucy.world`
-- [ ] SSL certificaat geïnstalleerd
-- [ ] HTTPS redirect werkt
-- [ ] Website bereikbaar op <https://lucy.world>
-- [ ] Health check werkt: <https://lucy.world/health>
+- **SSL issues**:
 
----
+    ```bash
+    sudo certbot certificates
+    sudo certbot renew --force-renewal -d lucy.world
+    sudo nginx -t
+    ```
 
-Na deze stappen is lucy.world live! 🎉
+- **Site down**:
+
+    ```bash
+    sudo systemctl status lucy-world-search
+    sudo systemctl status nginx
+    sudo journalctl -u lucy-world-search -f
+    ```
+
+## Checklist
+
+- [ ] Apex A-record published
+- [ ] `nslookup lucy.world` resolves to droplet IP
+- [ ] Certbot certificate issued and renewal tested
+- [ ] HTTP → HTTPS redirect confirmed
+- [ ] `/health` responds over HTTPS

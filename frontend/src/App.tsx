@@ -244,10 +244,41 @@ export default function App() {
 
   const closeLangMenu = () => setLangMenuAnchor(null)
 
-  const currentLangLabel = useMemo(() => {
-    const match = languagesList.find(l => (l.code || '').toLowerCase() === (language || '').toLowerCase())
-    return match?.label || (language || 'en').toUpperCase()
-  }, [languagesList, language])
+  const getLanguageLabel = useCallback((code?: string) => {
+    const normalized = (code || '').toLowerCase()
+    if (!normalized) return (code || '').toUpperCase()
+
+    const fallbackRaw = languagesList.find((l) => (l.code || '').toLowerCase() === normalized)?.label || normalized.toUpperCase()
+    let fallbackBase = fallbackRaw
+    let fallbackHint = ''
+    const fallbackMatch = typeof fallbackRaw === 'string' ? fallbackRaw.match(/^(.*?)\s*\((.*?)\)\s*$/) : null
+    if (fallbackMatch) {
+      fallbackBase = fallbackMatch[1]
+      fallbackHint = fallbackMatch[2]
+    }
+
+    try {
+      const ctor: any = (Intl as any).DisplayNames
+      if (ctor) {
+        const dn = new ctor([ui?.lang || language || 'en'], { type: 'language' })
+        const localized = dn?.of?.(normalized)
+        if (localized && typeof localized === 'string') {
+          const titleCased = localized.charAt(0).toUpperCase() + localized.slice(1)
+          if (titleCased.toLowerCase() === fallbackBase.toLowerCase()) {
+            return titleCased
+          }
+          const hint = fallbackHint || fallbackBase
+          return `${titleCased} (${hint})`
+        }
+      }
+    } catch {
+      /* ignore */
+    }
+
+    return fallbackRaw
+  }, [languagesList, ui?.lang, language])
+
+  const currentLangLabel = useMemo(() => getLanguageLabel(language), [getLanguageLabel, language])
 
   // Localized country display name for the topbar pill
   const displayCountryName = useMemo(() => {
@@ -311,8 +342,6 @@ export default function App() {
                   const nextCountry = filteredCountries[0]
                   setCountry(nextCountry)
                   try { localStorage.setItem('lw_country', nextCountry) } catch {}
-                  setLanguageManuallySelected(false)
-                  try { localStorage.removeItem('lw_search_lang_manual') } catch {}
                   setShowCountryDropdown(false)
                   setCountrySearchTerm('')
                 }
@@ -336,8 +365,6 @@ export default function App() {
                   onClick={() => {
                     setCountry(cc)
                     try { localStorage.setItem('lw_country', cc) } catch {}
-                    setLanguageManuallySelected(false)
-                    try { localStorage.removeItem('lw_search_lang_manual') } catch {}
                     setShowCountryDropdown(false)
                     setCountrySearchTerm('')
                   }}
@@ -376,7 +403,7 @@ export default function App() {
         }}
       >
         {languagesList.map((l) => (
-          <option key={l.code} value={l.code}>{l.label}</option>
+          <option key={l.code} value={l.code}>{getLanguageLabel(l.code)}</option>
         ))}
       </select>
     </>
