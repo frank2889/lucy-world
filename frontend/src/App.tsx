@@ -1,4 +1,6 @@
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { Suspense, useEffect, useMemo, useState } from 'react'
+import PlatformSidebar from './platforms/Sidebar/PlatformSidebar'
+import { usePlatformHandler } from './platforms/handlers/platformHandler'
 import { COUNTRY_CODES, GOOGLE_LANGUAGES, flagEmoji } from './locales'
 
 const FEATURED_LANGUAGE_CODES = ['en', 'nl', 'de', 'fr', 'es', 'it', 'pt', 'pl', 'tr', 'ja', 'ko', 'zh', 'ru'] as const
@@ -184,6 +186,8 @@ export default function App() {
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [langMenuAnchor, setLangMenuAnchor] = useState<'desktop' | 'mobile' | null>(null)
   const normalizedLanguage = (language || '').toLowerCase()
+  const { platforms, activePlatform, activePlatformId, setActivePlatformId } = usePlatformHandler()
+  const ActivePlatformTool = activePlatform?.tool
   type LanguageSelectOptions = { closeMenu?: boolean }
 
   const isSignedIn = !!token
@@ -924,7 +928,26 @@ export default function App() {
             </div>
           </div>
         )}
-        <section className="search-card">
+        <div className="platforms-wrapper">
+          <aside className="platforms-wrapper__sidebar" aria-label="Platform selector">
+          <div className="card platform-sidebar-card">
+            <PlatformSidebar
+            platforms={platforms}
+            activePlatformId={activePlatformId}
+            onSelect={setActivePlatformId}
+            />
+          </div>
+          </aside>
+          <div className="platforms-wrapper__main">
+          <section className="card platforms-active-card">
+            <div>
+            <h3 className="platforms-active-card__title">{activePlatform?.name || 'Selecteer een platform'}</h3>
+            <p className="platforms-active-card__description">
+              {activePlatform?.description || 'Kies een platform uit de lijst om specifieke suggesties en tools te zien.'}
+            </p>
+            </div>
+          </section>
+          <section className="search-card">
           <h3>{ui?.strings['search.title'] || 'Keyword research'}</h3>
           <form onSubmit={onSubmit} className="row">
             <input
@@ -1060,6 +1083,38 @@ export default function App() {
           {error && <div className="error">{error}</div>}
         </section>
 
+        {ActivePlatformTool && (
+          <section className="card platform-tool-card">
+          <Suspense fallback={<div className="platform-tool-card__loading">{`Loading ${activePlatform?.name || 'platform'}…`}</div>}>
+            <ActivePlatformTool
+            keyword={keyword}
+            setKeyword={setKeyword}
+            ui={ui}
+            loading={loading}
+            error={error}
+            data={data}
+            setData={setData}
+            onSubmit={onSubmit}
+            searchLanguage={searchLanguage}
+            setSearchLanguage={setSearchLanguage}
+            languagesList={languagesList}
+            country={country}
+            setCountry={setCountry}
+            countriesList={countriesList}
+            filteredCountries={filteredCountries}
+            showCountryDropdown={showCountryDropdown}
+            setShowCountryDropdown={setShowCountryDropdown}
+            countrySearchTerm={countrySearchTerm}
+            setCountrySearchTerm={setCountrySearchTerm}
+            getCountryName={getCountryName}
+            flagEmoji={flagEmoji}
+            categoryOrder={categoryOrder}
+            formatNumber={nl}
+            />
+          </Suspense>
+          </section>
+        )}
+
         {data && (
           <>
             <section className="grid">
@@ -1112,8 +1167,10 @@ export default function App() {
         <footer className="footer">
           © {new Date().getFullYear()} Lucy World
         </footer>
+          </div>
         </div>
-        
+        </div>
+
       </div>
     </div>
   )

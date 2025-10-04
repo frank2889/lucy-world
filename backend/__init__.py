@@ -8,6 +8,7 @@ import json
 import csv
 import io
 import logging
+import re
 import requests
 from datetime import datetime
 from typing import Any
@@ -17,6 +18,8 @@ from werkzeug.middleware.proxy_fix import ProxyFix
 
 from backend.services.advanced_keyword_tool import AdvancedKeywordTool
 from backend.services.free_keyword_tool import FreeKeywordTool
+from backend.providers import SuggestionRequest
+from backend.services.suggestion_dispatcher import SuggestionDispatcher
 from .extensions import db
 from .routes_projects import bp as projects_bp
 from .routes_auth import bp as auth_bp
@@ -81,6 +84,8 @@ def create_app() -> Flask:
 		logger.error(f"Error initializing keyword tools: {e}")
 		advanced_tool = None
 		free_tool = None
+
+	dispatcher = SuggestionDispatcher()
 
 	def _supported_langs():
 		"""Return a deduplicated list of primary language codes.
@@ -964,6 +969,720 @@ def create_app() -> Flask:
 		except Exception as e:
 			logger.error(f"Error in free search: {e}")
 			return jsonify({'error': f'Er is een fout opgetreden: {str(e)}'}), 500
+
+	@app.route('/api/platforms', methods=['GET'])
+	def list_registered_platforms():
+		return jsonify({'platforms': dispatcher.list_providers()})
+
+	@app.route('/api/platforms/youtube', methods=['GET'])
+	def youtube_platform_suggestions():
+		"""Return YouTube search suggestions for a given keyword."""
+		keyword = request.args.get('q', '').strip()
+		lang = request.args.get('lang', '').strip().lower() or _detect_lang()
+		if not keyword:
+			return jsonify({'error': 'Geen zoekwoord opgegeven'}), 400
+		params = {
+			'client': 'firefox',
+			'ds': 'yt',
+			'q': keyword,
+			'hl': lang or 'en'
+		}
+		try:
+			resp = requests.get(
+				'https://suggestqueries.google.com/complete/search',
+				params=params,
+				timeout=6
+			)
+			resp.raise_for_status()
+			payload = resp.json()
+			suggestions: list[str] = []
+			if isinstance(payload, list) and len(payload) > 1:
+				items = payload[1]
+				if isinstance(items, list):
+					suggestions = [str(item) for item in items if isinstance(item, str)]
+			return jsonify({
+				'keyword': keyword,
+				'language': lang,
+				'suggestions': suggestions,
+				'metadata': {
+					'approx_volume': len(suggestions)
+				}
+			})
+		except Exception as exc:
+			logger.error(f"YouTube suggestion fetch failed: {exc}")
+			return jsonify({'error': 'Kon YouTube suggesties niet ophalen'}), 502
+
+	@app.route('/api/platforms/amazon', methods=['GET'])
+	def amazon_platform_suggestions():
+		"""Return Amazon autocomplete suggestions for a given keyword."""
+		keyword = request.args.get('q', '').strip()
+		country = request.args.get('country', '').strip().upper() or _detect_country() or 'US'
+		alias = request.args.get('alias', '').strip().lower() or 'aps'
+		if not keyword:
+			return jsonify({'error': 'Geen zoekwoord opgegeven'}), 400
+
+		marketplace_map = {
+			'US': '1',   # amazon.com
+			'CA': '7',   # amazon.ca
+			'GB': '44551',  # amazon.co.uk
+			'UK': '44551',
+			'DE': '3',   # amazon.de
+			'FR': '5',   # amazon.fr
+			'IT': '8',   # amazon.it
+			'ES': '44561',  # amazon.es
+			'NL': '166452',  # amazon.nl
+			'SE': '44586',
+			'PL': '44571',
+			'BE': '44566',
+			'AU': '224',
+			'JP': '6',
+			'IN': '44574'
+		}
+		mkt = marketplace_map.get(country, '1')
+
+		params = {
+			'method': 'completion',
+			'mkt': mkt,
+			'q': keyword,
+			'search-alias': alias or 'aps'
+		}
+		headers = {
+			'User-Agent': 'Mozilla/5.0 (compatible; LucyWorldBot/1.0; +https://lucy.world)',
+			'Accept': 'application/json'
+		}
+		try:
+			resp = requests.get(
+				'https://completion.amazon.com/search/complete',
+				params=params,
+				headers=headers,
+				timeout=6
+			)
+			resp.raise_for_status()
+			payload = resp.json()
+			suggestions: list[str] = []
+			if isinstance(payload, list) and len(payload) > 1:
+				items = payload[1]
+				if isinstance(items, list):
+					suggestions = [str(item) for item in items if isinstance(item, str)]
+			metadata = payload[3] if len(payload) > 3 and isinstance(payload[3], dict) else {}
+			return jsonify({
+				'keyword': keyword,
+				'country': country,
+				'alias': alias,
+				'suggestions': suggestions,
+				'metadata': {
+					'approx_volume': len(suggestions),
+					'computed_from': 'amazon_autocomplete',
+					'marketplace': country,
+					'extra': metadata
+				}
+			})
+		except Exception as exc:
+			logger.error(f"Amazon suggestion fetch failed: {exc}")
+			return jsonify({'error': 'Kon Amazon suggesties niet ophalen'}), 502
+
+	@app.route('/api/platforms/bing', methods=['GET'])
+	def bing_platform_suggestions():
+		"""Return Bing autocomplete suggestions for a given keyword."""
+		keyword = request.args.get('q', '').strip()
+		language = request.args.get('lang', '').strip().lower() or request.args.get('language', '').strip().lower()
+		country = request.args.get('country', '').strip().upper()
+		market = request.args.get('mkt', '').strip()
+		if not keyword:
+			return jsonify({'error': 'Geen zoekwoord opgegeven'}), 400
+
+		if not language:
+			language = (_detect_lang() or 'en').lower()
+		language = language.split('-')[0]
+		if not country:
+			country = _detect_country() or 'US'
+		country = country.upper()
+		if market:
+			mkt = market
+		else:
+			mkt = f"{language}-{country}".lower()
+
+		params = {'query': keyword, 'mkt': mkt}
+		headers = {
+			'User-Agent': 'Mozilla/5.0 (compatible; LucyWorldBot/1.0; +https://lucy.world)',
+			'Accept': 'application/json, text/javascript;q=0.9,*/*;q=0.8'
+		}
+		try:
+			resp = requests.get('https://api.bing.com/osjson.aspx', params=params, headers=headers, timeout=6)
+			resp.raise_for_status()
+			payload = resp.json()
+			suggestions: list[str] = []
+			if isinstance(payload, list) and len(payload) > 1 and isinstance(payload[1], list):
+				suggestions = [str(item) for item in payload[1] if isinstance(item, str)]
+			return jsonify({
+				'keyword': keyword,
+				'market': mkt,
+				'suggestions': suggestions,
+				'metadata': {
+					'approx_volume': len(suggestions),
+					'computed_from': 'bing_autocomplete'
+				}
+			})
+		except Exception as exc:
+			logger.error(f"Bing suggestion fetch failed: {exc}")
+			return jsonify({'error': 'Kon Bing suggesties niet ophalen'}), 502
+
+	@app.route('/api/platforms/ebay', methods=['GET'])
+	def ebay_platform_suggestions():
+		"""Return eBay autocomplete suggestions for a given keyword."""
+		keyword = request.args.get('q', '').strip()
+		if not keyword:
+			return jsonify({'error': 'Geen zoekwoord opgegeven'}), 400
+
+		country = request.args.get('country', '').strip().upper() or _detect_country() or 'US'
+		site_param = request.args.get('siteId') or request.args.get('site') or request.args.get('sid')
+		limit_param = request.args.get('max') or request.args.get('limit') or '10'
+		try:
+			limit = max(1, min(int(limit_param), 15))
+		except Exception:
+			limit = 10
+
+		ebay_site_map = {
+			'US': '0',
+			'CA': '2',
+			'GB': '3',
+			'UK': '3',
+			'AU': '15',
+			'FR': '71',
+			'DE': '77',
+			'IT': '101',
+			'ES': '186',
+			'NL': '146',
+			'BE': '23',
+			'IE': '205',
+			'AT': '16'
+		}
+		site_id = (site_param or '').strip()
+		if not site_id:
+			site_id = ebay_site_map.get(country, '0')
+		params = {
+			'kwd': keyword,
+			'sId': site_id or '0',
+			'max': str(limit),
+			'fb': '1'
+		}
+		headers = {
+			'User-Agent': 'Mozilla/5.0 (compatible; LucyWorldBot/1.0; +https://lucy.world)',
+			'Accept': 'application/json, text/javascript;q=0.9,*/*;q=0.8'
+		}
+		try:
+			resp = requests.get('https://autosug.ebay.com/autosug', params=params, headers=headers, timeout=6)
+			resp.raise_for_status()
+			text = resp.text.strip()
+			data = None
+			if text:
+				start = text.find('(')
+				end = text.rfind(')')
+				if start != -1 and end != -1 and end > start:
+					payload_slice = text[start + 1:end]
+					try:
+						data = json.loads(payload_slice)
+					except Exception:
+						data = None
+			if not isinstance(data, dict):
+				return jsonify({'error': 'Kon eBay suggesties niet parsen'}), 502
+			suggestions_raw = data.get('res', {}).get('sug') if isinstance(data.get('res'), dict) else None
+			suggestions = [str(item) for item in suggestions_raw if isinstance(item, str)] if isinstance(suggestions_raw, list) else []
+			return jsonify({
+				'keyword': keyword,
+				'siteId': site_id or '0',
+				'country': country,
+				'suggestions': suggestions,
+				'metadata': {
+					'approx_volume': len(suggestions),
+					'computed_from': 'ebay_autocomplete'
+				}
+			})
+		except Exception as exc:
+			logger.error(f"eBay suggestion fetch failed: {exc}")
+			return jsonify({'error': 'Kon eBay suggesties niet ophalen'}), 502
+
+	@app.route('/api/platforms/baidu', methods=['GET'])
+	def baidu_platform_suggestions():
+		"""Return Baidu autocomplete suggestions for a given keyword."""
+		keyword = request.args.get('q', '').strip()
+		if not keyword:
+			return jsonify({'error': 'Geen zoekwoord opgegeven'}), 400
+
+		language = request.args.get('lang', '').strip().lower() or request.args.get('language', '').strip().lower()
+		p_param = request.args.get('p', '').strip() or '3'
+		try:
+			p_value = str(max(0, min(int(p_param), 10)))
+		except Exception:
+			p_value = '3'
+
+		params = {
+			'wd': keyword,
+			'ie': 'utf-8',
+			'oe': 'utf-8',
+			'json': '1',
+			'p': p_value,
+			'prod': 'pc',
+			'cb': 'window.baidu.sug'
+		}
+		if language:
+			params['from'] = language
+		headers = {
+			'User-Agent': 'Mozilla/5.0 (compatible; LucyWorldBot/1.0; +https://lucy.world)',
+			'Accept': 'application/json, text/javascript;q=0.9,*/*;q=0.8'
+		}
+		try:
+			resp = requests.get('https://suggestion.baidu.com/su', params=params, headers=headers, timeout=6)
+			resp.raise_for_status()
+			text = resp.text.strip()
+			data = None
+			if text:
+				match = re.search(r'\((.*)\)\s*;?\s*$', text, flags=re.S)
+				if match:
+					payload_slice = match.group(1)
+					try:
+						data = json.loads(payload_slice)
+					except Exception:
+						data = None
+			if not isinstance(data, dict):
+				return jsonify({'error': 'Kon Baidu suggesties niet parsen'}), 502
+			suggestions_raw = data.get('s') if isinstance(data.get('s'), list) else []
+			suggestions = [str(item) for item in suggestions_raw if isinstance(item, (str, bytes))]
+			return jsonify({
+				'keyword': keyword,
+				'language': language or 'zh',
+				'p': p_value,
+				'suggestions': suggestions,
+				'metadata': {
+					'approx_volume': len(suggestions),
+					'computed_from': 'baidu_autocomplete'
+				}
+			})
+		except Exception as exc:
+			logger.error(f"Baidu suggestion fetch failed: {exc}")
+			return jsonify({'error': 'Kon Baidu suggesties niet ophalen'}), 502
+
+	@app.route('/api/platforms/naver', methods=['GET'])
+	def naver_platform_suggestions():
+		"""Return Naver autocomplete suggestions for a given keyword."""
+		keyword = request.args.get('q', '').strip()
+		if not keyword:
+			return jsonify({'error': 'Geen zoekwoord opgegeven'}), 400
+
+		language = request.args.get('lang', '').strip().lower() or request.args.get('language', '').strip().lower()
+		country = request.args.get('country', '').strip().lower()
+		params = {
+			'q': keyword,
+			'st': request.args.get('st', '111'),
+			'r_format': 'json',
+			'r_enc': 'UTF-8',
+			'r_unicode': 'UTF-8',
+			'frm': request.args.get('frm', 'nx'),
+			'con': '0',
+			'ans': '0'
+		}
+		if language:
+			params['sr'] = language
+		if country:
+			params['country'] = country
+		headers = {
+			'User-Agent': 'Mozilla/5.0 (compatible; LucyWorldBot/1.0; +https://lucy.world)',
+			'Accept': 'application/json, text/javascript;q=0.9,*/*;q=0.8',
+			'Referer': 'https://search.naver.com/search.naver?sm=top_hty&fbm=1&ie=utf8&query='
+		}
+		try:
+			resp = requests.get('https://ac.search.naver.com/nx/ac', params=params, headers=headers, timeout=6)
+			resp.raise_for_status()
+			data = resp.json()
+			suggestions: list[str] = []
+			items = data.get('items') if isinstance(data, dict) else None
+			if isinstance(items, list):
+				for group in items:
+					if not isinstance(group, list):
+						continue
+					for entry in group:
+						candidate = None
+						if isinstance(entry, list) and entry:
+							candidate = entry[0]
+						elif isinstance(entry, str):
+							candidate = entry
+						if candidate is not None:
+							suggestions.append(str(candidate))
+			return jsonify({
+				'keyword': keyword,
+				'language': language or 'ko',
+				'country': country or 'kr',
+				'suggestions': suggestions,
+				'metadata': {
+					'approx_volume': len(suggestions),
+					'computed_from': 'naver_autocomplete'
+				}
+			})
+		except Exception as exc:
+			logger.error(f"Naver suggestion fetch failed: {exc}")
+			return jsonify({'error': 'Kon Naver suggesties niet ophalen'}), 502
+
+	@app.route('/api/platforms/yandex', methods=['GET'])
+	def yandex_platform_suggestions():
+		"""Return Yandex autocomplete suggestions for a given keyword."""
+		keyword = request.args.get('q', '').strip()
+		if not keyword:
+			return jsonify({'error': 'Geen zoekwoord opgegeven'}), 400
+
+		language = request.args.get('lang', '').strip().lower() or request.args.get('language', '').strip().lower()
+		region = request.args.get('lr', '').strip() or request.args.get('region', '').strip()
+		limit_param = request.args.get('n', '').strip() or request.args.get('limit', '').strip()
+		try:
+			limit = str(max(1, min(int(limit_param or '10'), 20)))
+		except Exception:
+			limit = '10'
+		params = {
+			'part': keyword,
+			'lang': language or 'ru',
+			'v': '4',
+			'n': limit,
+			'uil': language or 'ru'
+		}
+		if region:
+			params['lr'] = region
+			headers = {
+			'User-Agent': 'Mozilla/5.0 (compatible; LucyWorldBot/1.0; +https://lucy.world)',
+			'Accept': 'application/json, text/javascript;q=0.9,*/*;q=0.8'
+		}
+		try:
+			resp = requests.get('https://suggest.yandex.com/suggest-ya.cgi', params=params, headers=headers, timeout=6)
+			resp.raise_for_status()
+			payload = resp.json()
+			if not isinstance(payload, list) or len(payload) < 2:
+				return jsonify({'error': 'Kon Yandex suggesties niet parsen'}), 502
+			suggestions_raw = payload[1]
+			suggestions = [str(item) for item in suggestions_raw if isinstance(item, (str, bytes))]
+			meta = payload[2] if len(payload) > 2 and isinstance(payload[2], dict) else {}
+			return jsonify({
+				'keyword': keyword,
+				'language': language or 'ru',
+				'region': region or '',
+				'suggestions': suggestions,
+				'metadata': {
+					'approx_volume': len(suggestions),
+					'computed_from': 'yandex_autocomplete',
+					'extra': meta
+				}
+			})
+		except Exception as exc:
+			logger.error(f"Yandex suggestion fetch failed: {exc}")
+			return jsonify({'error': 'Kon Yandex suggesties niet ophalen'}), 502
+
+	@app.route('/api/platforms/appstore', methods=['GET'])
+	def appstore_platform_suggestions():
+		"""Return Apple App Store search suggestions for a given keyword."""
+		keyword = request.args.get('q', '').strip()
+		if not keyword:
+			return jsonify({'error': 'Geen zoekwoord opgegeven'}), 400
+
+		country = request.args.get('country', '').strip().lower()
+		if not country:
+			detected = _detect_country() or 'US'
+			country = detected.lower() if detected else 'us'
+		language = request.args.get('lang', '').strip().lower() or request.args.get('language', '').strip().lower()
+		limit_param = request.args.get('limit', '').strip() or request.args.get('n', '').strip() or '15'
+		try:
+			limit = max(1, min(int(limit_param), 25))
+		except Exception:
+			limit = 15
+
+		params = {
+			'term': keyword,
+			'entity': 'software',
+			'media': 'software',
+			'limit': str(limit),
+			'country': country or 'us'
+		}
+		if language:
+			params['lang'] = language
+
+		headers = {
+			'User-Agent': 'Mozilla/5.0 (compatible; LucyWorldBot/1.0; +https://lucy.world)',
+			'Accept': 'application/json'
+		}
+		try:
+			resp = requests.get('https://itunes.apple.com/search', params=params, headers=headers, timeout=6)
+			resp.raise_for_status()
+			data = resp.json()
+			results = data.get('results') if isinstance(data, dict) else None
+			apps: list[dict[str, Any]] = []
+			if isinstance(results, list):
+				for item in results:
+					if isinstance(item, dict):
+						apps.append({
+							'trackName': item.get('trackName'),
+							'artistName': item.get('artistName'),
+							'primaryGenreName': item.get('primaryGenreName'),
+							'averageUserRating': item.get('averageUserRating'),
+							'userRatingCount': item.get('userRatingCount'),
+							'formattedPrice': item.get('formattedPrice'),
+							'price': item.get('price'),
+							'currency': item.get('currency'),
+							'supportedDevices': item.get('supportedDevices'),
+							'artworkUrl100': item.get('artworkUrl100')
+						})
+			return jsonify({
+				'keyword': keyword,
+				'country': country,
+				'language': language,
+				'results': apps,
+				'metadata': {
+					'approx_volume': len(apps),
+					'computed_from': 'itunes_search'
+				}
+			})
+		except Exception as exc:
+			logger.error(f"App Store suggestion fetch failed: {exc}")
+			return jsonify({'error': 'Kon App Store suggesties niet ophalen'}), 502
+
+	@app.route('/api/platforms/googleplay', methods=['GET'])
+	def googleplay_platform_suggestions():
+		"""Return Google Play Store search suggestions for a given keyword."""
+		keyword = request.args.get('q', '').strip()
+		if not keyword:
+			return jsonify({'error': 'Geen zoekwoord opgegeven'}), 400
+
+		country = request.args.get('country', '').strip().lower() or (_detect_country() or 'US').lower()
+		language = request.args.get('lang', '').strip().lower() or request.args.get('language', '').strip().lower() or (_detect_lang() or 'en').lower()
+		limit_param = request.args.get('limit', '').strip() or '10'
+		try:
+			limit = max(1, min(int(limit_param), 20))
+		except Exception:
+			limit = 10
+
+		params = {
+			'q': keyword,
+			'hl': language,
+			'gl': country,
+			'c': '3',
+			'limit': str(limit)
+		}
+		headers = {
+			'User-Agent': 'Mozilla/5.0 (compatible; LucyWorldBot/1.0; +https://lucy.world)',
+			'Accept': 'application/json, text/plain, */*'
+		}
+		try:
+			resp = requests.get('https://play.google.com/_/PlayStoreUi/data/batchexecute', params={
+				'f.req': json.dumps([["aw1iJd", json.dumps([keyword, language, country, limit]), None, "generic"]])
+			}, headers=headers, timeout=6)
+			resp.raise_for_status()
+			text = resp.text
+			if not text:
+				return jsonify({'error': 'Lege respons van Google Play'}), 502
+			# The response is a JSON array string with escaped JSON inside
+			parsed = json.loads(text.replace(")]}'", '', 1))
+			if not isinstance(parsed, list) or not parsed:
+				return jsonify({'error': 'Kon Google Play suggesties niet parsen'}), 502
+			inner_payload = parsed[0][2] if isinstance(parsed[0], list) and len(parsed[0]) > 2 else None
+			if inner_payload:
+				inner_json = json.loads(inner_payload)
+			else:
+				inner_json = None
+			suggestions = []
+			if isinstance(inner_json, list):
+				try:
+					entries = inner_json[0][1]
+					for entry in entries:
+						if isinstance(entry, list) and entry:
+							sugg = entry[0]
+							if isinstance(sugg, str):
+								suggestions.append(sugg)
+				except Exception:
+					pass
+			return jsonify({
+				'keyword': keyword,
+				'language': language,
+				'country': country,
+				'suggestions': suggestions,
+				'metadata': {
+					'approx_volume': len(suggestions),
+					'computed_from': 'googleplay_autocomplete'
+				}
+			})
+		except Exception as exc:
+			logger.error(f"Google Play suggestion fetch failed: {exc}")
+			return jsonify({'error': 'Kon Google Play suggesties niet ophalen'}), 502
+
+		@app.route('/api/platforms/aggregate', methods=['GET'])
+		def aggregate_platform_suggestions():
+			keyword = request.args.get('q', '').strip()
+			if not keyword:
+				return jsonify({'error': 'Geen zoekwoord opgegeven'}), 400
+
+			language = request.args.get('lang', '').strip().lower() or request.args.get('language', '').strip().lower()
+			if not language:
+				language = (_detect_lang() or 'en').lower()
+			language = language.split('-')[0]
+			language = re.sub(r'[^a-z]', '', language)[:2] or None
+
+			country = request.args.get('country', '').strip().upper()
+			if not country:
+				country = _detect_country() or ''
+			country = re.sub(r'[^A-Z]', '', country)
+			if len(country) > 2:
+				country = country[:2]
+			country = country or None
+
+			request_extras: dict[str, Any] = {}
+			for key in request.args:
+				if key in {'q', 'lang', 'language', 'country', 'providers'}:
+					continue
+				values = request.args.getlist(key)
+				request_extras[key] = values if len(values) > 1 else values[0]
+
+			providers_param = request.args.get('providers', '').strip()
+			available_providers = dispatcher.list_providers()
+			if providers_param:
+				requested = [slug.strip().lower() for slug in providers_param.split(',') if slug.strip()]
+			else:
+				requested = sorted(available_providers.keys())
+
+			if not requested:
+				return jsonify({'error': 'Geen geldige providers gekozen'}), 400
+
+			unknown = [slug for slug in requested if slug not in available_providers]
+			if unknown:
+				return jsonify({'error': f'Onbekende providers: {", ".join(unknown)}'}), 400
+
+			req_payload = SuggestionRequest(
+				keyword=keyword,
+				language=language,
+				country=country,
+				extras=request_extras or None,
+			)
+
+			provider_responses = dispatcher.fetch_many(requested, req_payload, logger)
+
+			def _extract_text(item: Any) -> str | None:
+				if isinstance(item, str):
+					value = item.strip()
+					return value or None
+				if isinstance(item, dict):
+					for candidate_key in ('phrase', 'keyword', 'text', 'value', 'title', 'name'):
+						candidate_val = item.get(candidate_key)
+						if isinstance(candidate_val, str) and candidate_val.strip():
+							return candidate_val.strip()
+					return None
+				return str(item).strip() or None
+
+			aggregated: dict[str, dict[str, Any]] = {}
+			aggregated_list: list[dict[str, Any]] = []
+			provider_breakdown: list[dict[str, Any]] = []
+			errors: list[dict[str, str]] = []
+
+			for slug in requested:
+				entry = provider_responses.get(slug, {})
+				data = entry.get('data') if isinstance(entry, dict) else None
+				error_message = entry.get('error') if isinstance(entry, dict) else None
+				display_name = available_providers.get(slug, {}).get('display_name', slug.title())
+
+				provider_details: dict[str, Any] = {
+					'slug': slug,
+					'display_name': display_name,
+					'error': error_message,
+				}
+				if data:
+					suggestions = data.get('suggestions')
+					if not isinstance(suggestions, list):
+						suggestions = data.get('results') if isinstance(data.get('results'), list) else []
+					provider_details['metadata'] = data.get('metadata', {})
+					provider_details['suggestions'] = suggestions
+				else:
+					provider_details['suggestions'] = []
+
+				provider_breakdown.append(provider_details)
+
+				if error_message:
+					errors.append({'provider': slug, 'message': error_message})
+					continue
+
+				for suggestion in provider_details['suggestions']:
+					text_value = _extract_text(suggestion)
+					if not text_value:
+						continue
+					key = text_value.lower()
+					if key not in aggregated:
+						aggregated[key] = {
+							'value': text_value,
+							'sources': [slug],
+							'raw': [suggestion],
+							'count': 1,
+						}
+						aggregated_list.append(aggregated[key])
+					else:
+						if slug not in aggregated[key]['sources']:
+							aggregated[key]['sources'].append(slug)
+						aggregated[key]['count'] += 1
+						aggregated[key]['raw'].append(suggestion)
+
+			total_suggestion_count = sum(item['count'] for item in aggregated_list)
+
+			return jsonify({
+				'keyword': keyword,
+				'language': language,
+				'country': country,
+				'suggestions': aggregated_list,
+				'providers': provider_breakdown,
+				'metadata': {
+					'unique_suggestions': len(aggregated_list),
+					'total_suggestions': total_suggestion_count,
+					'providers_queried': len(requested),
+					'errors': errors,
+					'dedupe_strategy': 'case-insensitive-text',
+				}
+			})
+
+	@app.route('/api/platforms/<provider_slug>', methods=['GET'])
+	def dynamic_platform_provider(provider_slug: str):
+		provider = dispatcher.get_provider(provider_slug)
+		if not provider:
+			abort(404, description=f'Onbekend platform: {provider_slug}')
+
+		keyword = request.args.get('q', '').strip()
+		if not keyword:
+			return jsonify({'error': 'Geen zoekwoord opgegeven'}), 400
+
+		language = request.args.get('lang', '').strip().lower() or request.args.get('language', '').strip().lower()
+		if not language:
+			language = (_detect_lang() or 'en').lower()
+		language = language.split('-')[0]
+		language = re.sub(r'[^a-z]', '', language)[:2] or None
+
+		country = request.args.get('country', '').strip().upper()
+		if not country:
+			country = _detect_country() or ''
+		country = re.sub(r'[^A-Z]', '', country)
+		if len(country) > 2:
+			country = country[:2]
+		country = country or None
+
+		extras: dict[str, Any] = {}
+		for key in request.args:
+			if key in {'q', 'lang', 'language', 'country'}:
+				continue
+			values = request.args.getlist(key)
+			extras[key] = values if len(values) > 1 else values[0]
+
+		request_payload = SuggestionRequest(
+			keyword=keyword,
+			language=language,
+			country=country,
+			extras=extras or None,
+		)
+
+		provider_name = getattr(provider, 'display_name', provider_slug.title())
+
+		try:
+			result = dispatcher.fetch(provider_slug, request_payload, logger)
+			return jsonify(result)
+		except Exception as exc:
+			logger.error("%s suggestion fetch failed: %s", provider_name, exc)
+			return jsonify({'error': f"Kon {provider_name} suggesties niet ophalen"}), 502
 
 	# ========================================================================
 	# ADVANCED KEYWORD RESEARCH ENDPOINTS

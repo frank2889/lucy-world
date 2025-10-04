@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Brave icon">
+  <defs>
+    <linearGradient id="braveGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ff7b00" />
+      <stop offset="100%" stop-color="#ff2200" />
+    </linearGradient>
+  </defs>
+  <circle cx="32" cy="32" r="30" fill="url(#braveGradient)" />
+  <path
+    d="M20.5 19.5l5.8-3.5h11.4l5.8 3.5 4.5 7.6-2.3 13.9-12.3 9.5-12.3-9.5-2.3-13.9z"
+    fill="#fff"
+  />
+  <path
+    d="M32 24.5c2.8 0 5 2.2 5 5v5.2c0 2.8-2.2 5-5 5s-5-2.2-5-5v-5.2c0-2.8 2.2-5 5-5z"
+    fill="#ff4d00"
+  />
+</svg>

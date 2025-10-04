@@ -18,6 +18,14 @@ body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,"
 .sidebar-signin:disabled{cursor:default;opacity:0.6;color:var(--muted);background:transparent}
 .content{flex:1;display:flex;flex-direction:column}
 .content-inner{max-width:980px;margin:0 auto;padding:24px}
+.platforms-wrapper{display:flex;gap:24px;align-items:flex-start}
+.platforms-wrapper__sidebar{flex:0 0 240px;max-width:260px;position:sticky;top:96px;align-self:flex-start;max-height:calc(100vh - 140px);overflow:auto;padding-right:4px}
+.platforms-wrapper__main{flex:1;min-width:0;display:flex;flex-direction:column;gap:20px}
+.platform-sidebar-card{padding:0}
+.platforms-active-card{display:flex;flex-direction:column;gap:4px}
+.platforms-active-card__title{margin:0;font-size:16px;font-weight:700}
+.platforms-active-card__description{margin:0;color:var(--muted);font-size:13px;line-height:1.4}
+.platform-tool-card__loading{min-height:120px;display:flex;align-items:center;justify-content:center;color:var(--muted)}
 .topbar{display:none;align-items:center;gap:12px;padding:10px 12px;border-bottom:1px solid var(--line);background:rgba(11,13,16,0.6);backdrop-filter:saturate(180%) blur(10px);position:sticky;top:0;z-index:10}
 .desktopbar{display:flex}
 .hamburger{display:inline-flex;flex-direction:column;gap:4px;background:transparent;border:1px solid var(--line);padding:8px;border-radius:8px;cursor:pointer}
@@ -56,6 +64,9 @@ h4{margin:0 0 10px 0;font-size:15px;color:var(--muted)}
 	.sidebar.open{transform:translateX(0)}
 	.content{flex:1}
 	.content-inner{padding:16px}
+	.platforms-wrapper{flex-direction:column;gap:16px}
+	.platforms-wrapper__sidebar{position:static;width:100%;max-width:none;max-height:none;padding-right:0}
+	.platforms-wrapper__main{gap:16px}
 	.topbar{display:flex}
 	.desktopbar{display:none}
 	

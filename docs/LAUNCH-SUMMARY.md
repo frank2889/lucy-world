@@ -50,6 +50,9 @@ Je hebt nu een **complete, productie-klare keyword research applicatie** die bes
 - `POST /api/free/search` - Gratis keyword zoeken
 - `POST /api/advanced/research` - Premium research
 - `POST /api/export/csv` - Export naar CSV
+- `GET /api/platforms` - Overzicht van alle beschikbare platformproviders (nieuw)
+- `GET /api/platforms/{provider}` - Dynamische autocomplete via de registry (bijv. `duckduckgo`, `yahoo`, `brave`, `qwant`)
+- `GET /api/platforms/aggregate` - Combineert resultaten van meerdere providers met automatische deduplicatie
 - `GET /health` - System health check
 
 ### Production Features
