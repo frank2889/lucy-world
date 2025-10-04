@@ -19,6 +19,9 @@ type PlatformToolLayoutProps = {
   loading?: boolean
   emptyState?: string
   error?: string | null
+  controls?: React.ReactNode
+  onGlobalSearch?: (keyword: string) => Promise<void> | void
+  globalLoading?: boolean
 }
 
 const PlatformToolLayout: React.FC<PlatformToolLayoutProps> = ({
@@ -32,14 +35,28 @@ const PlatformToolLayout: React.FC<PlatformToolLayoutProps> = ({
   placeholder,
   loading = false,
   emptyState,
-  error = null
+  error = null,
+  controls,
+  onGlobalSearch,
+  globalLoading = false
 }) => {
   const canSearch = keyword.trim().length > 0
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     if (!canSearch) return
-    onSearch?.(keyword.trim())
+    const term = keyword.trim()
+    if (!term) return
+    const tasks: Array<Promise<unknown> | unknown> = []
+    if (onGlobalSearch) {
+      tasks.push(onGlobalSearch(term))
+    }
+    if (onSearch) {
+      tasks.push(onSearch(term))
+    }
+    if (tasks.length) {
+      await Promise.all(tasks.map((task) => Promise.resolve(task)))
+    }
   }
 
   const heading = useMemo(() => `${platformName} keywordtool`, [platformName])
@@ -57,8 +74,9 @@ const PlatformToolLayout: React.FC<PlatformToolLayoutProps> = ({
           onChange={(event) => onKeywordChange(event.target.value)}
           placeholder={placeholder ?? `Zoekwoord voor ${platformName}`}
         />
+        {controls}
         <div className="platform-tool__actions">
-          <button type="submit" disabled={!canSearch || loading}>
+          <button type="submit" disabled={!canSearch || loading || globalLoading}>
             {loading ? 'Laden…' : 'Zoeken'}
           </button>
         </div>

@@ -24,6 +24,15 @@
   flex-wrap: wrap;
 }
 
+.platform-tool__control {
+  position: relative;
+  min-width: 160px;
+}
+
+.platform-tool__language-select {
+  min-width: 160px;
+}
+
 .platform-tool__form input[type="text"] {
   flex: 1;
   min-width: 220px;

@@ -10,7 +10,8 @@ const resolveDefaultLimit = (raw?: string) => {
   return Math.min(Math.max(Math.round(parsed), 1), 20)
 }
 
-const YahooTool: React.FC<PlatformToolProps> = ({ keyword, setKeyword, searchLanguage, country }) => {
+const YahooTool: React.FC<PlatformToolProps> = (props) => {
+  const { keyword, setKeyword, searchLanguage, country } = props
   const normalizedKeyword = keyword ?? ''
   const [limit, setLimit] = useState(() => resolveDefaultLimit(undefined))
   const [results, setResults] = useState<PlatformResultItem[]>([])
@@ -115,6 +116,9 @@ const YahooTool: React.FC<PlatformToolProps> = ({ keyword, setKeyword, searchLan
       loading={loading}
       error={error}
       emptyState="Voer een zoekwoord in om Yahoo suggesties te zien."
+      controls={props.locationControls}
+      onGlobalSearch={props.onGlobalSearch}
+      globalLoading={props.globalLoading}
     />
   )
 }

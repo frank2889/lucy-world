@@ -22,7 +22,8 @@ const resolveDefaultRegion = (country?: string) => {
   return match?.code ?? 'US'
 }
 
-const GooglePlayTool: React.FC<PlatformToolProps> = ({ keyword, setKeyword, searchLanguage, country }) => {
+const GooglePlayTool: React.FC<PlatformToolProps> = (props) => {
+  const { keyword, setKeyword, searchLanguage, country } = props
   const normalizedKeyword = keyword ?? ''
   const [region, setRegion] = useState(() => resolveDefaultRegion(country))
   const [results, setResults] = useState<PlatformResultItem[]>([])
@@ -133,6 +134,9 @@ const GooglePlayTool: React.FC<PlatformToolProps> = ({ keyword, setKeyword, sear
       loading={loading}
       error={error}
       emptyState="Voer een zoekwoord in om Google Play kansen te zien."
+      controls={props.locationControls}
+      onGlobalSearch={props.onGlobalSearch}
+      globalLoading={props.globalLoading}
     />
   )
 }

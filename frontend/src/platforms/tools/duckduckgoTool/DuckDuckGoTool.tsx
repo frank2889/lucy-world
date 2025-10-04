@@ -43,7 +43,8 @@ const resolveDefaultRegion = (language?: string, country?: string) => {
   return FALLBACK_REGION
 }
 
-const DuckDuckGoTool: React.FC<PlatformToolProps> = ({ keyword, setKeyword, searchLanguage, country }) => {
+const DuckDuckGoTool: React.FC<PlatformToolProps> = (props) => {
+  const { keyword, setKeyword, searchLanguage, country } = props
   const normalizedKeyword = keyword ?? ''
   const [region, setRegion] = useState(() => resolveDefaultRegion(searchLanguage, country))
   const [results, setResults] = useState<PlatformResultItem[]>([])
@@ -158,6 +159,9 @@ const DuckDuckGoTool: React.FC<PlatformToolProps> = ({ keyword, setKeyword, sear
       loading={loading}
       error={error}
       emptyState="Voer een zoekwoord in om DuckDuckGo suggesties te zien."
+      controls={props.locationControls}
+      onGlobalSearch={props.onGlobalSearch}
+      globalLoading={props.globalLoading}
     />
   )
 }

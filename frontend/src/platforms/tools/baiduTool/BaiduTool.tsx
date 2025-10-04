@@ -2,7 +2,8 @@ import React, { useCallback, useEffect, useRef, useState } from 'react'
 import type { PlatformToolProps } from '../../types'
 import PlatformToolLayout, { type PlatformResultItem } from '../common/PlatformToolLayout'
 
-const BaiduTool: React.FC<PlatformToolProps> = ({ keyword, setKeyword, searchLanguage }) => {
+const BaiduTool: React.FC<PlatformToolProps> = (props) => {
+  const { keyword, setKeyword, searchLanguage } = props
   const normalizedKeyword = keyword ?? ''
   const [results, setResults] = useState<PlatformResultItem[]>([])
   const [loading, setLoading] = useState(false)
@@ -81,6 +82,9 @@ const BaiduTool: React.FC<PlatformToolProps> = ({ keyword, setKeyword, searchLan
       loading={loading}
       error={error}
       emptyState="Voer een zoekwoord in om Baidu ideeën te zien."
+      controls={props.locationControls}
+      onGlobalSearch={props.onGlobalSearch}
+      globalLoading={props.globalLoading}
     />
   )
 }

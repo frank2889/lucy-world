@@ -1,25 +1,8 @@
-import React, { Suspense, useEffect, useMemo, useState } from 'react'
+import React, { Suspense, useCallback, useEffect, useMemo, useState } from 'react'
+import { COUNTRY_CODES, GOOGLE_LANGUAGES, flagEmoji } from './locales'
+import { AMAZON_MARKETPLACE_CODES } from './platforms/data/amazonMarketplaces'
 import PlatformSidebar from './platforms/Sidebar/PlatformSidebar'
 import { usePlatformHandler } from './platforms/handlers/platformHandler'
-import { COUNTRY_CODES, GOOGLE_LANGUAGES, flagEmoji } from './locales'
-
-const FEATURED_LANGUAGE_CODES = ['en', 'nl', 'de', 'fr', 'es', 'it', 'pt', 'pl', 'tr', 'ja', 'ko', 'zh', 'ru'] as const
-
-const LANGUAGE_FLAG_MAP: Record<string, string> = {
-  en: 'us',
-  nl: 'nl',
-  de: 'de',
-  fr: 'fr',
-  es: 'es',
-  it: 'it',
-  pt: 'pt',
-  pl: 'pl',
-  tr: 'tr',
-  ja: 'jp',
-  ko: 'kr',
-  zh: 'cn',
-  ru: 'ru'
-}
 
 type CategoryItem = {
   keyword: string
@@ -66,29 +49,13 @@ function nl(n?: number) {
 export default function App() {
   // Detect UI language from URL prefix: /<lang>/ ... fallback to saved preference, then 'en'
   const urlLang = (typeof window !== 'undefined' ? window.location.pathname.split('/').filter(Boolean)[0] : '')
-  const [language, setLanguage] = useState(() => {
-    const urlCandidate = (urlLang || '').split('-')[0].toLowerCase()
-    if (urlCandidate && /^[a-z]{2}$/i.test(urlCandidate)) {
-      return urlCandidate
-    }
-    if (typeof window !== 'undefined') {
-      try {
-        const saved = localStorage.getItem('lw_lang') || ''
-        if (saved && /^[a-z]{2}$/i.test(saved)) {
-          return saved.toLowerCase()
-        }
-      } catch {
-        /* ignore */
-      }
-    }
-    return 'en'
-  })
   const [ui, setUi] = useState<{ lang: string; dir: 'ltr' | 'rtl'; strings: Record<string,string> } | null>(null)
   useEffect(() => {
+    // Prefer URL language when present; otherwise prefer saved UI language; else 'en'
     let lang = (urlLang || '').split('-')[0].toLowerCase()
     if (!lang || !/^[a-z]{2}$/i.test(lang)) {
       try {
-        const saved = typeof window !== 'undefined' ? (localStorage.getItem('lw_lang') || '') : ''
+        const saved = localStorage.getItem('lw_lang') || ''
         if (saved && /^[a-z]{2}$/i.test(saved)) {
           lang = saved.toLowerCase()
         }
@@ -97,75 +64,30 @@ export default function App() {
       }
     }
     if (!lang) lang = 'en'
-    const normalized = lang.toLowerCase()
-    setLanguage(prev => {
-      const prevLower = (prev || '').toLowerCase()
-      return prevLower !== normalized ? normalized : prev
+    fetch(`/meta/content/${lang}.json`).then(r => r.json()).then((data) => {
+      setUi(data)
+      const resolvedLang = (data?.lang || lang || 'en').toLowerCase()
+      setLanguage(prev => {
+        const prevLower = (prev || '').toLowerCase()
+        return prevLower !== resolvedLang ? resolvedLang : prev
+      })
+      if (typeof document !== 'undefined') {
+        document.documentElement.lang = data.lang || lang
+        document.documentElement.dir = data.dir || 'ltr'
+      }
+    }).catch(() => {
+      setUi({ lang, dir: 'ltr', strings: {} })
+      setLanguage(prev => {
+        const prevLower = (prev || '').toLowerCase()
+        const resolved = (lang || 'en').toLowerCase()
+        return prevLower !== resolved ? resolved : prev
+      })
     })
-    if (typeof window !== 'undefined') {
-      try { localStorage.setItem('lw_lang', normalized) } catch { /* ignore */ }
-    }
   }, [urlLang])
-  useEffect(() => {
-    const normalized = (language || '').split('-')[0].toLowerCase()
-    if (!normalized) return
-    let cancelled = false
-    fetch(`/meta/content/${normalized}.json`)
-      .then(r => (r.ok ? r.json() : Promise.reject()))
-      .then((data) => {
-        if (cancelled) return
-        setUi(data)
-        const resolvedLang = (data?.lang || normalized).toLowerCase()
-        if (resolvedLang !== normalized) {
-          setLanguage(prev => (prev === resolvedLang ? prev : resolvedLang))
-          if (typeof window !== 'undefined') {
-            try { localStorage.setItem('lw_lang', resolvedLang) } catch { /* ignore */ }
-          }
-          if (typeof document !== 'undefined') {
-            document.documentElement.lang = resolvedLang
-            document.documentElement.dir = data?.dir || 'ltr'
-          }
-          return
-        }
-        if (typeof window !== 'undefined') {
-          try { localStorage.setItem('lw_lang', normalized) } catch { /* ignore */ }
-        }
-        if (typeof document !== 'undefined') {
-          document.documentElement.lang = data?.lang || normalized
-          document.documentElement.dir = data?.dir || 'ltr'
-        }
-      })
-      .catch(() => {
-        if (cancelled) return
-        setUi({ lang: normalized, dir: 'ltr', strings: {} })
-        if (typeof document !== 'undefined') {
-          document.documentElement.lang = normalized
-          document.documentElement.dir = 'ltr'
-        }
-      })
-    return () => {
-      cancelled = true
-    }
-  }, [language])
   const [keyword, setKeyword] = useState('')
   // Language used for fetching search results (does NOT change UI language)
-  const [searchLanguage, setSearchLanguage] = useState(() => {
-    if (typeof window !== 'undefined') {
-      try {
-        const savedSearch = localStorage.getItem('lw_search_lang')
-        if (savedSearch && /^[a-z]{2}$/i.test(savedSearch)) {
-          return savedSearch.toLowerCase()
-        }
-        const savedUi = localStorage.getItem('lw_lang')
-        if (savedUi && /^[a-z]{2}$/i.test(savedUi)) {
-          return savedUi.toLowerCase()
-        }
-      } catch {
-        /* ignore */
-      }
-    }
-    return (urlLang || language || 'en').toLowerCase()
-  })
+  const [searchLanguage, setSearchLanguage] = useState(() => localStorage.getItem('lw_search_lang') || (localStorage.getItem('lw_lang') || urlLang || 'en'))
+  const [language, setLanguage] = useState(() => localStorage.getItem('lw_lang') || urlLang || 'en')
   const [country, setCountry] = useState(() => localStorage.getItem('lw_country') || '')
   // Detected country (geo/IP/headers) for display; separate from user-selected country used in searches
   const [detectedCountry, setDetectedCountry] = useState<string>('')
@@ -185,22 +107,32 @@ export default function App() {
   const [projects, setProjects] = useState<Array<{ id: number; name: string; description?: string | null; language?: string | null; country?: string | null; updated_at?: string }>>([])
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [langMenuAnchor, setLangMenuAnchor] = useState<'desktop' | 'mobile' | null>(null)
-  const normalizedLanguage = (language || '').toLowerCase()
-  const { platforms, activePlatform, activePlatformId, setActivePlatformId } = usePlatformHandler()
-  const ActivePlatformTool = activePlatform?.tool
-  type LanguageSelectOptions = { closeMenu?: boolean }
 
   const isSignedIn = !!token
+  const { platforms, activePlatform, activePlatformId, setActivePlatformId } = usePlatformHandler()
+  const ActivePlatformTool = activePlatform?.tool
 
-  // Priority countries (mix of major regions worldwide - no bias)
-  const priorityCountries = ['US', 'GB', 'CA', 'AU', 'DE', 'FR', 'ES', 'IT', 'NL', 'BE', 'JP', 'BR', 'IN', 'MX', 'AR']
+  // Priority countries (mix of major regions + active marketplace coverage - no bias)
+  const priorityCountries = useMemo(() => {
+    const core = ['US', 'GB', 'CA', 'AU', 'DE', 'FR', 'ES', 'IT', 'NL', 'BE']
+    const activeMarketplaceCountries = AMAZON_MARKETPLACE_CODES
+    const blended = [...core, ...activeMarketplaceCountries, 'JP', 'BR', 'IN', 'MX', 'AR']
+    const seen = new Set<string>()
+    return blended.filter((code) => {
+      const upper = code.toUpperCase()
+      if (!COUNTRY_CODES.includes(upper)) return false
+      if (seen.has(upper)) return false
+      seen.add(upper)
+      return true
+    })
+  }, [])
   
   // Filter and sort countries based on search
   const filteredCountries = useMemo(() => {
     if (!countrySearchTerm) {
       // No search - show priority countries first, then rest alphabetically
-      const priority = priorityCountries.filter(cc => COUNTRY_CODES.includes(cc))
-      const others = COUNTRY_CODES.filter(cc => !priorityCountries.includes(cc)).sort()
+  const priority = priorityCountries.filter(cc => COUNTRY_CODES.includes(cc))
+  const others = COUNTRY_CODES.filter(cc => !priorityCountries.includes(cc)).sort()
       return [...priority, ...others]
     }
     
@@ -241,56 +173,10 @@ export default function App() {
 
   const closeLangMenu = () => setLangMenuAnchor(null)
 
-  const handleLanguageSelect = (newLang: string, options: LanguageSelectOptions = {}) => {
-    const normalized = (newLang || '').split('-')[0].toLowerCase()
-    if (!normalized) return
-    if (options.closeMenu !== false) {
-      closeLangMenu()
-    }
-    if (normalized === normalizedLanguage) return
-    if (typeof window !== 'undefined') {
-      try { localStorage.setItem('lw_lang', normalized) } catch { /* ignore */ }
-    }
-    setLanguage(normalized)
-    setSearchLanguage(prev => {
-      if (!prev || prev === normalizedLanguage) {
-        if (typeof window !== 'undefined') {
-          try { localStorage.setItem('lw_search_lang', normalized) } catch { /* ignore */ }
-        }
-        return normalized
-      }
-      return prev
-    })
-  }
-
   const currentLangLabel = useMemo(() => {
-    const match = languagesList.find(l => (l.code || '').toLowerCase() === normalizedLanguage)
-    return match?.label || (normalizedLanguage || 'en').toUpperCase()
-  }, [languagesList, normalizedLanguage])
-
-  const quickLanguages = useMemo(() => {
-    const ordered = new Map<string, { code: string; label: string }>()
-    FEATURED_LANGUAGE_CODES.forEach(code => {
-      const match = languagesList.find(l => (l.code || '').toLowerCase() === code)
-      if (match) {
-        ordered.set(match.code.toLowerCase(), match)
-      }
-    })
-    const current = languagesList.find(l => (l.code || '').toLowerCase() === normalizedLanguage)
-    if (current) {
-      ordered.set(current.code.toLowerCase(), current)
-    }
-    return Array.from(ordered.values())
-  }, [languagesList, normalizedLanguage])
-
-  const languageSwitcherLabel = ui?.strings?.['sidebar.languages'] || ui?.strings?.['nav.language'] || 'Interface language'
-
-  const getLanguageIcon = (code: string) => {
-    const mapped = LANGUAGE_FLAG_MAP[code] || code
-    return /^[a-z]{2}$/i.test(mapped) ? flagEmoji(mapped) : code.toUpperCase()
-  }
-
-  const formatLanguageLabel = (label?: string) => (label || '').replace(/\s*\(.*?\)/, '').trim()
+    const match = languagesList.find(l => (l.code || '').toLowerCase() === (language || '').toLowerCase())
+    return match?.label || (language || 'en').toUpperCase()
+  }, [languagesList, language])
 
   // Localized country display name for the topbar pill
   const displayCountryName = useMemo(() => {
@@ -313,79 +199,180 @@ export default function App() {
     }
   }, [detectedCountry, ui?.lang, ui?.strings, language])
 
+  const locationControls = (
+    <>
+      <div className="platform-tool__control platform-tool__control--country" style={{ position: 'relative', minWidth: 160 }}>
+        <div
+          className="select flag-select"
+          onClick={() => setShowCountryDropdown(!showCountryDropdown)}
+          style={{ cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}
+          title={country ? `${flagEmoji(country)} ${getCountryName(country)}` : 'Select country'}
+        >
+          <span>{country ? `${flagEmoji(country)} ${getCountryName(country)}` : '🌍 Select country'}</span>
+          <span style={{ marginLeft: 8, fontSize: 12 }}>▼</span>
+        </div>
+        {showCountryDropdown && (
+          <div
+            style={{
+              position: 'absolute',
+              top: 'calc(100% + 6px)',
+              left: 0,
+              right: 0,
+              background: '#0e1217',
+              border: '1px solid var(--line)',
+              borderRadius: 8,
+              maxHeight: 300,
+              overflow: 'hidden',
+              zIndex: 1000,
+              boxShadow: '0 4px 20px rgba(0,0,0,0.3)'
+            }}
+          >
+            <input
+              type="text"
+              placeholder="Search countries..."
+              value={countrySearchTerm}
+              onChange={(e) => setCountrySearchTerm(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === 'Escape') {
+                  setShowCountryDropdown(false)
+                  setCountrySearchTerm('')
+                } else if (e.key === 'Enter' && filteredCountries.length > 0) {
+                  setCountry(filteredCountries[0])
+                  setShowCountryDropdown(false)
+                  setCountrySearchTerm('')
+                }
+              }}
+              style={{
+                width: '100%',
+                padding: '8px 12px',
+                background: 'transparent',
+                border: 'none',
+                borderBottom: '1px solid var(--line)',
+                color: 'var(--text)',
+                fontSize: 14,
+                outline: 'none'
+              }}
+              autoFocus
+            />
+            <div style={{ maxHeight: 250, overflow: 'auto' }}>
+              {filteredCountries.slice(0, 50).map((cc) => (
+                <div
+                  key={cc}
+                  onClick={() => {
+                    setCountry(cc)
+                    setShowCountryDropdown(false)
+                    setCountrySearchTerm('')
+                  }}
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: 8,
+                    padding: '8px 12px',
+                    cursor: 'pointer',
+                    background: cc === country ? 'var(--accent)' : 'transparent',
+                    color: cc === country ? '#fff' : 'var(--text)'
+                  }}
+                  onMouseEnter={(e) => (e.currentTarget.style.background = cc === country ? 'var(--accent)' : 'rgba(255,255,255,0.1)')}
+                  onMouseLeave={(e) => (e.currentTarget.style.background = cc === country ? 'var(--accent)' : 'transparent')}
+                >
+                  <span style={{ fontSize: 16 }}>{flagEmoji(cc)}</span>
+                  <span style={{ flex: 1 }}>{getCountryName(cc)}</span>
+                  <span style={{ fontSize: 12, color: 'var(--text-secondary)' }}>{cc}</span>
+                </div>
+              ))}
+              {filteredCountries.length === 0 && (
+                <div style={{ padding: 16, textAlign: 'center', color: 'var(--text-secondary)' }}>
+                  No countries found
+                </div>
+              )}
+            </div>
+          </div>
+        )}
+      </div>
+      <select
+        className="select platform-tool__language-select"
+        value={searchLanguage}
+        onChange={(e) => {
+          const newLang = e.target.value.toLowerCase()
+          setSearchLanguage(newLang)
+          try { localStorage.setItem('lw_search_lang', newLang) } catch {}
+        }}
+      >
+        {languagesList.map((l) => (
+          <option key={l.code} value={l.code}>{l.label}</option>
+        ))}
+      </select>
+    </>
+  )
+
   const categoryOrder = useMemo(
     () => ['google_suggestions', 'trends_related', 'related_questions', 'wikipedia_terms'],
     []
   )
 
-  const onSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    if (!keyword.trim()) return
-    
-    // Require country selection
+  const runGlobalSearch = useCallback(async (term?: string) => {
+    const submittedKeyword = (term ?? keyword).trim()
+    if (!submittedKeyword) return
+
     if (!country) {
       alert('Please select a country first')
       return
     }
-    
-    // GTM tracking - Search button click
+
     if (typeof window !== 'undefined' && (window as any).dataLayer) {
       (window as any).dataLayer.push({
         event: 'search_button_click',
-        search_keyword: keyword.trim(),
+        search_keyword: submittedKeyword,
         search_language: searchLanguage,
-        country: country,
-        keyword_length: keyword.trim().length,
-        has_keyword: keyword.trim().length > 0
-      });
-      console.log('🔍 GTM: Search button clicked', keyword.trim());
+        country,
+        keyword_length: submittedKeyword.length,
+        has_keyword: submittedKeyword.length > 0
+      })
+      console.log('🔍 GTM: Search button clicked', submittedKeyword)
     }
-    
+
     setLoading(true)
     setError(null)
     const searchStartTime = Date.now()
-    
+
     try {
       const res = await fetch('/api/free/search', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ keyword: keyword.trim(), language: searchLanguage, country })
+        body: JSON.stringify({ keyword: submittedKeyword, language: searchLanguage, country })
       })
       if (!res.ok) throw new Error('Search failed')
       const result = await res.json()
       setData(result)
-      
-      // GTM tracking - Search success
+
       if (typeof window !== 'undefined' && (window as any).dataLayer) {
-        const totalKeywords = Object.values(result.categories || {}).reduce((sum: number, cat: any) => sum + cat.length, 0);
-        (window as any).dataLayer.push({
+        const totalKeywords = Object.values(result.categories || {}).reduce((sum: number, cat: any) => sum + cat.length, 0)
+        ;(window as any).dataLayer.push({
           event: 'search_success',
-          search_keyword: keyword.trim(),
+          search_keyword: submittedKeyword,
           total_results: totalKeywords,
           categories_found: Object.keys(result.categories || {}).length,
           response_time: Date.now() - searchStartTime,
           search_language: searchLanguage
-        });
-        console.log('✅ GTM: Search successful', totalKeywords, 'results');
+        })
+        console.log('✅ GTM: Search successful', totalKeywords, 'results')
       }
-      
     } catch (err: any) {
       setError(err?.message || 'Er is een fout opgetreden')
-      
-      // GTM tracking - Search error
+
       if (typeof window !== 'undefined' && (window as any).dataLayer) {
-        (window as any).dataLayer.push({
+        ;(window as any).dataLayer.push({
           event: 'search_error',
-          search_keyword: keyword.trim(),
+          search_keyword: submittedKeyword,
           error_message: err?.message || 'Search failed',
           response_time: Date.now() - searchStartTime
-        });
-        console.log('❌ GTM: Search failed', err?.message);
+        })
+        console.log('❌ GTM: Search failed', err?.message)
       }
     } finally {
       setLoading(false)
     }
-  }
+  }, [keyword, country, searchLanguage])
 
   const requestMagicLink = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -646,55 +633,29 @@ export default function App() {
     <div className="layout">
   <aside id="sidebar" className={`sidebar ${sidebarOpen ? 'open' : ''}`} aria-hidden={!sidebarOpen}>
         <div className="sidebar-brand">Lucy <span>World</span></div>
-        <nav className="sidebar-nav">
-          <a className="nav-item active" onClick={() => setSidebarOpen(false)}>{ui?.strings['nav.search'] || 'Search'}</a>
-          <a className="nav-item muted" onClick={() => setSidebarOpen(false)}>{ui?.strings['nav.advanced'] || 'Advanced (soon)'}</a>
-          <a className="nav-item muted" onClick={() => setSidebarOpen(false)}>{ui?.strings['nav.trends'] || 'Trends (soon)'}</a>
-        </nav>
+        <PlatformSidebar
+          platforms={platforms}
+          activePlatformId={activePlatformId}
+          onSelect={(platformId) => {
+            setActivePlatformId(platformId)
+            setSidebarOpen(false)
+          }}
+        />
         <div className="sidebar-footer">
           <span className="sidebar-footer-copy">© {new Date().getFullYear()} Lucy World</span>
           <div className="sidebar-footer-actions">
-          <button
-            type="button"
-            className="sidebar-signin"
-            disabled={isSignedIn}
-            onClick={() => {
-            if (!isSignedIn) {
-              setShowSignin(true)
-            }
-            }}
-          >
-            {isSignedIn ? (ui?.strings['footer.premium'] || 'Premium account') : (ui?.strings['footer.signin'] || 'Sign in for Premium')}
-          </button>
-          <div className="sidebar-lang-switch">
-            <span className="sidebar-lang-heading">{languageSwitcherLabel}</span>
-            <div
-            className="sidebar-lang-carousel"
-            role="listbox"
-            aria-label={languageSwitcherLabel}
+            <button
+              type="button"
+              className="sidebar-signin"
+              disabled={isSignedIn}
+              onClick={() => {
+                if (!isSignedIn) {
+                  setShowSignin(true)
+                }
+              }}
             >
-            {quickLanguages.map((l) => {
-              const code = (l.code || '').toLowerCase()
-              const isActive = code === normalizedLanguage
-              return (
-              <button
-                key={l.code}
-                type="button"
-                role="option"
-                aria-selected={isActive}
-                className={`sidebar-lang-pill${isActive ? ' active' : ''}`}
-                onClick={() => handleLanguageSelect(l.code, { closeMenu: false })}
-                title={formatLanguageLabel(l.label || l.code.toUpperCase())}
-              >
-                <span className="sidebar-lang-icon" aria-hidden>
-                {getLanguageIcon(code)}
-                </span>
-                <span className="sidebar-lang-label-text">{formatLanguageLabel(l.label || l.code.toUpperCase())}</span>
-              </button>
-              )
-            })}
-            </div>
-          </div>
+              {isSignedIn ? (ui?.strings['footer.premium'] || 'Premium account') : (ui?.strings['footer.signin'] || 'Sign in for Premium')}
+            </button>
           </div>
         </div>
       </aside>
@@ -774,7 +735,16 @@ export default function App() {
                     key={l.code}
                     role="option"
                     aria-selected={l.code === language}
-                    onClick={() => handleLanguageSelect(l.code)}
+                    onClick={() => {
+                      closeLangMenu()
+                      const newLang = l.code.toLowerCase()
+                      localStorage.setItem('lw_lang', newLang)
+                      if (typeof window !== 'undefined') {
+                        window.location.href = `/${newLang}/`
+                      } else {
+                        setLanguage(newLang)
+                      }
+                    }}
                     className={`lang-item ${l.code === language ? 'active' : ''}`}
                     style={{
                       display: 'flex', width: '100%', textAlign: 'left',
@@ -868,7 +838,17 @@ export default function App() {
                       key={l.code}
                       role="option"
                       aria-selected={l.code === language}
-                      onClick={() => handleLanguageSelect(l.code)}
+                      onClick={() => {
+                        closeLangMenu()
+                        // Persist and navigate to language route for proper i18n + SEO
+                        const newLang = l.code.toLowerCase()
+                        localStorage.setItem('lw_lang', newLang)
+                        if (typeof window !== 'undefined') {
+                          window.location.href = `/${newLang}/`
+                        } else {
+                          setLanguage(newLang)
+                        }
+                      }}
                       className={`lang-item ${l.code === language ? 'active' : ''}`}
                       style={{
                         display: 'flex', width: '100%', textAlign: 'left',
@@ -928,191 +908,52 @@ export default function App() {
             </div>
           </div>
         )}
-        <div className="platforms-wrapper">
-          <aside className="platforms-wrapper__sidebar" aria-label="Platform selector">
-          <div className="card platform-sidebar-card">
-            <PlatformSidebar
-            platforms={platforms}
-            activePlatformId={activePlatformId}
-            onSelect={setActivePlatformId}
-            />
-          </div>
-          </aside>
-          <div className="platforms-wrapper__main">
-          <section className="card platforms-active-card">
-            <div>
-            <h3 className="platforms-active-card__title">{activePlatform?.name || 'Selecteer een platform'}</h3>
-            <p className="platforms-active-card__description">
-              {activePlatform?.description || 'Kies een platform uit de lijst om specifieke suggesties en tools te zien.'}
-            </p>
-            </div>
-          </section>
-          <section className="search-card">
-          <h3>{ui?.strings['search.title'] || 'Keyword research'}</h3>
-          <form onSubmit={onSubmit} className="row">
-            <input
-              type="text"
-              value={keyword}
-              onChange={(e) => setKeyword(e.target.value)}
-              placeholder={ui?.strings['search.placeholder'] || 'Enter a keyword'}
-              required
-            />
-            {/* Enhanced country selector with search */}
-            <div style={{ position: 'relative' }}>
-              <div
-                className="select flag-select"
-                onClick={() => setShowCountryDropdown(!showCountryDropdown)}
-                style={{ 
-                  cursor: 'pointer',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'space-between',
-                  minWidth: '120px'
-                }}
-                title={country ? `${flagEmoji(country)} ${getCountryName(country)}` : 'Select country'}
-              >
-                <span>{country ? `${flagEmoji(country)} ${getCountryName(country)}` : '🌍 Select country'}</span>
-                <span style={{ marginLeft: '8px', fontSize: '12px' }}>▼</span>
-              </div>
-              
-              {showCountryDropdown && (
-                <div
-                  style={{
-                    position: 'absolute',
-                    top: '100%',
-                    left: 0,
-                    right: 0,
-                    background: '#0e1217',
-                    border: '1px solid var(--line)',
-                    borderRadius: '8px',
-                    maxHeight: '300px',
-                    overflow: 'hidden',
-                    zIndex: 1000,
-                    boxShadow: '0 4px 20px rgba(0,0,0,0.3)'
-                  }}
-                >
-                  {/* Search input */}
-                  <input
-                    type="text"
-                    placeholder="Search countries..."
-                    value={countrySearchTerm}
-                    onChange={(e) => setCountrySearchTerm(e.target.value)}
-                    onKeyDown={(e) => {
-                      if (e.key === 'Escape') {
-                        setShowCountryDropdown(false)
-                        setCountrySearchTerm('')
-                      } else if (e.key === 'Enter' && filteredCountries.length > 0) {
-                        setCountry(filteredCountries[0])
-                        setShowCountryDropdown(false)
-                        setCountrySearchTerm('')
-                      }
-                    }}
-                    style={{
-                      width: '100%',
-                      padding: '8px 12px',
-                      background: 'transparent',
-                      border: 'none',
-                      borderBottom: '1px solid var(--line)',
-                      color: 'var(--text)',
-                      fontSize: '14px',
-                      outline: 'none'
-                    }}
-                    autoFocus
-                  />
-                  
-                  {/* Country list */}
-                  <div style={{ maxHeight: '250px', overflow: 'auto' }}>
-                    {filteredCountries.slice(0, 50).map((cc) => (
-                      <div
-                        key={cc}
-                        onClick={() => {
-                          setCountry(cc)
-                          setShowCountryDropdown(false)
-                          setCountrySearchTerm('')
-                        }}
-                        style={{
-                          display: 'flex',
-                          alignItems: 'center',
-                          gap: '8px',
-                          padding: '8px 12px',
-                          cursor: 'pointer',
-                          background: cc === country ? 'var(--accent)' : 'transparent',
-                          color: cc === country ? '#fff' : 'var(--text)',
-                          borderRadius: cc === country ? '4px' : '0',
-                          margin: cc === country ? '2px' : '0'
-                        }}
-                        onMouseEnter={(e) => e.currentTarget.style.background = cc === country ? 'var(--accent)' : 'rgba(255,255,255,0.1)'}
-                        onMouseLeave={(e) => e.currentTarget.style.background = cc === country ? 'var(--accent)' : 'transparent'}
-                      >
-                        <span style={{ fontSize: '16px' }}>{flagEmoji(cc)}</span>
-                        <span style={{ flex: 1 }}>{getCountryName(cc)}</span>
-                        <span style={{ fontSize: '12px', color: 'var(--text-secondary)' }}>{cc}</span>
-                      </div>
-                    ))}
-                    {filteredCountries.length === 0 && (
-                      <div style={{ padding: '16px', textAlign: 'center', color: 'var(--text-secondary)' }}>
-                        No countries found
-                      </div>
-                    )}
-                  </div>
-                </div>
-              )}
-            </div>
-            <select
-              className="select"
-              value={searchLanguage}
-              onChange={(e) => {
-                const newLang = e.target.value.toLowerCase()
-                setSearchLanguage(newLang)
-                try { localStorage.setItem('lw_search_lang', newLang) } catch {}
-              }}
-            >
-              {languagesList.map((l) => (
-                <option key={l.code} value={l.code}>{l.label}</option>
-              ))}
-            </select>
-            <button type="submit" disabled={loading}>
-              {loading ? (ui?.strings['search.button'] || 'Search') + '…' : (ui?.strings['search.button'] || 'Search')}
-            </button>
-          </form>
-          <div className="hint">{ui?.strings['search.hint'] || 'Free suggestions and trends. Results appear below.'}</div>
-          <div className="hint" style={{opacity:0.8}}>
-            {/* Clarify UX distinction between site locale and search settings */}
-            {(ui?.strings['hint.site_vs_search'] || 'Use the selectors above to choose the search country and language. Change the site interface language from the sidebar menu.')}
-          </div>
-          {error && <div className="error">{error}</div>}
-        </section>
+        {error && (
+          <div className="error">{error}</div>
+        )}
 
         {ActivePlatformTool && (
-          <section className="card platform-tool-card">
-          <Suspense fallback={<div className="platform-tool-card__loading">{`Loading ${activePlatform?.name || 'platform'}…`}</div>}>
-            <ActivePlatformTool
-            keyword={keyword}
-            setKeyword={setKeyword}
-            ui={ui}
-            loading={loading}
-            error={error}
-            data={data}
-            setData={setData}
-            onSubmit={onSubmit}
-            searchLanguage={searchLanguage}
-            setSearchLanguage={setSearchLanguage}
-            languagesList={languagesList}
-            country={country}
-            setCountry={setCountry}
-            countriesList={countriesList}
-            filteredCountries={filteredCountries}
-            showCountryDropdown={showCountryDropdown}
-            setShowCountryDropdown={setShowCountryDropdown}
-            countrySearchTerm={countrySearchTerm}
-            setCountrySearchTerm={setCountrySearchTerm}
-            getCountryName={getCountryName}
-            flagEmoji={flagEmoji}
-            categoryOrder={categoryOrder}
-            formatNumber={nl}
-            />
-          </Suspense>
-          </section>
+          <>
+            <Suspense
+              fallback={
+                <div className="card" style={{ marginTop: 24, padding: 24 }}>
+                  {`Laden ${activePlatform?.name || 'platform'}…`}
+                </div>
+              }
+            >
+              <ActivePlatformTool
+                keyword={keyword}
+                setKeyword={setKeyword}
+                ui={ui}
+                loading={loading}
+                error={error}
+                data={data}
+                setData={setData}
+                searchLanguage={searchLanguage}
+                setSearchLanguage={setSearchLanguage}
+                languagesList={languagesList}
+                country={country}
+                setCountry={setCountry}
+                countriesList={countriesList}
+                filteredCountries={filteredCountries}
+                showCountryDropdown={showCountryDropdown}
+                setShowCountryDropdown={setShowCountryDropdown}
+                countrySearchTerm={countrySearchTerm}
+                setCountrySearchTerm={setCountrySearchTerm}
+                getCountryName={getCountryName}
+                flagEmoji={flagEmoji}
+                categoryOrder={categoryOrder}
+                formatNumber={nl}
+                onGlobalSearch={runGlobalSearch}
+                globalLoading={loading}
+                locationControls={locationControls}
+              />
+            </Suspense>
+            <div className="hint" style={{ marginTop: 12 }}>{ui?.strings['search.hint'] || 'Free suggestions and trends. Results appear below.'}</div>
+            <div className="hint" style={{ opacity: 0.8 }}>
+              {ui?.strings['hint.site_vs_search'] || 'Use the selectors to choose the search country and language. Change the site interface language from the top menu.'}
+            </div>
+          </>
         )}
 
         {data && (
@@ -1167,10 +1008,8 @@ export default function App() {
         <footer className="footer">
           © {new Date().getFullYear()} Lucy World
         </footer>
-          </div>
         </div>
-        </div>
-
+        
       </div>
     </div>
   )

@@ -1,4 +1,4 @@
-import type { LazyExoticComponent, ComponentType } from 'react'
+import type { LazyExoticComponent, ComponentType, ReactNode } from 'react'
 
 export type UIStrings = Record<string, string>
 
@@ -60,6 +60,9 @@ export interface PlatformToolProps {
   flagEmoji?: (countryCode: string) => string
   categoryOrder?: string[]
   formatNumber?: (value?: number) => string
+  onGlobalSearch?: (keyword: string) => Promise<void> | void
+  globalLoading?: boolean
+  locationControls?: ReactNode
 }
 
 export interface PlatformConfig {

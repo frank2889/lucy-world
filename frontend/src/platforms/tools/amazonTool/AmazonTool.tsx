@@ -1,25 +1,12 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import type { PlatformToolProps } from '../../types'
+import { AMAZON_MARKETPLACES } from '../../data/amazonMarketplaces'
 import PlatformToolLayout, { type PlatformResultItem } from '../common/PlatformToolLayout'
 
-const MARKETPLACES = [
-  { code: 'US', label: 'Amazon.com (US)' },
-  { code: 'CA', label: 'Amazon.ca (CA)' },
-  { code: 'GB', label: 'Amazon.co.uk (UK)' },
-  { code: 'DE', label: 'Amazon.de (DE)' },
-  { code: 'FR', label: 'Amazon.fr (FR)' },
-  { code: 'IT', label: 'Amazon.it (IT)' },
-  { code: 'ES', label: 'Amazon.es (ES)' },
-  { code: 'NL', label: 'Amazon.nl (NL)' },
-  { code: 'SE', label: 'Amazon.se (SE)' },
-  { code: 'PL', label: 'Amazon.pl (PL)' },
-  { code: 'BE', label: 'Amazon.be (BE)' },
-  { code: 'AU', label: 'Amazon.com.au (AU)' },
-  { code: 'JP', label: 'Amazon.co.jp (JP)' },
-  { code: 'IN', label: 'Amazon.in (IN)' }
-]
+const MARKETPLACES = AMAZON_MARKETPLACES
 
-const AmazonTool: React.FC<PlatformToolProps> = ({ keyword, setKeyword, country }) => {
+const AmazonTool: React.FC<PlatformToolProps> = (props) => {
+  const { keyword, setKeyword, country } = props
   const normalizedKeyword = keyword ?? ''
   const [marketplace, setMarketplace] = useState(() => {
     const preferred = (country ?? '').toUpperCase()
@@ -125,6 +112,9 @@ const AmazonTool: React.FC<PlatformToolProps> = ({ keyword, setKeyword, country 
       loading={loading}
       error={error}
       emptyState="Voer een zoekwoord in om Amazon inzichten te zien."
+      controls={props.locationControls}
+      onGlobalSearch={props.onGlobalSearch}
+      globalLoading={props.globalLoading}
     />
   )
 }

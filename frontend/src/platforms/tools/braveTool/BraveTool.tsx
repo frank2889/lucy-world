@@ -8,7 +8,8 @@ const SOURCE_OPTIONS = [
   { value: 'videos', label: 'Video' }
 ]
 
-const BraveTool: React.FC<PlatformToolProps> = ({ keyword, setKeyword, searchLanguage }) => {
+const BraveTool: React.FC<PlatformToolProps> = (props) => {
+  const { keyword, setKeyword, searchLanguage, country } = props
   const normalizedKeyword = keyword ?? ''
   const [source, setSource] = useState<string>('web')
   const [results, setResults] = useState<PlatformResultItem[]>([])
@@ -112,6 +113,9 @@ const BraveTool: React.FC<PlatformToolProps> = ({ keyword, setKeyword, searchLan
       loading={loading}
       error={error}
       emptyState="Voer een zoekwoord in om Brave suggesties te zien."
+      controls={props.locationControls}
+      onGlobalSearch={props.onGlobalSearch}
+      globalLoading={props.globalLoading}
     />
   )
 }

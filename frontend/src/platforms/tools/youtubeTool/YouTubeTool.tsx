@@ -2,7 +2,8 @@ import React, { useCallback, useMemo, useState } from 'react'
 import type { PlatformToolProps } from '../../types'
 import PlatformToolLayout, { type PlatformResultItem } from '../common/PlatformToolLayout'
 
-const YouTubeTool: React.FC<PlatformToolProps> = ({ keyword, setKeyword, searchLanguage, ui }) => {
+const YouTubeTool: React.FC<PlatformToolProps> = (props) => {
+  const { keyword, setKeyword, searchLanguage, ui } = props
   const [results, setResults] = useState<PlatformResultItem[]>([])
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
@@ -57,6 +58,9 @@ const YouTubeTool: React.FC<PlatformToolProps> = ({ keyword, setKeyword, searchL
       emptyState="Voer een zoekwoord in om YouTube suggesties te ontvangen."
       loading={loading}
       error={error}
+      controls={props.locationControls}
+      onGlobalSearch={props.onGlobalSearch}
+      globalLoading={props.globalLoading}
     />
   )
 }

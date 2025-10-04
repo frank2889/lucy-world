@@ -35,7 +35,8 @@ const resolveDefaultMarket = (language?: string, country?: string) => {
   return fallbackMarket
 }
 
-const BingTool: React.FC<PlatformToolProps> = ({ keyword, setKeyword, searchLanguage, country }) => {
+const BingTool: React.FC<PlatformToolProps> = (props) => {
+  const { keyword, setKeyword, searchLanguage, country } = props
   const normalizedKeyword = keyword ?? ''
   const [market, setMarket] = useState(() => resolveDefaultMarket(searchLanguage, country))
   const [results, setResults] = useState<PlatformResultItem[]>([])
@@ -143,6 +144,9 @@ const BingTool: React.FC<PlatformToolProps> = ({ keyword, setKeyword, searchLang
       loading={loading}
       error={error}
       emptyState="Voer een zoekwoord in om Bing kansen te zien."
+      controls={props.locationControls}
+      onGlobalSearch={props.onGlobalSearch}
+      globalLoading={props.globalLoading}
     />
   )
 }

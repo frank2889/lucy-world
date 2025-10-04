@@ -2,7 +2,8 @@ import React, { useCallback, useMemo, useState } from 'react'
 import type { PlatformToolProps } from '../../types'
 import PlatformToolLayout, { type PlatformResultItem } from '../common/PlatformToolLayout'
 
-const GoogleTool: React.FC<PlatformToolProps> = ({ keyword, setKeyword, searchLanguage, country, ui }) => {
+const GoogleTool: React.FC<PlatformToolProps> = (props) => {
+  const { keyword, setKeyword, searchLanguage, country, ui } = props
   const [results, setResults] = useState<PlatformResultItem[]>([])
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
@@ -101,6 +102,9 @@ const GoogleTool: React.FC<PlatformToolProps> = ({ keyword, setKeyword, searchLa
       loading={loading}
       error={error}
       emptyState="Voer een zoekterm in om Google suggesties te zien."
+      controls={props.locationControls}
+      onGlobalSearch={props.onGlobalSearch}
+      globalLoading={props.globalLoading}
     />
   )
 }

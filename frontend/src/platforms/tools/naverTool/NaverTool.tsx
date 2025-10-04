@@ -2,7 +2,8 @@ import React, { useCallback, useEffect, useRef, useState } from 'react'
 import type { PlatformToolProps } from '../../types'
 import PlatformToolLayout, { type PlatformResultItem } from '../common/PlatformToolLayout'
 
-const NaverTool: React.FC<PlatformToolProps> = ({ keyword, setKeyword, searchLanguage, country }) => {
+const NaverTool: React.FC<PlatformToolProps> = (props) => {
+  const { keyword, setKeyword, searchLanguage, country } = props
   const normalizedKeyword = keyword ?? ''
   const [results, setResults] = useState<PlatformResultItem[]>([])
   const [loading, setLoading] = useState(false)
@@ -86,6 +87,9 @@ const NaverTool: React.FC<PlatformToolProps> = ({ keyword, setKeyword, searchLan
       loading={loading}
       error={error}
       emptyState="Voer een zoekwoord in om Naver kansen te zien."
+      controls={props.locationControls}
+      onGlobalSearch={props.onGlobalSearch}
+      globalLoading={props.globalLoading}
     />
   )
 }

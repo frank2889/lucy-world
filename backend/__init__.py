@@ -648,7 +648,9 @@ def create_app() -> Flask:
 		"""XML sitemap with language-specific home URLs (only available locales)."""
 		base = _base_url()
 		now = datetime.utcnow().strftime('%Y-%m-%d')
-		langs = _available_locales() or _supported_langs()
+		langs = _available_locales()
+		if not langs:
+			langs = ['en']
 		urls = [{"loc": f"{base}/{lang}/", "priority": "1.0"} for lang in langs]
 		items = "".join(
 			f"<url><loc>{u['loc']}</loc><lastmod>{now}</lastmod><changefreq>daily</changefreq><priority>{u['priority']}</priority></url>"
@@ -1014,72 +1016,7 @@ def create_app() -> Flask:
 
 	@app.route('/api/platforms/amazon', methods=['GET'])
 	def amazon_platform_suggestions():
-		"""Return Amazon autocomplete suggestions for a given keyword."""
-		keyword = request.args.get('q', '').strip()
-		country = request.args.get('country', '').strip().upper() or _detect_country() or 'US'
-		alias = request.args.get('alias', '').strip().lower() or 'aps'
-		if not keyword:
-			return jsonify({'error': 'Geen zoekwoord opgegeven'}), 400
-
-		marketplace_map = {
-			'US': '1',   # amazon.com
-			'CA': '7',   # amazon.ca
-			'GB': '44551',  # amazon.co.uk
-			'UK': '44551',
-			'DE': '3',   # amazon.de
-			'FR': '5',   # amazon.fr
-			'IT': '8',   # amazon.it
-			'ES': '44561',  # amazon.es
-			'NL': '166452',  # amazon.nl
-			'SE': '44586',
-			'PL': '44571',
-			'BE': '44566',
-			'AU': '224',
-			'JP': '6',
-			'IN': '44574'
-		}
-		mkt = marketplace_map.get(country, '1')
-
-		params = {
-			'method': 'completion',
-			'mkt': mkt,
-			'q': keyword,
-			'search-alias': alias or 'aps'
-		}
-		headers = {
-			'User-Agent': 'Mozilla/5.0 (compatible; LucyWorldBot/1.0; +https://lucy.world)',
-			'Accept': 'application/json'
-		}
-		try:
-			resp = requests.get(
-				'https://completion.amazon.com/search/complete',
-				params=params,
-				headers=headers,
-				timeout=6
-			)
-			resp.raise_for_status()
-			payload = resp.json()
-			suggestions: list[str] = []
-			if isinstance(payload, list) and len(payload) > 1:
-				items = payload[1]
-				if isinstance(items, list):
-					suggestions = [str(item) for item in items if isinstance(item, str)]
-			metadata = payload[3] if len(payload) > 3 and isinstance(payload[3], dict) else {}
-			return jsonify({
-				'keyword': keyword,
-				'country': country,
-				'alias': alias,
-				'suggestions': suggestions,
-				'metadata': {
-					'approx_volume': len(suggestions),
-					'computed_from': 'amazon_autocomplete',
-					'marketplace': country,
-					'extra': metadata
-				}
-			})
-		except Exception as exc:
-			logger.error(f"Amazon suggestion fetch failed: {exc}")
-			return jsonify({'error': 'Kon Amazon suggesties niet ophalen'}), 502
+		return dynamic_platform_provider('amazon')
 
 	@app.route('/api/platforms/bing', methods=['GET'])
 	def bing_platform_suggestions():

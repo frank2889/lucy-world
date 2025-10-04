@@ -24,7 +24,8 @@ const resolveDefaultSite = (country?: string) => {
   return match?.siteId ?? DEFAULT_SITE_ID
 }
 
-const EbayTool: React.FC<PlatformToolProps> = ({ keyword, setKeyword, country }) => {
+const EbayTool: React.FC<PlatformToolProps> = (props) => {
+  const { keyword, setKeyword, country } = props
   const normalizedKeyword = keyword ?? ''
   const [siteId, setSiteId] = useState(() => resolveDefaultSite(country))
   const [results, setResults] = useState<PlatformResultItem[]>([])
@@ -135,6 +136,9 @@ const EbayTool: React.FC<PlatformToolProps> = ({ keyword, setKeyword, country })
       loading={loading}
       error={error}
       emptyState="Voer een zoekwoord in voor eBay inzichten."
+      controls={props.locationControls}
+      onGlobalSearch={props.onGlobalSearch}
+      globalLoading={props.globalLoading}
     />
   )
 }

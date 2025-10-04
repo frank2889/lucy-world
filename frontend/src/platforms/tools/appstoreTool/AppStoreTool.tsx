@@ -33,7 +33,8 @@ type ITunesApp = {
   currency?: string
 }
 
-const AppStoreTool: React.FC<PlatformToolProps> = ({ keyword, setKeyword, country }) => {
+const AppStoreTool: React.FC<PlatformToolProps> = (props) => {
+  const { keyword, setKeyword, country } = props
   const normalizedKeyword = keyword ?? ''
   const [store, setStore] = useState(() => resolveDefaultStore(country))
   const [results, setResults] = useState<PlatformResultItem[]>([])
@@ -153,6 +154,9 @@ const AppStoreTool: React.FC<PlatformToolProps> = ({ keyword, setKeyword, countr
       loading={loading}
       error={error}
       emptyState="Voer een zoekwoord in voor App Store suggesties."
+      controls={props.locationControls}
+      onGlobalSearch={props.onGlobalSearch}
+      globalLoading={props.globalLoading}
     />
   )
 }

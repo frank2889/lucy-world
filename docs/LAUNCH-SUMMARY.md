@@ -51,9 +51,37 @@ Je hebt nu een **complete, productie-klare keyword research applicatie** die bes
 - `POST /api/advanced/research` - Premium research
 - `POST /api/export/csv` - Export naar CSV
 - `GET /api/platforms` - Overzicht van alle beschikbare platformproviders (nieuw)
-- `GET /api/platforms/{provider}` - Dynamische autocomplete via de registry (bijv. `google`, `duckduckgo`, `yahoo`, `bing`, `brave`, `qwant`)
+- `GET /api/platforms/{provider}` - Dynamische autocomplete via de registry (bijv. `google`, `duckduckgo`, `yahoo`, `bing`, `amazon`, `brave`, `qwant`)
 - `GET /api/platforms/aggregate` - Combineert resultaten van meerdere providers met automatische deduplicatie
 - `GET /health` - System health check
+
+### Amazon markten die we ondersteunen
+
+| Regio | Host | Marketplace ID |
+| --- | --- | --- |
+| Verenigde Staten | `completion.amazon.com` | `ATVPDKIKX0DER` |
+| Canada | `completion.amazon.ca` | `A2EUQ1WTGCTBG2` |
+| Mexico | `completion.amazon.com.mx` | `A1AM78C64UM0Y8` |
+| Brazilië | `completion.amazon.com.br` | `A2Q3Y263D00KWC` |
+| Verenigd Koninkrijk | `completion.amazon.co.uk` | `A1F83G8C2ARO7P` |
+| Duitsland | `completion.amazon.de` | `A1PA6795UKMFR9` |
+| Frankrijk | `completion.amazon.fr` | `A13V1IB3VIYZZH` |
+| Italië | `completion.amazon.it` | `APJ6JRA9NG5V4` |
+| Spanje | `completion.amazon.es` | `A1RKKUPIHCS9HS` |
+| Nederland | `completion.amazon.nl` | `A1805IZSGTT6HS` |
+| België | `completion.amazon.com.be` | `AMEN7PMS3EDWL` |
+| Zweden | `completion.amazon.se` | `A2NODRKZP88ZB9` |
+| Polen | `completion.amazon.pl` | `A1C3SOZRARQ6R3` |
+| Turkije | `completion.amazon.com.tr` | `A33AVAJ2PDY3EV` |
+| Verenigde Arabische Emiraten | `completion.amazon.ae` | `A2VIGQ35RCS4UG` |
+| Saoedi-Arabië | `completion.amazon.sa` | `A17E79C6D8DWNP` |
+| Egypte* | `completion.amazon.eg` | `A15E5T13P8WH5F` → fallback naar `A2VIGQ35RCS4UG` |
+| Singapore | `completion.amazon.sg` | `A19VAU5U5O7RUS` |
+| Australië | `completion.amazon.com.au` | `A39IBJ37TRP1C6` |
+| Japan | `completion.amazon.co.jp` | `A1VC38T7YXB528` |
+| India | `completion.amazon.in` | `A21TJRUUN4KGV` |
+
+> *Amazon Egypte retourneert suggesties via dezelfde API wanneer we automatisch terugvallen op de VAE marketplace ID. Dit gebeurt transparant in de backend en wordt gemarkeerd in de metadata (`fallback_marketplace`).
 
 ### Production Features
 

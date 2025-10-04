@@ -8,7 +8,8 @@ const CLIENT_OPTIONS = [
   { value: 'mobile', label: 'Mobile' }
 ]
 
-const QwantTool: React.FC<PlatformToolProps> = ({ keyword, setKeyword, searchLanguage }) => {
+const QwantTool: React.FC<PlatformToolProps> = (props) => {
+  const { keyword, setKeyword, searchLanguage } = props
   const normalizedKeyword = keyword ?? ''
   const [client, setClient] = useState<string>('opensearch')
   const [results, setResults] = useState<PlatformResultItem[]>([])
@@ -112,6 +113,9 @@ const QwantTool: React.FC<PlatformToolProps> = ({ keyword, setKeyword, searchLan
       loading={loading}
       error={error}
       emptyState="Voer een zoekwoord in om Qwant suggesties te zien."
+      controls={props.locationControls}
+      onGlobalSearch={props.onGlobalSearch}
+      globalLoading={props.globalLoading}
     />
   )
 }

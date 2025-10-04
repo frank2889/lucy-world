@@ -19,7 +19,8 @@ const defaultRegionForCountry = (country?: string) => {
   return '225'
 }
 
-const YandexTool: React.FC<PlatformToolProps> = ({ keyword, setKeyword, searchLanguage, country }) => {
+const YandexTool: React.FC<PlatformToolProps> = (props) => {
+  const { keyword, setKeyword, searchLanguage, country } = props
   const normalizedKeyword = keyword ?? ''
   const [region, setRegion] = useState(() => defaultRegionForCountry(country))
   const [results, setResults] = useState<PlatformResultItem[]>([])
@@ -139,6 +140,9 @@ const YandexTool: React.FC<PlatformToolProps> = ({ keyword, setKeyword, searchLa
       loading={loading}
       error={error}
       emptyState="Voer een zoekwoord in voor Yandex inzichten."
+      controls={props.locationControls}
+      onGlobalSearch={props.onGlobalSearch}
+      globalLoading={props.globalLoading}
     />
   )
 }
