@@ -87,9 +87,37 @@ export default function App() {
   }, [urlLang])
   const [keyword, setKeyword] = useState('')
   // Language used for fetching search results (does NOT change UI language)
-  const [searchLanguage, setSearchLanguage] = useState(() => localStorage.getItem('lw_search_lang') || (localStorage.getItem('lw_lang') || urlLang || 'en'))
-  const [language, setLanguage] = useState(() => localStorage.getItem('lw_lang') || urlLang || 'en')
-  const [country, setCountry] = useState(() => localStorage.getItem('lw_country') || '')
+  const [searchLanguage, setSearchLanguageState] = useState(() => {
+    try {
+      const stored = localStorage.getItem('lw_search_lang')
+      if (stored) return stored.toLowerCase()
+      const fallback = localStorage.getItem('lw_lang') || urlLang || 'en'
+      return (fallback || 'en').toLowerCase()
+    } catch {
+      return (urlLang || 'en').toLowerCase()
+    }
+  })
+  const [languageManuallySelected, setLanguageManuallySelected] = useState(() => {
+    try {
+      return localStorage.getItem('lw_search_lang_manual') === '1'
+    } catch {
+      return false
+    }
+  })
+  const [language, setLanguage] = useState(() => {
+    try {
+      return (localStorage.getItem('lw_lang') || urlLang || 'en').toLowerCase()
+    } catch {
+      return (urlLang || 'en').toLowerCase()
+    }
+  })
+  const [country, setCountry] = useState(() => {
+    try {
+      return localStorage.getItem('lw_country') || ''
+    } catch {
+      return ''
+    }
+  })
   // Detected country (geo/IP/headers) for display; separate from user-selected country used in searches
   const [detectedCountry, setDetectedCountry] = useState<string>('')
   const [languagesList, setLanguagesList] = useState(GOOGLE_LANGUAGES)
@@ -108,6 +136,24 @@ export default function App() {
   const [projects, setProjects] = useState<Array<{ id: number; name: string; description?: string | null; language?: string | null; country?: string | null; updated_at?: string }>>([])
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [langMenuAnchor, setLangMenuAnchor] = useState<'desktop' | 'mobile' | null>(null)
+  const [marketLocales, setMarketLocales] = useState<Map<string, string[]>>(() => new Map())
+
+  const updateSearchLanguage = useCallback((lang: string, manual = false) => {
+    const normalized = (lang || '').split('-')[0].toLowerCase() || 'en'
+    setSearchLanguageState((prev) => (prev === normalized ? prev : normalized))
+    try {
+      localStorage.setItem('lw_search_lang', normalized)
+      if (manual) {
+        localStorage.setItem('lw_search_lang_manual', '1')
+      } else {
+        localStorage.removeItem('lw_search_lang_manual')
+      }
+    } catch {
+      /* no-op */
+    }
+    setLanguageManuallySelected(manual)
+    return normalized
+  }, [setLanguageManuallySelected, setSearchLanguageState])
 
   const isSignedIn = !!token
   const { platforms, activePlatform, activePlatformId, setActivePlatformId } = usePlatformHandler()
@@ -150,7 +196,7 @@ export default function App() {
       seen.add(upper)
       return true
     })
-  }, [])
+  }, [languageManuallySelected, updateSearchLanguage])
   
   // Filter and sort countries based on search
   const filteredCountries = useMemo(() => {
@@ -262,7 +308,11 @@ export default function App() {
                   setShowCountryDropdown(false)
                   setCountrySearchTerm('')
                 } else if (e.key === 'Enter' && filteredCountries.length > 0) {
-                  setCountry(filteredCountries[0])
+                  const nextCountry = filteredCountries[0]
+                  setCountry(nextCountry)
+                  try { localStorage.setItem('lw_country', nextCountry) } catch {}
+                  setLanguageManuallySelected(false)
+                  try { localStorage.removeItem('lw_search_lang_manual') } catch {}
                   setShowCountryDropdown(false)
                   setCountrySearchTerm('')
                 }
@@ -285,6 +335,9 @@ export default function App() {
                   key={cc}
                   onClick={() => {
                     setCountry(cc)
+                    try { localStorage.setItem('lw_country', cc) } catch {}
+                    setLanguageManuallySelected(false)
+                    try { localStorage.removeItem('lw_search_lang_manual') } catch {}
                     setShowCountryDropdown(false)
                     setCountrySearchTerm('')
                   }}
@@ -319,8 +372,7 @@ export default function App() {
         value={searchLanguage}
         onChange={(e) => {
           const newLang = e.target.value.toLowerCase()
-          setSearchLanguage(newLang)
-          try { localStorage.setItem('lw_search_lang', newLang) } catch {}
+          updateSearchLanguage(newLang, true)
         }}
       >
         {languagesList.map((l) => (
@@ -465,7 +517,7 @@ export default function App() {
       if (!res.ok) throw new Error(translate('projects.error.open', 'Failed to open project'))
       const j = await res.json()
       // Restore search context
-      if (j.language) setSearchLanguage(String(j.language))
+  if (j.language) updateSearchLanguage(String(j.language), true)
       if (j.country) setCountry(String(j.country))
       if (j.data) setData(j.data)
       setShowProjects(false)
@@ -623,6 +675,62 @@ export default function App() {
       .catch(() => { /* keep fallback */ })
   }, [])
 
+  useEffect(() => {
+    fetch('/meta/markets.json')
+      .then((r) => (r.ok ? r.json() : Promise.reject()))
+      .then((data) => {
+        const map = new Map<string, string[]>()
+        const markets = Array.isArray(data?.markets) ? data.markets : []
+        markets.forEach((entry: any) => {
+          const code = (entry?.code || '').toString().toUpperCase()
+          if (!code || code.length !== 2) return
+          const seen = new Set<string>()
+          const locales: string[] = []
+          const push = (value: any) => {
+            if (!value) return
+            const normalized = value.toString().toLowerCase()
+            if (!normalized) return
+            const primary = normalized.split('-')[0]
+            if (!primary || seen.has(primary)) return
+            seen.add(primary)
+            locales.push(primary)
+          }
+          push(entry?.defaultLocale)
+          if (Array.isArray(entry?.locales)) {
+            entry.locales.forEach(push)
+          }
+          if (locales.length) {
+            map.set(code, locales)
+          }
+        })
+        if (map.size) {
+          setMarketLocales(map)
+        }
+      })
+      .catch(() => { /* ignore */ })
+  }, [])
+
+  useEffect(() => {
+    if (!country) return
+    if (languageManuallySelected) return
+    const locales = marketLocales.get(country.toUpperCase())
+    if (!locales || locales.length === 0) return
+
+    const availableCodes = new Set<string>()
+    languagesList.forEach((lang) => {
+      const code = (lang?.code || '').toLowerCase()
+      if (!code) return
+      availableCodes.add(code)
+      const primary = code.split('-')[0]
+      if (primary) availableCodes.add(primary)
+    })
+
+    const preferred = locales.find((locale) => availableCodes.has(locale.toLowerCase()))
+    if (preferred && preferred !== searchLanguage) {
+      updateSearchLanguage(preferred, false)
+    }
+  }, [country, languageManuallySelected, marketLocales, languagesList, searchLanguage, updateSearchLanguage])
+
   // Initialize language/country from server-side detection if user has no saved preferences
   useEffect(() => {
     try {
@@ -644,9 +752,8 @@ export default function App() {
             setLanguage(detLang)
             try { localStorage.setItem('lw_lang', detLang) } catch {}
           }
-          if (!hasSavedSearchLang && detLang) {
-            setSearchLanguage(detLang)
-            try { localStorage.setItem('lw_search_lang', detLang) } catch {}
+          if ((!hasSavedSearchLang || !languageManuallySelected) && detLang) {
+            updateSearchLanguage(detLang, false)
           }
           if (!hasSavedCountry && detCountry && detCountry.length === 2) {
             setCountry(detCountry)
@@ -963,7 +1070,7 @@ export default function App() {
                 data={data}
                 setData={setData}
                 searchLanguage={searchLanguage}
-                setSearchLanguage={setSearchLanguage}
+                setSearchLanguage={updateSearchLanguage}
                 languagesList={languagesList}
                 country={country}
                 setCountry={setCountry}
