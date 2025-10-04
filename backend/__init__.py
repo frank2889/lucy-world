@@ -9,6 +9,9 @@ import csv
 import io
 import logging
 import re
+import time
+import functools
+import ipaddress
 import requests
 from datetime import datetime
 from typing import Any
@@ -178,6 +181,94 @@ def create_app() -> Flask:
 				codes.append(code)
 		return codes
 
+	geoip_cache: dict[str, tuple[str, float]] = {}
+	GEOIP_CACHE_TTL = 3600  # seconds
+
+	@functools.lru_cache(maxsize=1)
+	def _market_index_data() -> dict[str, Any] | None:
+		"""Load the markets/index.json file once for locale lookups."""
+		index_path = os.path.join(project_root, 'markets', 'index.json')
+		try:
+			with open(index_path, 'r', encoding='utf-8') as f:
+				data = json.load(f)
+			if isinstance(data, dict):
+				return data
+		except Exception:
+			pass
+		return None
+
+	def _locale_for_country(country_code: str) -> str | None:
+		"""Derive the preferred locale for a given ISO country code."""
+		if not country_code:
+			return None
+		country_code = country_code.upper()
+		data = _market_index_data() or {}
+		markets = data.get('markets') if isinstance(data, dict) else None
+		if isinstance(markets, list):
+			for entry in markets:
+				if not isinstance(entry, dict):
+					continue
+				code = entry.get('code')
+				if isinstance(code, str) and code.upper() == country_code:
+					default_locale = entry.get('defaultLocale')
+					if isinstance(default_locale, str) and default_locale:
+						return default_locale.split('-')[0].lower()
+					locales = entry.get('locales')
+					if isinstance(locales, list):
+						for loc in locales:
+							if isinstance(loc, str) and loc:
+								return loc.split('-')[0].lower()
+		return None
+
+	def _client_ip() -> str | None:
+		"""Extract the client IP address from common proxy headers."""
+		header_candidates = [
+			'CF-Connecting-IP',
+			'True-Client-IP',
+			'X-Forwarded-For',
+			'X-Real-IP',
+		]
+		for header in header_candidates:
+			value = request.headers.get(header)
+			if not value:
+				continue
+			ip = value.split(',')[0].strip()
+			if not ip:
+				continue
+			try:
+				addr = ipaddress.ip_address(ip)
+			except ValueError:
+				continue
+			if addr.is_private or addr.is_loopback or addr.is_reserved or addr.is_unspecified:
+				continue
+			return ip
+		remote = request.remote_addr
+		if remote:
+			try:
+				addr = ipaddress.ip_address(remote)
+			except ValueError:
+				return None
+			if addr.is_private or addr.is_loopback or addr.is_reserved or addr.is_unspecified:
+				return None
+			return remote
+		return None
+
+	def _geo_lookup_country(ip: str) -> str:
+		"""Resolve an IP address to a country code using a lightweight external API."""
+		try:
+			resp = requests.get(f'https://api.country.is/{ip}', timeout=1.5)
+			if not resp.ok:
+				return ''
+			data = resp.json()
+			code = data.get('country') if isinstance(data, dict) else None
+			if isinstance(code, str):
+				code = code.strip().upper()
+				if len(code) == 2 and code.isalpha():
+					return code
+		except Exception:
+			return ''
+		return ''
+
 	def _detect_lang() -> str:
 		al = request.headers.get('Accept-Language', '')
 		candidates: list[str] = []
@@ -197,7 +288,7 @@ def create_app() -> Flask:
 		return 'en'
 
 	def _detect_country() -> str:
-		"""Simple country detection from CDN headers only - no fallbacks."""
+		"""Detect ISO country code from headers or GeoIP lookup."""
 		# Common CDN/proxy headers for country
 		header_candidates = [
 			'CF-IPCountry',                # Cloudflare
@@ -216,8 +307,34 @@ def create_app() -> Flask:
 				if len(cc) == 2 and cc.isalpha():
 					return cc
 		
+		# Fallback: GeoIP lookup based on client IP
+		client_ip = _client_ip()
+		if client_ip:
+			now = time.time()
+			cached = geoip_cache.get(client_ip)
+			if cached and (now - cached[1]) < GEOIP_CACHE_TTL:
+				return cached[0]
+			country_code = _geo_lookup_country(client_ip)
+			if country_code:
+				geoip_cache[client_ip] = (country_code, now)
+				return country_code
 		# No fallbacks - return empty string if unknown
 		return ''
+
+	def _preferred_language(detected_country: str | None = None) -> str:
+		"""Determine the best UI language, preferring geo detection before browser language."""
+		available = set(_available_locales())
+		country = (detected_country or '').strip().upper() or _detect_country()
+		if country:
+			locale_from_country = _locale_for_country(country)
+			if locale_from_country and locale_from_country in available:
+				return locale_from_country
+		browser_lang = _detect_lang()
+		if browser_lang in available:
+			return browser_lang
+		if 'en' in available:
+			return 'en'
+		return sorted(available)[0] if available else 'en'
 
 	def _vite_manifest():
 		manifest_path = os.path.join(static_folder, 'app', '.vite', 'manifest.json')
@@ -450,7 +567,7 @@ def create_app() -> Flask:
 	@app.route('/')
 	def index_root():
 		"""Detect language and redirect to /<lang>/ with GTM tracking"""
-		lang = _detect_lang()
+		lang = _preferred_language()
 		
 		# Create a temporary page with GTM that redirects immediately
 		redirect_html = f"""<!DOCTYPE html>
@@ -807,9 +924,10 @@ def create_app() -> Flask:
 	def meta_detect():
 		"""Return detected language and country for initial UI defaults."""
 		try:
+			country = _detect_country()
 			return jsonify({
-				'language': _detect_lang(),
-				'country': _detect_country(),
+				'language': _preferred_language(country),
+				'country': country,
 			})
 		except Exception:
 			return jsonify({'language': 'en', 'country': 'US'})
