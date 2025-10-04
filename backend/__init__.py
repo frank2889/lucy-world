@@ -1084,48 +1084,7 @@ def create_app() -> Flask:
 	@app.route('/api/platforms/bing', methods=['GET'])
 	def bing_platform_suggestions():
 		"""Return Bing autocomplete suggestions for a given keyword."""
-		keyword = request.args.get('q', '').strip()
-		language = request.args.get('lang', '').strip().lower() or request.args.get('language', '').strip().lower()
-		country = request.args.get('country', '').strip().upper()
-		market = request.args.get('mkt', '').strip()
-		if not keyword:
-			return jsonify({'error': 'Geen zoekwoord opgegeven'}), 400
-
-		if not language:
-			language = (_detect_lang() or 'en').lower()
-		language = language.split('-')[0]
-		if not country:
-			country = _detect_country() or 'US'
-		country = country.upper()
-		if market:
-			mkt = market
-		else:
-			mkt = f"{language}-{country}".lower()
-
-		params = {'query': keyword, 'mkt': mkt}
-		headers = {
-			'User-Agent': 'Mozilla/5.0 (compatible; LucyWorldBot/1.0; +https://lucy.world)',
-			'Accept': 'application/json, text/javascript;q=0.9,*/*;q=0.8'
-		}
-		try:
-			resp = requests.get('https://api.bing.com/osjson.aspx', params=params, headers=headers, timeout=6)
-			resp.raise_for_status()
-			payload = resp.json()
-			suggestions: list[str] = []
-			if isinstance(payload, list) and len(payload) > 1 and isinstance(payload[1], list):
-				suggestions = [str(item) for item in payload[1] if isinstance(item, str)]
-			return jsonify({
-				'keyword': keyword,
-				'market': mkt,
-				'suggestions': suggestions,
-				'metadata': {
-					'approx_volume': len(suggestions),
-					'computed_from': 'bing_autocomplete'
-				}
-			})
-		except Exception as exc:
-			logger.error(f"Bing suggestion fetch failed: {exc}")
-			return jsonify({'error': 'Kon Bing suggesties niet ophalen'}), 502
+		return dynamic_platform_provider('bing')
 
 	@app.route('/api/platforms/ebay', methods=['GET'])
 	def ebay_platform_suggestions():
