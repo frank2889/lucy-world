@@ -1,0 +1,36 @@
+{
+  "country": "GB",
+  "defaultLocale": "en-GB",
+  "locales": [
+    {
+      "code": "en",
+      "hreflang": "en-GB",
+      "path": "/en",
+      "canonical": "https://lucy.world/en"
+    },
+    {
+      "code": "cy",
+      "hreflang": "cy-GB",
+      "path": "/cy",
+      "canonical": "https://lucy.world/cy"
+    },
+    {
+      "code": "ga",
+      "hreflang": "ga-GB",
+      "path": "/ga",
+      "canonical": "https://lucy.world/ga"
+    },
+    {
+      "code": "gd",
+      "hreflang": "gd-GB",
+      "path": "/gd",
+      "canonical": "https://lucy.world/gd"
+    }
+  ],
+  "alternate": [
+    {
+      "hreflang": "x-default",
+      "href": "https://lucy.world/"
+    }
+  ]
+}

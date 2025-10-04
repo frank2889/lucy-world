@@ -1,0 +1,30 @@
+{
+  "country": "CH",
+  "defaultLocale": "de-CH",
+  "locales": [
+    {
+      "code": "de",
+      "hreflang": "de-CH",
+      "path": "/de",
+      "canonical": "https://lucy.world/de"
+    },
+    {
+      "code": "fr",
+      "hreflang": "fr-CH",
+      "path": "/fr",
+      "canonical": "https://lucy.world/fr"
+    },
+    {
+      "code": "it",
+      "hreflang": "it-CH",
+      "path": "/it",
+      "canonical": "https://lucy.world/it"
+    }
+  ],
+  "alternate": [
+    {
+      "hreflang": "x-default",
+      "href": "https://lucy.world/"
+    }
+  ]
+}

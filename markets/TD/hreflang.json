@@ -1,0 +1,24 @@
+{
+  "country": "TD",
+  "defaultLocale": "fr-TD",
+  "locales": [
+    {
+      "code": "fr",
+      "hreflang": "fr-TD",
+      "path": "/fr",
+      "canonical": "https://lucy.world/fr"
+    },
+    {
+      "code": "ar",
+      "hreflang": "ar-TD",
+      "path": "/ar",
+      "canonical": "https://lucy.world/ar"
+    }
+  ],
+  "alternate": [
+    {
+      "hreflang": "x-default",
+      "href": "https://lucy.world/"
+    }
+  ]
+}

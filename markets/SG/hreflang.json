@@ -1,0 +1,36 @@
+{
+  "country": "SG",
+  "defaultLocale": "en-SG",
+  "locales": [
+    {
+      "code": "en",
+      "hreflang": "en-SG",
+      "path": "/en",
+      "canonical": "https://lucy.world/en"
+    },
+    {
+      "code": "zh",
+      "hreflang": "zh-SG",
+      "path": "/zh",
+      "canonical": "https://lucy.world/zh"
+    },
+    {
+      "code": "ms",
+      "hreflang": "ms-SG",
+      "path": "/ms",
+      "canonical": "https://lucy.world/ms"
+    },
+    {
+      "code": "ta",
+      "hreflang": "ta-SG",
+      "path": "/ta",
+      "canonical": "https://lucy.world/ta"
+    }
+  ],
+  "alternate": [
+    {
+      "hreflang": "x-default",
+      "href": "https://lucy.world/"
+    }
+  ]
+}

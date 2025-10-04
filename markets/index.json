@@ -1,0 +1,2102 @@
+{
+  "markets": [
+    {
+      "code": "AD",
+      "defaultLocale": "ca-AD",
+      "canonical": "https://lucy.world/ca",
+      "locales": [
+        "ca"
+      ]
+    },
+    {
+      "code": "AE",
+      "defaultLocale": "ar-AE",
+      "canonical": "https://lucy.world/ar",
+      "locales": [
+        "ar"
+      ]
+    },
+    {
+      "code": "AF",
+      "defaultLocale": "fa-AF",
+      "canonical": "https://lucy.world/fa",
+      "locales": [
+        "fa",
+        "ps",
+        "uz",
+        "tk"
+      ]
+    },
+    {
+      "code": "AG",
+      "defaultLocale": "en-AG",
+      "canonical": "https://lucy.world/en",
+      "locales": [
+        "en"
+      ]
+    },
+    {
+      "code": "AI",
+      "defaultLocale": "en-AI",
+      "canonical": "https://lucy.world/en",
+      "locales": [
+        "en"
+      ]
+    },
+    {
+      "code": "AL",
+      "defaultLocale": "sq-AL",
+      "canonical": "https://lucy.world/sq",
+      "locales": [
+        "sq"
+      ]
+    },
+    {
+      "code": "AM",
+      "defaultLocale": "hy-AM",
+      "canonical": "https://lucy.world/hy",
+      "locales": [
+        "hy"
+      ]
+    },
+    {
+      "code": "AO",
+      "defaultLocale": "pt-AO",
+      "canonical": "https://lucy.world/pt",
+      "locales": [
+        "pt"
+      ]
+    },
+    {
+      "code": "AQ",
+      "defaultLocale": "en-AQ",
+      "canonical": "https://lucy.world/en",
+      "locales": [
+        "en",
+        "fr"
+      ]
+    },
+    {
+      "code": "AR",
+      "defaultLocale": "es-AR",
+      "canonical": "https://lucy.world/es",
+      "locales": [
+        "es"
+      ]
+    },
+    {
+      "code": "AS",
+      "defaultLocale": "sm-AS",
+      "canonical": "https://lucy.world/sm",
+      "locales": [
+        "sm",
+        "en"
+      ]
+    },
+    {
+      "code": "AT",
+      "defaultLocale": "de-AT",
+      "canonical": "https://lucy.world/de",
+      "locales": [
+        "de",
+        "hr",
+        "sl",
+        "hu"
+      ]
+    },
+    {
+      "code": "AU",
+      "defaultLocale": "en-AU",
+      "canonical": "https://lucy.world/en",
+      "locales": [
+        "en"
+      ]
+    },
+    {
+      "code": "AW",
+      "defaultLocale": "nl-AW",
+      "canonical": "https://lucy.world/nl",
+      "locales": [
+        "nl"
+      ]
+    },
+    {
+      "code": "AX",
+      "defaultLocale": "sv-AX",
+      "canonical": "https://lucy.world/sv",
+      "locales": [
+        "sv"
+      ]
+    },
+    {
+      "code": "AZ",
+      "defaultLocale": "az-AZ",
+      "canonical": "https://lucy.world/az",
+      "locales": [
+        "az"
+      ]
+    },
+    {
+      "code": "BA",
+      "defaultLocale": "bs-BA",
+      "canonical": "https://lucy.world/bs",
+      "locales": [
+        "bs",
+        "hr",
+        "sr"
+      ]
+    },
+    {
+      "code": "BB",
+      "defaultLocale": "en-BB",
+      "canonical": "https://lucy.world/en",
+      "locales": [
+        "en"
+      ]
+    },
+    {
+      "code": "BD",
+      "defaultLocale": "bn-BD",
+      "canonical": "https://lucy.world/bn",
+      "locales": [
+        "bn"
+      ]
+    },
+    {
+      "code": "BE",
+      "defaultLocale": "nl-BE",
+      "canonical": "https://lucy.world/nl",
+      "locales": [
+        "nl",
+        "fr",
+        "de"
+      ]
+    },
+    {
+      "code": "BF",
+      "defaultLocale": "fr-BF",
+      "canonical": "https://lucy.world/fr",
+      "locales": [
+        "fr"
+      ]
+    },
+    {
+      "code": "BG",
+      "defaultLocale": "bg-BG",
+      "canonical": "https://lucy.world/bg",
+      "locales": [
+        "bg"
+      ]
+    },
+    {
+      "code": "BH",
+      "defaultLocale": "ar-BH",
+      "canonical": "https://lucy.world/ar",
+      "locales": [
+        "ar"
+      ]
+    },
+    {
+      "code": "BI",
+      "defaultLocale": "fr-BI",
+      "canonical": "https://lucy.world/fr",
+      "locales": [
+        "fr",
+        "en"
+      ]
+    },
+    {
+      "code": "BJ",
+      "defaultLocale": "fr-BJ",
+      "canonical": "https://lucy.world/fr",
+      "locales": [
+        "fr"
+      ]
+    },
+    {
+      "code": "BL",
+      "defaultLocale": "fr-BL",
+      "canonical": "https://lucy.world/fr",
+      "locales": [
+        "fr"
+      ]
+    },
+    {
+      "code": "BM",
+      "defaultLocale": "en-BM",
+      "canonical": "https://lucy.world/en",
+      "locales": [
+        "en"
+      ]
+    },
+    {
+      "code": "BN",
+      "defaultLocale": "ms-BN",
+      "canonical": "https://lucy.world/ms",
+      "locales": [
+        "ms"
+      ]
+    },
+    {
+      "code": "BO",
+      "defaultLocale": "es-BO",
+      "canonical": "https://lucy.world/es",
+      "locales": [
+        "es"
+      ]
+    },
+    {
+      "code": "BQ",
+      "defaultLocale": "nl-BQ",
+      "canonical": "https://lucy.world/nl",
+      "locales": [
+        "nl"
+      ]
+    },
+    {
+      "code": "BR",
+      "defaultLocale": "pt-BR",
+      "canonical": "https://lucy.world/pt",
+      "locales": [
+        "pt"
+      ]
+    },
+    {
+      "code": "BS",
+      "defaultLocale": "en-BS",
+      "canonical": "https://lucy.world/en",
+      "locales": [
+        "en"
+      ]
+    },
+    {
+      "code": "BT",
+      "defaultLocale": null,
+      "canonical": null,
+      "locales": []
+    },
+    {
+      "code": "BV",
+      "defaultLocale": "no-BV",
+      "canonical": "https://lucy.world/no",
+      "locales": [
+        "no"
+      ]
+    },
+    {
+      "code": "BW",
+      "defaultLocale": "en-BW",
+      "canonical": "https://lucy.world/en",
+      "locales": [
+        "en"
+      ]
+    },
+    {
+      "code": "BY",
+      "defaultLocale": "be-BY",
+      "canonical": "https://lucy.world/be",
+      "locales": [
+        "be",
+        "ru"
+      ]
+    },
+    {
+      "code": "BZ",
+      "defaultLocale": "en-BZ",
+      "canonical": "https://lucy.world/en",
+      "locales": [
+        "en"
+      ]
+    },
+    {
+      "code": "CA",
+      "defaultLocale": "en-CA",
+      "canonical": "https://lucy.world/en",
+      "locales": [
+        "en",
+        "fr"
+      ]
+    },
+    {
+      "code": "CC",
+      "defaultLocale": "en-CC",
+      "canonical": "https://lucy.world/en",
+      "locales": [
+        "en"
+      ]
+    },
+    {
+      "code": "CD",
+      "defaultLocale": "fr-CD",
+      "canonical": "https://lucy.world/fr",
+      "locales": [
+        "fr",
+        "sw"
+      ]
+    },
+    {
+      "code": "CF",
+      "defaultLocale": "fr-CF",
+      "canonical": "https://lucy.world/fr",
+      "locales": [
+        "fr"
+      ]
+    },
+    {
+      "code": "CG",
+      "defaultLocale": "fr-CG",
+      "canonical": "https://lucy.world/fr",
+      "locales": [
+        "fr"
+      ]
+    },
+    {
+      "code": "CH",
+      "defaultLocale": "de-CH",
+      "canonical": "https://lucy.world/de",
+      "locales": [
+        "de",
+        "fr",
+        "it"
+      ]
+    },
+    {
+      "code": "CI",
+      "defaultLocale": "fr-CI",
+      "canonical": "https://lucy.world/fr",
+      "locales": [
+        "fr"
+      ]
+    },
+    {
+      "code": "CK",
+      "defaultLocale": "en-CK",
+      "canonical": "https://lucy.world/en",
+      "locales": [
+        "en"
+      ]
+    },
+    {
+      "code": "CL",
+      "defaultLocale": "es-CL",
+      "canonical": "https://lucy.world/es",
+      "locales": [
+        "es"
+      ]
+    },
+    {
+      "code": "CM",
+      "defaultLocale": "fr-CM",
+      "canonical": "https://lucy.world/fr",
+      "locales": [
+        "fr",
+        "en"
+      ]
+    },
+    {
+      "code": "CN",
+      "defaultLocale": "zh-CN",
+      "canonical": "https://lucy.world/zh",
+      "locales": [
+        "zh",
+        "ug",
+        "mn",
+        "ko"
+      ]
+    },
+    {
+      "code": "CO",
+      "defaultLocale": "es-CO",
+      "canonical": "https://lucy.world/es",
+      "locales": [
+        "es"
+      ]
+    },
+    {
+      "code": "CR",
+      "defaultLocale": "es-CR",
+      "canonical": "https://lucy.world/es",
+      "locales": [
+        "es"
+      ]
+    },
+    {
+      "code": "CU",
+      "defaultLocale": "es-CU",
+      "canonical": "https://lucy.world/es",
+      "locales": [
+        "es"
+      ]
+    },
+    {
+      "code": "CV",
+      "defaultLocale": "pt-CV",
+      "canonical": "https://lucy.world/pt",
+      "locales": [
+        "pt"
+      ]
+    },
+    {
+      "code": "CW",
+      "defaultLocale": "nl-CW",
+      "canonical": "https://lucy.world/nl",
+      "locales": [
+        "nl"
+      ]
+    },
+    {
+      "code": "CX",
+      "defaultLocale": "en-CX",
+      "canonical": "https://lucy.world/en",
+      "locales": [
+        "en"
+      ]
+    },
+    {
+      "code": "CY",
+      "defaultLocale": "el-CY",
+      "canonical": "https://lucy.world/el",
+      "locales": [
+        "el",
+        "tr"
+      ]
+    },
+    {
+      "code": "CZ",
+      "defaultLocale": "cs-CZ",
+      "canonical": "https://lucy.world/cs",
+      "locales": [
+        "cs"
+      ]
+    },
+    {
+      "code": "DE",
+      "defaultLocale": "de-DE",
+      "canonical": "https://lucy.world/de",
+      "locales": [
+        "de"
+      ]
+    },
+    {
+      "code": "DJ",
+      "defaultLocale": "ar-DJ",
+      "canonical": "https://lucy.world/ar",
+      "locales": [
+        "ar",
+        "fr"
+      ]
+    },
+    {
+      "code": "DK",
+      "defaultLocale": "da-DK",
+      "canonical": "https://lucy.world/da",
+      "locales": [
+        "da",
+        "de"
+      ]
+    },
+    {
+      "code": "DM",
+      "defaultLocale": "en-DM",
+      "canonical": "https://lucy.world/en",
+      "locales": [
+        "en"
+      ]
+    },
+    {
+      "code": "DO",
+      "defaultLocale": "es-DO",
+      "canonical": "https://lucy.world/es",
+      "locales": [
+        "es"
+      ]
+    },
+    {
+      "code": "DZ",
+      "defaultLocale": "ar-DZ",
+      "canonical": "https://lucy.world/ar",
+      "locales": [
+        "ar",
+        "fr"
+      ]
+    },
+    {
+      "code": "EC",
+      "defaultLocale": "es-EC",
+      "canonical": "https://lucy.world/es",
+      "locales": [
+        "es"
+      ]
+    },
+    {
+      "code": "EE",
+      "defaultLocale": "et-EE",
+      "canonical": "https://lucy.world/et",
+      "locales": [
+        "et"
+      ]
+    },
+    {
+      "code": "EG",
+      "defaultLocale": "ar-EG",
+      "canonical": "https://lucy.world/ar",
+      "locales": [
+        "ar"
+      ]
+    },
+    {
+      "code": "EH",
+      "defaultLocale": "ar-EH",
+      "canonical": "https://lucy.world/ar",
+      "locales": [
+        "ar"
+      ]
+    },
+    {
+      "code": "ER",
+      "defaultLocale": "en-ER",
+      "canonical": "https://lucy.world/en",
+      "locales": [
+        "en",
+        "ar"
+      ]
+    },
+    {
+      "code": "ES",
+      "defaultLocale": "es-ES",
+      "canonical": "https://lucy.world/es",
+      "locales": [
+        "es",
+        "ca",
+        "gl",
+        "eu"
+      ]
+    },
+    {
+      "code": "ET",
+      "defaultLocale": "am-ET",
+      "canonical": "https://lucy.world/am",
+      "locales": [
+        "am"
+      ]
+    },
+    {
+      "code": "FI",
+      "defaultLocale": "fi-FI",
+      "canonical": "https://lucy.world/fi",
+      "locales": [
+        "fi",
+        "sv"
+      ]
+    },
+    {
+      "code": "FJ",
+      "defaultLocale": "en-FJ",
+      "canonical": "https://lucy.world/en",
+      "locales": [
+        "en"
+      ]
+    },
+    {
+      "code": "FK",
+      "defaultLocale": "en-FK",
+      "canonical": "https://lucy.world/en",
+      "locales": [
+        "en"
+      ]
+    },
+    {
+      "code": "FM",
+      "defaultLocale": "en-FM",
+      "canonical": "https://lucy.world/en",
+      "locales": [
+        "en"
+      ]
+    },
+    {
+      "code": "FO",
+      "defaultLocale": "da-FO",
+      "canonical": "https://lucy.world/da",
+      "locales": [
+        "da"
+      ]
+    },
+    {
+      "code": "FR",
+      "defaultLocale": "fr-FR",
+      "canonical": "https://lucy.world/fr",
+      "locales": [
+        "fr"
+      ]
+    },
+    {
+      "code": "GA",
+      "defaultLocale": "fr-GA",
+      "canonical": "https://lucy.world/fr",
+      "locales": [
+        "fr"
+      ]
+    },
+    {
+      "code": "GB",
+      "defaultLocale": "en-GB",
+      "canonical": "https://lucy.world/en",
+      "locales": [
+        "en",
+        "cy",
+        "ga",
+        "gd"
+      ]
+    },
+    {
+      "code": "GD",
+      "defaultLocale": "en-GD",
+      "canonical": "https://lucy.world/en",
+      "locales": [
+        "en"
+      ]
+    },
+    {
+      "code": "GE",
+      "defaultLocale": "ka-GE",
+      "canonical": "https://lucy.world/ka",
+      "locales": [
+        "ka"
+      ]
+    },
+    {
+      "code": "GF",
+      "defaultLocale": "fr-GF",
+      "canonical": "https://lucy.world/fr",
+      "locales": [
+        "fr"
+      ]
+    },
+    {
+      "code": "GG",
+      "defaultLocale": "en-GG",
+      "canonical": "https://lucy.world/en",
+      "locales": [
+        "en"
+      ]
+    },
+    {
+      "code": "GH",
+      "defaultLocale": "en-GH",
+      "canonical": "https://lucy.world/en",
+      "locales": [
+        "en"
+      ]
+    },
+    {
+      "code": "GI",
+      "defaultLocale": "en-GI",
+      "canonical": "https://lucy.world/en",
+      "locales": [
+        "en"
+      ]
+    },
+    {
+      "code": "GL",
+      "defaultLocale": null,
+      "canonical": null,
+      "locales": []
+    },
+    {
+      "code": "GM",
+      "defaultLocale": "en-GM",
+      "canonical": "https://lucy.world/en",
+      "locales": [
+        "en"
+      ]
+    },
+    {
+      "code": "GN",
+      "defaultLocale": "fr-GN",
+      "canonical": "https://lucy.world/fr",
+      "locales": [
+        "fr"
+      ]
+    },
+    {
+      "code": "GP",
+      "defaultLocale": "fr-GP",
+      "canonical": "https://lucy.world/fr",
+      "locales": [
+        "fr"
+      ]
+    },
+    {
+      "code": "GQ",
+      "defaultLocale": "es-GQ",
+      "canonical": "https://lucy.world/es",
+      "locales": [
+        "es",
+        "fr",
+        "pt"
+      ]
+    },
+    {
+      "code": "GR",
+      "defaultLocale": "el-GR",
+      "canonical": "https://lucy.world/el",
+      "locales": [
+        "el"
+      ]
+    },
+    {
+      "code": "GS",
+      "defaultLocale": "en-GS",
+      "canonical": "https://lucy.world/en",
+      "locales": [
+        "en"
+      ]
+    },
+    {
+      "code": "GT",
+      "defaultLocale": "es-GT",
+      "canonical": "https://lucy.world/es",
+      "locales": [
+        "es"
+      ]
+    },
+    {
+      "code": "GU",
+      "defaultLocale": "en-GU",
+      "canonical": "https://lucy.world/en",
+      "locales": [
+        "en"
+      ]
+    },
+    {
+      "code": "GW",
+      "defaultLocale": "pt-GW",
+      "canonical": "https://lucy.world/pt",
+      "locales": [
+        "pt"
+      ]
+    },
+    {
+      "code": "GY",
+      "defaultLocale": "en-GY",
+      "canonical": "https://lucy.world/en",
+      "locales": [
+        "en"
+      ]
+    },
+    {
+      "code": "HK",
+      "defaultLocale": "zh-HK",
+      "canonical": "https://lucy.world/zh",
+      "locales": [
+        "zh",
+        "en"
+      ]
+    },
+    {
+      "code": "HM",
+      "defaultLocale": "en-HM",
+      "canonical": "https://lucy.world/en",
+      "locales": [
+        "en"
+      ]
+    },
+    {
+      "code": "HN",
+      "defaultLocale": "es-HN",
+      "canonical": "https://lucy.world/es",
+      "locales": [
+        "es"
+      ]
+    },
+    {
+      "code": "HR",
+      "defaultLocale": "hr-HR",
+      "canonical": "https://lucy.world/hr",
+      "locales": [
+        "hr",
+        "it"
+      ]
+    },
+    {
+      "code": "HT",
+      "defaultLocale": "ht-HT",
+      "canonical": "https://lucy.world/ht",
+      "locales": [
+        "ht",
+        "fr"
+      ]
+    },
+    {
+      "code": "HU",
+      "defaultLocale": "hu-HU",
+      "canonical": "https://lucy.world/hu",
+      "locales": [
+        "hu"
+      ]
+    },
+    {
+      "code": "ID",
+      "defaultLocale": "id-ID",
+      "canonical": "https://lucy.world/id",
+      "locales": [
+        "id"
+      ]
+    },
+    {
+      "code": "IE",
+      "defaultLocale": "en-IE",
+      "canonical": "https://lucy.world/en",
+      "locales": [
+        "en",
+        "ga"
+      ]
+    },
+    {
+      "code": "IL",
+      "defaultLocale": "he-IL",
+      "canonical": "https://lucy.world/he",
+      "locales": [
+        "he",
+        "ar"
+      ]
+    },
+    {
+      "code": "IM",
+      "defaultLocale": "en-IM",
+      "canonical": "https://lucy.world/en",
+      "locales": [
+        "en"
+      ]
+    },
+    {
+      "code": "IN",
+      "defaultLocale": "hi-IN",
+      "canonical": "https://lucy.world/hi",
+      "locales": [
+        "hi",
+        "en",
+        "bn",
+        "te",
+        "mr",
+        "ta",
+        "ur",
+        "gu",
+        "kn",
+        "ml",
+        "or",
+        "pa",
+        "ne",
+        "sd"
+      ]
+    },
+    {
+      "code": "IO",
+      "defaultLocale": "en-IO",
+      "canonical": "https://lucy.world/en",
+      "locales": [
+        "en"
+      ]
+    },
+    {
+      "code": "IQ",
+      "defaultLocale": "ar-IQ",
+      "canonical": "https://lucy.world/ar",
+      "locales": [
+        "ar",
+        "ku",
+        "az"
+      ]
+    },
+    {
+      "code": "IR",
+      "defaultLocale": "fa-IR",
+      "canonical": "https://lucy.world/fa",
+      "locales": [
+        "fa"
+      ]
+    },
+    {
+      "code": "IS",
+      "defaultLocale": "is-IS",
+      "canonical": "https://lucy.world/is",
+      "locales": [
+        "is"
+      ]
+    },
+    {
+      "code": "IT",
+      "defaultLocale": "it-IT",
+      "canonical": "https://lucy.world/it",
+      "locales": [
+        "it",
+        "fr"
+      ]
+    },
+    {
+      "code": "JE",
+      "defaultLocale": "en-JE",
+      "canonical": "https://lucy.world/en",
+      "locales": [
+        "en"
+      ]
+    },
+    {
+      "code": "JM",
+      "defaultLocale": "en-JM",
+      "canonical": "https://lucy.world/en",
+      "locales": [
+        "en"
+      ]
+    },
+    {
+      "code": "JO",
+      "defaultLocale": "ar-JO",
+      "canonical": "https://lucy.world/ar",
+      "locales": [
+        "ar"
+      ]
+    },
+    {
+      "code": "JP",
+      "defaultLocale": "ja-JP",
+      "canonical": "https://lucy.world/ja",
+      "locales": [
+        "ja"
+      ]
+    },
+    {
+      "code": "KE",
+      "defaultLocale": "sw-KE",
+      "canonical": "https://lucy.world/sw",
+      "locales": [
+        "sw",
+        "en"
+      ]
+    },
+    {
+      "code": "KG",
+      "defaultLocale": "ky-KG",
+      "canonical": "https://lucy.world/ky",
+      "locales": [
+        "ky",
+        "ru"
+      ]
+    },
+    {
+      "code": "KH",
+      "defaultLocale": "km-KH",
+      "canonical": "https://lucy.world/km",
+      "locales": [
+        "km"
+      ]
+    },
+    {
+      "code": "KI",
+      "defaultLocale": "en-KI",
+      "canonical": "https://lucy.world/en",
+      "locales": [
+        "en"
+      ]
+    },
+    {
+      "code": "KM",
+      "defaultLocale": "ar-KM",
+      "canonical": "https://lucy.world/ar",
+      "locales": [
+        "ar",
+        "fr"
+      ]
+    },
+    {
+      "code": "KN",
+      "defaultLocale": "en-KN",
+      "canonical": "https://lucy.world/en",
+      "locales": [
+        "en"
+      ]
+    },
+    {
+      "code": "KP",
+      "defaultLocale": "ko-KP",
+      "canonical": "https://lucy.world/ko",
+      "locales": [
+        "ko"
+      ]
+    },
+    {
+      "code": "KR",
+      "defaultLocale": "ko-KR",
+      "canonical": "https://lucy.world/ko",
+      "locales": [
+        "ko"
+      ]
+    },
+    {
+      "code": "KW",
+      "defaultLocale": "ar-KW",
+      "canonical": "https://lucy.world/ar",
+      "locales": [
+        "ar"
+      ]
+    },
+    {
+      "code": "KY",
+      "defaultLocale": "en-KY",
+      "canonical": "https://lucy.world/en",
+      "locales": [
+        "en"
+      ]
+    },
+    {
+      "code": "KZ",
+      "defaultLocale": "ru-KZ",
+      "canonical": "https://lucy.world/ru",
+      "locales": [
+        "ru",
+        "kk"
+      ]
+    },
+    {
+      "code": "LA",
+      "defaultLocale": "lo-LA",
+      "canonical": "https://lucy.world/lo",
+      "locales": [
+        "lo"
+      ]
+    },
+    {
+      "code": "LB",
+      "defaultLocale": "ar-LB",
+      "canonical": "https://lucy.world/ar",
+      "locales": [
+        "ar"
+      ]
+    },
+    {
+      "code": "LC",
+      "defaultLocale": "en-LC",
+      "canonical": "https://lucy.world/en",
+      "locales": [
+        "en"
+      ]
+    },
+    {
+      "code": "LI",
+      "defaultLocale": "de-LI",
+      "canonical": "https://lucy.world/de",
+      "locales": [
+        "de"
+      ]
+    },
+    {
+      "code": "LK",
+      "defaultLocale": "si-LK",
+      "canonical": "https://lucy.world/si",
+      "locales": [
+        "si",
+        "ta"
+      ]
+    },
+    {
+      "code": "LR",
+      "defaultLocale": "en-LR",
+      "canonical": "https://lucy.world/en",
+      "locales": [
+        "en"
+      ]
+    },
+    {
+      "code": "LS",
+      "defaultLocale": "st-LS",
+      "canonical": "https://lucy.world/st",
+      "locales": [
+        "st",
+        "en"
+      ]
+    },
+    {
+      "code": "LT",
+      "defaultLocale": "lt-LT",
+      "canonical": "https://lucy.world/lt",
+      "locales": [
+        "lt"
+      ]
+    },
+    {
+      "code": "LU",
+      "defaultLocale": "fr-LU",
+      "canonical": "https://lucy.world/fr",
+      "locales": [
+        "fr",
+        "lb",
+        "de"
+      ]
+    },
+    {
+      "code": "LV",
+      "defaultLocale": "lv-LV",
+      "canonical": "https://lucy.world/lv",
+      "locales": [
+        "lv"
+      ]
+    },
+    {
+      "code": "LY",
+      "defaultLocale": "ar-LY",
+      "canonical": "https://lucy.world/ar",
+      "locales": [
+        "ar"
+      ]
+    },
+    {
+      "code": "MA",
+      "defaultLocale": "ar-MA",
+      "canonical": "https://lucy.world/ar",
+      "locales": [
+        "ar",
+        "fr"
+      ]
+    },
+    {
+      "code": "MC",
+      "defaultLocale": "fr-MC",
+      "canonical": "https://lucy.world/fr",
+      "locales": [
+        "fr"
+      ]
+    },
+    {
+      "code": "MD",
+      "defaultLocale": "ro-MD",
+      "canonical": "https://lucy.world/ro",
+      "locales": [
+        "ro"
+      ]
+    },
+    {
+      "code": "ME",
+      "defaultLocale": "sr-ME",
+      "canonical": "https://lucy.world/sr",
+      "locales": [
+        "sr"
+      ]
+    },
+    {
+      "code": "MF",
+      "defaultLocale": "fr-MF",
+      "canonical": "https://lucy.world/fr",
+      "locales": [
+        "fr"
+      ]
+    },
+    {
+      "code": "MG",
+      "defaultLocale": "mg-MG",
+      "canonical": "https://lucy.world/mg",
+      "locales": [
+        "mg",
+        "fr",
+        "en"
+      ]
+    },
+    {
+      "code": "MH",
+      "defaultLocale": "en-MH",
+      "canonical": "https://lucy.world/en",
+      "locales": [
+        "en"
+      ]
+    },
+    {
+      "code": "MK",
+      "defaultLocale": "mk-MK",
+      "canonical": "https://lucy.world/mk",
+      "locales": [
+        "mk",
+        "sq"
+      ]
+    },
+    {
+      "code": "ML",
+      "defaultLocale": "fr-ML",
+      "canonical": "https://lucy.world/fr",
+      "locales": [
+        "fr"
+      ]
+    },
+    {
+      "code": "MM",
+      "defaultLocale": "my-MM",
+      "canonical": "https://lucy.world/my",
+      "locales": [
+        "my"
+      ]
+    },
+    {
+      "code": "MN",
+      "defaultLocale": "mn-MN",
+      "canonical": "https://lucy.world/mn",
+      "locales": [
+        "mn"
+      ]
+    },
+    {
+      "code": "MO",
+      "defaultLocale": "zh-MO",
+      "canonical": "https://lucy.world/zh",
+      "locales": [
+        "zh",
+        "pt"
+      ]
+    },
+    {
+      "code": "MP",
+      "defaultLocale": "en-MP",
+      "canonical": "https://lucy.world/en",
+      "locales": [
+        "en"
+      ]
+    },
+    {
+      "code": "MQ",
+      "defaultLocale": "fr-MQ",
+      "canonical": "https://lucy.world/fr",
+      "locales": [
+        "fr"
+      ]
+    },
+    {
+      "code": "MR",
+      "defaultLocale": "ar-MR",
+      "canonical": "https://lucy.world/ar",
+      "locales": [
+        "ar"
+      ]
+    },
+    {
+      "code": "MS",
+      "defaultLocale": "en-MS",
+      "canonical": "https://lucy.world/en",
+      "locales": [
+        "en"
+      ]
+    },
+    {
+      "code": "MT",
+      "defaultLocale": "mt-MT",
+      "canonical": "https://lucy.world/mt",
+      "locales": [
+        "mt",
+        "en"
+      ]
+    },
+    {
+      "code": "MU",
+      "defaultLocale": "en-MU",
+      "canonical": "https://lucy.world/en",
+      "locales": [
+        "en",
+        "fr"
+      ]
+    },
+    {
+      "code": "MV",
+      "defaultLocale": null,
+      "canonical": null,
+      "locales": []
+    },
+    {
+      "code": "MW",
+      "defaultLocale": "en-MW",
+      "canonical": "https://lucy.world/en",
+      "locales": [
+        "en",
+        "ny"
+      ]
+    },
+    {
+      "code": "MX",
+      "defaultLocale": "es-MX",
+      "canonical": "https://lucy.world/es",
+      "locales": [
+        "es"
+      ]
+    },
+    {
+      "code": "MY",
+      "defaultLocale": "ms-MY",
+      "canonical": "https://lucy.world/ms",
+      "locales": [
+        "ms"
+      ]
+    },
+    {
+      "code": "MZ",
+      "defaultLocale": "pt-MZ",
+      "canonical": "https://lucy.world/pt",
+      "locales": [
+        "pt"
+      ]
+    },
+    {
+      "code": "NA",
+      "defaultLocale": "en-NA",
+      "canonical": "https://lucy.world/en",
+      "locales": [
+        "en"
+      ]
+    },
+    {
+      "code": "NC",
+      "defaultLocale": "fr-NC",
+      "canonical": "https://lucy.world/fr",
+      "locales": [
+        "fr"
+      ]
+    },
+    {
+      "code": "NE",
+      "defaultLocale": "fr-NE",
+      "canonical": "https://lucy.world/fr",
+      "locales": [
+        "fr"
+      ]
+    },
+    {
+      "code": "NF",
+      "defaultLocale": "en-NF",
+      "canonical": "https://lucy.world/en",
+      "locales": [
+        "en"
+      ]
+    },
+    {
+      "code": "NG",
+      "defaultLocale": "en-NG",
+      "canonical": "https://lucy.world/en",
+      "locales": [
+        "en",
+        "yo"
+      ]
+    },
+    {
+      "code": "NI",
+      "defaultLocale": "es-NI",
+      "canonical": "https://lucy.world/es",
+      "locales": [
+        "es"
+      ]
+    },
+    {
+      "code": "NL",
+      "defaultLocale": "nl-NL",
+      "canonical": "https://lucy.world/nl",
+      "locales": [
+        "nl",
+        "fy"
+      ]
+    },
+    {
+      "code": "NO",
+      "defaultLocale": "no-NO",
+      "canonical": "https://lucy.world/no",
+      "locales": [
+        "no"
+      ]
+    },
+    {
+      "code": "NP",
+      "defaultLocale": "ne-NP",
+      "canonical": "https://lucy.world/ne",
+      "locales": [
+        "ne"
+      ]
+    },
+    {
+      "code": "NR",
+      "defaultLocale": "en-NR",
+      "canonical": "https://lucy.world/en",
+      "locales": [
+        "en"
+      ]
+    },
+    {
+      "code": "NU",
+      "defaultLocale": "en-NU",
+      "canonical": "https://lucy.world/en",
+      "locales": [
+        "en"
+      ]
+    },
+    {
+      "code": "NZ",
+      "defaultLocale": "mi-NZ",
+      "canonical": "https://lucy.world/mi",
+      "locales": [
+        "mi",
+        "en"
+      ]
+    },
+    {
+      "code": "OM",
+      "defaultLocale": "ar-OM",
+      "canonical": "https://lucy.world/ar",
+      "locales": [
+        "ar"
+      ]
+    },
+    {
+      "code": "PA",
+      "defaultLocale": "es-PA",
+      "canonical": "https://lucy.world/es",
+      "locales": [
+        "es"
+      ]
+    },
+    {
+      "code": "PE",
+      "defaultLocale": "es-PE",
+      "canonical": "https://lucy.world/es",
+      "locales": [
+        "es"
+      ]
+    },
+    {
+      "code": "PF",
+      "defaultLocale": "fr-PF",
+      "canonical": "https://lucy.world/fr",
+      "locales": [
+        "fr"
+      ]
+    },
+    {
+      "code": "PG",
+      "defaultLocale": "en-PG",
+      "canonical": "https://lucy.world/en",
+      "locales": [
+        "en"
+      ]
+    },
+    {
+      "code": "PH",
+      "defaultLocale": "en-PH",
+      "canonical": "https://lucy.world/en",
+      "locales": [
+        "en",
+        "tl"
+      ]
+    },
+    {
+      "code": "PK",
+      "defaultLocale": "ur-PK",
+      "canonical": "https://lucy.world/ur",
+      "locales": [
+        "ur",
+        "en"
+      ]
+    },
+    {
+      "code": "PL",
+      "defaultLocale": "pl-PL",
+      "canonical": "https://lucy.world/pl",
+      "locales": [
+        "pl",
+        "de",
+        "lt"
+      ]
+    },
+    {
+      "code": "PM",
+      "defaultLocale": "fr-PM",
+      "canonical": "https://lucy.world/fr",
+      "locales": [
+        "fr"
+      ]
+    },
+    {
+      "code": "PN",
+      "defaultLocale": "en-PN",
+      "canonical": "https://lucy.world/en",
+      "locales": [
+        "en"
+      ]
+    },
+    {
+      "code": "PR",
+      "defaultLocale": "es-PR",
+      "canonical": "https://lucy.world/es",
+      "locales": [
+        "es",
+        "en"
+      ]
+    },
+    {
+      "code": "PS",
+      "defaultLocale": "ar-PS",
+      "canonical": "https://lucy.world/ar",
+      "locales": [
+        "ar"
+      ]
+    },
+    {
+      "code": "PT",
+      "defaultLocale": "pt-PT",
+      "canonical": "https://lucy.world/pt",
+      "locales": [
+        "pt"
+      ]
+    },
+    {
+      "code": "PW",
+      "defaultLocale": "en-PW",
+      "canonical": "https://lucy.world/en",
+      "locales": [
+        "en"
+      ]
+    },
+    {
+      "code": "PY",
+      "defaultLocale": "es-PY",
+      "canonical": "https://lucy.world/es",
+      "locales": [
+        "es"
+      ]
+    },
+    {
+      "code": "QA",
+      "defaultLocale": "ar-QA",
+      "canonical": "https://lucy.world/ar",
+      "locales": [
+        "ar"
+      ]
+    },
+    {
+      "code": "RE",
+      "defaultLocale": "fr-RE",
+      "canonical": "https://lucy.world/fr",
+      "locales": [
+        "fr"
+      ]
+    },
+    {
+      "code": "RO",
+      "defaultLocale": "ro-RO",
+      "canonical": "https://lucy.world/ro",
+      "locales": [
+        "ro"
+      ]
+    },
+    {
+      "code": "RS",
+      "defaultLocale": "sr-RS",
+      "canonical": "https://lucy.world/sr",
+      "locales": [
+        "sr",
+        "hu",
+        "ro",
+        "hr",
+        "sk",
+        "uk"
+      ]
+    },
+    {
+      "code": "RU",
+      "defaultLocale": "ru-RU",
+      "canonical": "https://lucy.world/ru",
+      "locales": [
+        "ru",
+        "tt",
+        "az"
+      ]
+    },
+    {
+      "code": "RW",
+      "defaultLocale": "rw-RW",
+      "canonical": "https://lucy.world/rw",
+      "locales": [
+        "rw",
+        "en",
+        "fr"
+      ]
+    },
+    {
+      "code": "SA",
+      "defaultLocale": "ar-SA",
+      "canonical": "https://lucy.world/ar",
+      "locales": [
+        "ar"
+      ]
+    },
+    {
+      "code": "SB",
+      "defaultLocale": "en-SB",
+      "canonical": "https://lucy.world/en",
+      "locales": [
+        "en"
+      ]
+    },
+    {
+      "code": "SC",
+      "defaultLocale": "fr-SC",
+      "canonical": "https://lucy.world/fr",
+      "locales": [
+        "fr",
+        "en"
+      ]
+    },
+    {
+      "code": "SD",
+      "defaultLocale": "ar-SD",
+      "canonical": "https://lucy.world/ar",
+      "locales": [
+        "ar",
+        "en"
+      ]
+    },
+    {
+      "code": "SE",
+      "defaultLocale": "sv-SE",
+      "canonical": "https://lucy.world/sv",
+      "locales": [
+        "sv",
+        "fi"
+      ]
+    },
+    {
+      "code": "SG",
+      "defaultLocale": "en-SG",
+      "canonical": "https://lucy.world/en",
+      "locales": [
+        "en",
+        "zh",
+        "ms",
+        "ta"
+      ]
+    },
+    {
+      "code": "SH",
+      "defaultLocale": "en-SH",
+      "canonical": "https://lucy.world/en",
+      "locales": [
+        "en"
+      ]
+    },
+    {
+      "code": "SI",
+      "defaultLocale": "sl-SI",
+      "canonical": "https://lucy.world/sl",
+      "locales": [
+        "sl"
+      ]
+    },
+    {
+      "code": "SJ",
+      "defaultLocale": "no-SJ",
+      "canonical": "https://lucy.world/no",
+      "locales": [
+        "no"
+      ]
+    },
+    {
+      "code": "SK",
+      "defaultLocale": "sk-SK",
+      "canonical": "https://lucy.world/sk",
+      "locales": [
+        "sk"
+      ]
+    },
+    {
+      "code": "SL",
+      "defaultLocale": "en-SL",
+      "canonical": "https://lucy.world/en",
+      "locales": [
+        "en"
+      ]
+    },
+    {
+      "code": "SM",
+      "defaultLocale": "it-SM",
+      "canonical": "https://lucy.world/it",
+      "locales": [
+        "it"
+      ]
+    },
+    {
+      "code": "SN",
+      "defaultLocale": "fr-SN",
+      "canonical": "https://lucy.world/fr",
+      "locales": [
+        "fr"
+      ]
+    },
+    {
+      "code": "SO",
+      "defaultLocale": "so-SO",
+      "canonical": "https://lucy.world/so",
+      "locales": [
+        "so",
+        "ar"
+      ]
+    },
+    {
+      "code": "SR",
+      "defaultLocale": "nl-SR",
+      "canonical": "https://lucy.world/nl",
+      "locales": [
+        "nl"
+      ]
+    },
+    {
+      "code": "SS",
+      "defaultLocale": "en-SS",
+      "canonical": "https://lucy.world/en",
+      "locales": [
+        "en"
+      ]
+    },
+    {
+      "code": "ST",
+      "defaultLocale": "pt-ST",
+      "canonical": "https://lucy.world/pt",
+      "locales": [
+        "pt"
+      ]
+    },
+    {
+      "code": "SV",
+      "defaultLocale": "es-SV",
+      "canonical": "https://lucy.world/es",
+      "locales": [
+        "es"
+      ]
+    },
+    {
+      "code": "SX",
+      "defaultLocale": "en-SX",
+      "canonical": "https://lucy.world/en",
+      "locales": [
+        "en",
+        "nl"
+      ]
+    },
+    {
+      "code": "SY",
+      "defaultLocale": "ar-SY",
+      "canonical": "https://lucy.world/ar",
+      "locales": [
+        "ar",
+        "fr"
+      ]
+    },
+    {
+      "code": "SZ",
+      "defaultLocale": "en-SZ",
+      "canonical": "https://lucy.world/en",
+      "locales": [
+        "en"
+      ]
+    },
+    {
+      "code": "TC",
+      "defaultLocale": "en-TC",
+      "canonical": "https://lucy.world/en",
+      "locales": [
+        "en"
+      ]
+    },
+    {
+      "code": "TD",
+      "defaultLocale": "fr-TD",
+      "canonical": "https://lucy.world/fr",
+      "locales": [
+        "fr",
+        "ar"
+      ]
+    },
+    {
+      "code": "TF",
+      "defaultLocale": "fr-TF",
+      "canonical": "https://lucy.world/fr",
+      "locales": [
+        "fr"
+      ]
+    },
+    {
+      "code": "TG",
+      "defaultLocale": "fr-TG",
+      "canonical": "https://lucy.world/fr",
+      "locales": [
+        "fr"
+      ]
+    },
+    {
+      "code": "TH",
+      "defaultLocale": "th-TH",
+      "canonical": "https://lucy.world/th",
+      "locales": [
+        "th"
+      ]
+    },
+    {
+      "code": "TJ",
+      "defaultLocale": "tg-TJ",
+      "canonical": "https://lucy.world/tg",
+      "locales": [
+        "tg"
+      ]
+    },
+    {
+      "code": "TK",
+      "defaultLocale": "en-TK",
+      "canonical": "https://lucy.world/en",
+      "locales": [
+        "en"
+      ]
+    },
+    {
+      "code": "TL",
+      "defaultLocale": "pt-TL",
+      "canonical": "https://lucy.world/pt",
+      "locales": [
+        "pt"
+      ]
+    },
+    {
+      "code": "TM",
+      "defaultLocale": "tk-TM",
+      "canonical": "https://lucy.world/tk",
+      "locales": [
+        "tk"
+      ]
+    },
+    {
+      "code": "TN",
+      "defaultLocale": "ar-TN",
+      "canonical": "https://lucy.world/ar",
+      "locales": [
+        "ar",
+        "fr"
+      ]
+    },
+    {
+      "code": "TO",
+      "defaultLocale": "en-TO",
+      "canonical": "https://lucy.world/en",
+      "locales": [
+        "en"
+      ]
+    },
+    {
+      "code": "TR",
+      "defaultLocale": "tr-TR",
+      "canonical": "https://lucy.world/tr",
+      "locales": [
+        "tr"
+      ]
+    },
+    {
+      "code": "TT",
+      "defaultLocale": "en-TT",
+      "canonical": "https://lucy.world/en",
+      "locales": [
+        "en"
+      ]
+    },
+    {
+      "code": "TV",
+      "defaultLocale": "en-TV",
+      "canonical": "https://lucy.world/en",
+      "locales": [
+        "en"
+      ]
+    },
+    {
+      "code": "TW",
+      "defaultLocale": "zh-TW",
+      "canonical": "https://lucy.world/zh",
+      "locales": [
+        "zh"
+      ]
+    },
+    {
+      "code": "TZ",
+      "defaultLocale": "sw-TZ",
+      "canonical": "https://lucy.world/sw",
+      "locales": [
+        "sw",
+        "en"
+      ]
+    },
+    {
+      "code": "UA",
+      "defaultLocale": "uk-UA",
+      "canonical": "https://lucy.world/uk",
+      "locales": [
+        "uk",
+        "ru"
+      ]
+    },
+    {
+      "code": "UG",
+      "defaultLocale": "sw-UG",
+      "canonical": "https://lucy.world/sw",
+      "locales": [
+        "sw",
+        "en"
+      ]
+    },
+    {
+      "code": "UM",
+      "defaultLocale": "en-UM",
+      "canonical": "https://lucy.world/en",
+      "locales": [
+        "en"
+      ]
+    },
+    {
+      "code": "US",
+      "defaultLocale": "en-US",
+      "canonical": "https://lucy.world/en",
+      "locales": [
+        "en",
+        "es"
+      ]
+    },
+    {
+      "code": "UY",
+      "defaultLocale": "es-UY",
+      "canonical": "https://lucy.world/es",
+      "locales": [
+        "es"
+      ]
+    },
+    {
+      "code": "UZ",
+      "defaultLocale": "uz-UZ",
+      "canonical": "https://lucy.world/uz",
+      "locales": [
+        "uz"
+      ]
+    },
+    {
+      "code": "VA",
+      "defaultLocale": "it-VA",
+      "canonical": "https://lucy.world/it",
+      "locales": [
+        "it"
+      ]
+    },
+    {
+      "code": "VC",
+      "defaultLocale": "en-VC",
+      "canonical": "https://lucy.world/en",
+      "locales": [
+        "en"
+      ]
+    },
+    {
+      "code": "VE",
+      "defaultLocale": "es-VE",
+      "canonical": "https://lucy.world/es",
+      "locales": [
+        "es"
+      ]
+    },
+    {
+      "code": "VG",
+      "defaultLocale": "en-VG",
+      "canonical": "https://lucy.world/en",
+      "locales": [
+        "en"
+      ]
+    },
+    {
+      "code": "VI",
+      "defaultLocale": "en-VI",
+      "canonical": "https://lucy.world/en",
+      "locales": [
+        "en"
+      ]
+    },
+    {
+      "code": "VN",
+      "defaultLocale": "vi-VN",
+      "canonical": "https://lucy.world/vi",
+      "locales": [
+        "vi"
+      ]
+    },
+    {
+      "code": "VU",
+      "defaultLocale": "en-VU",
+      "canonical": "https://lucy.world/en",
+      "locales": [
+        "en",
+        "fr"
+      ]
+    },
+    {
+      "code": "WF",
+      "defaultLocale": "fr-WF",
+      "canonical": "https://lucy.world/fr",
+      "locales": [
+        "fr"
+      ]
+    },
+    {
+      "code": "WS",
+      "defaultLocale": "sm-WS",
+      "canonical": "https://lucy.world/sm",
+      "locales": [
+        "sm",
+        "en"
+      ]
+    },
+    {
+      "code": "YE",
+      "defaultLocale": "ar-YE",
+      "canonical": "https://lucy.world/ar",
+      "locales": [
+        "ar"
+      ]
+    },
+    {
+      "code": "YT",
+      "defaultLocale": "fr-YT",
+      "canonical": "https://lucy.world/fr",
+      "locales": [
+        "fr"
+      ]
+    },
+    {
+      "code": "ZA",
+      "defaultLocale": "en-ZA",
+      "canonical": "https://lucy.world/en",
+      "locales": [
+        "en",
+        "zu",
+        "xh",
+        "af",
+        "st"
+      ]
+    },
+    {
+      "code": "ZM",
+      "defaultLocale": "en-ZM",
+      "canonical": "https://lucy.world/en",
+      "locales": [
+        "en"
+      ]
+    },
+    {
+      "code": "ZW",
+      "defaultLocale": "sn-ZW",
+      "canonical": "https://lucy.world/sn",
+      "locales": [
+        "sn",
+        "en"
+      ]
+    }
+  ]
+}

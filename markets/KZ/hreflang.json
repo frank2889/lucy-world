@@ -1,0 +1,24 @@
+{
+  "country": "KZ",
+  "defaultLocale": "ru-KZ",
+  "locales": [
+    {
+      "code": "ru",
+      "hreflang": "ru-KZ",
+      "path": "/ru",
+      "canonical": "https://lucy.world/ru"
+    },
+    {
+      "code": "kk",
+      "hreflang": "kk-KZ",
+      "path": "/kk",
+      "canonical": "https://lucy.world/kk"
+    }
+  ],
+  "alternate": [
+    {
+      "hreflang": "x-default",
+      "href": "https://lucy.world/"
+    }
+  ]
+}

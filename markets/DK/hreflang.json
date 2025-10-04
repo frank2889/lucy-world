@@ -1,0 +1,24 @@
+{
+  "country": "DK",
+  "defaultLocale": "da-DK",
+  "locales": [
+    {
+      "code": "da",
+      "hreflang": "da-DK",
+      "path": "/da",
+      "canonical": "https://lucy.world/da"
+    },
+    {
+      "code": "de",
+      "hreflang": "de-DK",
+      "path": "/de",
+      "canonical": "https://lucy.world/de"
+    }
+  ],
+  "alternate": [
+    {
+      "hreflang": "x-default",
+      "href": "https://lucy.world/"
+    }
+  ]
+}

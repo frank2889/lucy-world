@@ -1,0 +1,30 @@
+{
+  "country": "BA",
+  "defaultLocale": "bs-BA",
+  "locales": [
+    {
+      "code": "bs",
+      "hreflang": "bs-BA",
+      "path": "/bs",
+      "canonical": "https://lucy.world/bs"
+    },
+    {
+      "code": "hr",
+      "hreflang": "hr-BA",
+      "path": "/hr",
+      "canonical": "https://lucy.world/hr"
+    },
+    {
+      "code": "sr",
+      "hreflang": "sr-BA",
+      "path": "/sr",
+      "canonical": "https://lucy.world/sr"
+    }
+  ],
+  "alternate": [
+    {
+      "hreflang": "x-default",
+      "href": "https://lucy.world/"
+    }
+  ]
+}

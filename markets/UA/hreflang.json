@@ -1,0 +1,24 @@
+{
+  "country": "UA",
+  "defaultLocale": "uk-UA",
+  "locales": [
+    {
+      "code": "uk",
+      "hreflang": "uk-UA",
+      "path": "/uk",
+      "canonical": "https://lucy.world/uk"
+    },
+    {
+      "code": "ru",
+      "hreflang": "ru-UA",
+      "path": "/ru",
+      "canonical": "https://lucy.world/ru"
+    }
+  ],
+  "alternate": [
+    {
+      "hreflang": "x-default",
+      "href": "https://lucy.world/"
+    }
+  ]
+}

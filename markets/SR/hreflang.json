@@ -1,0 +1,18 @@
+{
+  "country": "SR",
+  "defaultLocale": "nl-SR",
+  "locales": [
+    {
+      "code": "nl",
+      "hreflang": "nl-SR",
+      "path": "/nl",
+      "canonical": "https://lucy.world/nl"
+    }
+  ],
+  "alternate": [
+    {
+      "hreflang": "x-default",
+      "href": "https://lucy.world/"
+    }
+  ]
+}

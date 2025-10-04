@@ -1,0 +1,18 @@
+{
+  "country": "BJ",
+  "defaultLocale": "fr-BJ",
+  "locales": [
+    {
+      "code": "fr",
+      "hreflang": "fr-BJ",
+      "path": "/fr",
+      "canonical": "https://lucy.world/fr"
+    }
+  ],
+  "alternate": [
+    {
+      "hreflang": "x-default",
+      "href": "https://lucy.world/"
+    }
+  ]
+}

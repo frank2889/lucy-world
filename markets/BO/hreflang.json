@@ -1,0 +1,18 @@
+{
+  "country": "BO",
+  "defaultLocale": "es-BO",
+  "locales": [
+    {
+      "code": "es",
+      "hreflang": "es-BO",
+      "path": "/es",
+      "canonical": "https://lucy.world/es"
+    }
+  ],
+  "alternate": [
+    {
+      "hreflang": "x-default",
+      "href": "https://lucy.world/"
+    }
+  ]
+}

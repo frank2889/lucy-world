@@ -1,0 +1,18 @@
+{
+  "country": "LT",
+  "defaultLocale": "lt-LT",
+  "locales": [
+    {
+      "code": "lt",
+      "hreflang": "lt-LT",
+      "path": "/lt",
+      "canonical": "https://lucy.world/lt"
+    }
+  ],
+  "alternate": [
+    {
+      "hreflang": "x-default",
+      "href": "https://lucy.world/"
+    }
+  ]
+}

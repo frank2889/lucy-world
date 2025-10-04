@@ -1,0 +1,18 @@
+{
+  "country": "BN",
+  "defaultLocale": "ms-BN",
+  "locales": [
+    {
+      "code": "ms",
+      "hreflang": "ms-BN",
+      "path": "/ms",
+      "canonical": "https://lucy.world/ms"
+    }
+  ],
+  "alternate": [
+    {
+      "hreflang": "x-default",
+      "href": "https://lucy.world/"
+    }
+  ]
+}

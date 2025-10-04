@@ -1,0 +1,18 @@
+{
+  "country": "GA",
+  "defaultLocale": "fr-GA",
+  "locales": [
+    {
+      "code": "fr",
+      "hreflang": "fr-GA",
+      "path": "/fr",
+      "canonical": "https://lucy.world/fr"
+    }
+  ],
+  "alternate": [
+    {
+      "hreflang": "x-default",
+      "href": "https://lucy.world/"
+    }
+  ]
+}

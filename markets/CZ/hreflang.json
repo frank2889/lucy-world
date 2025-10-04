@@ -1,0 +1,18 @@
+{
+  "country": "CZ",
+  "defaultLocale": "cs-CZ",
+  "locales": [
+    {
+      "code": "cs",
+      "hreflang": "cs-CZ",
+      "path": "/cs",
+      "canonical": "https://lucy.world/cs"
+    }
+  ],
+  "alternate": [
+    {
+      "hreflang": "x-default",
+      "href": "https://lucy.world/"
+    }
+  ]
+}

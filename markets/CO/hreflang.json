@@ -1,0 +1,18 @@
+{
+  "country": "CO",
+  "defaultLocale": "es-CO",
+  "locales": [
+    {
+      "code": "es",
+      "hreflang": "es-CO",
+      "path": "/es",
+      "canonical": "https://lucy.world/es"
+    }
+  ],
+  "alternate": [
+    {
+      "hreflang": "x-default",
+      "href": "https://lucy.world/"
+    }
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "country": "NG",
+  "defaultLocale": "en-NG",
+  "locales": [
+    {
+      "code": "en",
+      "hreflang": "en-NG",
+      "path": "/en",
+      "canonical": "https://lucy.world/en"
+    },
+    {
+      "code": "yo",
+      "hreflang": "yo-NG",
+      "path": "/yo",
+      "canonical": "https://lucy.world/yo"
+    }
+  ],
+  "alternate": [
+    {
+      "hreflang": "x-default",
+      "href": "https://lucy.world/"
+    }
+  ]
+}

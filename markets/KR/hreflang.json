@@ -1,0 +1,18 @@
+{
+  "country": "KR",
+  "defaultLocale": "ko-KR",
+  "locales": [
+    {
+      "code": "ko",
+      "hreflang": "ko-KR",
+      "path": "/ko",
+      "canonical": "https://lucy.world/ko"
+    }
+  ],
+  "alternate": [
+    {
+      "hreflang": "x-default",
+      "href": "https://lucy.world/"
+    }
+  ]
+}

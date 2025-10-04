@@ -1,0 +1,24 @@
+{
+  "country": "BY",
+  "defaultLocale": "be-BY",
+  "locales": [
+    {
+      "code": "be",
+      "hreflang": "be-BY",
+      "path": "/be",
+      "canonical": "https://lucy.world/be"
+    },
+    {
+      "code": "ru",
+      "hreflang": "ru-BY",
+      "path": "/ru",
+      "canonical": "https://lucy.world/ru"
+    }
+  ],
+  "alternate": [
+    {
+      "hreflang": "x-default",
+      "href": "https://lucy.world/"
+    }
+  ]
+}

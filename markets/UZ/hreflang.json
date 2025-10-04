@@ -1,0 +1,18 @@
+{
+  "country": "UZ",
+  "defaultLocale": "uz-UZ",
+  "locales": [
+    {
+      "code": "uz",
+      "hreflang": "uz-UZ",
+      "path": "/uz",
+      "canonical": "https://lucy.world/uz"
+    }
+  ],
+  "alternate": [
+    {
+      "hreflang": "x-default",
+      "href": "https://lucy.world/"
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "country": "SJ",
+  "defaultLocale": "no-SJ",
+  "locales": [
+    {
+      "code": "no",
+      "hreflang": "no-SJ",
+      "path": "/no",
+      "canonical": "https://lucy.world/no"
+    }
+  ],
+  "alternate": [
+    {
+      "hreflang": "x-default",
+      "href": "https://lucy.world/"
+    }
+  ]
+}

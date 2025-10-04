@@ -1,0 +1,18 @@
+{
+  "country": "KH",
+  "defaultLocale": "km-KH",
+  "locales": [
+    {
+      "code": "km",
+      "hreflang": "km-KH",
+      "path": "/km",
+      "canonical": "https://lucy.world/km"
+    }
+  ],
+  "alternate": [
+    {
+      "hreflang": "x-default",
+      "href": "https://lucy.world/"
+    }
+  ]
+}

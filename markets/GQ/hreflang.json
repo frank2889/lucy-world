@@ -1,0 +1,30 @@
+{
+  "country": "GQ",
+  "defaultLocale": "es-GQ",
+  "locales": [
+    {
+      "code": "es",
+      "hreflang": "es-GQ",
+      "path": "/es",
+      "canonical": "https://lucy.world/es"
+    },
+    {
+      "code": "fr",
+      "hreflang": "fr-GQ",
+      "path": "/fr",
+      "canonical": "https://lucy.world/fr"
+    },
+    {
+      "code": "pt",
+      "hreflang": "pt-GQ",
+      "path": "/pt",
+      "canonical": "https://lucy.world/pt"
+    }
+  ],
+  "alternate": [
+    {
+      "hreflang": "x-default",
+      "href": "https://lucy.world/"
+    }
+  ]
+}

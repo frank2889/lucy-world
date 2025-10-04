@@ -1,0 +1,18 @@
+{
+  "country": "SI",
+  "defaultLocale": "sl-SI",
+  "locales": [
+    {
+      "code": "sl",
+      "hreflang": "sl-SI",
+      "path": "/sl",
+      "canonical": "https://lucy.world/sl"
+    }
+  ],
+  "alternate": [
+    {
+      "hreflang": "x-default",
+      "href": "https://lucy.world/"
+    }
+  ]
+}
