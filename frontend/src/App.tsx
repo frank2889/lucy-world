@@ -1,6 +1,24 @@
 import React, { useEffect, useMemo, useState } from 'react'
 import { COUNTRY_CODES, GOOGLE_LANGUAGES, flagEmoji } from './locales'
 
+const FEATURED_LANGUAGE_CODES = ['en', 'nl', 'de', 'fr', 'es', 'it', 'pt', 'pl', 'tr', 'ja', 'ko', 'zh', 'ru'] as const
+
+const LANGUAGE_FLAG_MAP: Record<string, string> = {
+  en: 'us',
+  nl: 'nl',
+  de: 'de',
+  fr: 'fr',
+  es: 'es',
+  it: 'it',
+  pt: 'pt',
+  pl: 'pl',
+  tr: 'tr',
+  ja: 'jp',
+  ko: 'kr',
+  zh: 'cn',
+  ru: 'ru'
+}
+
 type CategoryItem = {
   keyword: string
   search_volume?: number
@@ -46,13 +64,29 @@ function nl(n?: number) {
 export default function App() {
   // Detect UI language from URL prefix: /<lang>/ ... fallback to saved preference, then 'en'
   const urlLang = (typeof window !== 'undefined' ? window.location.pathname.split('/').filter(Boolean)[0] : '')
+  const [language, setLanguage] = useState(() => {
+    const urlCandidate = (urlLang || '').split('-')[0].toLowerCase()
+    if (urlCandidate && /^[a-z]{2}$/i.test(urlCandidate)) {
+      return urlCandidate
+    }
+    if (typeof window !== 'undefined') {
+      try {
+        const saved = localStorage.getItem('lw_lang') || ''
+        if (saved && /^[a-z]{2}$/i.test(saved)) {
+          return saved.toLowerCase()
+        }
+      } catch {
+        /* ignore */
+      }
+    }
+    return 'en'
+  })
   const [ui, setUi] = useState<{ lang: string; dir: 'ltr' | 'rtl'; strings: Record<string,string> } | null>(null)
   useEffect(() => {
-    // Prefer URL language when present; otherwise prefer saved UI language; else 'en'
     let lang = (urlLang || '').split('-')[0].toLowerCase()
     if (!lang || !/^[a-z]{2}$/i.test(lang)) {
       try {
-        const saved = localStorage.getItem('lw_lang') || ''
+        const saved = typeof window !== 'undefined' ? (localStorage.getItem('lw_lang') || '') : ''
         if (saved && /^[a-z]{2}$/i.test(saved)) {
           lang = saved.toLowerCase()
         }
@@ -61,30 +95,75 @@ export default function App() {
       }
     }
     if (!lang) lang = 'en'
-    fetch(`/meta/content/${lang}.json`).then(r => r.json()).then((data) => {
-      setUi(data)
-      const resolvedLang = (data?.lang || lang || 'en').toLowerCase()
-      setLanguage(prev => {
-        const prevLower = (prev || '').toLowerCase()
-        return prevLower !== resolvedLang ? resolvedLang : prev
-      })
-      if (typeof document !== 'undefined') {
-        document.documentElement.lang = data.lang || lang
-        document.documentElement.dir = data.dir || 'ltr'
-      }
-    }).catch(() => {
-      setUi({ lang, dir: 'ltr', strings: {} })
-      setLanguage(prev => {
-        const prevLower = (prev || '').toLowerCase()
-        const resolved = (lang || 'en').toLowerCase()
-        return prevLower !== resolved ? resolved : prev
-      })
+    const normalized = lang.toLowerCase()
+    setLanguage(prev => {
+      const prevLower = (prev || '').toLowerCase()
+      return prevLower !== normalized ? normalized : prev
     })
+    if (typeof window !== 'undefined') {
+      try { localStorage.setItem('lw_lang', normalized) } catch { /* ignore */ }
+    }
   }, [urlLang])
+  useEffect(() => {
+    const normalized = (language || '').split('-')[0].toLowerCase()
+    if (!normalized) return
+    let cancelled = false
+    fetch(`/meta/content/${normalized}.json`)
+      .then(r => (r.ok ? r.json() : Promise.reject()))
+      .then((data) => {
+        if (cancelled) return
+        setUi(data)
+        const resolvedLang = (data?.lang || normalized).toLowerCase()
+        if (resolvedLang !== normalized) {
+          setLanguage(prev => (prev === resolvedLang ? prev : resolvedLang))
+          if (typeof window !== 'undefined') {
+            try { localStorage.setItem('lw_lang', resolvedLang) } catch { /* ignore */ }
+          }
+          if (typeof document !== 'undefined') {
+            document.documentElement.lang = resolvedLang
+            document.documentElement.dir = data?.dir || 'ltr'
+          }
+          return
+        }
+        if (typeof window !== 'undefined') {
+          try { localStorage.setItem('lw_lang', normalized) } catch { /* ignore */ }
+        }
+        if (typeof document !== 'undefined') {
+          document.documentElement.lang = data?.lang || normalized
+          document.documentElement.dir = data?.dir || 'ltr'
+        }
+      })
+      .catch(() => {
+        if (cancelled) return
+        setUi({ lang: normalized, dir: 'ltr', strings: {} })
+        if (typeof document !== 'undefined') {
+          document.documentElement.lang = normalized
+          document.documentElement.dir = 'ltr'
+        }
+      })
+    return () => {
+      cancelled = true
+    }
+  }, [language])
   const [keyword, setKeyword] = useState('')
   // Language used for fetching search results (does NOT change UI language)
-  const [searchLanguage, setSearchLanguage] = useState(() => localStorage.getItem('lw_search_lang') || (localStorage.getItem('lw_lang') || urlLang || 'en'))
-  const [language, setLanguage] = useState(() => localStorage.getItem('lw_lang') || urlLang || 'en')
+  const [searchLanguage, setSearchLanguage] = useState(() => {
+    if (typeof window !== 'undefined') {
+      try {
+        const savedSearch = localStorage.getItem('lw_search_lang')
+        if (savedSearch && /^[a-z]{2}$/i.test(savedSearch)) {
+          return savedSearch.toLowerCase()
+        }
+        const savedUi = localStorage.getItem('lw_lang')
+        if (savedUi && /^[a-z]{2}$/i.test(savedUi)) {
+          return savedUi.toLowerCase()
+        }
+      } catch {
+        /* ignore */
+      }
+    }
+    return (urlLang || language || 'en').toLowerCase()
+  })
   const [country, setCountry] = useState(() => localStorage.getItem('lw_country') || '')
   // Detected country (geo/IP/headers) for display; separate from user-selected country used in searches
   const [detectedCountry, setDetectedCountry] = useState<string>('')
@@ -103,7 +182,9 @@ export default function App() {
   const [showProjects, setShowProjects] = useState(false)
   const [projects, setProjects] = useState<Array<{ id: number; name: string; description?: string | null; language?: string | null; country?: string | null; updated_at?: string }>>([])
   const [sidebarOpen, setSidebarOpen] = useState(false)
-  const [langMenuAnchor, setLangMenuAnchor] = useState<'desktop' | 'mobile' | 'sidebar' | null>(null)
+  const [langMenuAnchor, setLangMenuAnchor] = useState<'desktop' | 'mobile' | null>(null)
+  const normalizedLanguage = (language || '').toLowerCase()
+  type LanguageSelectOptions = { closeMenu?: boolean }
 
   const isSignedIn = !!token
 
@@ -150,16 +231,62 @@ export default function App() {
     }
   }
 
-  const toggleLangMenu = (anchor: 'desktop' | 'mobile' | 'sidebar') => {
+  const toggleLangMenu = (anchor: 'desktop' | 'mobile') => {
     setLangMenuAnchor(prev => (prev === anchor ? null : anchor))
   }
 
   const closeLangMenu = () => setLangMenuAnchor(null)
 
+  const handleLanguageSelect = (newLang: string, options: LanguageSelectOptions = {}) => {
+    const normalized = (newLang || '').split('-')[0].toLowerCase()
+    if (!normalized) return
+    if (options.closeMenu !== false) {
+      closeLangMenu()
+    }
+    if (normalized === normalizedLanguage) return
+    if (typeof window !== 'undefined') {
+      try { localStorage.setItem('lw_lang', normalized) } catch { /* ignore */ }
+    }
+    setLanguage(normalized)
+    setSearchLanguage(prev => {
+      if (!prev || prev === normalizedLanguage) {
+        if (typeof window !== 'undefined') {
+          try { localStorage.setItem('lw_search_lang', normalized) } catch { /* ignore */ }
+        }
+        return normalized
+      }
+      return prev
+    })
+  }
+
   const currentLangLabel = useMemo(() => {
-    const match = languagesList.find(l => (l.code || '').toLowerCase() === (language || '').toLowerCase())
-    return match?.label || (language || 'en').toUpperCase()
-  }, [languagesList, language])
+    const match = languagesList.find(l => (l.code || '').toLowerCase() === normalizedLanguage)
+    return match?.label || (normalizedLanguage || 'en').toUpperCase()
+  }, [languagesList, normalizedLanguage])
+
+  const quickLanguages = useMemo(() => {
+    const ordered = new Map<string, { code: string; label: string }>()
+    FEATURED_LANGUAGE_CODES.forEach(code => {
+      const match = languagesList.find(l => (l.code || '').toLowerCase() === code)
+      if (match) {
+        ordered.set(match.code.toLowerCase(), match)
+      }
+    })
+    const current = languagesList.find(l => (l.code || '').toLowerCase() === normalizedLanguage)
+    if (current) {
+      ordered.set(current.code.toLowerCase(), current)
+    }
+    return Array.from(ordered.values())
+  }, [languagesList, normalizedLanguage])
+
+  const languageSwitcherLabel = ui?.strings?.['sidebar.languages'] || ui?.strings?.['nav.language'] || 'Interface language'
+
+  const getLanguageIcon = (code: string) => {
+    const mapped = LANGUAGE_FLAG_MAP[code] || code
+    return /^[a-z]{2}$/i.test(mapped) ? flagEmoji(mapped) : code.toUpperCase()
+  }
+
+  const formatLanguageLabel = (label?: string) => (label || '').replace(/\s*\(.*?\)/, '').trim()
 
   // Localized country display name for the topbar pill
   const displayCountryName = useMemo(() => {
@@ -523,70 +650,47 @@ export default function App() {
         <div className="sidebar-footer">
           <span className="sidebar-footer-copy">© {new Date().getFullYear()} Lucy World</span>
           <div className="sidebar-footer-actions">
-            <button
-              type="button"
-              className="sidebar-signin"
-              disabled={isSignedIn}
-              onClick={() => {
-                if (!isSignedIn) {
-                  setShowSignin(true)
-                }
-              }}
+          <button
+            type="button"
+            className="sidebar-signin"
+            disabled={isSignedIn}
+            onClick={() => {
+            if (!isSignedIn) {
+              setShowSignin(true)
+            }
+            }}
+          >
+            {isSignedIn ? (ui?.strings['footer.premium'] || 'Premium account') : (ui?.strings['footer.signin'] || 'Sign in for Premium')}
+          </button>
+          <div className="sidebar-lang-switch">
+            <span className="sidebar-lang-heading">{languageSwitcherLabel}</span>
+            <div
+            className="sidebar-lang-carousel"
+            role="listbox"
+            aria-label={languageSwitcherLabel}
             >
-              {isSignedIn ? (ui?.strings['footer.premium'] || 'Premium account') : (ui?.strings['footer.signin'] || 'Sign in for Premium')}
-            </button>
-            <div className="sidebar-lang-switch" style={{ position: 'relative' }}>
+            {quickLanguages.map((l) => {
+              const code = (l.code || '').toLowerCase()
+              const isActive = code === normalizedLanguage
+              return (
               <button
+                key={l.code}
                 type="button"
-                className="sidebar-lang-btn"
-                aria-haspopup="listbox"
-                aria-expanded={langMenuAnchor === 'sidebar'}
-                onClick={() => toggleLangMenu('sidebar')}
+                role="option"
+                aria-selected={isActive}
+                className={`sidebar-lang-pill${isActive ? ' active' : ''}`}
+                onClick={() => handleLanguageSelect(l.code, { closeMenu: false })}
+                title={formatLanguageLabel(l.label || l.code.toUpperCase())}
               >
-                <span aria-hidden>🌐</span>
-                <span style={{ fontWeight: 600 }}>{currentLangLabel}</span>
+                <span className="sidebar-lang-icon" aria-hidden>
+                {getLanguageIcon(code)}
+                </span>
+                <span className="sidebar-lang-label-text">{formatLanguageLabel(l.label || l.code.toUpperCase())}</span>
               </button>
-              {langMenuAnchor === 'sidebar' && (
-                <div
-                  className="lang-menu sidebar-lang-menu"
-                  role="listbox"
-                  style={{
-                    background: '#0e1217', 
-                    border: '1px solid var(--line)', 
-                    borderRadius: 10,
-                    overflow: 'auto', 
-                    boxShadow: '0 8px 32px rgba(0,0,0,0.4)'
-                  }}
-                >
-                  {languagesList.map((l) => (
-                    <button
-                      key={l.code}
-                      role="option"
-                      aria-selected={l.code === language}
-                      onClick={() => {
-                        closeLangMenu()
-                        const newLang = l.code.toLowerCase()
-                        localStorage.setItem('lw_lang', newLang)
-                        if (typeof window !== 'undefined') {
-                          window.location.href = `/${newLang}/`
-                        } else {
-                          setLanguage(newLang)
-                        }
-                      }}
-                      className={`lang-item ${l.code === language ? 'active' : ''}`}
-                      style={{
-                        display: 'flex', width: '100%', textAlign: 'left',
-                        gap: 10, padding: '10px 12px', background: 'transparent', color: 'var(--text)',
-                        border: 0, cursor: 'pointer'
-                      }}
-                    >
-                      <span style={{ width: 22, textAlign: 'center' }}>{/* No pure language flags; show code */}</span>
-                      <span style={{ flex: 1 }}>{l.label || l.code.toUpperCase()}</span>
-                    </button>
-                  ))}
-                </div>
-              )}
+              )
+            })}
             </div>
+          </div>
           </div>
         </div>
       </aside>
@@ -666,16 +770,7 @@ export default function App() {
                     key={l.code}
                     role="option"
                     aria-selected={l.code === language}
-                    onClick={() => {
-                      closeLangMenu()
-                      const newLang = l.code.toLowerCase()
-                      localStorage.setItem('lw_lang', newLang)
-                      if (typeof window !== 'undefined') {
-                        window.location.href = `/${newLang}/`
-                      } else {
-                        setLanguage(newLang)
-                      }
-                    }}
+                    onClick={() => handleLanguageSelect(l.code)}
                     className={`lang-item ${l.code === language ? 'active' : ''}`}
                     style={{
                       display: 'flex', width: '100%', textAlign: 'left',
@@ -769,17 +864,7 @@ export default function App() {
                       key={l.code}
                       role="option"
                       aria-selected={l.code === language}
-                      onClick={() => {
-                        closeLangMenu()
-                        // Persist and navigate to language route for proper i18n + SEO
-                        const newLang = l.code.toLowerCase()
-                        localStorage.setItem('lw_lang', newLang)
-                        if (typeof window !== 'undefined') {
-                          window.location.href = `/${newLang}/`
-                        } else {
-                          setLanguage(newLang)
-                        }
-                      }}
+                      onClick={() => handleLanguageSelect(l.code)}
                       className={`lang-item ${l.code === language ? 'active' : ''}`}
                       style={{
                         display: 'flex', width: '100%', textAlign: 'left',
