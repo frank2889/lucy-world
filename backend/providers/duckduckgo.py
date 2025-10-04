@@ -74,21 +74,37 @@ class DuckDuckGoProvider(SuggestionProvider):
 
         suggestions: List[Dict[str, Any]] = []
         if isinstance(payload, list):
-            for item in payload:
-                if not isinstance(item, dict):
-                    continue
-                phrase = item.get('phrase') or item.get('q') or item.get('text')
-                if not phrase:
-                    continue
-                suggestions.append(
-                    {
-                        'phrase': str(phrase),
-                        'snippet': item.get('snippet') or item.get('desc') or None,
-                        'score': item.get('score'),
-                        'type': item.get('type') or None,
-                        'image': item.get('image') or None,
-                    }
-                )
+            if payload and isinstance(payload[0], dict):
+                for item in payload:
+                    if not isinstance(item, dict):
+                        continue
+                    phrase = item.get('phrase') or item.get('q') or item.get('text')
+                    if not phrase:
+                        continue
+                    suggestions.append(
+                        {
+                            'phrase': str(phrase),
+                            'snippet': item.get('snippet') or item.get('desc') or None,
+                            'score': item.get('score'),
+                            'type': item.get('type') or None,
+                            'image': item.get('image') or None,
+                        }
+                    )
+            elif len(payload) >= 2 and isinstance(payload[1], list):
+                # Newer DuckDuckGo response structure: ["query", [suggestions...], ...]
+                for index, phrase in enumerate(payload[1]):
+                    if not isinstance(phrase, str) or not phrase.strip():
+                        continue
+                    suggestions.append(
+                        {
+                            'phrase': phrase.strip(),
+                            'snippet': None,
+                            'score': None,
+                            'type': None,
+                            'image': None,
+                            'rank': index + 1,
+                        }
+                    )
 
         return {
             'keyword': keyword,
