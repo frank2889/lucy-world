@@ -2,11 +2,12 @@ import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import type { PlatformToolProps } from '../../types'
 import { AMAZON_MARKETPLACES } from '../../data/amazonMarketplaces'
 import PlatformToolLayout, { type PlatformResultItem } from '../common/PlatformToolLayout'
+import { createTranslator } from '../../../i18n/translate'
 
 const MARKETPLACES = AMAZON_MARKETPLACES
 
 const AmazonTool: React.FC<PlatformToolProps> = (props) => {
-  const { keyword, setKeyword, country } = props
+  const { keyword, setKeyword, country, ui } = props
   const normalizedKeyword = keyword ?? ''
   const [marketplace, setMarketplace] = useState(() => {
     const preferred = (country ?? '').toUpperCase()
@@ -16,6 +17,7 @@ const AmazonTool: React.FC<PlatformToolProps> = (props) => {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const initialFetchRef = useRef(false)
+  const t = useMemo(() => createTranslator(ui), [ui])
 
   const selectedMarketplace = useMemo(() => {
     return MARKETPLACES.find((m) => m.code === marketplace) ?? MARKETPLACES[0]
@@ -39,28 +41,30 @@ const AmazonTool: React.FC<PlatformToolProps> = (props) => {
         const response = await fetch(`/api/platforms/amazon?${params.toString()}`)
         if (!response.ok) {
           const payload = await response.json().catch(() => null)
-          throw new Error(payload?.error || 'Onbekende fout bij Amazon data')
+          throw new Error(payload?.error || t('platform.amazon.error.fetch', 'Amazon data request failed'))
         }
         const payload = await response.json()
         const suggestions: string[] = Array.isArray(payload?.suggestions) ? payload.suggestions : []
         const mapped: PlatformResultItem[] = suggestions.map((suggestion, index) => ({
           title: suggestion,
-          subtitle: `Suggestie voor ${selectedMarketplace.label}`,
-          metric: `Populariteit #${index + 1}`
+          subtitle: t('platform.amazon.subtitle', 'Suggestion for {{marketplace}}', {
+            marketplace: selectedMarketplace.label
+          }),
+          metric: t('platform.amazon.metric.rank', 'Popularity #{{rank}}', { rank: index + 1 })
         }))
         setResults(mapped)
         if (mapped.length === 0) {
-          setError('Geen Amazon suggesties gevonden voor dit zoekwoord.')
+          setError(t('platform.amazon.error.none', 'No Amazon suggestions found for this keyword.'))
         }
       } catch (fetchError) {
-        const message = fetchError instanceof Error ? fetchError.message : 'Onbekende fout'
+        const message = fetchError instanceof Error ? fetchError.message : t('platform.amazon.error.generic', 'Unknown error')
         setError(message)
         setResults([])
       } finally {
         setLoading(false)
       }
     },
-    [selectedMarketplace.code, selectedMarketplace.label]
+    [selectedMarketplace.code, selectedMarketplace.label, t]
   )
 
   useEffect(() => {
@@ -80,7 +84,7 @@ const AmazonTool: React.FC<PlatformToolProps> = (props) => {
   const filters = (
     <div className="platform-tool__filters">
       <label htmlFor="amazon-marketplace">
-        Marketplace
+        {t('platform.amazon.filters.marketplace', 'Marketplace')}
         <select
           id="amazon-marketplace"
           value={marketplace}
@@ -101,20 +105,21 @@ const AmazonTool: React.FC<PlatformToolProps> = (props) => {
 
   return (
     <PlatformToolLayout
-      platformName="Amazon"
+      platformName={t('platform.amazon.meta.name', 'Amazon')}
       keyword={normalizedKeyword}
       onKeywordChange={setKeyword}
       onSearch={performSearch}
-      description="Productzoekwoorden en listing-optimalisatie voor Amazon."
+      description={t('platform.amazon.description', 'Product keyword discovery and listing insights for Amazon.')}
       extraFilters={filters}
       results={results}
-      placeholder="Welke producten verkoop je?"
+      placeholder={t('platform.amazon.placeholder', 'Which products do you sell?')}
       loading={loading}
       error={error}
-      emptyState="Voer een zoekwoord in om Amazon inzichten te zien."
+      emptyState={t('platform.amazon.empty', 'Enter a keyword to see Amazon insights.')}
       controls={props.locationControls}
       onGlobalSearch={props.onGlobalSearch}
       globalLoading={props.globalLoading}
+      translate={t}
     />
   )
 }

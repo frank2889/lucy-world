@@ -1,17 +1,22 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 import type { PlatformToolProps } from '../../types'
+import { createTranslator } from '../../../i18n/translate'
 
-const EtsyTool: React.FC<PlatformToolProps> = () => {
+const EtsyTool: React.FC<PlatformToolProps> = ({ ui }) => {
+  const t = useMemo(() => createTranslator(ui), [ui])
   return (
     <section className="platform-tool">
       <header className="platform-tool__header">
-        <h3>Etsy keywordtool</h3>
+        <h3>{t('platform.etsy.heading', 'Etsy keyword tool')}</h3>
         <p className="platform-tool__description">
-          Deze tool is momenteel niet beschikbaar omdat Etsy geen open suggestie-API aanbiedt die zonder authenticatie werkt.
+          {t(
+            'platform.etsy.description',
+            'This tool is currently unavailable because Etsy does not offer a public suggestions API without authentication.'
+          )}
         </p>
       </header>
       <div className="platform-tool__results">
-        <div className="platform-tool__placeholder">Not available</div>
+        <div className="platform-tool__placeholder">{t('platform.etsy.placeholder', 'Not available')}</div>
       </div>
     </section>
   )

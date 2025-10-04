@@ -1,14 +1,16 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import type { PlatformToolProps } from '../../types'
 import PlatformToolLayout, { type PlatformResultItem } from '../common/PlatformToolLayout'
+import { createTranslator } from '../../../i18n/translate'
 
 const BaiduTool: React.FC<PlatformToolProps> = (props) => {
-  const { keyword, setKeyword, searchLanguage } = props
+  const { keyword, setKeyword, searchLanguage, ui } = props
   const normalizedKeyword = keyword ?? ''
   const [results, setResults] = useState<PlatformResultItem[]>([])
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const hasFetched = useRef(false)
+  const t = useMemo(() => createTranslator(ui), [ui])
 
   const performSearch = useCallback(
     async (term: string) => {
@@ -28,28 +30,28 @@ const BaiduTool: React.FC<PlatformToolProps> = (props) => {
         const response = await fetch(`/api/platforms/baidu?${params.toString()}`)
         if (!response.ok) {
           const payload = await response.json().catch(() => null)
-          throw new Error(payload?.error || 'Onbekende Baidu fout')
+          throw new Error(payload?.error || t('platform.baidu.error.fetch', 'Unable to fetch Baidu suggestions'))
         }
         const payload = await response.json()
         const suggestions: string[] = Array.isArray(payload?.suggestions) ? payload.suggestions : []
         const mapped: PlatformResultItem[] = suggestions.map((item, index) => ({
           title: item,
-          subtitle: 'Baidu zoek suggestie',
-          metric: `热门度 #${index + 1}`
+          subtitle: t('platform.baidu.subtitle', 'Baidu search suggestion'),
+          metric: t('platform.baidu.metric.rank', 'Hotness #{{rank}}', { rank: index + 1 })
         }))
         setResults(mapped)
         if (mapped.length === 0) {
-          setError('Geen Baidu suggesties gevonden voor dit zoekwoord.')
+          setError(t('platform.baidu.error.none', 'No Baidu suggestions found for this keyword.'))
         }
       } catch (err) {
-        const message = err instanceof Error ? err.message : 'Onbekende fout'
+        const message = err instanceof Error ? err.message : t('platform.baidu.error.generic', 'Unknown error')
         setError(message)
         setResults([])
       } finally {
         setLoading(false)
       }
     },
-    [searchLanguage]
+    [searchLanguage, t]
   )
 
   useEffect(() => {
@@ -72,19 +74,20 @@ const BaiduTool: React.FC<PlatformToolProps> = (props) => {
 
   return (
     <PlatformToolLayout
-      platformName="Baidu"
+      platformName={t('platform.baidu.meta.name', 'Baidu')}
       keyword={normalizedKeyword}
       onKeywordChange={setKeyword}
       onSearch={performSearch}
-      description="Inzichten voor de Chinese zoekmachine Baidu."
+      description={t('platform.baidu.description', 'Insights for the Chinese search engine Baidu.')}
       results={results}
-      placeholder="Chinese zoekwoord of merk"
+      placeholder={t('platform.baidu.placeholder', 'Chinese keyword or brand')}
       loading={loading}
       error={error}
-      emptyState="Voer een zoekwoord in om Baidu ideeën te zien."
+      emptyState={t('platform.baidu.empty', 'Enter a keyword to discover Baidu ideas.')}
       controls={props.locationControls}
       onGlobalSearch={props.onGlobalSearch}
       globalLoading={props.globalLoading}
+      translate={t}
     />
   )
 }

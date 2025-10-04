@@ -3,6 +3,7 @@ import { COUNTRY_CODES, GOOGLE_LANGUAGES, flagEmoji } from './locales'
 import { AMAZON_MARKETPLACE_CODES } from './platforms/data/amazonMarketplaces'
 import PlatformSidebar from './platforms/Sidebar/PlatformSidebar'
 import { usePlatformHandler } from './platforms/handlers/platformHandler'
+import { createTranslator } from './i18n/translate'
 
 type CategoryItem = {
   keyword: string
@@ -111,6 +112,30 @@ export default function App() {
   const isSignedIn = !!token
   const { platforms, activePlatform, activePlatformId, setActivePlatformId } = usePlatformHandler()
   const ActivePlatformTool = activePlatform?.tool
+  const translate = useMemo(() => createTranslator(ui), [ui])
+  const localizedPlatforms = useMemo(
+    () =>
+      platforms.map((platform) => ({
+        ...platform,
+        description: translate(`platform.${platform.id}.sidebar_description`, platform.description || platform.name)
+      })),
+    [platforms, translate]
+  )
+  const locationUnknownLabel = useMemo(() => translate('topbar.location_unknown', 'Location unknown'), [translate])
+  const openNavigationLabel = useMemo(() => translate('aria.open_navigation', 'Open navigation'), [translate])
+  const myProjectsLabel = useMemo(() => translate('projects.button.my_projects', 'My projects'), [translate])
+  const saveProjectLabel = useMemo(() => translate('projects.button.save', 'Save project'), [translate])
+  const closeLabel = useMemo(() => translate('modal.close', 'Close'), [translate])
+  const signInTitle = useMemo(() => translate('auth.signin.title', 'Sign in'), [translate])
+  const signInDescription = useMemo(() => translate('auth.signin.description', 'Enter your email to get a one-time sign-in link. No password needed.'), [translate])
+  const signInPlaceholder = useMemo(() => translate('auth.signin.placeholder', 'you@example.com'), [translate])
+  const sendLinkLabel = useMemo(() => translate('auth.signin.submit', 'Send link'), [translate])
+  const projectsTitle = useMemo(() => translate('projects.modal.title', 'My projects'), [translate])
+  const projectsEmptyMessage = useMemo(() => translate('projects.modal.empty', 'No projects yet. Run a search and click "{{save}}" to create one.', { save: saveProjectLabel }), [translate, saveProjectLabel])
+  const openLabel = useMemo(() => translate('projects.modal.open', 'Open'), [translate])
+  const renameLabel = useMemo(() => translate('projects.modal.rename', 'Rename'), [translate])
+  const deleteLabel = useMemo(() => translate('projects.modal.delete', 'Delete'), [translate])
+  const getCountryAriaLabel = useCallback((code: string) => translate('aria.country_label', 'Country {{code}}', { code: code.toUpperCase() }), [translate])
 
   // Priority countries (mix of major regions + active marketplace coverage - no bias)
   const priorityCountries = useMemo(() => {
@@ -206,9 +231,9 @@ export default function App() {
           className="select flag-select"
           onClick={() => setShowCountryDropdown(!showCountryDropdown)}
           style={{ cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}
-          title={country ? `${flagEmoji(country)} ${getCountryName(country)}` : 'Select country'}
+          title={country ? `${flagEmoji(country)} ${getCountryName(country)}` : translate('controls.country.select_title', 'Select country')}
         >
-          <span>{country ? `${flagEmoji(country)} ${getCountryName(country)}` : '🌍 Select country'}</span>
+          <span>{country ? `${flagEmoji(country)} ${getCountryName(country)}` : `🌍 ${translate('controls.country.select_placeholder', 'Select country')}`}</span>
           <span style={{ marginLeft: 8, fontSize: 12 }}>▼</span>
         </div>
         {showCountryDropdown && (
@@ -229,7 +254,7 @@ export default function App() {
           >
             <input
               type="text"
-              placeholder="Search countries..."
+              placeholder={translate('controls.country.search_placeholder', 'Search countries…')}
               value={countrySearchTerm}
               onChange={(e) => setCountrySearchTerm(e.target.value)}
               onKeyDown={(e) => {
@@ -282,7 +307,7 @@ export default function App() {
               ))}
               {filteredCountries.length === 0 && (
                 <div style={{ padding: 16, textAlign: 'center', color: 'var(--text-secondary)' }}>
-                  No countries found
+                  {translate('controls.country.no_results', 'No countries found')}
                 </div>
               )}
             </div>
@@ -315,7 +340,7 @@ export default function App() {
     if (!submittedKeyword) return
 
     if (!country) {
-      alert('Please select a country first')
+      alert(translate('alerts.country_required', 'Please select a country first'))
       return
     }
 
@@ -341,7 +366,7 @@ export default function App() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ keyword: submittedKeyword, language: searchLanguage, country })
       })
-      if (!res.ok) throw new Error('Search failed')
+      if (!res.ok) throw new Error(translate('errors.search_failed', 'Search failed'))
       const result = await res.json()
       setData(result)
 
@@ -358,7 +383,7 @@ export default function App() {
         console.log('✅ GTM: Search successful', totalKeywords, 'results')
       }
     } catch (err: any) {
-      setError(err?.message || 'Er is een fout opgetreden')
+      setError(err?.message || translate('errors.generic', 'Something went wrong'))
 
       if (typeof window !== 'undefined' && (window as any).dataLayer) {
         ;(window as any).dataLayer.push({
@@ -372,7 +397,7 @@ export default function App() {
     } finally {
       setLoading(false)
     }
-  }, [keyword, country, searchLanguage])
+  }, [keyword, country, searchLanguage, translate])
 
   const requestMagicLink = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -383,11 +408,11 @@ export default function App() {
         method: 'POST', headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email })
       })
-      if (!res.ok) throw new Error('Failed to send sign-in link')
-      alert('Check your email for a sign-in link. After clicking it, you will be redirected back here and signed in automatically.')
+      if (!res.ok) throw new Error(translate('auth.magic_link.failed', 'Failed to send sign-in link'))
+      alert(translate('auth.magic_link.sent', 'Check your email for a sign-in link. After clicking it, you will be redirected back here and signed in automatically.'))
       setShowSignin(false)
     } catch (err: any) {
-      alert(err?.message || 'Unable to send sign-in link')
+      alert(err?.message || translate('auth.magic_link.error', 'Unable to send sign-in link'))
     }
   }
 
@@ -423,12 +448,12 @@ export default function App() {
         return
       }
       const res = await fetch('/api/projects', { headers: { 'Authorization': `Bearer ${t}` } })
-      if (!res.ok) throw new Error('Failed to load projects')
+      if (!res.ok) throw new Error(translate('projects.error.load', 'Failed to load projects'))
       const j = await res.json()
       setProjects(Array.isArray(j) ? j : [])
       setShowProjects(true)
     } catch (err: any) {
-      alert(err?.message || 'Could not load projects')
+      alert(err?.message || translate('projects.error.load_generic', 'Could not load projects'))
     }
   }
 
@@ -437,7 +462,7 @@ export default function App() {
       const t = token || localStorage.getItem('lw_token')
       if (!t) { setShowSignin(true); return }
       const res = await fetch(`/api/projects/${pid}`, { headers: { 'Authorization': `Bearer ${t}` } })
-      if (!res.ok) throw new Error('Failed to open project')
+      if (!res.ok) throw new Error(translate('projects.error.open', 'Failed to open project'))
       const j = await res.json()
       // Restore search context
       if (j.language) setSearchLanguage(String(j.language))
@@ -445,12 +470,12 @@ export default function App() {
       if (j.data) setData(j.data)
       setShowProjects(false)
     } catch (err: any) {
-      alert(err?.message || 'Open failed')
+      alert(err?.message || translate('projects.error.open_generic', 'Unable to open project'))
     }
   }
 
   const renameProject = async (pid: number) => {
-    const newName = prompt('New project name:')
+    const newName = prompt(translate('projects.rename.prompt', 'New project name:'))
     if (!newName) return
     try {
       const t = token || localStorage.getItem('lw_token')
@@ -460,16 +485,16 @@ export default function App() {
         headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${t}` },
         body: JSON.stringify({ name: newName.trim() })
       })
-      if (!res.ok) throw new Error('Rename failed')
+      if (!res.ok) throw new Error(translate('projects.error.rename', 'Rename failed'))
       // update locally
       setProjects(prev => prev.map(p => p.id === pid ? { ...p, name: newName.trim() } : p))
     } catch (err: any) {
-      alert(err?.message || 'Rename failed')
+      alert(err?.message || translate('projects.error.rename_generic', 'Rename failed'))
     }
   }
 
   const deleteProject = async (pid: number) => {
-    if (!confirm('Delete this project?')) return
+    if (!confirm(translate('projects.delete.confirm', 'Delete this project?'))) return
     try {
       const t = token || localStorage.getItem('lw_token')
       if (!t) { setShowSignin(true); return }
@@ -477,10 +502,10 @@ export default function App() {
         method: 'DELETE',
         headers: { 'Authorization': `Bearer ${t}` }
       })
-      if (!res.ok) throw new Error('Delete failed')
+      if (!res.ok) throw new Error(translate('projects.error.delete', 'Delete failed'))
       setProjects(prev => prev.filter(p => p.id !== pid))
     } catch (err: any) {
-      alert(err?.message || 'Delete failed')
+      alert(err?.message || translate('projects.error.delete_generic', 'Delete failed'))
     }
   }
 
@@ -492,7 +517,7 @@ export default function App() {
         return
       }
       if (!data) {
-        alert('Run a search first before saving a project')
+        alert(translate('projects.save.missing_search', 'Run a search first before saving a project'))
         return
       }
       const res = await fetch('/api/projects', {
@@ -500,17 +525,22 @@ export default function App() {
         headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${t}` },
         body: JSON.stringify({
           name: `${data.keyword} (${searchLanguage}-${country})`,
-          description: 'Saved from Lucy World',
+          description: translate('projects.save.default_description', 'Saved from Lucy World'),
           language: searchLanguage,
           country,
           data
         })
       })
-      if (!res.ok) throw new Error('Failed to save project')
+      if (!res.ok) throw new Error(translate('projects.error.save', 'Failed to save project'))
       const j = await res.json()
-      alert(`Project saved (id ${j.id})`)
+      const success = translate('projects.save.success', 'Project saved')
+      if (j?.id) {
+        alert(`${success} (ID ${j.id})`)
+      } else {
+        alert(success)
+      }
     } catch (err: any) {
-      alert(err?.message || 'Save failed')
+      alert(err?.message || translate('projects.error.save_generic', 'Save failed'))
     }
   }
 
@@ -634,7 +664,8 @@ export default function App() {
   <aside id="sidebar" className={`sidebar ${sidebarOpen ? 'open' : ''}`} aria-hidden={!sidebarOpen}>
         <div className="sidebar-brand">Lucy <span>World</span></div>
         <PlatformSidebar
-          platforms={platforms}
+          title={translate('platforms.sidebar.title', 'Platforms')}
+          platforms={localizedPlatforms}
           activePlatformId={activePlatformId}
           onSelect={(platformId) => {
             setActivePlatformId(platformId)
@@ -671,7 +702,7 @@ export default function App() {
               <div
                 className="country-pill"
                 title={detectedCountry.toUpperCase()}
-                aria-label={`Country ${detectedCountry.toUpperCase()}`}
+                aria-label={getCountryAriaLabel(detectedCountry)}
                 style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: 'transparent', color: 'var(--text)', border: '1px solid var(--line)', padding: '8px 10px', borderRadius: 10 }}
               >
                 <span aria-hidden style={{ fontSize: 14 }}>{flagEmoji(detectedCountry.toUpperCase())}</span>
@@ -680,8 +711,8 @@ export default function App() {
             ) : (
               <div
                 className="country-pill"
-                title="Location unknown"
-                aria-label="Location unknown"
+                title={locationUnknownLabel}
+                aria-label={locationUnknownLabel}
                 style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: 'transparent', color: 'var(--text-secondary)', border: '1px solid var(--line)', padding: '8px 10px', borderRadius: 10 }}
               >
                 <span aria-hidden style={{ fontSize: 14 }}>🌍</span>
@@ -696,14 +727,14 @@ export default function App() {
                   onClick={loadProjects}
                   style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: 'transparent', color: 'var(--text)', border: '1px solid var(--line)', padding: '8px 10px', borderRadius: 10 }}
                 >
-                  📁 My projects
+                  📁 {myProjectsLabel}
                 </button>
                 <button
                   type="button"
                   onClick={saveProject}
                   style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: 'transparent', color: 'var(--text)', border: '1px solid var(--line)', padding: '8px 10px', borderRadius: 10 }}
                 >
-                  💾 Save project
+                  💾 {saveProjectLabel}
                 </button>
               </>
             )}
@@ -764,7 +795,7 @@ export default function App() {
         <div className="topbar">
           <button
             className="hamburger"
-            aria-label="Open navigatie"
+            aria-label={openNavigationLabel}
             aria-expanded={sidebarOpen}
             aria-controls="sidebar"
             type="button"
@@ -782,7 +813,7 @@ export default function App() {
                 <div
                   className="country-pill"
                   title={detectedCountry.toUpperCase()}
-                  aria-label={`Country ${detectedCountry.toUpperCase()}`}
+                  aria-label={getCountryAriaLabel(detectedCountry)}
                   style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: 'transparent', color: 'var(--text)', border: '1px solid var(--line)', padding: '8px 10px', borderRadius: 10, marginRight: 8 }}
                 >
                   <span aria-hidden style={{ fontSize: 14 }}>{flagEmoji(detectedCountry.toUpperCase())}</span>
@@ -791,8 +822,8 @@ export default function App() {
               ) : (
                 <div
                   className="country-pill"
-                  title="Location unknown"
-                  aria-label="Location unknown"
+                  title={locationUnknownLabel}
+                  aria-label={locationUnknownLabel}
                   style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: 'transparent', color: 'var(--text-secondary)', border: '1px solid var(--line)', padding: '8px 10px', borderRadius: 10, marginRight: 8 }}
                 >
                   <span aria-hidden style={{ fontSize: 14 }}>🌍</span>
@@ -869,11 +900,11 @@ export default function App() {
         {showSignin && (
           <div style={{ position: 'fixed', inset: 0 as any, background: 'rgba(0,0,0,0.5)', display: 'grid', placeItems: 'center', zIndex: 50 }} onClick={() => setShowSignin(false)}>
             <div style={{ background: '#0e1217', border: '1px solid var(--line)', borderRadius: 12, padding: 16, width: 'min(420px, 92vw)' }} onClick={e => e.stopPropagation()}>
-              <h3 style={{ marginTop: 0 }}>Sign in</h3>
-              <p>Enter your email to get a one-time sign-in link. No password needed.</p>
+              <h3 style={{ marginTop: 0 }}>{signInTitle}</h3>
+              <p>{signInDescription}</p>
               <form onSubmit={requestMagicLink} style={{ display: 'flex', gap: 8 }}>
-                <input type="email" placeholder="you@example.com" value={signinEmail} onChange={e => setSigninEmail(e.target.value)} required />
-                <button type="submit">Send link</button>
+                <input type="email" placeholder={signInPlaceholder} value={signinEmail} onChange={e => setSigninEmail(e.target.value)} required />
+                <button type="submit">{sendLinkLabel}</button>
               </form>
             </div>
           </div>
@@ -883,11 +914,11 @@ export default function App() {
           <div style={{ position: 'fixed', inset: 0 as any, background: 'rgba(0,0,0,0.5)', display: 'grid', placeItems: 'center', zIndex: 50 }} onClick={() => setShowProjects(false)}>
             <div style={{ background: '#0e1217', border: '1px solid var(--line)', borderRadius: 12, padding: 16, width: 'min(720px, 92vw)' }} onClick={e => e.stopPropagation()}>
               <div style={{ display: 'flex', alignItems: 'center' }}>
-                <h3 style={{ margin: 0, flex: 1 }}>My projects</h3>
-                <button onClick={() => setShowProjects(false)} aria-label="Close" style={{ background: 'transparent', border: 0, color: 'var(--text)', fontSize: 20 }}>✕</button>
+                <h3 style={{ margin: 0, flex: 1 }}>{projectsTitle}</h3>
+                <button onClick={() => setShowProjects(false)} aria-label={closeLabel} title={closeLabel} style={{ background: 'transparent', border: 0, color: 'var(--text)', fontSize: 20 }}>✕</button>
               </div>
               {projects.length === 0 ? (
-                <p style={{ marginTop: 12 }}>No projects yet. Run a search and click "Save project" to create one.</p>
+                <p style={{ marginTop: 12 }}>{projectsEmptyMessage}</p>
               ) : (
                 <div style={{ marginTop: 12, display: 'grid', gap: 8 }}>
                   {projects.map((p) => (
@@ -897,9 +928,9 @@ export default function App() {
                         <div style={{ opacity: 0.7, fontSize: 12 }}>{[(p.language || '').toUpperCase(), p.country]?.filter(Boolean).join(' • ')}{p.updated_at ? ` • ${new Date(p.updated_at).toLocaleString()}` : ''}</div>
                       </div>
                       <div style={{ display: 'inline-flex', gap: 8 }}>
-                        <button onClick={() => openProject(p.id)} title="Open" style={{ background: 'transparent', border: '1px solid var(--line)', borderRadius: 8, color: 'var(--text)', padding: '6px 10px' }}>Open</button>
-                        <button onClick={() => renameProject(p.id)} title="Rename" style={{ background: 'transparent', border: '1px solid var(--line)', borderRadius: 8, color: 'var(--text)', padding: '6px 10px' }}>Rename</button>
-                        <button onClick={() => deleteProject(p.id)} title="Delete" style={{ background: 'transparent', border: '1px solid var(--line)', borderRadius: 8, color: 'var(--text)', padding: '6px 10px' }}>Delete</button>
+                        <button onClick={() => openProject(p.id)} title={openLabel} style={{ background: 'transparent', border: '1px solid var(--line)', borderRadius: 8, color: 'var(--text)', padding: '6px 10px' }}>{openLabel}</button>
+                        <button onClick={() => renameProject(p.id)} title={renameLabel} style={{ background: 'transparent', border: '1px solid var(--line)', borderRadius: 8, color: 'var(--text)', padding: '6px 10px' }}>{renameLabel}</button>
+                        <button onClick={() => deleteProject(p.id)} title={deleteLabel} style={{ background: 'transparent', border: '1px solid var(--line)', borderRadius: 8, color: 'var(--text)', padding: '6px 10px' }}>{deleteLabel}</button>
                       </div>
                     </div>
                   ))}
@@ -917,7 +948,9 @@ export default function App() {
             <Suspense
               fallback={
                 <div className="card" style={{ marginTop: 24, padding: 24 }}>
-                  {`Laden ${activePlatform?.name || 'platform'}…`}
+                  {translate('platforms.loading_fallback', 'Loading {{platform}}…', {
+                    platform: activePlatform?.name || translate('platforms.loading_generic', 'platform')
+                  })}
                 </div>
               }
             >

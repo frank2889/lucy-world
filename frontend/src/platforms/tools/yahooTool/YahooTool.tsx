@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import type { PlatformToolProps } from '../../types'
 import PlatformToolLayout, { type PlatformResultItem } from '../common/PlatformToolLayout'
+import { createTranslator } from '../../../i18n/translate'
 
 const LIMIT_OPTIONS = [5, 10, 15, 20]
 
@@ -11,13 +12,23 @@ const resolveDefaultLimit = (raw?: string) => {
 }
 
 const YahooTool: React.FC<PlatformToolProps> = (props) => {
-  const { keyword, setKeyword, searchLanguage, country } = props
+  const {
+    keyword,
+    setKeyword,
+    searchLanguage,
+    country,
+    ui,
+    locationControls,
+    onGlobalSearch,
+    globalLoading
+  } = props
   const normalizedKeyword = keyword ?? ''
   const [limit, setLimit] = useState(() => resolveDefaultLimit(undefined))
   const [results, setResults] = useState<PlatformResultItem[]>([])
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const hasFetched = useRef(false)
+  const t = useMemo(() => createTranslator(ui), [ui])
 
   const performSearch = useCallback(
     async (term: string) => {
@@ -39,28 +50,30 @@ const YahooTool: React.FC<PlatformToolProps> = (props) => {
         const response = await fetch(`/api/platforms/yahoo?${params.toString()}`)
         if (!response.ok) {
           const payload = await response.json().catch(() => null)
-          throw new Error(payload?.error || 'Onbekende Yahoo fout')
+          throw new Error(payload?.error || t('platform.yahoo.errors.fetch', 'Unable to fetch Yahoo suggestions'))
         }
         const payload = await response.json()
         const suggestions: string[] = Array.isArray(payload?.suggestions) ? payload.suggestions : []
         const mapped: PlatformResultItem[] = suggestions.map((item, index) => ({
           title: item,
-          subtitle: `Yahoo (${payload?.country || country || 'global'})`,
-          metric: `Suggestie #${index + 1}`
+          subtitle: t('platform.yahoo.results.subtitle', 'Yahoo ({{country}})', {
+            country: payload?.country || country || 'global'
+          }),
+          metric: t('platform.yahoo.results.rank', 'Suggestion #{{rank}}', { rank: index + 1 })
         }))
         setResults(mapped)
         if (mapped.length === 0) {
-          setError('Geen Yahoo suggesties gevonden voor dit zoekwoord.')
+          setError(t('platform.yahoo.errors.noneFound', 'No Yahoo suggestions found for this keyword.'))
         }
       } catch (err) {
-        const message = err instanceof Error ? err.message : 'Onbekende fout'
+        const message = err instanceof Error ? err.message : t('platform.yahoo.errors.generic', 'Unknown error')
         setError(message)
         setResults([])
       } finally {
         setLoading(false)
       }
     },
-    [limit, searchLanguage, country]
+    [limit, searchLanguage, country, t]
   )
 
   useEffect(() => {
@@ -84,7 +97,7 @@ const YahooTool: React.FC<PlatformToolProps> = (props) => {
   const filters = useMemo(() => (
     <div className="platform-tool__filters">
       <label htmlFor="yahoo-limit">
-        Resultaten
+        {t('platform.yahoo.filters.limit', 'Results')}
         <select
           id="yahoo-limit"
           value={limit}
@@ -101,24 +114,25 @@ const YahooTool: React.FC<PlatformToolProps> = (props) => {
         </select>
       </label>
     </div>
-  ), [limit])
+  ), [limit, t])
 
   return (
     <PlatformToolLayout
-      platformName="Yahoo"
+      platformName={t('platform.yahoo.meta.name', 'Yahoo')}
       keyword={normalizedKeyword}
       onKeywordChange={setKeyword}
       onSearch={performSearch}
-      description="Yahoo zoekopdrachten met autocomplete suggesties."
+      description={t('platform.yahoo.description', 'Yahoo searches with autocomplete suggestions.')}
       extraFilters={filters}
       results={results}
-      placeholder="Waar ben je naar op zoek?"
+      placeholder={t('platform.yahoo.placeholder', 'What are you searching for?')}
       loading={loading}
       error={error}
-      emptyState="Voer een zoekwoord in om Yahoo suggesties te zien."
-      controls={props.locationControls}
-      onGlobalSearch={props.onGlobalSearch}
-      globalLoading={props.globalLoading}
+      emptyState={t('platform.yahoo.emptyState', 'Enter a keyword to see Yahoo suggestions.')}
+      controls={locationControls}
+      onGlobalSearch={onGlobalSearch}
+      globalLoading={globalLoading}
+      translate={t}
     />
   )
 }

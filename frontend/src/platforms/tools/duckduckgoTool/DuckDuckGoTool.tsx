@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import type { PlatformToolProps } from '../../types'
 import PlatformToolLayout, { type PlatformResultItem } from '../common/PlatformToolLayout'
+import { createTranslator } from '../../../i18n/translate'
 
 type DuckDuckGoSuggestion = {
   phrase: string
@@ -44,13 +45,21 @@ const resolveDefaultRegion = (language?: string, country?: string) => {
 }
 
 const DuckDuckGoTool: React.FC<PlatformToolProps> = (props) => {
-  const { keyword, setKeyword, searchLanguage, country } = props
+  const { keyword, setKeyword, searchLanguage, country, ui } = props
   const normalizedKeyword = keyword ?? ''
   const [region, setRegion] = useState(() => resolveDefaultRegion(searchLanguage, country))
   const [results, setResults] = useState<PlatformResultItem[]>([])
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const hasFetched = useRef(false)
+  const t = useMemo(() => createTranslator(ui), [ui])
+  const regionOptions = useMemo(
+    () => DUCKDUCKGO_REGIONS.map((item) => ({
+      ...item,
+      label: t(`platform.duckduckgo.region.${item.code}`, item.label)
+    })),
+    [t]
+  )
 
   useEffect(() => {
     setRegion(resolveDefaultRegion(searchLanguage, country))
@@ -76,7 +85,7 @@ const DuckDuckGoTool: React.FC<PlatformToolProps> = (props) => {
         const response = await fetch(`/api/platforms/duckduckgo?${params.toString()}`)
         if (!response.ok) {
           const payload = await response.json().catch(() => null)
-          throw new Error(payload?.error || 'Onbekende DuckDuckGo fout')
+          throw new Error(payload?.error || t('platform.duckduckgo.error.fetch', 'Unable to fetch DuckDuckGo suggestions'))
         }
         const payload = await response.json()
         const suggestions: DuckDuckGoSuggestion[] = Array.isArray(payload?.suggestions)
@@ -86,24 +95,27 @@ const DuckDuckGoTool: React.FC<PlatformToolProps> = (props) => {
           .filter((item) => typeof item?.phrase === 'string' && item.phrase.trim().length > 0)
           .map((item, index) => ({
             title: item.phrase,
-            subtitle: item.snippet || `DuckDuckGo (${payload?.kl || region})`,
+            subtitle: item.snippet
+              || t('platform.duckduckgo.subtitle', 'DuckDuckGo ({{region}})', {
+                region: payload?.kl || region
+              }),
             metric: typeof item.score === 'number' && Number.isFinite(item.score)
-              ? `Relevantie score ${item.score}`
-              : `Suggestie #${index + 1}`
+              ? t('platform.duckduckgo.metric.score', 'Relevance score {{score}}', { score: item.score })
+              : t('platform.duckduckgo.metric.rank', 'Suggestion #{{rank}}', { rank: index + 1 })
           }))
         setResults(mapped)
         if (mapped.length === 0) {
-          setError('Geen DuckDuckGo suggesties gevonden voor dit zoekwoord.')
+          setError(t('platform.duckduckgo.error.none', 'No DuckDuckGo suggestions found for this keyword.'))
         }
       } catch (err) {
-        const message = err instanceof Error ? err.message : 'Onbekende fout'
+        const message = err instanceof Error ? err.message : t('platform.duckduckgo.error.generic', 'Unknown error')
         setError(message)
         setResults([])
       } finally {
         setLoading(false)
       }
     },
-    [region, searchLanguage, country]
+    [region, searchLanguage, country, t]
   )
 
   useEffect(() => {
@@ -127,7 +139,7 @@ const DuckDuckGoTool: React.FC<PlatformToolProps> = (props) => {
   const filters = useMemo(() => (
     <div className="platform-tool__filters">
       <label htmlFor="duckduckgo-region">
-        Regio
+        {t('platform.duckduckgo.filters.region', 'Region')}
         <select
           id="duckduckgo-region"
           value={region}
@@ -136,7 +148,7 @@ const DuckDuckGoTool: React.FC<PlatformToolProps> = (props) => {
             hasFetched.current = false
           }}
         >
-          {DUCKDUCKGO_REGIONS.map((item) => (
+          {regionOptions.map((item) => (
             <option key={item.code} value={item.code}>
               {item.label}
             </option>
@@ -144,24 +156,25 @@ const DuckDuckGoTool: React.FC<PlatformToolProps> = (props) => {
         </select>
       </label>
     </div>
-  ), [region])
+  ), [region, regionOptions, t])
 
   return (
     <PlatformToolLayout
-      platformName="DuckDuckGo"
+      platformName={t('platform.duckduckgo.meta.name', 'DuckDuckGo')}
       keyword={normalizedKeyword}
       onKeywordChange={setKeyword}
       onSearch={performSearch}
-      description="Ontdek privacyvriendelijke zoekopdrachten met DuckDuckGo autocomplete."
+      description={t('platform.duckduckgo.description', 'Discover privacy-friendly queries with DuckDuckGo autocomplete.')}
       extraFilters={filters}
       results={results}
-      placeholder="Welke zoekterm wil je onderzoeken?"
+      placeholder={t('platform.duckduckgo.placeholder', 'Which query do you want to explore?')}
       loading={loading}
       error={error}
-      emptyState="Voer een zoekwoord in om DuckDuckGo suggesties te zien."
+      emptyState={t('platform.duckduckgo.empty', 'Enter a keyword to see DuckDuckGo suggestions.')}
       controls={props.locationControls}
       onGlobalSearch={props.onGlobalSearch}
       globalLoading={props.globalLoading}
+      translate={t}
     />
   )
 }

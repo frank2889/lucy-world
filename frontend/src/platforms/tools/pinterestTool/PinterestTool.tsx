@@ -1,17 +1,22 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 import type { PlatformToolProps } from '../../types'
+import { createTranslator } from '../../../i18n/translate'
 
-const PinterestTool: React.FC<PlatformToolProps> = () => {
+const PinterestTool: React.FC<PlatformToolProps> = ({ ui }) => {
+  const t = useMemo(() => createTranslator(ui), [ui])
   return (
     <section className="platform-tool">
       <header className="platform-tool__header">
-        <h3>Pinterest keywordtool</h3>
+        <h3>{t('platform.pinterest.heading', 'Pinterest keyword tool')}</h3>
         <p className="platform-tool__description">
-          Deze tool is momenteel niet beschikbaar omdat Pinterest geen vrij toegankelijke suggestie-API heeft.
+          {t(
+            'platform.pinterest.description',
+            'This tool is currently unavailable because Pinterest does not offer a freely accessible suggestions API.'
+          )}
         </p>
       </header>
       <div className="platform-tool__results">
-        <div className="platform-tool__placeholder">Not available</div>
+        <div className="platform-tool__placeholder">{t('platform.pinterest.placeholder', 'Not available')}</div>
       </div>
     </section>
   )

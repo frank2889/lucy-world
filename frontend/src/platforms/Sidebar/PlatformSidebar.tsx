@@ -3,19 +3,20 @@ import type { PlatformConfig } from '../types'
 import '../styles/sidebar.css'
 
 type PlatformSidebarProps = {
+  title?: string
   platforms: PlatformConfig[]
   activePlatformId: string
   onSelect: (platformId: string) => void
 }
 
-const PlatformSidebar: React.FC<PlatformSidebarProps> = ({ platforms, activePlatformId, onSelect }) => {
+const PlatformSidebar: React.FC<PlatformSidebarProps> = ({ title = 'Platforms', platforms, activePlatformId, onSelect }) => {
   if (!platforms.length) {
     return null
   }
 
   return (
     <div className="platform-sidebar">
-      <h4 className="platform-sidebar__title">Platforms</h4>
+      <h4 className="platform-sidebar__title">{title}</h4>
       <ul className="platform-sidebar__list">
         {platforms.map((platform) => {
           const isActive = platform.id === activePlatformId

@@ -1,4 +1,5 @@
 import React, { useMemo } from 'react'
+import type { Translator } from '../../../i18n/translate'
 import '../../styles/tools.css'
 
 export type PlatformResultItem = {
@@ -22,6 +23,7 @@ type PlatformToolLayoutProps = {
   controls?: React.ReactNode
   onGlobalSearch?: (keyword: string) => Promise<void> | void
   globalLoading?: boolean
+  translate?: Translator
 }
 
 const PlatformToolLayout: React.FC<PlatformToolLayoutProps> = ({
@@ -38,8 +40,10 @@ const PlatformToolLayout: React.FC<PlatformToolLayoutProps> = ({
   error = null,
   controls,
   onGlobalSearch,
-  globalLoading = false
+  globalLoading = false,
+  translate
 }) => {
+  const t = useMemo(() => translate ?? ((_: string, fallback: string) => fallback), [translate])
   const canSearch = keyword.trim().length > 0
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -59,7 +63,10 @@ const PlatformToolLayout: React.FC<PlatformToolLayoutProps> = ({
     }
   }
 
-  const heading = useMemo(() => `${platformName} keywordtool`, [platformName])
+  const heading = useMemo(
+    () => t('platforms.common.heading', '{{platform}} keyword tool', { platform: platformName }),
+    [platformName, t]
+  )
 
   return (
     <section className="platform-tool">
@@ -72,12 +79,12 @@ const PlatformToolLayout: React.FC<PlatformToolLayoutProps> = ({
           type="text"
           value={keyword}
           onChange={(event) => onKeywordChange(event.target.value)}
-          placeholder={placeholder ?? `Zoekwoord voor ${platformName}`}
+          placeholder={placeholder ?? t('platforms.common.placeholder', 'Keyword for {{platform}}', { platform: platformName })}
         />
         {controls}
         <div className="platform-tool__actions">
           <button type="submit" disabled={!canSearch || loading || globalLoading}>
-            {loading ? 'Laden…' : 'Zoeken'}
+            {loading ? t('platforms.common.button.loading', 'Loading…') : t('platforms.common.button.submit', 'Search')}
           </button>
         </div>
       </form>
@@ -88,9 +95,9 @@ const PlatformToolLayout: React.FC<PlatformToolLayoutProps> = ({
             {error}
           </div>
         )}
-        {loading && <div className="platform-tool__placeholder">Resultaten worden geladen…</div>}
+        {loading && <div className="platform-tool__placeholder">{t('platforms.common.placeholder.loading', 'Loading results…')}</div>}
         {!loading && !error && results.length === 0 && (
-          <div className="platform-tool__placeholder">{emptyState ?? 'Voer een zoekwoord in om resultaten te zien.'}</div>
+          <div className="platform-tool__placeholder">{emptyState ?? t('platforms.common.placeholder.empty', 'Enter a keyword to see results.')}</div>
         )}
         {!loading && !error && results.length > 0 && (
           <ul>

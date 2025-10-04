@@ -1,12 +1,14 @@
 import React, { useCallback, useMemo, useState } from 'react'
 import type { PlatformToolProps } from '../../types'
 import PlatformToolLayout, { type PlatformResultItem } from '../common/PlatformToolLayout'
+import { createTranslator } from '../../../i18n/translate'
 
 const GoogleTool: React.FC<PlatformToolProps> = (props) => {
   const { keyword, setKeyword, searchLanguage, country, ui } = props
   const [results, setResults] = useState<PlatformResultItem[]>([])
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  const t = useMemo(() => createTranslator(ui), [ui])
 
   const resolvedLanguage = useMemo(() => {
     return (searchLanguage || ui?.lang || 'en').split('-')[0].toLowerCase()
@@ -41,7 +43,7 @@ const GoogleTool: React.FC<PlatformToolProps> = (props) => {
         const payload = await response.json().catch(() => ({}))
 
         if (!response.ok) {
-          throw new Error(payload?.error || 'Kon Google suggesties niet ophalen')
+          throw new Error(payload?.error || t('platform.google.error.fetch', 'Unable to fetch Google suggestions'))
         }
 
         const suggestionsRaw = Array.isArray(payload?.suggestions) ? payload.suggestions : []
@@ -56,31 +58,37 @@ const GoogleTool: React.FC<PlatformToolProps> = (props) => {
             if (!text) return null
             const subtitleParts: string[] = []
             if (payload?.metadata?.hl) {
-              subtitleParts.push(`Taal: ${(payload.metadata.hl as string).toUpperCase()}`)
+              subtitleParts.push(t('platform.google.subtitle.language', 'Language: {{language}}', {
+                language: (payload.metadata.hl as string).toUpperCase()
+              }))
             }
             if (payload?.metadata?.gl) {
-              subtitleParts.push(`Land: ${payload.metadata.gl}`)
+              subtitleParts.push(t('platform.google.subtitle.country', 'Country: {{country}}', {
+                country: payload.metadata.gl
+              }))
             }
             return {
               title: text,
-              subtitle: subtitleParts.length ? subtitleParts.join(' • ') : 'Google suggestie',
-              metric: `#${index + 1}`
+              subtitle: subtitleParts.length
+                ? subtitleParts.join(' • ')
+                : t('platform.google.result.subtitle', 'Google suggestion'),
+              metric: t('platform.google.result.rank', '#{{rank}}', { rank: index + 1 })
             }
           })
           .filter(Boolean) as PlatformResultItem[]
 
         setResults(mapped)
         if (mapped.length === 0) {
-          setError('Geen Google suggesties gevonden voor dit zoekwoord.')
+          setError(t('platform.google.error.none', 'No Google suggestions found for this keyword.'))
         }
       } catch (err: any) {
-        setError(err?.message || 'Kon Google suggesties niet ophalen')
+        setError(err?.message || t('platform.google.error.generic', 'Unable to fetch Google suggestions'))
         setResults([])
       } finally {
         setLoading(false)
       }
     },
-    [resolvedLanguage, resolvedCountry]
+    [resolvedLanguage, resolvedCountry, t]
   )
 
   const handleSearch = useCallback(
@@ -92,19 +100,20 @@ const GoogleTool: React.FC<PlatformToolProps> = (props) => {
 
   return (
     <PlatformToolLayout
-      platformName="Google"
+      platformName={t('platform.google.meta.name', 'Google')}
       keyword={keyword || ''}
       onKeywordChange={setKeyword}
       onSearch={handleSearch}
-      description="Directe autocomplete-suggesties uit Google Search."
+      description={t('platform.google.description', 'Real-time autocomplete suggestions from Google Search.')}
       results={results}
-      placeholder="Waar zoeken mensen naar op Google?"
+      placeholder={t('platform.google.placeholder', 'What are people searching for on Google?')}
       loading={loading}
       error={error}
-      emptyState="Voer een zoekterm in om Google suggesties te zien."
+      emptyState={t('platform.google.empty', 'Enter a term to view Google suggestions.')}
       controls={props.locationControls}
       onGlobalSearch={props.onGlobalSearch}
       globalLoading={props.globalLoading}
+      translate={t}
     />
   )
 }

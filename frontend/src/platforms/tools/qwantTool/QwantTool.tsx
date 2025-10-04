@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import type { PlatformToolProps } from '../../types'
 import PlatformToolLayout, { type PlatformResultItem } from '../common/PlatformToolLayout'
+import { createTranslator } from '../../../i18n/translate'
 
 const CLIENT_OPTIONS = [
   { value: 'opensearch', label: 'OpenSearch' },
@@ -9,13 +10,30 @@ const CLIENT_OPTIONS = [
 ]
 
 const QwantTool: React.FC<PlatformToolProps> = (props) => {
-  const { keyword, setKeyword, searchLanguage } = props
+  const {
+    keyword,
+    setKeyword,
+    searchLanguage,
+    ui,
+    locationControls,
+    onGlobalSearch,
+    globalLoading
+  } = props
   const normalizedKeyword = keyword ?? ''
   const [client, setClient] = useState<string>('opensearch')
   const [results, setResults] = useState<PlatformResultItem[]>([])
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const hasFetched = useRef(false)
+  const t = useMemo(() => createTranslator(ui), [ui])
+  const clientOptions = useMemo(
+    () =>
+      CLIENT_OPTIONS.map((item) => ({
+        ...item,
+        label: t(`platform.qwant.client.${item.value}`, item.label)
+      })),
+    [t]
+  )
 
   const performSearch = useCallback(
     async (term: string) => {
@@ -36,28 +54,30 @@ const QwantTool: React.FC<PlatformToolProps> = (props) => {
         const response = await fetch(`/api/platforms/qwant?${params.toString()}`)
         if (!response.ok) {
           const payload = await response.json().catch(() => null)
-          throw new Error(payload?.error || 'Onbekende Qwant fout')
+          throw new Error(payload?.error || t('platform.qwant.errors.fetch', 'Unable to fetch Qwant suggestions'))
         }
         const payload = await response.json()
         const suggestions: string[] = Array.isArray(payload?.suggestions) ? payload.suggestions : []
         const mapped: PlatformResultItem[] = suggestions.map((item, index) => ({
           title: item,
-          subtitle: `Qwant (${payload?.metadata?.client || client})`,
-          metric: `Suggestie #${index + 1}`
+          subtitle: t('platform.qwant.results.subtitle', 'Qwant ({{client}})', {
+            client: payload?.metadata?.client || client
+          }),
+          metric: t('platform.qwant.results.rank', 'Suggestion #{{rank}}', { rank: index + 1 })
         }))
         setResults(mapped)
         if (mapped.length === 0) {
-          setError('Geen Qwant suggesties gevonden voor dit zoekwoord.')
+          setError(t('platform.qwant.errors.noneFound', 'No Qwant suggestions found for this keyword.'))
         }
       } catch (err) {
-        const message = err instanceof Error ? err.message : 'Onbekende fout'
+        const message = err instanceof Error ? err.message : t('platform.qwant.errors.generic', 'Unknown error')
         setError(message)
         setResults([])
       } finally {
         setLoading(false)
       }
     },
-    [client, searchLanguage]
+    [client, searchLanguage, t]
   )
 
   useEffect(() => {
@@ -81,7 +101,7 @@ const QwantTool: React.FC<PlatformToolProps> = (props) => {
   const filters = useMemo(() => (
     <div className="platform-tool__filters">
       <label htmlFor="qwant-client">
-        Client
+        {t('platform.qwant.filters.client', 'Client')}
         <select
           id="qwant-client"
           value={client}
@@ -90,7 +110,7 @@ const QwantTool: React.FC<PlatformToolProps> = (props) => {
             hasFetched.current = false
           }}
         >
-          {CLIENT_OPTIONS.map((item) => (
+          {clientOptions.map((item) => (
             <option key={item.value} value={item.value}>
               {item.label}
             </option>
@@ -98,24 +118,25 @@ const QwantTool: React.FC<PlatformToolProps> = (props) => {
         </select>
       </label>
     </div>
-  ), [client])
+  ), [client, clientOptions, t])
 
   return (
     <PlatformToolLayout
-      platformName="Qwant"
+      platformName={t('platform.qwant.meta.name', 'Qwant')}
       keyword={normalizedKeyword}
       onKeywordChange={setKeyword}
       onSearch={performSearch}
-      description="Europese zoekmachine Qwant autocomplete."
+      description={t('platform.qwant.description', 'European search engine Qwant autocomplete.')}
       extraFilters={filters}
       results={results}
-      placeholder="Welke zoekterm wil je bekijken?"
+      placeholder={t('platform.qwant.placeholder', 'Which search term would you like to inspect?')}
       loading={loading}
       error={error}
-      emptyState="Voer een zoekwoord in om Qwant suggesties te zien."
-      controls={props.locationControls}
-      onGlobalSearch={props.onGlobalSearch}
-      globalLoading={props.globalLoading}
+      emptyState={t('platform.qwant.emptyState', 'Enter a keyword to see Qwant suggestions.')}
+      controls={locationControls}
+      onGlobalSearch={onGlobalSearch}
+      globalLoading={globalLoading}
+      translate={t}
     />
   )
 }

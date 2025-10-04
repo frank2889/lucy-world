@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import type { PlatformToolProps } from '../../types'
 import PlatformToolLayout, { type PlatformResultItem } from '../common/PlatformToolLayout'
+import { createTranslator } from '../../../i18n/translate'
 
 const YANDEX_REGIONS = [
   { code: '213', label: 'Россия — Москва', countries: ['RU'] },
@@ -20,23 +21,36 @@ const defaultRegionForCountry = (country?: string) => {
 }
 
 const YandexTool: React.FC<PlatformToolProps> = (props) => {
-  const { keyword, setKeyword, searchLanguage, country } = props
+  const {
+    keyword,
+    setKeyword,
+    searchLanguage,
+    country,
+    ui,
+    locationControls,
+    onGlobalSearch,
+    globalLoading
+  } = props
   const normalizedKeyword = keyword ?? ''
   const [region, setRegion] = useState(() => defaultRegionForCountry(country))
   const [results, setResults] = useState<PlatformResultItem[]>([])
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const hasFetched = useRef(false)
+  const t = useMemo(() => createTranslator(ui), [ui])
 
   const availableRegions = useMemo(() => {
     const uniq = new Map<string, { code: string; label: string }>()
     for (const item of YANDEX_REGIONS) {
       if (!uniq.has(item.code)) {
-        uniq.set(item.code, { code: item.code, label: item.label })
+        uniq.set(item.code, {
+          code: item.code,
+          label: t(`platform.yandex.regions.${item.code}`, item.label)
+        })
       }
     }
     return Array.from(uniq.values())
-  }, [])
+  }, [t])
 
   useEffect(() => {
     setRegion(defaultRegionForCountry(country))
@@ -63,28 +77,30 @@ const YandexTool: React.FC<PlatformToolProps> = (props) => {
         const response = await fetch(`/api/platforms/yandex?${params.toString()}`)
         if (!response.ok) {
           const payload = await response.json().catch(() => null)
-          throw new Error(payload?.error || 'Onbekende Yandex fout')
+          throw new Error(payload?.error || t('platform.yandex.errors.fetch', 'Unable to fetch Yandex suggestions'))
         }
         const payload = await response.json()
         const suggestions: string[] = Array.isArray(payload?.suggestions) ? payload.suggestions : []
         const mapped: PlatformResultItem[] = suggestions.map((item, index) => ({
           title: item,
-          subtitle: `Запрос (${payload?.region || region || 'все регионы'})`,
-          metric: `Популярность #${index + 1}`
+          subtitle: t('platform.yandex.results.subtitle', 'Query ({{region}})', {
+            region: payload?.region || region || 'all'
+          }),
+          metric: t('platform.yandex.results.rank', 'Popularity #{{rank}}', { rank: index + 1 })
         }))
         setResults(mapped)
         if (mapped.length === 0) {
-          setError('Geen Yandex suggesties gevonden voor dit zoekwoord.')
+          setError(t('platform.yandex.errors.noneFound', 'No Yandex suggestions found for this keyword.'))
         }
       } catch (err) {
-        const message = err instanceof Error ? err.message : 'Onbekende fout'
+        const message = err instanceof Error ? err.message : t('platform.yandex.errors.generic', 'Unknown error')
         setError(message)
         setResults([])
       } finally {
         setLoading(false)
       }
     },
-    [region, searchLanguage]
+    [region, searchLanguage, t]
   )
 
   useEffect(() => {
@@ -108,7 +124,7 @@ const YandexTool: React.FC<PlatformToolProps> = (props) => {
   const filters = (
     <div className="platform-tool__filters">
       <label htmlFor="yandex-region">
-        Regio
+        {t('platform.yandex.filters.region', 'Region')}
         <select
           id="yandex-region"
           value={region}
@@ -129,20 +145,21 @@ const YandexTool: React.FC<PlatformToolProps> = (props) => {
 
   return (
     <PlatformToolLayout
-      platformName="Yandex"
+      platformName={t('platform.yandex.meta.name', 'Yandex')}
       keyword={normalizedKeyword}
       onKeywordChange={setKeyword}
       onSearch={performSearch}
-      description="Lokale zoektermen voor Yandex ecosysteem."
+      description={t('platform.yandex.description', 'Local search terms for the Yandex ecosystem.')}
       extraFilters={filters}
       results={results}
-      placeholder="Welke Russische zoekterm onderzoek je?"
+      placeholder={t('platform.yandex.placeholder', 'Which Russian search term are you researching?')}
       loading={loading}
       error={error}
-      emptyState="Voer een zoekwoord in voor Yandex inzichten."
-      controls={props.locationControls}
-      onGlobalSearch={props.onGlobalSearch}
-      globalLoading={props.globalLoading}
+      emptyState={t('platform.yandex.emptyState', 'Enter a keyword for Yandex insights.')}
+      controls={locationControls}
+      onGlobalSearch={onGlobalSearch}
+      globalLoading={globalLoading}
+      translate={t}
     />
   )
 }

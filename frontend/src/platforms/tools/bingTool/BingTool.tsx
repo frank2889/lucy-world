@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import type { PlatformToolProps } from '../../types'
 import PlatformToolLayout, { type PlatformResultItem } from '../common/PlatformToolLayout'
+import { createTranslator } from '../../../i18n/translate'
 
 const BING_MARKETS = [
   { code: 'en-US', label: 'United States (English)' },
@@ -36,13 +37,14 @@ const resolveDefaultMarket = (language?: string, country?: string) => {
 }
 
 const BingTool: React.FC<PlatformToolProps> = (props) => {
-  const { keyword, setKeyword, searchLanguage, country } = props
+  const { keyword, setKeyword, searchLanguage, country, ui } = props
   const normalizedKeyword = keyword ?? ''
   const [market, setMarket] = useState(() => resolveDefaultMarket(searchLanguage, country))
   const [results, setResults] = useState<PlatformResultItem[]>([])
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const hasFetched = useRef(false)
+  const t = useMemo(() => createTranslator(ui), [ui])
 
   useEffect(() => {
     setMarket(resolveDefaultMarket(searchLanguage, country))
@@ -67,28 +69,28 @@ const BingTool: React.FC<PlatformToolProps> = (props) => {
         const response = await fetch(`/api/platforms/bing?${params.toString()}`)
         if (!response.ok) {
           const payload = await response.json().catch(() => null)
-          throw new Error(payload?.error || 'Onbekende Bing fout')
+          throw new Error(payload?.error || t('platform.bing.error.fetch', 'Unable to fetch Bing suggestions'))
         }
         const payload = await response.json()
         const suggestions: string[] = Array.isArray(payload?.suggestions) ? payload.suggestions : []
         const mapped: PlatformResultItem[] = suggestions.map((item, index) => ({
           title: item,
-          subtitle: `Autocompletion (${payload?.market || market})`,
-          metric: `Populariteit #${index + 1}`
+          subtitle: t('platform.bing.subtitle', 'Autocompletion ({{market}})', { market: payload?.market || market }),
+          metric: t('platform.bing.metric.rank', 'Popularity #{{rank}}', { rank: index + 1 })
         }))
         setResults(mapped)
         if (mapped.length === 0) {
-          setError('Geen Bing suggesties gevonden voor dit zoekwoord.')
+          setError(t('platform.bing.error.none', 'No Bing suggestions found for this keyword.'))
         }
       } catch (err) {
-        const message = err instanceof Error ? err.message : 'Onbekende fout'
+        const message = err instanceof Error ? err.message : t('platform.bing.error.generic', 'Unknown error')
         setError(message)
         setResults([])
       } finally {
         setLoading(false)
       }
     },
-    [market, searchLanguage]
+    [market, searchLanguage, t]
   )
 
   useEffect(() => {
@@ -112,7 +114,7 @@ const BingTool: React.FC<PlatformToolProps> = (props) => {
   const filters = (
     <div className="platform-tool__filters">
       <label htmlFor="bing-market">
-        Markt
+        {t('platform.bing.filters.market', 'Market')}
         <select
           id="bing-market"
           value={market}
@@ -133,20 +135,21 @@ const BingTool: React.FC<PlatformToolProps> = (props) => {
 
   return (
     <PlatformToolLayout
-      platformName="Bing"
+      platformName={t('platform.bing.meta.name', 'Bing')}
       keyword={normalizedKeyword}
       onKeywordChange={setKeyword}
       onSearch={performSearch}
-      description="Zoekmachine optimalisatie voor Microsoft Bing."
+      description={t('platform.bing.description', 'Search optimization insights for Microsoft Bing.')}
       extraFilters={filters}
       results={results}
-      placeholder="Welke zoekterm wil je in Bing ranken?"
+      placeholder={t('platform.bing.placeholder', 'Which keyword do you want to rank on Bing?')}
       loading={loading}
       error={error}
-      emptyState="Voer een zoekwoord in om Bing kansen te zien."
+      emptyState={t('platform.bing.empty', 'Enter a keyword to uncover Bing opportunities.')}
       controls={props.locationControls}
       onGlobalSearch={props.onGlobalSearch}
       globalLoading={props.globalLoading}
+      translate={t}
     />
   )
 }

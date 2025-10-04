@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import type { PlatformToolProps } from '../../types'
 import PlatformToolLayout, { type PlatformResultItem } from '../common/PlatformToolLayout'
+import { createTranslator } from '../../../i18n/translate'
 
 const APP_STORE_COUNTRIES = [
   { code: 'US', label: 'United States' },
@@ -34,13 +35,14 @@ type ITunesApp = {
 }
 
 const AppStoreTool: React.FC<PlatformToolProps> = (props) => {
-  const { keyword, setKeyword, country } = props
+  const { keyword, setKeyword, country, ui } = props
   const normalizedKeyword = keyword ?? ''
   const [store, setStore] = useState(() => resolveDefaultStore(country))
   const [results, setResults] = useState<PlatformResultItem[]>([])
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const hasFetched = useRef(false)
+  const t = useMemo(() => createTranslator(ui), [ui])
 
   const storeOptions = useMemo(() => APP_STORE_COUNTRIES, [])
 
@@ -67,7 +69,7 @@ const AppStoreTool: React.FC<PlatformToolProps> = (props) => {
         const response = await fetch(`/api/platforms/appstore?${params.toString()}`)
         if (!response.ok) {
           const payload = await response.json().catch(() => null)
-          throw new Error(payload?.error || 'Onbekende App Store fout')
+          throw new Error(payload?.error || t('platform.appstore.error.fetch', 'Unable to fetch App Store data'))
         }
         const payload = await response.json()
         const apps: ITunesApp[] = Array.isArray(payload?.results) ? payload.results : []
@@ -78,27 +80,31 @@ const AppStoreTool: React.FC<PlatformToolProps> = (props) => {
             ? `${app.averageUserRating.toFixed(1)}★${app.userRatingCount ? ` (${app.userRatingCount.toLocaleString()})` : ''}`
             : null
           const price = app.formattedPrice
-            || (typeof app.price === 'number' ? `${app.price === 0 ? 'Free' : `${app.price} ${app.currency || ''}`}` : null)
+            || (typeof app.price === 'number'
+              ? (app.price === 0
+                ? t('platform.appstore.price.free', 'Free')
+                : `${app.price} ${app.currency || ''}`)
+              : null)
           const metricParts = [rating, price].filter(Boolean)
           return {
             title,
             subtitle: subtitleParts.join(' • ') || undefined,
-            metric: metricParts.join(' • ') || `Populariteit #${index + 1}`
+            metric: metricParts.join(' • ') || t('platform.appstore.metric.rank', 'Popularity #{{rank}}', { rank: index + 1 })
           }
         })
         setResults(mapped)
         if (mapped.length === 0) {
-          setError('Geen App Store suggesties gevonden voor dit zoekwoord.')
+          setError(t('platform.appstore.error.none', 'No App Store suggestions found for this keyword.'))
         }
       } catch (err) {
-        const message = err instanceof Error ? err.message : 'Onbekende fout'
+        const message = err instanceof Error ? err.message : t('platform.appstore.error.generic', 'Unknown error')
         setError(message)
         setResults([])
       } finally {
         setLoading(false)
       }
     },
-    [store]
+    [store, t]
   )
 
   useEffect(() => {
@@ -122,7 +128,7 @@ const AppStoreTool: React.FC<PlatformToolProps> = (props) => {
   const filters = (
     <div className="platform-tool__filters">
       <label htmlFor="appstore-country">
-        Store
+        {t('platform.appstore.filters.store', 'Store')}
         <select
           id="appstore-country"
           value={store}
@@ -143,20 +149,21 @@ const AppStoreTool: React.FC<PlatformToolProps> = (props) => {
 
   return (
     <PlatformToolLayout
-      platformName="App Store"
+      platformName={t('platform.appstore.meta.name', 'App Store')}
       keyword={normalizedKeyword}
       onKeywordChange={setKeyword}
       onSearch={performSearch}
-      description="ASO (App Store Optimization) voor iOS applicaties."
+      description={t('platform.appstore.description', 'App Store Optimization insights for iOS apps.')}
       extraFilters={filters}
       results={results}
-      placeholder="Welke app zoekterm onderzoek je?"
+      placeholder={t('platform.appstore.placeholder', 'Which app keyword are you exploring?')}
       loading={loading}
       error={error}
-      emptyState="Voer een zoekwoord in voor App Store suggesties."
+      emptyState={t('platform.appstore.empty', 'Enter a keyword to see App Store suggestions.')}
       controls={props.locationControls}
       onGlobalSearch={props.onGlobalSearch}
       globalLoading={props.globalLoading}
+      translate={t}
     />
   )
 }

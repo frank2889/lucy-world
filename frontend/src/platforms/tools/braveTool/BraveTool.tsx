@@ -1,21 +1,30 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import type { PlatformToolProps } from '../../types'
 import PlatformToolLayout, { type PlatformResultItem } from '../common/PlatformToolLayout'
+import { createTranslator } from '../../../i18n/translate'
 
 const SOURCE_OPTIONS = [
   { value: 'web', label: 'Web' },
-  { value: 'news', label: 'Nieuws' },
+  { value: 'news', label: 'News' },
   { value: 'videos', label: 'Video' }
 ]
 
 const BraveTool: React.FC<PlatformToolProps> = (props) => {
-  const { keyword, setKeyword, searchLanguage, country } = props
+  const { keyword, setKeyword, searchLanguage, country, ui } = props
   const normalizedKeyword = keyword ?? ''
   const [source, setSource] = useState<string>('web')
   const [results, setResults] = useState<PlatformResultItem[]>([])
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const hasFetched = useRef(false)
+  const t = useMemo(() => createTranslator(ui), [ui])
+  const sourceOptions = useMemo(
+    () => SOURCE_OPTIONS.map((item) => ({
+      ...item,
+      label: t(`platform.brave.source.${item.value}`, item.label)
+    })),
+    [t]
+  )
 
   const performSearch = useCallback(
     async (term: string) => {
@@ -36,28 +45,30 @@ const BraveTool: React.FC<PlatformToolProps> = (props) => {
         const response = await fetch(`/api/platforms/brave?${params.toString()}`)
         if (!response.ok) {
           const payload = await response.json().catch(() => null)
-          throw new Error(payload?.error || 'Onbekende Brave fout')
+          throw new Error(payload?.error || t('platform.brave.error.fetch', 'Unable to fetch Brave suggestions'))
         }
         const payload = await response.json()
         const suggestions: string[] = Array.isArray(payload?.suggestions) ? payload.suggestions : []
         const mapped: PlatformResultItem[] = suggestions.map((item, index) => ({
           title: item,
-          subtitle: `Brave (${payload?.metadata?.source || source})`,
-          metric: `Suggestie #${index + 1}`
+          subtitle: t('platform.brave.subtitle', 'Brave ({{source}})', {
+            source: payload?.metadata?.source || source
+          }),
+          metric: t('platform.brave.metric.rank', 'Suggestion #{{rank}}', { rank: index + 1 })
         }))
         setResults(mapped)
         if (mapped.length === 0) {
-          setError('Geen Brave suggesties gevonden voor dit zoekwoord.')
+          setError(t('platform.brave.error.none', 'No Brave suggestions found for this keyword.'))
         }
       } catch (err) {
-        const message = err instanceof Error ? err.message : 'Onbekende fout'
+        const message = err instanceof Error ? err.message : t('platform.brave.error.generic', 'Unknown error')
         setError(message)
         setResults([])
       } finally {
         setLoading(false)
       }
     },
-    [source, searchLanguage]
+    [source, searchLanguage, t]
   )
 
   useEffect(() => {
@@ -81,7 +92,7 @@ const BraveTool: React.FC<PlatformToolProps> = (props) => {
   const filters = useMemo(() => (
     <div className="platform-tool__filters">
       <label htmlFor="brave-source">
-        Bron
+        {t('platform.brave.filters.source', 'Source')}
         <select
           id="brave-source"
           value={source}
@@ -90,7 +101,7 @@ const BraveTool: React.FC<PlatformToolProps> = (props) => {
             hasFetched.current = false
           }}
         >
-          {SOURCE_OPTIONS.map((item) => (
+          {sourceOptions.map((item) => (
             <option key={item.value} value={item.value}>
               {item.label}
             </option>
@@ -98,24 +109,25 @@ const BraveTool: React.FC<PlatformToolProps> = (props) => {
         </select>
       </label>
     </div>
-  ), [source])
+  ), [source, sourceOptions, t])
 
   return (
     <PlatformToolLayout
-      platformName="Brave"
+      platformName={t('platform.brave.meta.name', 'Brave')}
       keyword={normalizedKeyword}
       onKeywordChange={setKeyword}
       onSearch={performSearch}
-      description="Privacyvriendelijke Brave Search suggesties."
+      description={t('platform.brave.description', 'Privacy-focused Brave Search suggestions.')}
       extraFilters={filters}
       results={results}
-      placeholder="Welke zoekterm wil je onderzoeken?"
+      placeholder={t('platform.brave.placeholder', 'Which query do you want to explore?')}
       loading={loading}
       error={error}
-      emptyState="Voer een zoekwoord in om Brave suggesties te zien."
+      emptyState={t('platform.brave.empty', 'Enter a keyword to see Brave suggestions.')}
       controls={props.locationControls}
       onGlobalSearch={props.onGlobalSearch}
       globalLoading={props.globalLoading}
+      translate={t}
     />
   )
 }

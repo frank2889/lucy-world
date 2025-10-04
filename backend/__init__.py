@@ -160,6 +160,24 @@ def create_app() -> Flask:
 					codes.append(name.split('.json')[0])
 		return sorted(set(codes))
 
+	def _available_markets() -> list[str]:
+		"""Return ISO country codes that have market configuration files."""
+		markets_dir = os.path.join(project_root, 'markets')
+		if not os.path.isdir(markets_dir):
+			return []
+		codes: list[str] = []
+		for name in sorted(os.listdir(markets_dir)):
+			folder = os.path.join(markets_dir, name)
+			if not os.path.isdir(folder):
+				continue
+			hreflang_path = os.path.join(folder, 'hreflang.json')
+			if not os.path.isfile(hreflang_path):
+				continue
+			code = name.strip().upper()
+			if len(code) == 2 and code.isalpha():
+				codes.append(code)
+		return codes
+
 	def _detect_lang() -> str:
 		al = request.headers.get('Accept-Language', '')
 		candidates: list[str] = []
@@ -855,6 +873,76 @@ def create_app() -> Flask:
 		except Exception:
 			# minimal fallback of common markets
 			return jsonify({"countries": ["US","GB","NL","DE","FR","ES","IT","CA","AU","IN"]})
+
+	@app.route('/meta/markets.json')
+	def meta_markets():
+		"""Return list of configured markets."""
+		markets_dir = os.path.join(project_root, 'markets')
+		index_path = os.path.join(markets_dir, 'index.json')
+		try:
+			with open(index_path, 'r', encoding='utf-8') as f:
+				data = json.load(f)
+			if isinstance(data, dict):
+				return jsonify(data)
+		except Exception:
+			pass
+		summary: list[dict[str, Any]] = []
+		for code in _available_markets():
+			folder = os.path.join(markets_dir, code)
+			hreflang_path = os.path.join(folder, 'hreflang.json')
+			default_locale: str | None = None
+			canonical: str | None = None
+			locales: list[str] = []
+			try:
+				with open(hreflang_path, 'r', encoding='utf-8') as f:
+					config = json.load(f)
+			except Exception:
+				config = {}
+			if isinstance(config, dict):
+				default_locale = config.get('defaultLocale')
+				for locale in config.get('locales', []) or []:
+					code_value = locale.get('code')
+					if isinstance(code_value, str):
+						locales.append(code_value)
+					if canonical is None:
+						canonical = locale.get('canonical') if isinstance(locale, dict) else None
+			summary.append({
+				"code": code,
+				"defaultLocale": default_locale,
+				"canonical": canonical,
+				"locales": locales
+			})
+		return jsonify({"markets": summary})
+
+	@app.route('/meta/markets/<code>.json')
+	def meta_market(code: str):
+		"""Return market configuration for a specific country code."""
+		if not code:
+			abort(404)
+		markets_dir = os.path.join(project_root, 'markets')
+		folder = os.path.join(markets_dir, code.upper())
+		if not os.path.isdir(folder):
+			folder = os.path.join(markets_dir, code.lower())
+			if not os.path.isdir(folder):
+				abort(404)
+		hreflang_path = os.path.join(folder, 'hreflang.json')
+		if not os.path.isfile(hreflang_path):
+			abort(404)
+		try:
+			with open(hreflang_path, 'r', encoding='utf-8') as f:
+				config = json.load(f)
+		except Exception:
+			abort(404)
+		payments_path = os.path.join(folder, 'payments.json')
+		if os.path.isfile(payments_path):
+			try:
+				with open(payments_path, 'r', encoding='utf-8') as f:
+					payments = json.load(f)
+				if isinstance(payments, dict):
+					config['payments'] = payments
+			except Exception:
+				pass
+		return jsonify(config)
 
 	# ========================================================================
 	# FREE KEYWORD RESEARCH ENDPOINTS

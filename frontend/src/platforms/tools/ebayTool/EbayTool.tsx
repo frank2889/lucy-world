@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import type { PlatformToolProps } from '../../types'
 import PlatformToolLayout, { type PlatformResultItem } from '../common/PlatformToolLayout'
+import { createTranslator } from '../../../i18n/translate'
 
 const EBAY_SITES = [
   { country: 'US', siteId: '0', label: 'United States (eBay.com)' },
@@ -25,13 +26,14 @@ const resolveDefaultSite = (country?: string) => {
 }
 
 const EbayTool: React.FC<PlatformToolProps> = (props) => {
-  const { keyword, setKeyword, country } = props
+  const { keyword, setKeyword, country, ui } = props
   const normalizedKeyword = keyword ?? ''
   const [siteId, setSiteId] = useState(() => resolveDefaultSite(country))
   const [results, setResults] = useState<PlatformResultItem[]>([])
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const hasFetched = useRef(false)
+  const t = useMemo(() => createTranslator(ui), [ui])
 
   const selectedSite = useMemo(() => EBAY_SITES.find((item) => item.siteId === siteId) ?? EBAY_SITES[0], [siteId])
 
@@ -59,28 +61,30 @@ const EbayTool: React.FC<PlatformToolProps> = (props) => {
         const response = await fetch(`/api/platforms/ebay?${params.toString()}`)
         if (!response.ok) {
           const payload = await response.json().catch(() => null)
-          throw new Error(payload?.error || 'Onbekende eBay fout')
+          throw new Error(payload?.error || t('platform.ebay.error.fetch', 'Unable to fetch eBay suggestions'))
         }
         const payload = await response.json()
         const suggestions: string[] = Array.isArray(payload?.suggestions) ? payload.suggestions : []
         const mapped: PlatformResultItem[] = suggestions.map((item, index) => ({
           title: item,
-          subtitle: `Zoeksuggestie uit ${selectedSite.label}`,
-          metric: `Populariteit #${index + 1}`
+          subtitle: t('platform.ebay.subtitle', 'Search suggestion from {{marketplace}}', {
+            marketplace: selectedSite.label
+          }),
+          metric: t('platform.ebay.metric.rank', 'Popularity #{{rank}}', { rank: index + 1 })
         }))
         setResults(mapped)
         if (mapped.length === 0) {
-          setError('Geen eBay suggesties gevonden voor dit zoekwoord.')
+          setError(t('platform.ebay.error.none', 'No eBay suggestions found for this keyword.'))
         }
       } catch (err) {
-        const message = err instanceof Error ? err.message : 'Onbekende fout'
+        const message = err instanceof Error ? err.message : t('platform.ebay.error.generic', 'Unknown error')
         setError(message)
         setResults([])
       } finally {
         setLoading(false)
       }
     },
-    [siteId, country, selectedSite.label]
+    [siteId, country, selectedSite.label, t]
   )
 
   useEffect(() => {
@@ -104,7 +108,7 @@ const EbayTool: React.FC<PlatformToolProps> = (props) => {
   const filters = (
     <div className="platform-tool__filters">
       <label htmlFor="ebay-site">
-        Marketplace
+        {t('platform.ebay.filters.marketplace', 'Marketplace')}
         <select
           id="ebay-site"
           value={siteId}
@@ -125,20 +129,21 @@ const EbayTool: React.FC<PlatformToolProps> = (props) => {
 
   return (
     <PlatformToolLayout
-      platformName="eBay"
+      platformName={t('platform.ebay.meta.name', 'eBay')}
       keyword={normalizedKeyword}
       onKeywordChange={setKeyword}
       onSearch={performSearch}
-      description="Listing- en prijsstrategieën voor eBay."
+      description={t('platform.ebay.description', 'Listing and pricing insights for eBay.')}
       extraFilters={filters}
       results={results}
-      placeholder="Welk product verkoop je op eBay?"
+      placeholder={t('platform.ebay.placeholder', 'Which product are you selling on eBay?')}
       loading={loading}
       error={error}
-      emptyState="Voer een zoekwoord in voor eBay inzichten."
+      emptyState={t('platform.ebay.empty', 'Enter a keyword to see eBay insights.')}
       controls={props.locationControls}
       onGlobalSearch={props.onGlobalSearch}
       globalLoading={props.globalLoading}
+      translate={t}
     />
   )
 }

@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import type { PlatformToolProps } from '../../types'
+import { createTranslator } from '../../../i18n/translate'
 import PlatformToolLayout, { type PlatformResultItem } from '../common/PlatformToolLayout'
 
 const GOOGLE_PLAY_REGIONS = [
@@ -23,7 +24,17 @@ const resolveDefaultRegion = (country?: string) => {
 }
 
 const GooglePlayTool: React.FC<PlatformToolProps> = (props) => {
-  const { keyword, setKeyword, searchLanguage, country } = props
+  const {
+    keyword,
+    setKeyword,
+    searchLanguage,
+    country,
+    ui,
+    locationControls,
+    onGlobalSearch,
+    globalLoading,
+    getCountryName
+  } = props
   const normalizedKeyword = keyword ?? ''
   const [region, setRegion] = useState(() => resolveDefaultRegion(country))
   const [results, setResults] = useState<PlatformResultItem[]>([])
@@ -31,7 +42,16 @@ const GooglePlayTool: React.FC<PlatformToolProps> = (props) => {
   const [error, setError] = useState<string | null>(null)
   const hasFetched = useRef(false)
 
-  const regionOptions = useMemo(() => GOOGLE_PLAY_REGIONS, [])
+  const t = useMemo(() => createTranslator(ui), [ui])
+
+  const regionOptions = useMemo(
+    () =>
+      GOOGLE_PLAY_REGIONS.map((item) => ({
+        code: item.code,
+        label: getCountryName?.(item.code) ?? t(`platform.googlePlay.regions.${item.code}`, item.label)
+      })),
+    [getCountryName, t]
+  )
 
   useEffect(() => {
     setRegion(resolveDefaultRegion(country))
@@ -57,28 +77,30 @@ const GooglePlayTool: React.FC<PlatformToolProps> = (props) => {
         const response = await fetch(`/api/platforms/googleplay?${params.toString()}`)
         if (!response.ok) {
           const payload = await response.json().catch(() => null)
-          throw new Error(payload?.error || 'Onbekende Google Play fout')
+          throw new Error(payload?.error || t('platform.googlePlay.errors.unknownResponse', 'Unknown Google Play error'))
         }
         const payload = await response.json()
         const suggestions: string[] = Array.isArray(payload?.suggestions) ? payload.suggestions : []
         const mapped: PlatformResultItem[] = suggestions.map((item, index) => ({
           title: item,
-          subtitle: `Zoeksuggestie (${payload?.country?.toUpperCase() || region})`,
-          metric: `Populariteit #${index + 1}`
+          subtitle: t('platform.googlePlay.results.subtitle', 'Search suggestion ({{country}})', {
+            country: (payload?.country?.toUpperCase() || region) ?? region
+          }),
+          metric: t('platform.googlePlay.results.rank', 'Popularity #{{rank}}', { rank: index + 1 })
         }))
         setResults(mapped)
         if (mapped.length === 0) {
-          setError('Geen Google Play suggesties gevonden voor dit zoekwoord.')
+          setError(t('platform.googlePlay.errors.noneFound', 'No Google Play suggestions found for this keyword.'))
         }
       } catch (err) {
-        const message = err instanceof Error ? err.message : 'Onbekende fout'
+        const message = err instanceof Error ? err.message : t('platform.googlePlay.errors.generic', 'Unknown error')
         setError(message)
         setResults([])
       } finally {
         setLoading(false)
       }
     },
-    [region, searchLanguage]
+    [region, searchLanguage, t]
   )
 
   useEffect(() => {
@@ -102,7 +124,7 @@ const GooglePlayTool: React.FC<PlatformToolProps> = (props) => {
   const filters = (
     <div className="platform-tool__filters">
       <label htmlFor="google-play-region">
-        Regio
+  {t('platform.googlePlay.filters.region', 'Region')}
         <select
           id="google-play-region"
           value={region}
@@ -123,20 +145,21 @@ const GooglePlayTool: React.FC<PlatformToolProps> = (props) => {
 
   return (
     <PlatformToolLayout
-      platformName="Google Play"
+  platformName={t('platform.googlePlay.meta.name', 'Google Play')}
       keyword={normalizedKeyword}
       onKeywordChange={setKeyword}
       onSearch={performSearch}
-      description="ASO voor Android apps in Google Play."
+  description={t('platform.googlePlay.description', 'ASO for Android apps in Google Play.')}
       extraFilters={filters}
       results={results}
-      placeholder="Welk Android keyword onderzoek je?"
+  placeholder={t('platform.googlePlay.form.placeholder', 'Which Android keyword are you researching?')}
       loading={loading}
       error={error}
-      emptyState="Voer een zoekwoord in om Google Play kansen te zien."
-      controls={props.locationControls}
-      onGlobalSearch={props.onGlobalSearch}
-      globalLoading={props.globalLoading}
+  emptyState={t('platform.googlePlay.emptyState', 'Enter a keyword to see Google Play opportunities.')}
+      controls={locationControls}
+      onGlobalSearch={onGlobalSearch}
+      globalLoading={globalLoading}
+      translate={t}
     />
   )
 }
