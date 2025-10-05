@@ -32,6 +32,7 @@ from .models import PlanConfig, QueryLog, CandidateQuery, ContentDraft, DailyUsa
 from .routes_projects import bp as projects_bp
 from .routes_auth import bp as auth_bp
 from .routes_billing import bp as billing_bp
+from .routes_entitlements import bp as entitlements_bp
 from .routes_growth import bp as growth_bp
 
 
@@ -2636,6 +2637,7 @@ def create_app() -> Flask:
 	app.register_blueprint(projects_bp)
 	app.register_blueprint(auth_bp)
 	app.register_blueprint(billing_bp)
+	app.register_blueprint(entitlements_bp)
 	app.register_blueprint(growth_bp)
 
 	# Create database tables if not exist

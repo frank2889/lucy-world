@@ -19,6 +19,27 @@ bp = Blueprint("billing", __name__, url_prefix="/api/billing")
 class StripeConfigurationError(RuntimeError):
     """Raised when Stripe is not configured correctly."""
 
+def _ensure_metadata(user: User) -> Dict[str, Any]:
+    raw_meta = user.plan_metadata if isinstance(user.plan_metadata, dict) else {}
+    meta = dict(raw_meta or {})
+    if "tier" not in meta:
+        meta["tier"] = "free"
+    if "ai_credits" not in meta:
+        meta["ai_credits"] = 0
+    user.plan_metadata = meta
+    return meta
+
+
+def _set_subscription_expiry(meta: Dict[str, Any], period_end: Any) -> None:
+    if isinstance(period_end, (int, float)):
+        expires_at = datetime.utcfromtimestamp(period_end).replace(microsecond=0).isoformat() + "Z"
+        meta["expires_at"] = expires_at
+    elif isinstance(period_end, str):
+        meta["expires_at"] = period_end
+    else:
+        meta.pop("expires_at", None)
+
+
 
 def _ensure_stripe_api() -> None:
     secret_key = (os.getenv("STRIPE_SECRET_KEY") or "").strip()
@@ -239,12 +260,14 @@ def _handle_checkout_completed(session: Dict[str, Any]) -> bool:
     if tax_ids:
         user.billing_tax_id = tax_ids[0].get("value") or user.billing_tax_id
 
-    metadata = user.plan_metadata or {}
+    metadata = _ensure_metadata(user)
+    metadata["tier"] = "pro"
     metadata["stripe"] = {
         "customer_id": user.stripe_customer_id,
         "subscription_id": user.stripe_subscription_id,
         "checkout_session": session.get("id"),
     }
+    _set_subscription_expiry(metadata, session.get("subscription") and session.get("expires_at"))
     user.plan_metadata = metadata
 
     return True
@@ -282,7 +305,7 @@ def _handle_invoice_paid(invoice: Dict[str, Any]) -> bool:
         payment.net_amount = net_amount
         payment.tax_amount = tax_amount
         payment.currency = currency
-        metadata = payment.metadata_payload or {}
+        metadata = dict(payment.metadata_payload or {})
         metadata["stripe"] = invoice
         payment.metadata_payload = metadata
 
@@ -294,8 +317,11 @@ def _handle_invoice_paid(invoice: Dict[str, Any]) -> bool:
     # Ensure subscription remains active
     user.plan = "pro"
     user.plan_started_at = datetime.utcnow()
-    meta = user.plan_metadata or {}
+    meta = _ensure_metadata(user)
     meta.setdefault("stripe", {})["latest_invoice"] = invoice_id
+    meta["tier"] = "pro"
+    period_end = (invoice.get("lines", {}).get("data", [{}])[0].get("period") or {}).get("end")
+    _set_subscription_expiry(meta, period_end)
     user.plan_metadata = meta
     return True
 
@@ -305,7 +331,7 @@ def _handle_invoice_failed(invoice: Dict[str, Any]) -> bool:
     user = _find_user_by_stripe(customer_id=customer_id)
     if not user:
         return False
-    meta = user.plan_metadata or {}
+    meta = _ensure_metadata(user)
     meta.setdefault("stripe", {})["payment_failed_at"] = datetime.utcnow().isoformat() + "Z"
     user.plan_metadata = meta
     return True
@@ -319,9 +345,11 @@ def _handle_subscription_cancelled(subscription: Dict[str, Any]) -> bool:
     if not user:
         return False
     user.plan = "trial_expired"
-    meta = user.plan_metadata or {}
+    meta = _ensure_metadata(user)
     meta.setdefault("stripe", {})["subscription_status"] = subscription.get("status")
     meta["stripe"]["ended_at"] = datetime.utcnow().isoformat() + "Z"
+    meta["tier"] = "free"
+    meta.pop("expires_at", None)
     user.plan_metadata = meta
     return True
 
@@ -334,11 +362,16 @@ def _handle_subscription_updated(subscription: Dict[str, Any]) -> bool:
     if not user:
         return False
     status = subscription.get("status")
-    meta = user.plan_metadata or {}
+    meta = _ensure_metadata(user)
     meta.setdefault("stripe", {})["subscription_status"] = status
+    period = subscription.get("current_period_end")
+    _set_subscription_expiry(meta, period)
     user.plan_metadata = meta
     if status in {"active", "trialing", "past_due"}:
         user.plan = "pro"
+        meta["tier"] = "pro"
     elif status in {"canceled", "unpaid"}:
         user.plan = "trial_expired"
+        meta["tier"] = "free"
+        meta.pop("expires_at", None)
     return True

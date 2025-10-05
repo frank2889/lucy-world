@@ -8,7 +8,7 @@ wikipedia==1.4.0
 Werkzeug==3.0.1
 pandas==2.1.0
 Flask-SQLAlchemy==3.0.5
-SQLAlchemy==2.0.21
+SQLAlchemy==2.0.34
 langcodes==3.5.0
 openai==1.43.0
 markdown==3.6

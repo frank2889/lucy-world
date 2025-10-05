@@ -128,6 +128,10 @@ class User(db.Model):
             api_token=token,
             plan='trial',
             plan_started_at=now,
+            plan_metadata={
+                'tier': 'free',
+                'ai_credits': 0,
+            },
         )
         db.session.add(user)
         db.session.commit()
