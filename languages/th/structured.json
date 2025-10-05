@@ -9,11 +9,11 @@
     },
     {
       "@type": "WebSite",
-      "name": "Lucy World",
+      "name": "การวิจัยคีย์เวิร์ด - Lucy World",
       "url": "https://lucy.world/th/",
       "inLanguage": "th",
-      "description": "Keyword research made simple with Google data: suggestions, trends, and insights.",
-      "keywords": "keyword research, SEO, Google Trends, suggestions, search volume",
+      "description": "Lucy World tracks live search demand and AI clustering for Thai audiences so teams plan weekly campaigns and sustainable growth with confidence.",
+      "keywords": "การวิจัยคีย์เวิร์ด, SEO ไทย, Google Trends, คำแนะนำ, ปริมาณการค้นหา",
       "publisher": {
         "@type": "Organization",
         "name": "Lucy World"
@@ -30,22 +30,22 @@
     },
     {
       "@type": "WebPage",
-      "name": "Lucy World",
+      "name": "การวิจัยคีย์เวิร์ด - Lucy World",
       "url": "https://lucy.world/th/",
       "inLanguage": "th",
       "isPartOf": {
         "@type": "WebSite",
         "url": "https://lucy.world/th/"
       },
-      "description": "การวิจัยคีย์เวิร์ดสำหรับตลาดไทยและข้อมูล Google เทรนด์ และข้อมูลเชิงลึกเพื่อเพิ่มประสิทธิภาพ SEO บน Google.co.th",
-      "keywords": "การวิจัยคีย์เวิร์ด, SEO ไทย, Google Trends, คำแนะนำ, ปริมาณการค้นหา, ตลาดไทย",
+      "description": "Lucy World tracks live search demand and AI clustering for Thai audiences so teams plan weekly campaigns and sustainable growth with confidence.",
+      "keywords": "การวิจัยคีย์เวิร์ด, SEO ไทย, Google Trends, คำแนะนำ, ปริมาณการค้นหา",
       "aiSemantic": [
-        "Google.co.th การเพิ่มประสิทธิภาพ",
-        "การวิเคราะห์ตลาดไทย",
-        "เทรนด์การค้นหาไทย",
-        "การวิจัยคีย์เวิร์ดไทย",
-        "SEO เอเชียตะวันออกเฉียงใต้",
-        "การตลาดดิจิทัลไทย"
+        "Thai keyword research",
+        "Thai SEO insights",
+        "search trends platform",
+        "AI content planning",
+        "Thai market analysis",
+        "Lucy World intelligence"
       ]
     }
   ]

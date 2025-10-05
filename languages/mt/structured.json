@@ -9,11 +9,11 @@
     },
     {
       "@type": "WebSite",
-      "name": "Lucy World",
+      "name": "Lucy World – Analiżi tat-tfittxija lokali għal Malta",
       "url": "https://lucy.world/mt/",
       "inLanguage": "mt",
-      "description": "Keyword research made simple with Google data: suggestions, trends, and insights.",
-      "keywords": "keyword research, SEO, Google Trends, suggestions, search volume",
+      "description": "Lucy World tracks live search demand and AI clustering for Maltese audiences so teams plan weekly campaigns and sustainable growth with confidence.",
+      "keywords": "keywords Maltin, SEO Malta, Google Trends, volum tat-tfittxija, analiżi AI, strateġija tal-kontenut lokali",
       "publisher": {
         "@type": "Organization",
         "name": "Lucy World"
@@ -30,15 +30,23 @@
     },
     {
       "@type": "WebPage",
-      "name": "Lucy World",
+      "name": "Lucy World – Analiżi tat-tfittxija lokali għal Malta",
       "url": "https://lucy.world/mt/",
       "inLanguage": "mt",
       "isPartOf": {
         "@type": "WebSite",
         "url": "https://lucy.world/mt/"
       },
-      "description": "Riċerka tal-keywords għal Malta b'data Google: suġġerimenti, trends u analiżi AI għat-tkabbir tan-negozju lokali.",
-      "keywords": "keywords Maltin, SEO Malta, Google Trends, volum tat-tfittxija, analiżi AI, strateġija tal-kontenut lokali, tkabbir tan-negozju, marketing diġitali"
+      "description": "Lucy World tracks live search demand and AI clustering for Maltese audiences so teams plan weekly campaigns and sustainable growth with confidence.",
+      "keywords": "keywords Maltin, SEO Malta, Google Trends, volum tat-tfittxija, analiżi AI, strateġija tal-kontenut lokali",
+      "aiSemantic": [
+        "Maltese keyword research",
+        "Maltese SEO insights",
+        "search trends platform",
+        "AI content planning",
+        "Maltese market analysis",
+        "Lucy World intelligence"
+      ]
     }
   ]
 }

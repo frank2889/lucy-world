@@ -18,7 +18,7 @@ except Exception:  # pragma: no cover - optional dependency
         raise ValueError("wordfreq not available")
 
 if TYPE_CHECKING:  # Avoid circular imports during runtime
-    from free_keyword_tool import KeywordData
+    from premium_keyword_tool import KeywordData
 
 
 class KeywordLanguageValidator:

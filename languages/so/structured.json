@@ -9,11 +9,11 @@
     },
     {
       "@type": "WebSite",
-      "name": "Lucy World",
+      "name": "Lucy World – Falanqaynta raadinta maxalliga ah ee Soomaaliya",
       "url": "https://lucy.world/so/",
       "inLanguage": "so",
-      "description": "Keyword research made simple with Google data: suggestions, trends, and insights.",
-      "keywords": "keyword research, SEO, Google Trends, suggestions, search volume",
+      "description": "Sahami xogta Google Soomaaliyeed oo leh talooyiin, isbeddelka iyo falanqaynta AI taas oo xoojisa go'aamada waxa lagu qoro iyo kordhinta ganacsiga maxalliga ah.",
+      "keywords": "ereyada muhiimka ah ee Soomaaliga, SEO Soomaaliya, Google Trends, mugga raadinta, falanqaynta AI, istaraatiijiyada waxa lagu qoro ee maxalliga ah",
       "publisher": {
         "@type": "Organization",
         "name": "Lucy World"
@@ -30,15 +30,23 @@
     },
     {
       "@type": "WebPage",
-      "name": "Lucy World",
+      "name": "Lucy World – Falanqaynta raadinta maxalliga ah ee Soomaaliya",
       "url": "https://lucy.world/so/",
       "inLanguage": "so",
       "isPartOf": {
         "@type": "WebSite",
         "url": "https://lucy.world/so/"
       },
-      "description": "Cilmi-baadhista ereyada muhiimka ah ee Soomaaliya iyo xogta Google: talooyiin, isbeddelka iyo falanqaynta AI kordhinta ganacsiga maxalliga ah.",
-      "keywords": "ereyada muhiimka ah ee Soomaaliga, SEO Soomaaliya, Google Trends, mugga raadinta, falanqaynta AI, istaraatiijiyada waxa lagu qoro ee maxalliga ah, kordhinta ganacsiga, suuq-geynta dijitaalka ah"
+      "description": "Sahami xogta Google Soomaaliyeed oo leh talooyiin, isbeddelka iyo falanqaynta AI taas oo xoojisa go'aamada waxa lagu qoro iyo kordhinta ganacsiga maxalliga ah.",
+      "keywords": "ereyada muhiimka ah ee Soomaaliga, SEO Soomaaliya, Google Trends, mugga raadinta, falanqaynta AI, istaraatiijiyada waxa lagu qoro ee maxalliga ah",
+      "aiSemantic": [
+        "Somali keyword research",
+        "Somali SEO insights",
+        "search trends platform",
+        "AI content planning",
+        "Somali market analysis",
+        "Lucy World intelligence"
+      ]
     }
   ]
 }

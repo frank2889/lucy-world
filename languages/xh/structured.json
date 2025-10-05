@@ -9,11 +9,11 @@
     },
     {
       "@type": "WebSite",
-      "name": "Lucy World",
+      "name": "Uphando lwamagama aphambili - Lucy World",
       "url": "https://lucy.world/xh/",
       "inLanguage": "xh",
-      "description": "Keyword research made simple with Google data: suggestions, trends, and insights.",
-      "keywords": "keyword research, SEO, Google Trends, suggestions, search volume",
+      "description": "Lucy World tracks live search demand and AI clustering for Xhosa audiences so teams plan weekly campaigns and sustainable growth with confidence.",
+      "keywords": "uphando lwamagama aphambili, SEO isiXhosa, Google Trends, iingcebiso, umthamo wokukhangela",
       "publisher": {
         "@type": "Organization",
         "name": "Lucy World"
@@ -30,22 +30,22 @@
     },
     {
       "@type": "WebPage",
-      "name": "Lucy World",
+      "name": "Uphando lwamagama aphambili - Lucy World",
       "url": "https://lucy.world/xh/",
       "inLanguage": "xh",
       "isPartOf": {
         "@type": "WebSite",
         "url": "https://lucy.world/xh/"
       },
-      "description": "Uphando lwamagama aphambili kwintengiso yaseMzantsi Afrika kunye neenkcukacha zeGoogle. Iintshukumo, uhlalutyo kunye nokuqonda ngeSEO ngesiXhosa.",
-      "keywords": "uphando lwamagama aphambili, SEO isiXhosa, Google Trends, iingcebiso, umthamo wokukhangela, uMzantsi Afrika",
+      "description": "Lucy World tracks live search demand and AI clustering for Xhosa audiences so teams plan weekly campaigns and sustainable growth with confidence.",
+      "keywords": "uphando lwamagama aphambili, SEO isiXhosa, Google Trends, iingcebiso, umthamo wokukhangela",
       "aiSemantic": [
-        "Google.co.za SEO isiXhosa",
-        "Uhlalutyo lwentengiso yaseMzantsi Afrika",
-        "Iintshukumo zokukhangela zaseMzantsi Afrika",
-        "Uphando lwamagama aphambili ngesiXhosa",
-        "SEO yoMzantsi Afrika",
-        "Ukuthengisa ngedijithali kwisiXhosa"
+        "Xhosa keyword research",
+        "Xhosa SEO insights",
+        "search trends platform",
+        "AI content planning",
+        "Xhosa market analysis",
+        "Lucy World intelligence"
       ]
     }
   ]

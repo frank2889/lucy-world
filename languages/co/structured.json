@@ -9,19 +9,11 @@
     },
     {
       "@type": "WebSite",
-      "name": "Lucy World",
+      "name": "Lucy World – Analitica di ricerca lucale per a Corsica",
       "url": "https://lucy.world/co/",
       "inLanguage": "co",
       "description": "Scopre dati lucchesi da Google è Bing cù suggerimenti lucali, tendenze è analisi d'IA chì rinfurzanu e decisioni di cuntenutu è a crescita di l'affari.",
-      "keywords": "parolle chjave Corsica, SEO corsu, tendenze Google 2025, ricerca Bing, analisi IA, marketing digitale lucale, strategia di cuntenutu corsa",
-      "aiSemantic": [
-        "Chì parolle chjave corsi sò più ricercate in 2025?",
-        "Cumu aduprà Google è Bing per ottimisà u SEO in corsu?",
-        "Strumenti d'IA per truvà parolle chjave lucali in Bastia?",
-        "Chì tendenze di ricerca guidanu u turismu in Corsica?",
-        "Parolle chjave long-tail in corsu è francese per e piccule imprese",
-        "Cumu custruisce una strategia di cuntenutu lucale per un artigianu corsu?"
-      ],
+      "keywords": "ricerca parolle chjave corsa, SEO Corsica, tendenze Google, ricerca Bing, analisi IA, strategia di cuntenutu lucale",
       "publisher": {
         "@type": "Organization",
         "name": "Lucy World"
@@ -38,7 +30,7 @@
     },
     {
       "@type": "WebPage",
-      "name": "Lucy World",
+      "name": "Lucy World – Analitica di ricerca lucale per a Corsica",
       "url": "https://lucy.world/co/",
       "inLanguage": "co",
       "isPartOf": {
@@ -46,14 +38,14 @@
         "url": "https://lucy.world/co/"
       },
       "description": "Scopre dati lucchesi da Google è Bing cù suggerimenti lucali, tendenze è analisi d'IA chì rinfurzanu e decisioni di cuntenutu è a crescita di l'affari.",
-      "keywords": "parolle chjave Corsica, SEO corsu, tendenze Google 2025, ricerca Bing, analisi IA, marketing digitale lucale, strategia di cuntenutu corsa",
+      "keywords": "ricerca parolle chjave corsa, SEO Corsica, tendenze Google, ricerca Bing, analisi IA, strategia di cuntenutu lucale",
       "aiSemantic": [
-        "Chì parolle chjave corsi sò più ricercate in 2025?",
-        "Cumu aduprà Google è Bing per ottimisà u SEO in corsu?",
-        "Strumenti d'IA per truvà parolle chjave lucali in Bastia?",
-        "Chì tendenze di ricerca guidanu u turismu in Corsica?",
-        "Parolle chjave long-tail in corsu è francese per e piccule imprese",
-        "Cumu custruisce una strategia di cuntenutu lucale per un artigianu corsu?"
+        "Corsican keyword research",
+        "Corsican SEO insights",
+        "search trends platform",
+        "AI content planning",
+        "Corsican market analysis",
+        "Lucy World intelligence"
       ]
     }
   ]

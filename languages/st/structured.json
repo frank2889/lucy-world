@@ -9,11 +9,11 @@
     },
     {
       "@type": "WebSite",
-      "name": "Lucy World",
+      "name": "Lucy World – Manollo ya patlo ya lehae bakeng sa Lesotho",
       "url": "https://lucy.world/st/",
       "inLanguage": "st",
-      "description": "Keyword research made simple with Google data: suggestions, trends, and insights.",
-      "keywords": "keyword research, SEO, Google Trends, suggestions, search volume",
+      "description": "Hlahloba lintlha tsa Google tsa Sesotho tse nang le dikeletso, mekhoa le manollo ya AI e matlafatsang diqeto tsa dikahare le kgolo ya kgwebo ya lehae.",
+      "keywords": "mantswe a bohlokoa a Sesotho, SEO Lesotho, Google Trends, bongata ba patlo, manollo ya AI, leano la dikahare tsa lehae",
       "publisher": {
         "@type": "Organization",
         "name": "Lucy World"
@@ -30,15 +30,23 @@
     },
     {
       "@type": "WebPage",
-      "name": "Lucy World",
+      "name": "Lucy World – Manollo ya patlo ya lehae bakeng sa Lesotho",
       "url": "https://lucy.world/st/",
       "inLanguage": "st",
       "isPartOf": {
         "@type": "WebSite",
         "url": "https://lucy.world/st/"
       },
-      "description": "Phuputso ya mantswe a bohlokoa bakeng sa Lesotho ka lintlha tsa Google: dikeletso, mekhoa le manollo ya AI bakeng sa kgolo ya kgwebo ya lehae.",
-      "keywords": "mantswe a bohlokoa a Sesotho, SEO Lesotho, Google Trends, bongata ba patlo, manollo ya AI, leano la dikahare tsa lehae, kgolo ya kgwebo, papatso ya dijithale"
+      "description": "Hlahloba lintlha tsa Google tsa Sesotho tse nang le dikeletso, mekhoa le manollo ya AI e matlafatsang diqeto tsa dikahare le kgolo ya kgwebo ya lehae.",
+      "keywords": "mantswe a bohlokoa a Sesotho, SEO Lesotho, Google Trends, bongata ba patlo, manollo ya AI, leano la dikahare tsa lehae",
+      "aiSemantic": [
+        "Sesotho keyword research",
+        "Sesotho SEO insights",
+        "search trends platform",
+        "AI content planning",
+        "Sesotho market analysis",
+        "Lucy World intelligence"
+      ]
     }
   ]
 }

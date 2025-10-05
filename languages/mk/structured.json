@@ -9,11 +9,11 @@
     },
     {
       "@type": "WebSite",
-      "name": "Lucy World",
+      "name": "Lucy World – Локална анализа на пребарување за Македонија",
       "url": "https://lucy.world/mk/",
       "inLanguage": "mk",
-      "description": "Keyword research made simple with Google data: suggestions, trends, and insights.",
-      "keywords": "keyword research, SEO, Google Trends, suggestions, search volume",
+      "description": "Lucy World tracks live search demand and AI clustering for Macedonian audiences so teams plan weekly campaigns and sustainable growth with confidence.",
+      "keywords": "македонски клучни зборови, SEO Македонија, Google трендови, волумен на пребарување, AI анализа, локална стратегија за содржина",
       "publisher": {
         "@type": "Organization",
         "name": "Lucy World"
@@ -30,15 +30,23 @@
     },
     {
       "@type": "WebPage",
-      "name": "Lucy World",
+      "name": "Lucy World – Локална анализа на пребарување за Македонија",
       "url": "https://lucy.world/mk/",
       "inLanguage": "mk",
       "isPartOf": {
         "@type": "WebSite",
         "url": "https://lucy.world/mk/"
       },
-      "description": "Истражување на клучни зборови за Македонија со Google податоци: предлози, трендови и AI анализа за зајакнување на локалниот бизнис раст.",
-      "keywords": "македонски клучни зборови, SEO Македонија, Google трендови, волумен на пребарување, AI анализа, локална стратегија за содржина, бизнис раст, дигитален маркетинг"
+      "description": "Lucy World tracks live search demand and AI clustering for Macedonian audiences so teams plan weekly campaigns and sustainable growth with confidence.",
+      "keywords": "македонски клучни зборови, SEO Македонија, Google трендови, волумен на пребарување, AI анализа, локална стратегија за содржина",
+      "aiSemantic": [
+        "Macedonian keyword research",
+        "Macedonian SEO insights",
+        "search trends platform",
+        "AI content planning",
+        "Macedonian market analysis",
+        "Lucy World intelligence"
+      ]
     }
   ]
 }

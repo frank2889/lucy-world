@@ -9,11 +9,11 @@
     },
     {
       "@type": "WebSite",
-      "name": "Lucy World",
+      "name": "Lucy World – Análise de pesquisa local para Brasil e Portugal",
       "url": "https://lucy.world/pt/",
       "inLanguage": "pt",
-      "description": "Keyword research made simple with Google data: suggestions, trends, and insights.",
-      "keywords": "keyword research, SEO, Google Trends, suggestions, search volume",
+      "description": "Explore dados do Google em português com sugestões, tendências e análise de IA que fortalecem decisões de conteúdo e crescimento empresarial.",
+      "keywords": "palavras-chave português, SEO Brasil, Google Trends, volume de pesquisa, análise IA, estratégia de conteúdo local",
       "publisher": {
         "@type": "Organization",
         "name": "Lucy World"
@@ -30,15 +30,23 @@
     },
     {
       "@type": "WebPage",
-      "name": "Lucy World",
+      "name": "Lucy World – Análise de pesquisa local para Brasil e Portugal",
       "url": "https://lucy.world/pt/",
       "inLanguage": "pt",
       "isPartOf": {
         "@type": "WebSite",
         "url": "https://lucy.world/pt/"
       },
-      "description": "Pesquisa de palavras-chave para Brasil e Portugal com dados Google: sugestões, tendências e análise IA para crescimento empresarial local.",
-      "keywords": "palavras-chave português, SEO Brasil, Google Trends, volume de pesquisa, análise IA, estratégia de conteúdo local, crescimento empresarial, marketing digital"
+      "description": "Explore dados do Google em português com sugestões, tendências e análise de IA que fortalecem decisões de conteúdo e crescimento empresarial.",
+      "keywords": "palavras-chave português, SEO Brasil, Google Trends, volume de pesquisa, análise IA, estratégia de conteúdo local",
+      "aiSemantic": [
+        "Portuguese keyword research",
+        "Portuguese SEO insights",
+        "search trends platform",
+        "AI content planning",
+        "Portuguese market analysis",
+        "Lucy World intelligence"
+      ]
     }
   ]
 }

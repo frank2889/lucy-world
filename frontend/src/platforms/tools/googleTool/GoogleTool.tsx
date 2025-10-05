@@ -4,11 +4,11 @@ import PlatformToolLayout, { type PlatformResultItem } from '../common/PlatformT
 import { createTranslator } from '../../../i18n/translate'
 
 const GoogleTool: React.FC<PlatformToolProps> = (props) => {
-  const { keyword, setKeyword, searchLanguage, country, ui } = props
+  const { keyword, setKeyword, searchLanguage, country, ui, uiFallback } = props
   const [results, setResults] = useState<PlatformResultItem[]>([])
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
-  const t = useMemo(() => createTranslator(ui), [ui])
+  const t = useMemo(() => createTranslator(ui, uiFallback), [ui, uiFallback])
 
   const resolvedLanguage = useMemo(() => {
     return (searchLanguage || ui?.lang || 'en').split('-')[0].toLowerCase()
@@ -43,7 +43,7 @@ const GoogleTool: React.FC<PlatformToolProps> = (props) => {
         const payload = await response.json().catch(() => ({}))
 
         if (!response.ok) {
-          throw new Error(payload?.error || t('platform.google.error.fetch', 'Unable to fetch Google suggestions'))
+          throw new Error(payload?.error || t('platform.google.error.fetch'))
         }
 
         const suggestionsRaw = Array.isArray(payload?.suggestions) ? payload.suggestions : []
@@ -58,12 +58,12 @@ const GoogleTool: React.FC<PlatformToolProps> = (props) => {
             if (!text) return null
             const subtitleParts: string[] = []
             if (payload?.metadata?.hl) {
-              subtitleParts.push(t('platform.google.subtitle.language', 'Language: {{language}}', {
+              subtitleParts.push(t('platform.google.subtitle.language', {
                 language: (payload.metadata.hl as string).toUpperCase()
               }))
             }
             if (payload?.metadata?.gl) {
-              subtitleParts.push(t('platform.google.subtitle.country', 'Country: {{country}}', {
+              subtitleParts.push(t('platform.google.subtitle.country', {
                 country: payload.metadata.gl
               }))
             }
@@ -71,18 +71,18 @@ const GoogleTool: React.FC<PlatformToolProps> = (props) => {
               title: text,
               subtitle: subtitleParts.length
                 ? subtitleParts.join(' • ')
-                : t('platform.google.result.subtitle', 'Google suggestion'),
-              metric: t('platform.google.result.rank', '#{{rank}}', { rank: index + 1 })
+                : t('platform.google.result.subtitle'),
+              metric: t('platform.google.result.rank', { rank: index + 1 })
             }
           })
           .filter(Boolean) as PlatformResultItem[]
 
         setResults(mapped)
         if (mapped.length === 0) {
-          setError(t('platform.google.error.none', 'No Google suggestions found for this keyword.'))
+          setError(t('platform.google.error.none'))
         }
       } catch (err: any) {
-        setError(err?.message || t('platform.google.error.generic', 'Unable to fetch Google suggestions'))
+        setError(err?.message || t('platform.google.error.generic'))
         setResults([])
       } finally {
         setLoading(false)
@@ -100,16 +100,16 @@ const GoogleTool: React.FC<PlatformToolProps> = (props) => {
 
   return (
     <PlatformToolLayout
-      platformName={t('platform.google.meta.name', 'Google')}
+      platformName={t('platform.google.meta.name')}
       keyword={keyword || ''}
       onKeywordChange={setKeyword}
       onSearch={handleSearch}
-      description={t('platform.google.description', 'Real-time autocomplete suggestions from Google Search.')}
+      description={t('platform.google.description')}
       results={results}
-      placeholder={t('platform.google.placeholder', 'What are people searching for on Google?')}
+      placeholder={t('platform.google.placeholder')}
       loading={loading}
       error={error}
-      emptyState={t('platform.google.empty', 'Enter a term to view Google suggestions.')}
+      emptyState={t('platform.google.empty')}
       controls={props.locationControls}
       onGlobalSearch={props.onGlobalSearch}
       globalLoading={props.globalLoading}

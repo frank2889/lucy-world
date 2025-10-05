@@ -9,11 +9,11 @@
     },
     {
       "@type": "WebSite",
-      "name": "Lucy World",
+      "name": "Lucy World – Локальный анализ поиска для России",
       "url": "https://lucy.world/ru/",
       "inLanguage": "ru",
-      "description": "Keyword research made simple with Google data: suggestions, trends, and insights.",
-      "keywords": "keyword research, SEO, Google Trends, suggestions, search volume",
+      "description": "Lucy World tracks live search demand and AI clustering for Russian audiences so teams plan weekly campaigns and sustainable growth with confidence.",
+      "keywords": "русские ключевые слова, SEO Россия, Google Trends, объём поиска, AI-анализ, локальная контент-стратегия",
       "publisher": {
         "@type": "Organization",
         "name": "Lucy World"
@@ -30,15 +30,23 @@
     },
     {
       "@type": "WebPage",
-      "name": "Lucy World",
+      "name": "Lucy World – Локальный анализ поиска для России",
       "url": "https://lucy.world/ru/",
       "inLanguage": "ru",
       "isPartOf": {
         "@type": "WebSite",
         "url": "https://lucy.world/ru/"
       },
-      "description": "Исследование ключевых слов для России с данными Google: подсказки, тренды и AI-анализ для роста локального бизнеса и оптимизации контента.",
-      "keywords": "русские ключевые слова, SEO Россия, Google Trends, объём поиска, AI-анализ, локальная контент-стратегия, рост бизнеса, цифровой маркетинг"
+      "description": "Lucy World tracks live search demand and AI clustering for Russian audiences so teams plan weekly campaigns and sustainable growth with confidence.",
+      "keywords": "русские ключевые слова, SEO Россия, Google Trends, объём поиска, AI-анализ, локальная контент-стратегия",
+      "aiSemantic": [
+        "Russian keyword research",
+        "Russian SEO insights",
+        "search trends platform",
+        "AI content planning",
+        "Russian market analysis",
+        "Lucy World intelligence"
+      ]
     }
   ]
 }

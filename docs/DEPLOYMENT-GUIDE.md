@@ -9,7 +9,7 @@ Lucy World Search runs as a Flask application that serves a Vite-built React SPA
 - **Infrastructure**: Ubuntu 22.04 LTS droplet (1 GB RAM is fine for low traffic) + DNS `A` record pointing `lucy.world` to the droplet (see `DNS-SETUP.md`).
 - **Access**: SSH key with root or deploy-user privileges on the droplet. Avoid password auth and update the server’s `sshd_config` accordingly.
 - **Local tooling**: Node 20+, npm 10+, Python 3.11+ (project currently uses 3.13), Git, and `zip`/`rsync` if you prefer artifact deployments.
-- **Secrets**: Prepare values for `SECRET_KEY`, optional `DATABASE_URL`, and SMTP credentials if email sign-in needs to work.
+- **Secrets**: Prepare values for `SECRET_KEY`, optional `DATABASE_URL`, SMTP credentials (for magic links), the Search Console service-account variables (`GSC_TYPE`, `GSC_PROJECT_ID`, `GSC_PRIVATE_KEY_ID`, `GSC_PRIVATE_KEY`, `GSC_CLIENT_EMAIL`, `GSC_CLIENT_ID`, `GSC_AUTH_URI`, `GSC_TOKEN_URI`, `GSC_AUTH_PROVIDER_CERT_URL`, `GSC_CLIENT_CERT_URL`, `GSC_UNIVERSE_DOMAIN`), and the Stripe Billing keys: `STRIPE_SECRET_KEY`, `STRIPE_PUBLISHABLE_KEY`, `STRIPE_PRICE_PRO`, optional `STRIPE_PRICE_PRO_USAGE`, and `STRIPE_WEBHOOK_SECRET`.
 
 ## 1. Prepare a release locally
 
@@ -71,6 +71,27 @@ cat > .env <<'EOF'
 FLASK_ENV=production
 SECRET_KEY=<generate_with_python>
 PUBLIC_BASE_URL=https://lucy.world
+# Search Console service account (escape newlines with \n)
+GSC_TYPE=service_account
+GSC_PROJECT_ID=<your_project_id>
+GSC_PRIVATE_KEY_ID=<your_private_key_id>
+GSC_PRIVATE_KEY="-----BEGIN PRIVATE KEY-----\n...\n-----END PRIVATE KEY-----\n"
+GSC_CLIENT_EMAIL=<service-account@your-project.iam.gserviceaccount.com>
+GSC_CLIENT_ID=<service_account_client_id>
+GSC_AUTH_URI=https://accounts.google.com/o/oauth2/auth
+GSC_TOKEN_URI=https://oauth2.googleapis.com/token
+GSC_AUTH_PROVIDER_CERT_URL=https://www.googleapis.com/oauth2/v1/certs
+GSC_CLIENT_CERT_URL=https://www.googleapis.com/robot/v1/metadata/x509/<urlencoded_service_account>
+GSC_UNIVERSE_DOMAIN=googleapis.com
+
+# Stripe Billing (Checkout + customer portal)
+STRIPE_PUBLISHABLE_KEY=<stripe_publishable_key>
+STRIPE_SECRET_KEY=<stripe_secret_key>
+STRIPE_PRICE_PRO=<stripe_price_id>
+# Optional usage-based add-on price
+STRIPE_PRICE_PRO_USAGE=<optional_usage_price_id>
+STRIPE_WEBHOOK_SECRET=<stripe_webhook_secret>
+
 # DATABASE_URL=postgresql://...
 # SMTP_HOST=...
 # SMTP_PORT=587
@@ -189,6 +210,22 @@ curl -s https://lucy.world/api/free/search -X POST -H 'Content-Type: application
 
 Confirm that `language` in the response matches the request, and that `trends.trend_direction` is present. Visit `https://lucy.world/` in a browser with Dutch and German `Accept-Language` headers to ensure the redirect and UI strings behave as expected.
 
+### Ongoing health monitoring
+
+Keep the Gunicorn service honest with the repository's probe helper:
+
+```bash
+python3 scripts/monitor_gunicorn_service.py --base-url https://lucy.world --service lucy-world-search
+```
+
+Schedule it via cron or a systemd timer to alert if the HTTP checks or the systemd unit fall over.
+
+To keep an eye on hreflang health and Search Console coverage, run the GSC monitor once OAuth access is configured:
+
+```bash
+python3 scripts/gsc_monitor.py --site https://lucy.world/ --lookback 14
+```
+
 ## 5. Automating deployments
 
 Automation keeps production in sync with `main` after each push:
@@ -233,7 +270,66 @@ Automation keeps production in sync with `main` after each push:
 
 See `operations.md` for operational monitoring and scheduled maintenance once automation is live.
 
-## 6. Known gaps / TODOs
+## 6. TLS renewals
+
+TLS certificates are handled by Certbot. The repository includes `scripts/renew_tls.sh` to run `certbot renew`, reload Nginx, and refresh the Gunicorn unit once new certificates are issued.
+
+1. Copy the script to `/usr/local/bin/renew-lucy-tls` and make it executable:
+
+    ```bash
+    sudo install -m 755 scripts/renew_tls.sh /usr/local/bin/renew-lucy-tls
+    ```
+
+2. Test the workflow with a dry run:
+
+    ```bash
+    sudo CERTBOT_BIN=/usr/bin/certbot /usr/local/bin/renew-lucy-tls --domain lucy.world --dry-run
+    ```
+
+3. When the dry run succeeds, create `/etc/systemd/system/renew-lucy-tls.timer` to run the script twice a day:
+
+    ```ini
+    [Unit]
+    Description=Renew Lucy.world TLS certificates
+
+    [Timer]
+    OnCalendar=*-*-* 02:00:00
+    OnCalendar=*-*-* 14:00:00
+    Persistent=true
+
+    [Install]
+    WantedBy=timers.target
+    ```
+
+    ```bash
+    sudo systemctl enable --now renew-lucy-tls.timer
+    ```
+
+The timer ensures certificates renew automatically and Nginx/Gunicorn pick up the new chain without manual intervention.
+
+## 7. Localization workflow
+
+Keeping the UI strings in sync is now a two-step process. Run these checks locally before opening a pull request, and they also execute in CI:
+
+1. **Audit translator coverage.** From the repo root run:
+
+    ```bash
+    /usr/local/bin/python3 scripts/validate_locale_keys.py --strict
+    ```
+
+    This enumerates every translator key in the frontend bundle and asserts the key exists in every `languages/<locale>/locale.json`. The script exits non-zero on missing keys and lists the offending locale(s). Avoid dynamic translator calls (for example, ``translate(`platform.${id}.description`)``) so the auditor can detect the string at build time.
+
+2. **Backfill missing entries.** If keys are missing, copy the English string into the target locale while waiting for real translations:
+
+    ```bash
+    /usr/local/bin/python3 scripts/backfill_locale_keys.py --source en --locales fr de es
+    ```
+
+    The script preserves existing translations and writes sorted JSON for readability. Always commit the updated locale files after a backfill.
+
+3. **Regenerate and validate assets.** Re-run `python scripts/generate_site_assets.py --all` followed by `python scripts/validate_enhanced_locales.py --strict` if you change sitemap or hreflang metadata; CI relies on the same commands.
+
+## 7. Known gaps / TODOs
 
 - Update `deploy.sh` and `auto-deploy.sh` to reference `requirements.txt`, respect the new locale-aware routing, and drop the password-based SSH usage in `quick-deploy.sh`.
 - Consider creating a dedicated deploy user with limited permissions instead of running everything as `root`/`www-data`.

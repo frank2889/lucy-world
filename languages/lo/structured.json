@@ -9,11 +9,11 @@
     },
     {
       "@type": "WebSite",
-      "name": "Lucy World",
+      "name": "Lucy World – ການວິເຄາະຄົ້ນຫາທ້ອງຖິ່ນສຳລັບລາວ",
       "url": "https://lucy.world/lo/",
       "inLanguage": "lo",
-      "description": "Keyword research made simple with Google data: suggestions, trends, and insights.",
-      "keywords": "keyword research, SEO, Google Trends, suggestions, search volume",
+      "description": "Lucy World tracks live search demand and AI clustering for Lao audiences so teams plan weekly campaigns and sustainable growth with confidence.",
+      "keywords": "ຄຳສຳຄັນລາວ, SEO ລາວ, Google Trends, ປະລິມານຄົ້ນຫາ, ການວິເຄາະ AI, ຍຸດທະສາດເນື້ອໃນທ້ອງຖິ່ນ",
       "publisher": {
         "@type": "Organization",
         "name": "Lucy World"
@@ -30,15 +30,23 @@
     },
     {
       "@type": "WebPage",
-      "name": "Lucy World",
+      "name": "Lucy World – ການວິເຄາະຄົ້ນຫາທ້ອງຖິ່ນສຳລັບລາວ",
       "url": "https://lucy.world/lo/",
       "inLanguage": "lo",
       "isPartOf": {
         "@type": "WebSite",
         "url": "https://lucy.world/lo/"
       },
-      "description": "ການຄົ້ນຄວ້າຄຳສຳຄັນສຳລັບລາວດ້ວຍຂໍ້ມູນ Google: ຄຳແນະນຳ, ເທນແລະການວິເຄາະ AI ທີ່ຊ່ວຍການຕັດສິນໃຈທຸລະກິດທ້ອງຖິ່ນ.",
-      "keywords": "ຄຳສຳຄັນລາວ, SEO ລາວ, Google Trends, ປະລິມານຄົ້ນຫາ, ການວິເຄາະ AI, ຍຸດທະສາດເນື້ອໃນທ້ອງຖິ່ນ, ການເຕີບໂຕທຸລະກິດ, ການຕະຫຼາດດິຈິຕອນ"
+      "description": "Lucy World tracks live search demand and AI clustering for Lao audiences so teams plan weekly campaigns and sustainable growth with confidence.",
+      "keywords": "ຄຳສຳຄັນລາວ, SEO ລາວ, Google Trends, ປະລິມານຄົ້ນຫາ, ການວິເຄາະ AI, ຍຸດທະສາດເນື້ອໃນທ້ອງຖິ່ນ",
+      "aiSemantic": [
+        "Lao keyword research",
+        "Lao SEO insights",
+        "search trends platform",
+        "AI content planning",
+        "Lao market analysis",
+        "Lucy World intelligence"
+      ]
     }
   ]
 }

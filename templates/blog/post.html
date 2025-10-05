@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="{{ post.language or 'en' }}">
+  <head>
+    <meta charset="utf-8" />
+    <title>{{ post.title }} - Lucy World Blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    {% if post.summary %}
+      <meta name="description" content="{{ post.summary }}" />
+    {% endif %}
+    <link rel="canonical" href="/blog/{{ post.slug }}/" />
+    <link rel="stylesheet" href="/static/css/blog.css" />
+  </head>
+  <body>
+    <main class="lucy-blog-index">
+      <nav class="breadcrumb"><a href="/blog/">← Back to insights</a></nav>
+      <article class="lucy-blog-post">
+        <header>
+          <h1>{{ post.title }}</h1>
+          <p class="meta">
+            {% if post.published_at %}
+              <time datetime="{{ post.published_at.isoformat() }}">Published {{ post.published_at.strftime('%d %B %Y') }}</time>
+            {% endif %}
+            {% if post.author_name %}
+              · {{ post.author_name }}
+            {% endif %}
+            {% if post.language %}
+              · {{ post.language | upper }}
+            {% endif %}
+          </p>
+        </header>
+        <section class="post-body">{{ post.html | safe }}</section>
+        <footer class="cta">
+          <h2>Accelerate your next campaign with Lucy</h2>
+          <p>Use Lucy's AI workspace to uncover high-intent keywords, generate multilingual briefs, and launch privacy-first experiments in minutes.</p>
+          <a class="cta-button" href="/en/">Launch Lucy</a>
+        </footer>
+      </article>
+    </main>
+  </body>
+</html>

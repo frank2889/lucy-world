@@ -9,11 +9,11 @@
     },
     {
       "@type": "WebSite",
-      "name": "Lucy World",
+      "name": "Lucy World – Lokal sökanalys för Sverige",
       "url": "https://lucy.world/sv/",
       "inLanguage": "sv",
-      "description": "Keyword research made simple with Google data: suggestions, trends, and insights.",
-      "keywords": "keyword research, SEO, Google Trends, suggestions, search volume",
+      "description": "Lucy World tracks live search demand and AI clustering for Swedish audiences so teams plan weekly campaigns and sustainable growth with confidence.",
+      "keywords": "svenska sökord, SEO Sverige, Google Trends, sökvolym, AI-analys, lokal innehållsstrategi",
       "publisher": {
         "@type": "Organization",
         "name": "Lucy World"
@@ -30,22 +30,22 @@
     },
     {
       "@type": "WebPage",
-      "name": "Lucy World",
+      "name": "Lucy World – Lokal sökanalys för Sverige",
       "url": "https://lucy.world/sv/",
       "inLanguage": "sv",
       "isPartOf": {
         "@type": "WebSite",
         "url": "https://lucy.world/sv/"
       },
-      "description": "Sökordsanalys för svenska marknaden med Google-data, trender och insikter. Optimera SEO för svenska sökresultat på Google.se.",
-      "keywords": "sökordsanalys, SEO Sverige, Google Trends, sökvolym, svenska nyckelord, sökoptimering",
+      "description": "Lucy World tracks live search demand and AI clustering for Swedish audiences so teams plan weekly campaigns and sustainable growth with confidence.",
+      "keywords": "svenska sökord, SEO Sverige, Google Trends, sökvolym, AI-analys, lokal innehållsstrategi",
       "aiSemantic": [
-        "Google.se sökoptimering",
-        "Svenska SEO-verktyg",
-        "Skandinavisk marknadsanalys", 
-        "Nordiska sökord",
-        "Svensk sökvolym",
-        "Svenska trender"
+        "Swedish keyword research",
+        "Swedish SEO insights",
+        "search trends platform",
+        "AI content planning",
+        "Swedish market analysis",
+        "Lucy World intelligence"
       ]
     }
   ]

@@ -9,19 +9,11 @@
     },
     {
       "@type": "WebSite",
-      "name": "Lucy World",
+      "name": "Lucy World – Análisis de búsqueda local para España",
       "url": "https://lucy.world/es/",
       "inLanguage": "es",
-  "description": "Descubre datos españoles de Google con sugerencias, tendencias y análisis de IA que refuerzan las decisiones de contenido y el crecimiento empresarial.",
-  "keywords": "palabras clave españolas, SEO España 2025, tendencias Google, volumen búsqueda, análisis IA, marketing digital local, estrategia contenido",
-  "aiSemantic": [
-    "¿Qué palabras clave españolas tienen más búsquedas en 2025?",
-    "¿Cómo combinar datos de Google para SEO en español?",
-    "Herramientas IA para investigación local de palabras clave en España",
-    "Tendencias e-commerce y marketing español 2025",
-    "Estrategias SEO local para empresas españolas",
-    "Madrid vs Barcelona – patrones de búsqueda locales y tendencias"
-  ],
+      "description": "Descubre datos españoles de Google con sugerencias, tendencias y análisis de IA que refuerzan las decisiones de contenido y el crecimiento empresarial.",
+      "keywords": "palabras clave españolas, SEO España, tendencias Google, volumen búsqueda, análisis IA, estrategia contenido local",
       "publisher": {
         "@type": "Organization",
         "name": "Lucy World"
@@ -38,15 +30,23 @@
     },
     {
       "@type": "WebPage",
-      "name": "Lucy World",
+      "name": "Lucy World – Análisis de búsqueda local para España",
       "url": "https://lucy.world/es/",
       "inLanguage": "es",
       "isPartOf": {
         "@type": "WebSite",
         "url": "https://lucy.world/es/"
       },
-  "description": "Descubre datos españoles de Google con sugerencias, tendencias y análisis de IA que refuerzan las decisiones de contenido y el crecimiento empresarial.",
-  "keywords": "palabras clave españolas, SEO España 2025, tendencias Google, volumen búsqueda, análisis IA, marketing digital local, estrategia contenido"
+      "description": "Descubre datos españoles de Google con sugerencias, tendencias y análisis de IA que refuerzan las decisiones de contenido y el crecimiento empresarial.",
+      "keywords": "palabras clave españolas, SEO España, tendencias Google, volumen búsqueda, análisis IA, estrategia contenido local",
+      "aiSemantic": [
+        "Spanish keyword research",
+        "Spanish SEO insights",
+        "search trends platform",
+        "AI content planning",
+        "Spanish market analysis",
+        "Lucy World intelligence"
+      ]
     }
   ]
 }

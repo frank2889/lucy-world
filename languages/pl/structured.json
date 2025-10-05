@@ -9,11 +9,11 @@
     },
     {
       "@type": "WebSite",
-      "name": "Lucy World",
+      "name": "Lucy World – Lokalna analiza wyszukiwania dla Polski",
       "url": "https://lucy.world/pl/",
       "inLanguage": "pl",
-      "description": "Keyword research made simple with Google data: suggestions, trends, and insights.",
-      "keywords": "keyword research, SEO, Google Trends, suggestions, search volume",
+      "description": "Lucy World tracks live search demand and AI clustering for Polish audiences so teams plan weekly campaigns and sustainable growth with confidence.",
+      "keywords": "polskie słowa kluczowe, SEO Polska, Google Trends, wolumen wyszukiwań, analiza AI, lokalna strategia treści",
       "publisher": {
         "@type": "Organization",
         "name": "Lucy World"
@@ -30,15 +30,23 @@
     },
     {
       "@type": "WebPage",
-      "name": "Lucy World",
+      "name": "Lucy World – Lokalna analiza wyszukiwania dla Polski",
       "url": "https://lucy.world/pl/",
       "inLanguage": "pl",
       "isPartOf": {
         "@type": "WebSite",
         "url": "https://lucy.world/pl/"
       },
-      "description": "Badanie słów kluczowych dla Polski z danymi Google: sugestie, trendy i analiza AI dla lokalnego wzrostu biznesu i optymalizacji treści.",
-      "keywords": "polskie słowa kluczowe, SEO Polska, Google Trends, wolumen wyszukiwań, analiza AI, lokalna strategia treści, wzrost biznesu, marketing cyfrowy"
+      "description": "Lucy World tracks live search demand and AI clustering for Polish audiences so teams plan weekly campaigns and sustainable growth with confidence.",
+      "keywords": "polskie słowa kluczowe, SEO Polska, Google Trends, wolumen wyszukiwań, analiza AI, lokalna strategia treści",
+      "aiSemantic": [
+        "Polish keyword research",
+        "Polish SEO insights",
+        "search trends platform",
+        "AI content planning",
+        "Polish market analysis",
+        "Lucy World intelligence"
+      ]
     }
   ]
 }

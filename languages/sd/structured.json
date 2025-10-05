@@ -9,11 +9,11 @@
     },
     {
       "@type": "WebSite",
-      "name": "Lucy World",
+      "name": "Lucy World – سنڌ لاءِ مقامي ڳولا جو تجزيو",
       "url": "https://lucy.world/sd/",
       "inLanguage": "sd",
-      "description": "Keyword research made simple with Google data: suggestions, trends, and insights.",
-      "keywords": "keyword research, SEO, Google Trends, suggestions, search volume",
+      "description": "Lucy World tracks live search demand and AI clustering for Sindhi audiences so teams plan weekly campaigns and sustainable growth with confidence.",
+      "keywords": "سنڌي اهم لفظ, SEO سنڌ, Google رجحانات, ڳولا جي مقدار, AI تجزيو, مقامي مواد جي حڪمت عملي",
       "publisher": {
         "@type": "Organization",
         "name": "Lucy World"
@@ -30,15 +30,23 @@
     },
     {
       "@type": "WebPage",
-      "name": "Lucy World",
+      "name": "Lucy World – سنڌ لاءِ مقامي ڳولا جو تجزيو",
       "url": "https://lucy.world/sd/",
       "inLanguage": "sd",
       "isPartOf": {
         "@type": "WebSite",
         "url": "https://lucy.world/sd/"
       },
-      "description": "سنڌ لاءِ اهم لفظن جي تحقيق Google ڊيٽا سان: تجاويز، رجحانات ۽ AI تجزيو مقامي ڪاروبار جي واڌ لاءِ.",
-      "keywords": "سنڌي اهم لفظ, SEO سنڌ, Google رجحانات, ڳولا جي مقدار, AI تجزيو, مقامي مواد جي حڪمت عملي, ڪاروبار جي واڌ, ڊجيٽل مارڪيٽنگ"
+      "description": "Lucy World tracks live search demand and AI clustering for Sindhi audiences so teams plan weekly campaigns and sustainable growth with confidence.",
+      "keywords": "سنڌي اهم لفظ, SEO سنڌ, Google رجحانات, ڳولا جي مقدار, AI تجزيو, مقامي مواد جي حڪمت عملي",
+      "aiSemantic": [
+        "Sindhi keyword research",
+        "Sindhi SEO insights",
+        "search trends platform",
+        "AI content planning",
+        "Sindhi market analysis",
+        "Lucy World intelligence"
+      ]
     }
   ]
 }

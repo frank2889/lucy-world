@@ -9,19 +9,11 @@
     },
     {
       "@type": "WebSite",
-      "name": "Lucy World",
+      "name": "Lucy World – Lokale Suchanalyse für Deutschland",
       "url": "https://lucy.world/de/",
       "inLanguage": "de",
-      "description": "Entdecken Sie deutsche Google-Daten mit Vorschlägen, Trends und KI-Analyse, die Inhaltsentscheidungen und Unternehmenswachstum stärken.",
-      "keywords": "deutsche Keywords, SEO Deutschland 2025, Google Trends, Suchvolumen, KI-Analyse, digitales Marketing lokal, Content-Strategie",
-      "aiSemantic": [
-        "Welche deutschen Keywords haben 2025 die meisten Suchanfragen?",
-        "Wie kombiniert man Google-Daten für deutsches SEO?",
-        "KI-Tools für lokale Keyword-Recherche in Deutschland",
-        "Deutsche E-Commerce und Marketing-Trends 2025",
-        "Lokale SEO-Strategien für deutsche Unternehmen",
-        "Berlin vs München – lokale Suchmuster und Trends"
-      ],
+      "description": "Lucy World tracks live search demand and AI clustering for German audiences so teams plan weekly campaigns and sustainable growth with confidence.",
+      "keywords": "deutsche Keywords, SEO Deutschland, Google Trends, Suchvolumen, KI-Analyse, lokale Content-Strategie",
       "publisher": {
         "@type": "Organization",
         "name": "Lucy World"
@@ -38,15 +30,23 @@
     },
     {
       "@type": "WebPage",
-      "name": "Lucy World",
+      "name": "Lucy World – Lokale Suchanalyse für Deutschland",
       "url": "https://lucy.world/de/",
       "inLanguage": "de",
       "isPartOf": {
         "@type": "WebSite",
         "url": "https://lucy.world/de/"
       },
-      "description": "Entdecken Sie deutsche Google-Daten mit Vorschlägen, Trends und KI-Analyse, die Inhaltsentscheidungen und Unternehmenswachstum stärken.",
-      "keywords": "deutsche Keywords, SEO Deutschland 2025, Google Trends, Suchvolumen, KI-Analyse, digitales Marketing lokal, Content-Strategie"
+      "description": "Lucy World tracks live search demand and AI clustering for German audiences so teams plan weekly campaigns and sustainable growth with confidence.",
+      "keywords": "deutsche Keywords, SEO Deutschland, Google Trends, Suchvolumen, KI-Analyse, lokale Content-Strategie",
+      "aiSemantic": [
+        "German keyword research",
+        "German SEO insights",
+        "search trends platform",
+        "AI content planning",
+        "German market analysis",
+        "Lucy World intelligence"
+      ]
     }
   ]
 }

@@ -9,19 +9,11 @@
     },
     {
       "@type": "WebSite",
-      "name": "Lucy World",
+      "name": "Lucy World – Anailís cuardaigh áitiúil d'Éirinn",
       "url": "https://lucy.world/ga/",
       "inLanguage": "ga",
-      "description": "Faigh amach sonraí Gaeilge Google le moltaí, treochtaí agus anailís AI a neartaíonn cinntí ábhair agus fás gnó.",
-      "keywords": "eochairfhocail Gaeilge, SEO Éire 2025, treochtaí Google, toirt cuardaigh, anailís AI, margaíocht dhigiteach áitiúil, straitéis ábhair",
-      "aiSemantic": [
-        "Cad iad na heochairfhocail Ghaeilge is mó cuardach sa bhliain 2025?",
-        "Conas sonraí Google a chomhcheangal le haghaidh SEO Gaeilge?",
-        "Uirlisí AI do thaighde eochairfhocal áitiúil in Éirinn",
-        "Treochtaí ríomhthráchtála agus margaíochta Gaeilge 2025",
-        "Straitéisí SEO áitiúla do ghnólachtaí Éireannacha",
-        "Baile Átha Cliath vs Corcaigh – patrúin chuardaigh áitiúla"
-      ],
+      "description": "Lucy World tracks live search demand and AI clustering for Irish audiences so teams plan weekly campaigns and sustainable growth with confidence.",
+      "keywords": "eochairfhocail Gaeilge, SEO Éire, treochtaí Google, toirt cuardaigh, anailís AI, straitéis ábhair áitiúil",
       "publisher": {
         "@type": "Organization",
         "name": "Lucy World"
@@ -38,15 +30,23 @@
     },
     {
       "@type": "WebPage",
-      "name": "Lucy World",
+      "name": "Lucy World – Anailís cuardaigh áitiúil d'Éirinn",
       "url": "https://lucy.world/ga/",
       "inLanguage": "ga",
       "isPartOf": {
         "@type": "WebSite",
         "url": "https://lucy.world/ga/"
       },
-      "description": "Faigh amach sonraí Gaeilge Google le moltaí, treochtaí agus anailís AI a neartaíonn cinntí ábhair agus fás gnó.",
-      "keywords": "eochairfhocail Gaeilge, SEO Éire 2025, treochtaí Google, toirt cuardaigh, anailís AI, margaíocht dhigiteach áitiúil, straitéis ábhair"
+      "description": "Lucy World tracks live search demand and AI clustering for Irish audiences so teams plan weekly campaigns and sustainable growth with confidence.",
+      "keywords": "eochairfhocail Gaeilge, SEO Éire, treochtaí Google, toirt cuardaigh, anailís AI, straitéis ábhair áitiúil",
+      "aiSemantic": [
+        "Irish keyword research",
+        "Irish SEO insights",
+        "search trends platform",
+        "AI content planning",
+        "Irish market analysis",
+        "Lucy World intelligence"
+      ]
     }
   ]
 }

@@ -9,19 +9,11 @@
     },
     {
       "@type": "WebSite",
-      "name": "Lucy World",
+      "name": "Lucy World – Қазақстан үшін жергілікті іздеу талдауы",
       "url": "https://lucy.world/kk/",
       "inLanguage": "kk",
-      "description": "Google қазақ деректерін ұсыныстармен, трендтермен және AI талдауымен ашып, контент шешімдері мен бизнес өсуін күшейтіңіз.",
-      "keywords": "қазақ кілт сөздері, SEO Қазақстан 2025, Google трендтері, іздеу көлемі, AI талдауы, жергілікті цифрлық маркетинг, контент стратегиясы",
-      "aiSemantic": [
-        "2025 жылы қандай қазақ кілт сөздері ең көп ізделеді?",
-        "Қазақ SEO үшін Google деректерін қалай біріктіруге болады?",
-        "Қазақстандағы жергілікті кілт сөздерді зерттеуге арналған AI құралдары",
-        "Қазақ электрондық сауда және маркетинг трендтері 2025",
-        "Қазақстандық бизнес үшін жергілікті SEO стратегиялары",
-        "Алматы vs Нұр-Сұлтан – жергілікті іздеу үлгілері мен трендтер"
-      ],
+      "description": "Lucy World tracks live search demand and AI clustering for Kazakh audiences so teams plan weekly campaigns and sustainable growth with confidence.",
+      "keywords": "қазақ кілт сөздері, SEO Қазақстан, Google трендтері, іздеу көлемі, AI талдауы, жергілікті контент стратегиясы",
       "publisher": {
         "@type": "Organization",
         "name": "Lucy World"
@@ -38,15 +30,23 @@
     },
     {
       "@type": "WebPage",
-      "name": "Lucy World",
+      "name": "Lucy World – Қазақстан үшін жергілікті іздеу талдауы",
       "url": "https://lucy.world/kk/",
       "inLanguage": "kk",
       "isPartOf": {
         "@type": "WebSite",
         "url": "https://lucy.world/kk/"
       },
-      "description": "Google қазақ деректерін ұсыныстармен, трендтермен және AI талдауымен ашып, контент шешімдері мен бизнес өсуін күшейтіңіз.",
-      "keywords": "қазақ кілт сөздері, SEO Қазақстан 2025, Google трендтері, іздеу көлемі, AI талдауы, жергілікті цифрлық маркетинг, контент стратегиясы"
+      "description": "Lucy World tracks live search demand and AI clustering for Kazakh audiences so teams plan weekly campaigns and sustainable growth with confidence.",
+      "keywords": "қазақ кілт сөздері, SEO Қазақстан, Google трендтері, іздеу көлемі, AI талдауы, жергілікті контент стратегиясы",
+      "aiSemantic": [
+        "Kazakh keyword research",
+        "Kazakh SEO insights",
+        "search trends platform",
+        "AI content planning",
+        "Kazakh market analysis",
+        "Lucy World intelligence"
+      ]
     }
   ]
 }

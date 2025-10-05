@@ -9,19 +9,11 @@
     },
     {
       "@type": "WebSite",
-      "name": "Lucy World",
+      "name": "Lucy World – भारत के लिए स्थानीय खोज विश्लेषण",
       "url": "https://lucy.world/hi/",
       "inLanguage": "hi",
-      "description": "Google डेटा के साथ हिंदी कीवर्ड खोजें - सुझाव, रुझान और AI विश्लेषण जो सामग्री निर्णयों और व्यावसायिक विकास को मजबूत बनाते हैं।",
-      "keywords": "हिंदी कीवर्ड, SEO भारत 2025, Google रुझान, खोज वॉल्यूम, AI विश्लेषण, स्थानीय डिजिटल मार्केटिंग, सामग्री रणनीति",
-      "aiSemantic": [
-        "2025 में कौन से हिंदी कीवर्ड सबसे ज्यादा खोजे जाते हैं?",
-        "हिंदी SEO के लिए Google डेटा को कैसे जोड़ें?",
-        "भारत में स्थानीय कीवर्ड अनुसंधान के लिए AI उपकरण",
-        "हिंदी ई-कॉमर्स और मार्केटिंग रुझान 2025",
-        "भारतीय व्यवसायों के लिए स्थानीय SEO रणनीतियां",
-        "दिल्ली बनाम मुंबई - स्थानीय खोज पैटर्न और रुझान"
-      ],
+      "description": "Lucy World tracks live search demand and AI clustering for Hindi audiences so teams plan weekly campaigns and sustainable growth with confidence.",
+      "keywords": "हिंदी कीवर्ड, SEO भारत, Google रुझान, खोज वॉल्यूम, AI विश्लेषण, स्थानीय सामग्री रणनीति",
       "publisher": {
         "@type": "Organization",
         "name": "Lucy World"
@@ -38,15 +30,23 @@
     },
     {
       "@type": "WebPage",
-      "name": "Lucy World",
+      "name": "Lucy World – भारत के लिए स्थानीय खोज विश्लेषण",
       "url": "https://lucy.world/hi/",
       "inLanguage": "hi",
       "isPartOf": {
         "@type": "WebSite",
         "url": "https://lucy.world/hi/"
       },
-      "description": "Google डेटा के साथ हिंदी कीवर्ड खोजें - सुझाव, रुझान और AI विश्लेषण जो सामग्री निर्णयों और व्यावसायिक विकास को मजबूत बनाते हैं।",
-      "keywords": "हिंदी कीवर्ड, SEO भारत 2025, Google रुझान, खोज वॉल्यूम, AI विश्लेषण, स्थानीय डिजिटल मार्केटिंग, सामग्री रणनीति"
+      "description": "Lucy World tracks live search demand and AI clustering for Hindi audiences so teams plan weekly campaigns and sustainable growth with confidence.",
+      "keywords": "हिंदी कीवर्ड, SEO भारत, Google रुझान, खोज वॉल्यूम, AI विश्लेषण, स्थानीय सामग्री रणनीति",
+      "aiSemantic": [
+        "Hindi keyword research",
+        "Hindi SEO insights",
+        "search trends platform",
+        "AI content planning",
+        "Hindi market analysis",
+        "Lucy World intelligence"
+      ]
     }
   ]
 }

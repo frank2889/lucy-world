@@ -9,11 +9,11 @@
     },
     {
       "@type": "WebSite",
-      "name": "Lucy World",
+      "name": "కీవర్డ్ పరిశోధన - Lucy World",
       "url": "https://lucy.world/te/",
       "inLanguage": "te",
-      "description": "Keyword research made simple with Google data: suggestions, trends, and insights.",
-      "keywords": "keyword research, SEO, Google Trends, suggestions, search volume",
+      "description": "Lucy World tracks live search demand and AI clustering for Telugu audiences so teams plan weekly campaigns and sustainable growth with confidence.",
+      "keywords": "కీవర్డ్ పరిశోధన, తెలుగు SEO, Google Trends, సూచనలు, వెతుకుట వాల్యూమ్",
       "publisher": {
         "@type": "Organization",
         "name": "Lucy World"
@@ -30,22 +30,22 @@
     },
     {
       "@type": "WebPage",
-      "name": "Lucy World",
+      "name": "కీవర్డ్ పరిశోధన - Lucy World",
       "url": "https://lucy.world/te/",
       "inLanguage": "te",
       "isPartOf": {
         "@type": "WebSite",
         "url": "https://lucy.world/te/"
       },
-      "description": "తెలుగు మార్కెట్ కోసం కీవర్డ్ పరిశోధన మరియు Google డేటా. ఆంధ్రప్రదేశ్ మరియు తెలంగాణ కోసం SEO అంతర్దృష్టులు మరియు ట్రెండ్లు.",
-      "keywords": "కీవర్డ్ పరిశోధన, తెలుగు SEO, Google Trends, సూచనలు, వెతుకుట వాల్యూమ్, తెలంగాణ",
+      "description": "Lucy World tracks live search demand and AI clustering for Telugu audiences so teams plan weekly campaigns and sustainable growth with confidence.",
+      "keywords": "కీవర్డ్ పరిశోధన, తెలుగు SEO, Google Trends, సూచనలు, వెతుకుట వాల్యూమ్",
       "aiSemantic": [
-        "Google.co.in తెలుగు SEO",
-        "తెలంగాణ మార్కెట్ విశ్లేషణ",
-        "ఆంధ్రప్రదేశ్ వెతుకుట ట్రెండ్లు",
-        "తెలుగు కీవర్డ్ పరిశోధన",
-        "దక్షిణ భారత SEO",
-        "తెలుగు డిజిటల్ మార్కెటింగ్"
+        "Telugu keyword research",
+        "Telugu SEO insights",
+        "search trends platform",
+        "AI content planning",
+        "Telugu market analysis",
+        "Lucy World intelligence"
       ]
     }
   ]

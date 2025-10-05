@@ -1,7 +1,20 @@
 {
   "country": "GL",
-  "defaultLocale": null,
-  "locales": [],
+  "defaultLocale": "da-GL",
+  "locales": [
+    {
+      "code": "da",
+      "hreflang": "da-GL",
+      "path": "/da",
+      "canonical": "https://lucy.world/da"
+    },
+    {
+      "code": "en",
+      "hreflang": "en-GL",
+      "path": "/en",
+      "canonical": "https://lucy.world/en"
+    }
+  ],
   "alternate": [
     {
       "hreflang": "x-default",

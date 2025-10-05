@@ -10,3 +10,9 @@ pandas==2.1.0
 Flask-SQLAlchemy==3.0.5
 SQLAlchemy==2.0.21
 langcodes==3.5.0
+openai==1.43.0
+markdown==3.6
+google-api-python-client==2.129.0
+google-auth==2.35.0
+google-auth-httplib2==0.2.0
+stripe==10.11.0

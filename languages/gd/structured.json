@@ -9,19 +9,11 @@
     },
     {
       "@type": "WebSite",
-      "name": "Lucy World",
+      "name": "Lucy World – Mion-sgrùdadh rannsachaidh ionadail airson Alba",
       "url": "https://lucy.world/gd/",
       "inLanguage": "gd",
       "description": "Faigh a-mach dàta Gàidhlig Google le molaidhean, treandaichean agus mion-sgrùdadh AI a neartaicheas co-dhùnaidhean susbaint agus fàs gnìomhachais.",
-      "keywords": "prìomh-fhaclan Gàidhlig, SEO Alba 2025, treandaichean Google, meud rannsachaidh, mion-sgrùdadh AI, margaidheachd dhiditeach ionadail, ro-innleachd susbaint",
-      "aiSemantic": [
-        "Dè na prìomh-fhaclan Gàidhlig as motha rannsachadh ann an 2025?",
-        "Ciamar a cheanglaidh tu dàta Google airson SEO Gàidhlig?",
-        "Innealan AI airson rannsachadh prìomh-fhacal ionadail ann an Alba",
-        "Treandaichean malairt-d agus margaidheachd Gàidhlig 2025",
-        "Ro-innleachdan SEO ionadail airson gnìomhachasan Albannach",
-        "Dùn Èideann vs Glaschu – pàtranan rannsachaidh ionadail"
-      ],
+      "keywords": "prìomh-fhaclan Gàidhlig, SEO Alba, treandaichean Google, meud rannsachaidh, mion-sgrùdadh AI, ro-innleachd susbaint ionadail",
       "publisher": {
         "@type": "Organization",
         "name": "Lucy World"
@@ -38,7 +30,7 @@
     },
     {
       "@type": "WebPage",
-      "name": "Lucy World",
+      "name": "Lucy World – Mion-sgrùdadh rannsachaidh ionadail airson Alba",
       "url": "https://lucy.world/gd/",
       "inLanguage": "gd",
       "isPartOf": {
@@ -46,7 +38,15 @@
         "url": "https://lucy.world/gd/"
       },
       "description": "Faigh a-mach dàta Gàidhlig Google le molaidhean, treandaichean agus mion-sgrùdadh AI a neartaicheas co-dhùnaidhean susbaint agus fàs gnìomhachais.",
-      "keywords": "prìomh-fhaclan Gàidhlig, SEO Alba 2025, treandaichean Google, meud rannsachaidh, mion-sgrùdadh AI, margaidheachd dhiditeach ionadail, ro-innleachd susbaint"
+      "keywords": "prìomh-fhaclan Gàidhlig, SEO Alba, treandaichean Google, meud rannsachaidh, mion-sgrùdadh AI, ro-innleachd susbaint ionadail",
+      "aiSemantic": [
+        "Scottish Gaelic keyword research",
+        "Scottish Gaelic SEO insights",
+        "search trends platform",
+        "AI content planning",
+        "Scottish Gaelic market analysis",
+        "Lucy World intelligence"
+      ]
     }
   ]
 }

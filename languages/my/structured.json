@@ -9,11 +9,11 @@
     },
     {
       "@type": "WebSite",
-      "name": "Lucy World",
+      "name": "Lucy World – မြန်မာ့ဒေသဆိုင်ရာ ရှာဖွေမှု ခွဲခြမ်းစိတ်ဖြာခြင်း",
       "url": "https://lucy.world/my/",
       "inLanguage": "my",
-      "description": "Keyword research made simple with Google data: suggestions, trends, and insights.",
-      "keywords": "keyword research, SEO, Google Trends, suggestions, search volume",
+      "description": "အကြံပြုချက်များ၊ လမ်းကြောင်းများနှင့် AI ခွဲခြမ်းစိတ်ဖြာမှုများဖြင့် မြန်မာ Google ဒေတာများကို စူးစမ်းလေ့လာပြီး ပြည်တွင်းလုပ်ငန်း တိုးတက်မှုကို အားဖြည့်ပါ။",
+      "keywords": "မြန်မာ သော့ချက်စာလုံးများ, SEO မြန်မာ, Google လမ်းကြောင်းများ, ရှာဖွေမှု ပမာဏ, AI ခွဲခြမ်းစိတ်ဖြာမှု, ဒေသဆိုင်ရာ အကြောင်းအရာ ဗျူဟာ",
       "publisher": {
         "@type": "Organization",
         "name": "Lucy World"
@@ -30,15 +30,23 @@
     },
     {
       "@type": "WebPage",
-      "name": "Lucy World",
+      "name": "Lucy World – မြန်မာ့ဒေသဆိုင်ရာ ရှာဖွေမှု ခွဲခြမ်းစိတ်ဖြာခြင်း",
       "url": "https://lucy.world/my/",
       "inLanguage": "my",
       "isPartOf": {
         "@type": "WebSite",
         "url": "https://lucy.world/my/"
       },
-      "description": "မြန်မာ့သော့ချက်စာလုံး သုတေသန Google ဒေတာဖြင့်: အကြံပြုချက်များ၊ လမ်းကြောင်းများနှင့် AI ခွဲခြမ်းစိတ်ဖြာမှု ပြည်တွင်းလုပ်ငန်း တိုးတက်မှုအတွက်။",
-      "keywords": "မြန်မာ သော့ချက်စာလုံးများ, SEO မြန်မာ, Google လမ်းကြောင်းများ, ရှာဖွေမှု ပမာဏ, AI ခွဲခြမ်းစိတ်ဖြာမှု, ဒေသဆိုင်ရာ အကြောင်းအရာ ဗျူဟာ, လုပ်ငန်း တိုးတက်မှု, ဒစ်ဂျစ်တယ် ကုန်သွယ်ရေး"
+      "description": "အကြံပြုချက်များ၊ လမ်းကြောင်းများနှင့် AI ခွဲခြမ်းစိတ်ဖြာမှုများဖြင့် မြန်မာ Google ဒေတာများကို စူးစမ်းလေ့လာပြီး ပြည်တွင်းလုပ်ငန်း တိုးတက်မှုကို အားဖြည့်ပါ။",
+      "keywords": "မြန်မာ သော့ချက်စာလုံးများ, SEO မြန်မာ, Google လမ်းကြောင်းများ, ရှာဖွေမှု ပမာဏ, AI ခွဲခြမ်းစိတ်ဖြာမှု, ဒေသဆိုင်ရာ အကြောင်းအရာ ဗျူဟာ",
+      "aiSemantic": [
+        "Burmese keyword research",
+        "Burmese SEO insights",
+        "search trends platform",
+        "AI content planning",
+        "Burmese market analysis",
+        "Lucy World intelligence"
+      ]
     }
   ]
 }

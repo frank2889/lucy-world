@@ -9,11 +9,11 @@
     },
     {
       "@type": "WebSite",
-      "name": "Lucy World",
+      "name": "Lucy World – ශ්‍රී ලංකාව සඳහා ප්‍රාදේශීය සෙවුම් විශ්ලේෂණය",
       "url": "https://lucy.world/si/",
       "inLanguage": "si",
-      "description": "Keyword research made simple with Google data: suggestions, trends, and insights.",
-      "keywords": "keyword research, SEO, Google Trends, suggestions, search volume",
+      "description": "Lucy World tracks live search demand and AI clustering for Sinhala audiences so teams plan weekly campaigns and sustainable growth with confidence.",
+      "keywords": "සිංහල මූල පද, SEO ශ්‍රී ලංකාව, Google ප්‍රවණතා, සෙවුම් පරිමාව, AI විශ්ලේෂණය, ප්‍රාදේශීය අන්තර්ගත උපාය මාර්ගය",
       "publisher": {
         "@type": "Organization",
         "name": "Lucy World"
@@ -30,15 +30,23 @@
     },
     {
       "@type": "WebPage",
-      "name": "Lucy World",
+      "name": "Lucy World – ශ්‍රී ලංකාව සඳහා ප්‍රාදේශීය සෙවුම් විශ්ලේෂණය",
       "url": "https://lucy.world/si/",
       "inLanguage": "si",
       "isPartOf": {
         "@type": "WebSite",
         "url": "https://lucy.world/si/"
       },
-      "description": "ශ්‍රී ලංකාව සඳහා මූල පද පර්යේෂණ Google දත්ත සමඟ: යෝජනා, ප්‍රවණතා සහ AI විශ්ලේෂණය ප්‍රාදේශීය ව්‍යාපාරික වර්ධනය සඳහා.",
-      "keywords": "සිංහල මූල පද, SEO ශ්‍රී ලංකාව, Google ප්‍රවණතා, සෙවුම් පරිමාව, AI විශ්ලේෂණය, ප්‍රාදේශීය අන්තර්ගත උපාය මාර්ගය, ව්‍යාපාරික වර්ධනය, ඩිජිටල් අලෙවිකරණය"
+      "description": "Lucy World tracks live search demand and AI clustering for Sinhala audiences so teams plan weekly campaigns and sustainable growth with confidence.",
+      "keywords": "සිංහල මූල පද, SEO ශ්‍රී ලංකාව, Google ප්‍රවණතා, සෙවුම් පරිමාව, AI විශ්ලේෂණය, ප්‍රාදේශීය අන්තර්ගත උපාය මාර්ගය",
+      "aiSemantic": [
+        "Sinhala keyword research",
+        "Sinhala SEO insights",
+        "search trends platform",
+        "AI content planning",
+        "Sinhala market analysis",
+        "Lucy World intelligence"
+      ]
     }
   ]
 }

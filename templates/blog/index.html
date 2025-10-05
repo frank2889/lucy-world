@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Lucy World Blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Growth flywheel insights generated from Lucy's keyword intelligence." />
+    <link rel="canonical" href="/blog/" />
+    <link rel="stylesheet" href="/static/css/blog.css" />
+  </head>
+  <body>
+    <main class="lucy-blog-index">
+      <header>
+        <h1>Lucy World Insights</h1>
+        <p class="lede">Fresh growth experiments generated from real-time keyword demand.</p>
+      </header>
+      {% if posts %}
+        <ul class="post-list">
+          {% for post in posts %}
+            <li>
+              <article>
+                <h2><a href="/blog/{{ post.slug }}/">{{ post.title }}</a></h2>
+                {% if post.summary %}
+                  <p class="summary">{{ post.summary }}</p>
+                {% endif %}
+                <p class="meta">
+                  {% if post.published_at %}
+                    <time datetime="{{ post.published_at.isoformat() }}">{{ post.published_at.strftime('%d %B %Y') }}</time>
+                  {% endif %}
+                  {% if post.language %}
+                    · {{ post.language | upper }}
+                  {% endif %}
+                </p>
+              </article>
+            </li>
+          {% endfor %}
+        </ul>
+      {% else %}
+        <section class="empty">
+          <p>No insight articles have been published yet—check back soon as the AI pipeline rolls out.</p>
+        </section>
+      {% endif %}
+    </main>
+  </body>
+</html>

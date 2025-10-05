@@ -9,11 +9,11 @@
     },
     {
       "@type": "WebSite",
-      "name": "Lucy World",
+      "name": "முக்கிய சொல் ஆராய்ச்சி - Lucy World",
       "url": "https://lucy.world/ta/",
       "inLanguage": "ta",
-      "description": "Keyword research made simple with Google data: suggestions, trends, and insights.",
-      "keywords": "keyword research, SEO, Google Trends, suggestions, search volume",
+      "description": "Lucy World tracks live search demand and AI clustering for Tamil audiences so teams plan weekly campaigns and sustainable growth with confidence.",
+      "keywords": "முக்கிய சொல் ஆராய்ச்சி, தமிழ் SEO, Google Trends, பரிந்துரைகள், தேடல் அளவு",
       "publisher": {
         "@type": "Organization",
         "name": "Lucy World"
@@ -30,22 +30,22 @@
     },
     {
       "@type": "WebPage",
-      "name": "Lucy World",
+      "name": "முக்கிய சொல் ஆராய்ச்சி - Lucy World",
       "url": "https://lucy.world/ta/",
       "inLanguage": "ta",
       "isPartOf": {
         "@type": "WebSite",
         "url": "https://lucy.world/ta/"
       },
-      "description": "தமிழ் சந்தைக்கான முக்கிய சொல் ஆராய்ச்சி மற்றும் Google தரவுகள். தமிழகம் மற்றும் இலங்கைக்கான SEO நுண்ணறிவுகள் மற்றும் போக்குகள்.",
-      "keywords": "முக்கிய சொல் ஆராய்ச்சி, தமிழ் SEO, Google Trends, பரிந்துரைகள், தேடல் அளவு, தமிழகம்",
+      "description": "Lucy World tracks live search demand and AI clustering for Tamil audiences so teams plan weekly campaigns and sustainable growth with confidence.",
+      "keywords": "முக்கிய சொல் ஆராய்ச்சி, தமிழ் SEO, Google Trends, பரிந்துரைகள், தேடல் அளவு",
       "aiSemantic": [
-        "Google.co.in தமிழ் SEO",
-        "தமிழக சந்தை பகுப்பாய்வு",
-        "இலங்கை தேடல் போக்குகள்",
-        "தமிழ் கீவர்ட் ஆராய்ச்சி",
-        "தென்னிந்திய SEO",
-        "தமிழ் டிஜிட்டல் மார்க்கெட்டிங்"
+        "Tamil keyword research",
+        "Tamil SEO insights",
+        "search trends platform",
+        "AI content planning",
+        "Tamil market analysis",
+        "Lucy World intelligence"
       ]
     }
   ]

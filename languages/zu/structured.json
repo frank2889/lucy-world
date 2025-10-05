@@ -9,11 +9,11 @@
     },
     {
       "@type": "WebSite",
-      "name": "Lucy World",
+      "name": "Ucwaningo lwamagama angukhiye - Lucy World",
       "url": "https://lucy.world/zu/",
       "inLanguage": "zu",
-      "description": "Keyword research made simple with Google data: suggestions, trends, and insights.",
-      "keywords": "keyword research, SEO, Google Trends, suggestions, search volume",
+      "description": "Lucy World tracks live search demand and AI clustering for Zulu audiences so teams plan weekly campaigns and sustainable growth with confidence.",
+      "keywords": "ucwaningo lwamagama angukhiye, SEO isiZulu, Google Trends, iziphakamiso, umthamo wosesho",
       "publisher": {
         "@type": "Organization",
         "name": "Lucy World"
@@ -30,22 +30,22 @@
     },
     {
       "@type": "WebPage",
-      "name": "Lucy World",
+      "name": "Ucwaningo lwamagama angukhiye - Lucy World",
       "url": "https://lucy.world/zu/",
       "inLanguage": "zu",
       "isPartOf": {
         "@type": "WebSite",
         "url": "https://lucy.world/zu/"
       },
-      "description": "Ucwaningo lwamagama angukhiye lwemakethe yaseNingizimu Afrika ngedatha kaGoogle. Izinjalo, ukuhlaziya no-SEO wesiZulu.",
-      "keywords": "ucwaningo lwamagama angukhiye, SEO isiZulu, Google Trends, iziphakamiso, umthamo wosesho, Ningizimu Afrika",
+      "description": "Lucy World tracks live search demand and AI clustering for Zulu audiences so teams plan weekly campaigns and sustainable growth with confidence.",
+      "keywords": "ucwaningo lwamagama angukhiye, SEO isiZulu, Google Trends, iziphakamiso, umthamo wosesho",
       "aiSemantic": [
-        "Google.co.za SEO isiZulu",
-        "Ukuhlaziya imakethe yaseNingizimu Afrika",
-        "Izinjalo zosesho lwaseNingizimu Afrika",
-        "Ucwaningo lwamagama angukhiye ngesiZulu",
-        "SEO yaseNingizimu Afrika",
-        "Imakethe yedijithali yesiZulu"
+        "Zulu keyword research",
+        "Zulu SEO insights",
+        "search trends platform",
+        "AI content planning",
+        "Zulu market analysis",
+        "Lucy World intelligence"
       ]
     }
   ]

@@ -9,11 +9,11 @@
     },
     {
       "@type": "WebSite",
-      "name": "Lucy World",
+      "name": "Lucy World – Analiza e kërkimit vendor për Shqipërinë",
       "url": "https://lucy.world/sq/",
       "inLanguage": "sq",
-      "description": "Keyword research made simple with Google data: suggestions, trends, and insights.",
-      "keywords": "keyword research, SEO, Google Trends, suggestions, search volume",
+      "description": "Eksploroni të dhënat Google shqiptare me sugjerime, tendenca dhe analizë AI që forcojnë vendimet e përmbajtjes dhe rritjen e biznesit vendor.",
+      "keywords": "fjalë kyçe shqipe, SEO Shqipëri, Google Trends, volumi i kërkimit, analiza AI, strategjia e përmbajtjes vendore",
       "publisher": {
         "@type": "Organization",
         "name": "Lucy World"
@@ -30,15 +30,23 @@
     },
     {
       "@type": "WebPage",
-      "name": "Lucy World",
+      "name": "Lucy World – Analiza e kërkimit vendor për Shqipërinë",
       "url": "https://lucy.world/sq/",
       "inLanguage": "sq",
       "isPartOf": {
         "@type": "WebSite",
         "url": "https://lucy.world/sq/"
       },
-      "description": "Kërkimi i fjalëve kyçe për Shqipërinë me të dhënat Google: sugjerime, tendenca dhe analizë AI për rritjen e biznesit vendor dhe optimizimin e përmbajtjes.",
-      "keywords": "fjalë kyçe shqipe, SEO Shqipëri, Google Trends, volumi i kërkimit, analiza AI, strategjia e përmbajtjes vendore, rritja e biznesit, marketingu dixhital"
+      "description": "Eksploroni të dhënat Google shqiptare me sugjerime, tendenca dhe analizë AI që forcojnë vendimet e përmbajtjes dhe rritjen e biznesit vendor.",
+      "keywords": "fjalë kyçe shqipe, SEO Shqipëri, Google Trends, volumi i kërkimit, analiza AI, strategjia e përmbajtjes vendore",
+      "aiSemantic": [
+        "Albanian keyword research",
+        "Albanian SEO insights",
+        "search trends platform",
+        "AI content planning",
+        "Albanian market analysis",
+        "Lucy World intelligence"
+      ]
     }
   ]
 }

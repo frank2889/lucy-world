@@ -9,11 +9,11 @@
     },
     {
       "@type": "WebSite",
-      "name": "Lucy World",
+      "name": "مطلوبہ الفاظ کی تحقیق - Lucy World",
       "url": "https://lucy.world/ur/",
       "inLanguage": "ur",
-      "description": "Keyword research made simple with Google data: suggestions, trends, and insights.",
-      "keywords": "keyword research, SEO, Google Trends, suggestions, search volume",
+      "description": "Lucy World tracks live search demand and AI clustering for Urdu audiences so teams plan weekly campaigns and sustainable growth with confidence.",
+      "keywords": "مطلوبہ الفاظ کی تحقیق، SEO اردو، Google Trends، تجاویز، تلاش کا حجم",
       "publisher": {
         "@type": "Organization",
         "name": "Lucy World"
@@ -30,22 +30,22 @@
     },
     {
       "@type": "WebPage",
-      "name": "Lucy World",
+      "name": "مطلوبہ الفاظ کی تحقیق - Lucy World",
       "url": "https://lucy.world/ur/",
       "inLanguage": "ur",
       "isPartOf": {
         "@type": "WebSite",
         "url": "https://lucy.world/ur/"
       },
-      "description": "پاکستان کے لیے مطلوبہ الفاظ کی تحقیق اور Google ڈیٹا۔ رجحانات، تجزیات اور اردو مارکیٹ کے لیے SEO بہتری۔",
-      "keywords": "مطلوبہ الفاظ کی تحقیق، SEO اردو، Google Trends، تجاویز، تلاش کا حجم، پاکستان",
+      "description": "Lucy World tracks live search demand and AI clustering for Urdu audiences so teams plan weekly campaigns and sustainable growth with confidence.",
+      "keywords": "مطلوبہ الفاظ کی تحقیق، SEO اردو، Google Trends، تجاویز، تلاش کا حجم",
       "aiSemantic": [
-        "Google.com.pk SEO بہتری",
-        "پاکستان مارکیٹ تجزیہ",
-        "اردو تلاش کے رجحانات",
-        "اردو مطلوبہ الفاظ کی تحقیق",
-        "جنوبی ایشیا SEO",
-        "اردو ڈیجیٹل مارکیٹنگ"
+        "Urdu keyword research",
+        "Urdu SEO insights",
+        "search trends platform",
+        "AI content planning",
+        "Urdu market analysis",
+        "Lucy World intelligence"
       ]
     }
   ]

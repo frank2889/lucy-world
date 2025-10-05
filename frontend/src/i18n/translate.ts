@@ -17,9 +17,11 @@ function applyReplacements(template: string, replacements?: Replacements): strin
   })
 }
 
-export function createTranslator(ui?: UIState | null) {
-  return (key: string, fallback: string, replacements?: Replacements): string => {
-    const template = ui?.strings?.[key] ?? fallback
+export function createTranslator(ui?: UIState | null, fallbackUi?: UIState | null) {
+  const primaryStrings = ui?.strings ?? {}
+  const fallbackStrings = fallbackUi?.strings ?? {}
+  return (key: string, replacements?: Replacements): string => {
+    const template = primaryStrings[key] ?? fallbackStrings[key] ?? key
     return applyReplacements(template, replacements)
   }
 }

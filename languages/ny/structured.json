@@ -9,11 +9,11 @@
     },
     {
       "@type": "WebSite",
-      "name": "Lucy World",
+      "name": "Lucy World – Kusanthula kusaka kwakomweko ku Malawi",
       "url": "https://lucy.world/ny/",
       "inLanguage": "ny",
-      "description": "Keyword research made simple with Google data: suggestions, trends, and insights.",
-      "keywords": "keyword research, SEO, Google Trends, suggestions, search volume",
+      "description": "Fukulani data ya Google ya Chichewa ndi maupangiri, machitidwe ndi kusanthula kwa AI komwe kumalimbikitsa ziganizo za zinthu ndi kukula kwa malonda.",
+      "keywords": "makiyi mawu a Chichewa, SEO Malawi, Google Trends, voliyumu ya kusaka, kusanthula kwa AI, njira ya zinthu zakomweko",
       "publisher": {
         "@type": "Organization",
         "name": "Lucy World"
@@ -30,15 +30,23 @@
     },
     {
       "@type": "WebPage",
-      "name": "Lucy World",
+      "name": "Lucy World – Kusanthula kusaka kwakomweko ku Malawi",
       "url": "https://lucy.world/ny/",
       "inLanguage": "ny",
       "isPartOf": {
         "@type": "WebSite",
         "url": "https://lucy.world/ny/"
       },
-      "description": "Kafukufuku wa makiyi mawu ku Malawi ndi data ya Google: maupangiri, machitidwe ndi kusanthula kwa AI kwa kukula kwa malonda akomweko.",
-      "keywords": "makiyi mawu a Chichewa, SEO Malawi, Google Trends, voliyumu ya kusaka, kusanthula kwa AI, njira ya zinthu zakomweko, kukula kwa malonda, malonda a pa intaneti"
+      "description": "Fukulani data ya Google ya Chichewa ndi maupangiri, machitidwe ndi kusanthula kwa AI komwe kumalimbikitsa ziganizo za zinthu ndi kukula kwa malonda.",
+      "keywords": "makiyi mawu a Chichewa, SEO Malawi, Google Trends, voliyumu ya kusaka, kusanthula kwa AI, njira ya zinthu zakomweko",
+      "aiSemantic": [
+        "Nyanja (Chichewa) keyword research",
+        "Nyanja (Chichewa) SEO insights",
+        "search trends platform",
+        "AI content planning",
+        "Nyanja (Chichewa) market analysis",
+        "Lucy World intelligence"
+      ]
     }
   ]
 }

@@ -9,11 +9,11 @@
     },
     {
       "@type": "WebSite",
-      "name": "Lucy World",
+      "name": "Lucy World – Su'esu'ega saili a le lotoifale mo Samoa",
       "url": "https://lucy.world/sm/",
       "inLanguage": "sm",
-      "description": "Keyword research made simple with Google data: suggestions, trends, and insights.",
-      "keywords": "keyword research, SEO, Google Trends, suggestions, search volume",
+      "description": "Su'esu'e fa'amatalaga Google Samoa ma fautuaga, aga ma su'esu'ega AI e fa'amalosia ai filifiliga o mea ma le fa'atupulaia o pisinisi a le lotoifale.",
+      "keywords": "upu autu Samoa, SEO Samoa, Google Trends, paleni saili, su'esu'ega AI, ta'iala mea a le lotoifale",
       "publisher": {
         "@type": "Organization",
         "name": "Lucy World"
@@ -30,15 +30,23 @@
     },
     {
       "@type": "WebPage",
-      "name": "Lucy World",
+      "name": "Lucy World – Su'esu'ega saili a le lotoifale mo Samoa",
       "url": "https://lucy.world/sm/",
       "inLanguage": "sm",
       "isPartOf": {
         "@type": "WebSite",
         "url": "https://lucy.world/sm/"
       },
-      "description": "Su'esu'ega o upu autu mo Samoa ma fa'amatalaga Google: fautuaga, aga ma su'esu'ega AI mo le fa'atupulaia o pisinisi a le lotoifale.",
-      "keywords": "upu autu Samoa, SEO Samoa, Google Trends, paleni saili, su'esu'ega AI, ta'iala mea a le lotoifale, fa'atupulaia pisinisi, fa'atau fa'atekonolosi"
+      "description": "Su'esu'e fa'amatalaga Google Samoa ma fautuaga, aga ma su'esu'ega AI e fa'amalosia ai filifiliga o mea ma le fa'atupulaia o pisinisi a le lotoifale.",
+      "keywords": "upu autu Samoa, SEO Samoa, Google Trends, paleni saili, su'esu'ega AI, ta'iala mea a le lotoifale",
+      "aiSemantic": [
+        "Samoan keyword research",
+        "Samoan SEO insights",
+        "search trends platform",
+        "AI content planning",
+        "Samoan market analysis",
+        "Lucy World intelligence"
+      ]
     }
   ]
 }

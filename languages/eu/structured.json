@@ -9,11 +9,11 @@
     },
     {
       "@type": "WebSite",
-      "name": "Lucy World",
+      "name": "Lucy World – Euskal Herriko bilaketa-analisia",
       "url": "https://lucy.world/eu/",
       "inLanguage": "eu",
-      "description": "Keyword research made simple with Google data: suggestions, trends, and insights.",
-      "keywords": "keyword research, SEO, Google Trends, suggestions, search volume",
+      "description": "Lucy World tracks live search demand and AI clustering for Basque audiences so teams plan weekly campaigns and sustainable growth with confidence.",
+      "keywords": "euskal gako-hitzak, SEO Euskadi, Google joerak, bilaketa-bolumena, AI analisia, tokiko eduki-estrategia",
       "publisher": {
         "@type": "Organization",
         "name": "Lucy World"
@@ -30,15 +30,23 @@
     },
     {
       "@type": "WebPage",
-      "name": "Lucy World",
+      "name": "Lucy World – Euskal Herriko bilaketa-analisia",
       "url": "https://lucy.world/eu/",
       "inLanguage": "eu",
       "isPartOf": {
         "@type": "WebSite",
         "url": "https://lucy.world/eu/"
       },
-      "description": "Keyword research made simple with Google data: suggestions, trends, and insights.",
-      "keywords": "keyword research, SEO, Google Trends, suggestions, search volume"
+      "description": "Lucy World tracks live search demand and AI clustering for Basque audiences so teams plan weekly campaigns and sustainable growth with confidence.",
+      "keywords": "euskal gako-hitzak, SEO Euskadi, Google joerak, bilaketa-bolumena, AI analisia, tokiko eduki-estrategia",
+      "aiSemantic": [
+        "Basque keyword research",
+        "Basque SEO insights",
+        "search trends platform",
+        "AI content planning",
+        "Basque market analysis",
+        "Lucy World intelligence"
+      ]
     }
   ]
 }

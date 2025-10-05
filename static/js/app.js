@@ -1,5 +1,5 @@
 /**
- * FREE KEYWORD RESEARCH TOOL - MAIN JAVASCRIPT
+ * PREMIUM KEYWORD RESEARCH TOOL - MAIN JAVASCRIPT
  * Professional keyword research application
  */
 
@@ -105,7 +105,7 @@ class KeywordResearchApp {
         this.hideError();
 
         try {
-            const response = await fetch('/api/research-free', {
+            const response = await fetch('/api/premium/search', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -114,7 +114,7 @@ class KeywordResearchApp {
             });
 
             if (!response.ok) {
-                throw new Error('Er is een fout opgetreden bij het ophalen van gratis data');
+                throw new Error('Er is een fout opgetreden bij het ophalen van premium data');
             }
 
             const data = await response.json();
@@ -358,7 +358,7 @@ class KeywordResearchApp {
         }
 
         try {
-            const response = await fetch('/api/export-free', {
+            const response = await fetch('/api/premium/export', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -367,14 +367,14 @@ class KeywordResearchApp {
             });
 
             if (!response.ok) {
-                throw new Error('Gratis export mislukt');
+                throw new Error('Premium export mislukt');
             }
 
             const blob = await response.blob();
             const url = window.URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
-            a.download = `free_keyword_research_${this.currentResults.main_keyword.replace(/\s+/g, '_')}.csv`;
+            a.download = `premium_keyword_research_${this.currentResults.main_keyword.replace(/\s+/g, '_')}.csv`;
             document.body.appendChild(a);
             a.click();
             window.URL.revokeObjectURL(url);
@@ -385,7 +385,7 @@ class KeywordResearchApp {
 
         } catch (error) {
             console.error('Export error:', error);
-            this.showError('Gratis export mislukt: ' + error.message);
+            this.showError('Premium export mislukt: ' + error.message);
         }
     }
 

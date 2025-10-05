@@ -11,21 +11,28 @@ import logging
 import re
 import time
 import functools
+from collections import defaultdict
 import ipaddress
 import requests
-from datetime import datetime
+from datetime import datetime, date, timedelta
+from math import log1p
 from typing import Any
 from flask import Flask, render_template, request, jsonify, send_file, redirect, abort
 from flask import send_from_directory
 from werkzeug.middleware.proxy_fix import ProxyFix
+from sqlalchemy import inspect, text
 
 from backend.services.advanced_keyword_tool import AdvancedKeywordTool
-from backend.services.free_keyword_tool import FreeKeywordTool
+from backend.services.ai_blog_pipeline import AIBlogPipeline
+from backend.services.premium_keyword_tool import PremiumKeywordTool
 from backend.providers import SuggestionRequest
 from backend.services.suggestion_dispatcher import SuggestionDispatcher
 from .extensions import db
+from .models import PlanConfig, QueryLog, CandidateQuery, ContentDraft, DailyUsage, User, get_plan_config
 from .routes_projects import bp as projects_bp
 from .routes_auth import bp as auth_bp
+from .routes_billing import bp as billing_bp
+from .routes_growth import bp as growth_bp
 
 
 def create_app() -> Flask:
@@ -81,14 +88,16 @@ def create_app() -> Flask:
 	# Initialiseer beide keyword tools
 	try:
 		advanced_tool = AdvancedKeywordTool()
-		free_tool = FreeKeywordTool()
+		premium_tool = PremiumKeywordTool()
 		logger.info("Keyword tools successfully initialized")
 	except Exception as e:
 		logger.error(f"Error initializing keyword tools: {e}")
 		advanced_tool = None
-		free_tool = None
+		premium_tool = None
 
 	dispatcher = SuggestionDispatcher()
+	growth_pipeline = AIBlogPipeline(project_root=project_root, logger=logger)
+	app.extensions['growth_pipeline'] = growth_pipeline
 
 	def _supported_langs():
 		"""Return a deduplicated list of primary language codes.
@@ -180,6 +189,92 @@ def create_app() -> Flask:
 			if len(code) == 2 and code.isalpha():
 				codes.append(code)
 		return codes
+
+	@functools.lru_cache(maxsize=1)
+	def _valid_language_codes() -> set[str]:
+		"""Return normalized language codes that have locale coverage."""
+		available = _available_locales()
+		if not available:
+			available = _supported_langs()
+		return {code.split('-')[0].lower() for code in available if isinstance(code, str) and code}
+
+	@functools.lru_cache(maxsize=1)
+	def _valid_country_codes() -> set[str]:
+		"""Return ISO 3166-1 alpha-2 country codes referenced by locales."""
+		codes: set[str] = set()
+		path = os.path.join(project_root, 'languages', 'countries.json')
+		try:
+			with open(path, 'r', encoding='utf-8') as f:
+				payload = json.load(f)
+			for entry in payload.get('countries', []):
+				if isinstance(entry, str):
+					code = entry.strip().upper()
+					if len(code) == 2 and code.isalpha():
+						codes.add(code)
+		except Exception:
+			codes.update(_available_markets())
+		return codes
+
+	@functools.lru_cache(maxsize=1)
+	def _hreflang_relations() -> tuple[dict[str, set[str]], dict[str, set[str]]]:
+		"""Return mapping of language -> allowed alternates and preferred paths."""
+		markets_dir = os.path.join(project_root, 'markets')
+		groups: dict[str, set[str]] = defaultdict(set)
+		paths: dict[str, set[str]] = defaultdict(set)
+
+		if os.path.isdir(markets_dir):
+			for name in os.listdir(markets_dir):
+				folder = os.path.join(markets_dir, name)
+				if not os.path.isdir(folder):
+					continue
+				hreflang_path = os.path.join(folder, 'hreflang.json')
+				if not os.path.isfile(hreflang_path):
+					continue
+				try:
+					with open(hreflang_path, 'r', encoding='utf-8') as fh:
+						data = json.load(fh)
+				except Exception:
+					continue
+				locales = data.get('locales') if isinstance(data, dict) else None
+				if not isinstance(locales, list):
+					continue
+				codes_for_market: list[str] = []
+				for entry in locales:
+					if not isinstance(entry, dict):
+						continue
+					code = entry.get('code')
+					if not isinstance(code, str):
+						continue
+					primary = code.split('-')[0].lower()
+					if len(primary) != 2 or not primary.isalpha():
+						continue
+					path_value = entry.get('path') if isinstance(entry.get('path'), str) else f'/{primary}'
+					path_value = path_value.strip()
+					if not path_value.startswith('/'):
+						path_value = f'/{path_value}'
+					if not path_value.endswith('/'):
+						path_value = f'{path_value}/'
+					paths[primary].add(path_value)
+					codes_for_market.append(primary)
+				for code_primary in codes_for_market:
+					groups[code_primary].update(codes_for_market)
+
+		available_locales = _available_locales()
+		for lang in available_locales:
+			groups.setdefault(lang, set()).add(lang)
+			if lang not in paths or not paths[lang]:
+				paths[lang].add(f'/{lang}/')
+			else:
+				paths[lang] = {(
+					p if p.endswith('/') else f'{p}/'
+				) for p in {(
+					p if p.startswith('/') else f'/{p}'
+				) for p in paths[lang]}}
+
+		return (
+			{k: set(v) for k, v in groups.items()},
+			{k: set(v) for k, v in paths.items()},
+		)
 
 	geoip_cache: dict[str, tuple[str, float]] = {}
 	GEOIP_CACHE_TTL = 3600  # seconds
@@ -568,44 +663,10 @@ def create_app() -> Flask:
 	def index_root():
 		"""Detect language and redirect to /<lang>/ with GTM tracking"""
 		lang = _preferred_language()
-		
-		# Create a temporary page with GTM that redirects immediately
-		redirect_html = f"""<!DOCTYPE html>
-<html>
-<head>
-	<meta charset="UTF-8">
-	<title>Lucy World - Redirecting...</title>
-	<!-- Google Tag Manager -->
-	<script>(function(w,d,s,l,i){{w[l]=w[l]||[];w[l].push({{'gtm.start':
-	new Date().getTime(),event:'gtm.js'}});var f=d.getElementsByTagName(s)[0],
-	j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-	'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-	}})(window,document,'script','dataLayer','GTM-KGMG5JTG');</script>
-	<!-- End Google Tag Manager -->
-	<meta http-equiv="refresh" content="0; url=/{lang}/">
-	<script>
-		// Track root page visit
-		window.dataLayer = window.dataLayer || [];
-		window.dataLayer.push({{
-			'event': 'page_view',
-			'page_title': 'Lucy World Root Redirect',
-			'page_location': window.location.href,
-			'redirect_target': '/{lang}/'
-		}});
-		// Immediate redirect
-		window.location.href = '/{lang}/';
-	</script>
-</head>
-<body>
-	<!-- Google Tag Manager (noscript) -->
-	<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KGMG5JTG"
-	height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-	<!-- End Google Tag Manager (noscript) -->
-	<h1>Redirecting...</h1>
-	<p>You should be redirected automatically to <a href="/{lang}/">/{lang}/</a>.</p>
-</body>
-</html>"""
-		return redirect_html
+		response = redirect(f'/{lang}/', code=302)
+		# Advertise x-default so search engines understand there is no content at root
+		response.headers.setdefault('Link', f'<{request.url_root.rstrip("/")}>; rel="alternate"; hreflang="x-default"')
+		return response
 
 	# Redirect '/<lang>' (no trailing slash) to '/<lang>/'
 	@app.route('/<lang>')
@@ -634,14 +695,40 @@ def create_app() -> Flask:
 		if not available or lang not in available:
 			abort(404)
 		override = _lang_asset_path(lang, 'robots.txt')
-		base = _base_url()
 		if override:
 			return send_file(override, mimetype='text/plain')
-		content = (
-			"User-agent: *\n"
-			"Allow: /\n\n"
-			f"Sitemap: {base}/{lang}/sitemap.xml\n"
-		)
+		relations, path_map = _hreflang_relations()
+		allowed = relations.get(lang, {lang})
+		base = _base_url()
+		lines: list[str] = ["User-agent: *"]
+		seen_paths: set[str] = set()
+
+		def _normalize(path: str, code: str) -> str:
+			path = (path or '').strip() or f'/{code}'
+			if not path.startswith('/'):
+				path = f'/{path}'
+			if not path.endswith('/'):
+				path = f'{path}/'
+			return path
+
+		def _append_paths(code: str):
+			for raw_path in sorted(path_map.get(code, {f'/{code}/'})):
+				normalized = _normalize(raw_path, code)
+				if normalized not in seen_paths:
+					lines.append(f"Allow: {normalized}")
+					seen_paths.add(normalized)
+
+		_append_paths(lang)
+		for code in sorted(allowed - {lang}):
+			_append_paths(code)
+
+		for code in sorted(available - allowed):
+			lines.append(f"Disallow: /{code}/")
+
+		lines.append("Disallow: /*/*/")
+		lines.append("")
+		lines.append(f"Sitemap: {base}/{lang}/sitemap.xml")
+		content = "\n".join(lines) + "\n"
 		return app.response_class(content, mimetype='text/plain')
 
 	@app.route('/<lang>/sitemap.xml')
@@ -715,20 +802,20 @@ def create_app() -> Flask:
 	def search_index():
 		"""Search pagina (GET) of gratis zoekactie (POST)."""
 		if request.method == 'POST':
-			# Reuse the free API logic so UI can POST to /search
-			return free_search_keywords()
+			# Reuse the premium API logic so UI can POST to /search
+			return premium_search_keywords()
 		# GET -> redirect to Lucy UI
 		return redirect('/')
 
-	@app.route('/search/free')
-	def free_index():
+	@app.route('/search/premium')
+	def premium_index():
 		"""Gratis keyword research tool"""
 		# Toon de nieuwe Lucy World UI i.p.v. de oude Canva pagina
 		return render_template('lucy_index.html')
 
 	# Convenience shortcuts for legacy links
-	@app.route('/free')
-	def free_shortcut():
+	@app.route('/premium')
+	def premium_shortcut():
 		return index_root()
 
 	@app.route('/search/advanced')
@@ -765,11 +852,7 @@ def create_app() -> Flask:
 	def meta_robots():
 		"""Robots.txt with sitemap link"""
 		base = _base_url()
-		content = (
-			"User-agent: *\n"
-			"Allow: /\n\n"
-			f"Sitemap: {base}/meta/sitemap.xml\n"
-		)
+		content = f"Sitemap: {base}/sitemap.xml\n"
 		return app.response_class(content, mimetype='text/plain')
 
 	# Standard robots.txt alias at the root
@@ -878,7 +961,7 @@ def create_app() -> Flask:
 				"base_url": base,
 				"endpoints": [
 					{
-						"path": "/api/free/search",
+						"path": "/api/premium/search",
 						"method": "POST",
 						"content_type": "application/json",
 						"params": {
@@ -906,6 +989,22 @@ def create_app() -> Flask:
 	# ------------------------------------------------------------------------
 	# Basic legal pages (minimal HTML) referenced by meta_structured
 	# ------------------------------------------------------------------------
+	@app.route('/blog/')
+	def blog_index():
+		posts = (
+			ContentDraft.query.filter_by(status='published')
+			.order_by(ContentDraft.published_at.desc())
+			.all()
+		)
+		return render_template('blog/index.html', posts=posts)
+
+	@app.route('/blog/<slug>/')
+	def blog_post(slug: str):
+		post = ContentDraft.query.filter_by(slug=slug, status='published').first()
+		if not post:
+			abort(404, description='Blog post not found')
+		return render_template('blog/post.html', post=post)
+
 	@app.route('/privacy')
 	def privacy_page():
 		try:
@@ -924,7 +1023,7 @@ def create_app() -> Flask:
 	def meta_detect():
 		"""Return detected language and country for initial UI defaults."""
 		try:
-			country = _detect_country()
+			country = _detect_country() or 'US'
 			return jsonify({
 				'language': _preferred_language(country),
 				'country': country,
@@ -1063,14 +1162,21 @@ def create_app() -> Flask:
 		return jsonify(config)
 
 	# ========================================================================
-	# FREE KEYWORD RESEARCH ENDPOINTS
+	# PREMIUM KEYWORD RESEARCH ENDPOINTS
 	# ========================================================================
-	@app.route('/api/free/search', methods=['POST'])
-	def free_search_keywords():
+	@app.route('/api/premium/search', methods=['POST'])
+	def premium_search_keywords():
 		"""Gratis keyword research API"""
 		try:
-			if not free_tool:
-				return jsonify({'error': 'Free keyword tool niet beschikbaar'}), 500
+			if not premium_tool:
+				return jsonify({'error': 'Premium keyword tool niet beschikbaar'}), 500
+
+			user, _ = _resolve_user_optional()
+			if not user:
+				return jsonify({'error': 'auth_required'}), 401
+			plan_config, usage, error_response, error_status, _, usage_day = _plan_gate(user, feature='premium')
+			if error_response is not None:
+				return error_response, error_status or 403
 
 			data = request.get_json() or {}
 			keyword = data.get('keyword', request.form.get('keyword', '')).strip()
@@ -1082,15 +1188,15 @@ def create_app() -> Flask:
 
 			if not language:
 				# Prefer detected browser language; fallback to tool default
-				language = _detect_lang() or getattr(free_tool, 'default_language', 'en')
+				language = _detect_lang() or getattr(premium_tool, 'default_language', 'en')
 
 			if not country:
 				country = _detect_country()
-			logger.info(f"Free search for keyword: {keyword}, language: {language}, country: {country}")
+			logger.info(f"Premium search for keyword: {keyword}, language: {language}, country: {country}")
 
 			# Voer gratis keyword research uit
-			raw_keyword_data = free_tool.research_comprehensive(keyword, language=language, country=country or 'US')
-			processed_keywords = free_tool.process_keywords_with_data(
+			raw_keyword_data = premium_tool.research_comprehensive(keyword, language=language, country=country or 'US')
+			processed_keywords = premium_tool.process_keywords_with_data(
 				raw_keyword_data,
 				keyword,
 				language=language,
@@ -1172,11 +1278,15 @@ def create_app() -> Flask:
 			response_data['summary']['total_keywords'] = total_keywords
 			response_data['summary']['total_volume'] = total_volume
 			response_data['summary']['real_data_keywords'] = real_data_keywords
+			usage_after = usage
+			if plan_config:
+				usage_after = _increment_usage(user, usage, usage_day or datetime.utcnow().date())
+				response_data['plan'] = _plan_snapshot(user, usage_after)
 
 			return jsonify(response_data)
             
 		except Exception as e:
-			logger.error(f"Error in free search: {e}")
+			logger.error(f"Error in premium search: {e}")
 			return jsonify({'error': f'Er is een fout opgetreden: {str(e)}'}), 500
 
 	@app.route('/api/platforms', methods=['GET'])
@@ -1611,134 +1721,682 @@ def create_app() -> Flask:
 			logger.error(f"Google Play suggestion fetch failed: {exc}")
 			return jsonify({'error': 'Kon Google Play suggesties niet ophalen'}), 502
 
-		@app.route('/api/platforms/aggregate', methods=['GET'])
-		def aggregate_platform_suggestions():
-			keyword = request.args.get('q', '').strip()
-			if not keyword:
-				return jsonify({'error': 'Geen zoekwoord opgegeven'}), 400
+	def _collect_provider_suggestions(
+		keyword: str,
+		language: str | None,
+		country: str | None,
+		requested: list[str],
+		extras: dict[str, Any] | None,
+		available_providers: dict[str, dict[str, Any]],
+	) -> dict[str, Any]:
+		req_payload = SuggestionRequest(
+			keyword=keyword,
+			language=language,
+			country=country,
+			extras=extras,
+		)
 
-			language = request.args.get('lang', '').strip().lower() or request.args.get('language', '').strip().lower()
-			if not language:
-				language = (_detect_lang() or 'en').lower()
-			language = language.split('-')[0]
-			language = re.sub(r'[^a-z]', '', language)[:2] or None
+		provider_responses = dispatcher.fetch_many(requested, req_payload, logger)
 
-			country = request.args.get('country', '').strip().upper()
-			if not country:
-				country = _detect_country() or ''
-			country = re.sub(r'[^A-Z]', '', country)
-			if len(country) > 2:
-				country = country[:2]
-			country = country or None
+		def _extract_text(item: Any) -> str | None:
+			if isinstance(item, str):
+				value = item.strip()
+				return value or None
+			if isinstance(item, dict):
+				for candidate_key in ('phrase', 'keyword', 'text', 'value', 'title', 'name'):
+					candidate_val = item.get(candidate_key)
+					if isinstance(candidate_val, str) and candidate_val.strip():
+						return candidate_val.strip()
+				return None
+			return str(item).strip() or None
 
-			request_extras: dict[str, Any] = {}
-			for key in request.args:
-				if key in {'q', 'lang', 'language', 'country', 'providers'}:
-					continue
-				values = request.args.getlist(key)
-				request_extras[key] = values if len(values) > 1 else values[0]
+		aggregated: dict[str, dict[str, Any]] = {}
+		aggregated_list: list[dict[str, Any]] = []
+		provider_breakdown: list[dict[str, Any]] = []
+		errors: list[dict[str, str]] = []
 
-			providers_param = request.args.get('providers', '').strip()
-			available_providers = dispatcher.list_providers()
-			if providers_param:
-				requested = [slug.strip().lower() for slug in providers_param.split(',') if slug.strip()]
+		for slug in requested:
+			entry = provider_responses.get(slug, {})
+			data = entry.get('data') if isinstance(entry, dict) else None
+			error_message = entry.get('error') if isinstance(entry, dict) else None
+			display_name = available_providers.get(slug, {}).get('display_name', slug.title())
+
+			provider_details: dict[str, Any] = {
+				'slug': slug,
+				'display_name': display_name,
+				'error': error_message,
+			}
+			if data:
+				suggestions = data.get('suggestions')
+				if not isinstance(suggestions, list):
+					suggestions = data.get('results') if isinstance(data.get('results'), list) else []
+				provider_details['metadata'] = data.get('metadata', {})
+				provider_details['suggestions'] = suggestions
 			else:
-				requested = sorted(available_providers.keys())
+				provider_details['suggestions'] = []
 
-			if not requested:
-				return jsonify({'error': 'Geen geldige providers gekozen'}), 400
+			provider_breakdown.append(provider_details)
 
-			unknown = [slug for slug in requested if slug not in available_providers]
-			if unknown:
-				return jsonify({'error': f'Onbekende providers: {", ".join(unknown)}'}), 400
+			if error_message:
+				errors.append({'provider': slug, 'message': error_message})
+				continue
 
-			req_payload = SuggestionRequest(
+			for suggestion in provider_details['suggestions']:
+				text_value = _extract_text(suggestion)
+				if not text_value:
+					continue
+				key = text_value.lower()
+				if key not in aggregated:
+					aggregated[key] = {
+						'value': text_value,
+						'sources': [slug],
+						'raw': [suggestion],
+						'count': 1,
+					}
+					aggregated_list.append(aggregated[key])
+				else:
+					if slug not in aggregated[key]['sources']:
+						aggregated[key]['sources'].append(slug)
+					aggregated[key]['count'] += 1
+					aggregated[key]['raw'].append(suggestion)
+
+		total_suggestion_count = sum(item['count'] for item in aggregated_list)
+
+		return {
+			'aggregated': aggregated_list,
+			'providers': provider_breakdown,
+			'errors': errors,
+			'unique': len(aggregated_list),
+			'total': total_suggestion_count,
+		}
+
+	FREE_DEFAULT_PROVIDERS = ('google', 'bing', 'duckduckgo', 'yahoo')
+
+	def _score_audience_potential(unique_suggestions: int, total_suggestions: int, providers_queried: int) -> float:
+		"""Derive a 0-100 audience potential score for growth flywheel triage."""
+		unique = max(0, int(unique_suggestions or 0))
+		total = max(0, int(total_suggestions or 0))
+		providers = max(0, int(providers_queried or 0))
+
+		unique_score = 0.0
+		if unique:
+			unique_score = min(70.0, (log1p(unique) / log1p(50)) * 70.0)
+
+		total_score = 0.0
+		if total:
+			# Reward depth beyond unique coverage (overlap = demand consistency)
+			depth = max(total - unique, 0)
+			total_score = min(20.0, (log1p(depth + unique) / log1p(150)) * 20.0)
+
+		provider_score = min(10.0, providers * 2.5)
+
+		score = unique_score + total_score + provider_score
+		return round(min(score, 100.0), 2)
+
+	def _evaluate_threshold(unique_suggestions: int, total_suggestions: int) -> tuple[bool, str | None]:
+		"""Check if query meets aggregation thresholds (>=10 users or >=50 searches/day)."""
+		unique = max(0, int(unique_suggestions or 0))
+		total = max(0, int(total_suggestions or 0))
+		passes_users = unique >= 10
+		passes_volume = total >= 50
+		if passes_users and passes_volume:
+			return True, 'users>=10,searches>=50'
+		if passes_users:
+			return True, 'users>=10'
+		if passes_volume:
+			return True, 'searches>=50'
+		return False, None
+
+	def _audience_band(score: float) -> str:
+		if score >= 80:
+			return 'high'
+		if score >= 50:
+			return 'medium'
+		return 'low'
+
+	def _log_query_event(
+		*,
+		keyword: str,
+		language: str | None,
+		country: str | None,
+		providers_queried: int,
+		unique_suggestions: int,
+		total_suggestions: int,
+		audience_score: float,
+		passes_threshold: bool,
+		threshold_reason: str | None,
+		metadata: dict[str, Any] | None,
+	) -> int | None:
+		try:
+			entry = QueryLog.record(
 				keyword=keyword,
 				language=language,
 				country=country,
-				extras=request_extras or None,
+				providers_queried=providers_queried,
+				unique_suggestions=unique_suggestions,
+				total_suggestions=total_suggestions,
+				audience_score=audience_score,
+				passes_threshold=passes_threshold,
+				threshold_reason=threshold_reason,
+				metadata=metadata,
 			)
+			if passes_threshold:
+				CandidateQuery.ensure_from_log(entry, threshold_reason)
+			return entry.id
+		except Exception as exc:  # pragma: no cover - logging must never break requests
+			logger.warning("Failed to persist query log: %s", exc)
+			try:
+				db.session.rollback()
+			except Exception:
+				pass
+			return None
 
-			provider_responses = dispatcher.fetch_many(requested, req_payload, logger)
+	def _ensure_plan_schema() -> None:
+		"""Ensure billing/plan columns and usage tracking tables exist."""
+		try:
+			inspector = inspect(db.engine)
+			columns = {col['name'] for col in inspector.get_columns('users')}
+			statements: list[str] = []
+			if 'plan' not in columns:
+				statements.append("ALTER TABLE users ADD COLUMN plan VARCHAR(32) NOT NULL DEFAULT 'trial'")
+			if 'plan_started_at' not in columns:
+				statements.append("ALTER TABLE users ADD COLUMN plan_started_at TIMESTAMP")
+			if 'plan_metadata' not in columns:
+				statements.append("ALTER TABLE users ADD COLUMN plan_metadata JSON")
+			for statement in statements:
+				db.session.execute(text(statement))
+			if statements:
+				db.session.commit()
+			# Backfill defaults to avoid NULL plans
+			db.session.execute(text("UPDATE users SET plan = COALESCE(NULLIF(plan, ''), 'trial')"))
+			db.session.execute(text("UPDATE users SET plan_started_at = COALESCE(plan_started_at, created_at)"))
+			db.session.commit()
+			# Create daily usage table if missing
+			DailyUsage.__table__.create(bind=db.engine, checkfirst=True)
+		except Exception as exc:
+			logger.warning("Failed to enforce plan schema: %s", exc)
+			try:
+				db.session.rollback()
+			except Exception:
+				pass
 
-			def _extract_text(item: Any) -> str | None:
-				if isinstance(item, str):
-					value = item.strip()
-					return value or None
-				if isinstance(item, dict):
-					for candidate_key in ('phrase', 'keyword', 'text', 'value', 'title', 'name'):
-						candidate_val = item.get(candidate_key)
-						if isinstance(candidate_val, str) and candidate_val.strip():
-							return candidate_val.strip()
-					return None
-				return str(item).strip() or None
+	def _ensure_growth_tables() -> None:
+		"""Ensure query_logs has latest columns and candidate table exists."""
+		try:
+			inspector = inspect(db.engine)
+			columns = {col['name'] for col in inspector.get_columns('query_logs')}
+			sql_statements: list[str] = []
+			if 'passes_threshold' not in columns:
+				sql_statements.append("ALTER TABLE query_logs ADD COLUMN passes_threshold BOOLEAN NOT NULL DEFAULT 0")
+			if 'threshold_reason' not in columns:
+				sql_statements.append("ALTER TABLE query_logs ADD COLUMN threshold_reason VARCHAR(128)")
+			for statement in sql_statements:
+				db.session.execute(text(statement))
 
-			aggregated: dict[str, dict[str, Any]] = {}
-			aggregated_list: list[dict[str, Any]] = []
-			provider_breakdown: list[dict[str, Any]] = []
-			errors: list[dict[str, str]] = []
+			candidate_statements: list[str] = []
+			try:
+				candidate_columns = {col['name'] for col in inspector.get_columns('candidate_queries')}
+			except Exception:
+				candidate_columns = set()
+			if candidate_columns:
+				if 'status' not in candidate_columns:
+					candidate_statements.append("ALTER TABLE candidate_queries ADD COLUMN status VARCHAR(32) NOT NULL DEFAULT 'pending'")
+				if 'audience_score' not in candidate_columns:
+					candidate_statements.append("ALTER TABLE candidate_queries ADD COLUMN audience_score FLOAT NOT NULL DEFAULT 0")
+				if 'threshold_reason' not in candidate_columns:
+					candidate_statements.append("ALTER TABLE candidate_queries ADD COLUMN threshold_reason VARCHAR(128)")
+				if 'created_at' not in candidate_columns:
+					candidate_statements.append("ALTER TABLE candidate_queries ADD COLUMN created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+				if 'updated_at' not in candidate_columns:
+					candidate_statements.append("ALTER TABLE candidate_queries ADD COLUMN updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+			for statement in candidate_statements:
+				db.session.execute(text(statement))
 
-			for slug in requested:
-				entry = provider_responses.get(slug, {})
-				data = entry.get('data') if isinstance(entry, dict) else None
-				error_message = entry.get('error') if isinstance(entry, dict) else None
-				display_name = available_providers.get(slug, {}).get('display_name', slug.title())
+			if sql_statements or candidate_statements:
+				db.session.commit()
+		except Exception as exc:
+			logger.warning("Failed to enforce growth schema: %s", exc)
+			try:
+				db.session.rollback()
+			except Exception:
+				pass
 
-				provider_details: dict[str, Any] = {
-					'slug': slug,
-					'display_name': display_name,
-					'error': error_message,
-				}
-				if data:
-					suggestions = data.get('suggestions')
-					if not isinstance(suggestions, list):
-						suggestions = data.get('results') if isinstance(data.get('results'), list) else []
-					provider_details['metadata'] = data.get('metadata', {})
-					provider_details['suggestions'] = suggestions
-				else:
-					provider_details['suggestions'] = []
+	def _anonymous_plan_payload(plan_config) -> dict[str, Any]:
+		payload = {
+			'slug': plan_config.slug,
+			'name': plan_config.name,
+			'description': plan_config.description,
+			'max_daily_queries': plan_config.max_daily_queries,
+			'feature_flags': sorted(plan_config.feature_flags),
+		}
+		if plan_config.allowed_providers is not None:
+			payload['allowed_providers'] = list(plan_config.allowed_providers)
+		return payload
 
-				provider_breakdown.append(provider_details)
+	def _extract_authorization_token() -> str | None:
+		auth = request.headers.get('Authorization', '').strip()
+		if auth.startswith('Bearer '):
+			token = auth.split(' ', 1)[1].strip()
+			if token:
+				return token
+		token = (request.args.get('token') or '').strip()
+		if token:
+			return token
+		if request.is_json:
+			body = request.get_json(silent=True) or {}
+			token_val = body.get('token')
+			if isinstance(token_val, str) and token_val.strip():
+				return token_val.strip()
+		return None
 
-				if error_message:
-					errors.append({'provider': slug, 'message': error_message})
-					continue
+	def _resolve_user_optional() -> tuple[User | None, str | None]:
+		token = _extract_authorization_token()
+		if not token:
+			return None, None
+		user = User.query.filter_by(api_token=token).first()
+		if not user:
+			return None, token
+		return user, token
 
-				for suggestion in provider_details['suggestions']:
-					text_value = _extract_text(suggestion)
-					if not text_value:
-						continue
-					key = text_value.lower()
-					if key not in aggregated:
-						aggregated[key] = {
-							'value': text_value,
-							'sources': [slug],
-							'raw': [suggestion],
-							'count': 1,
-						}
-						aggregated_list.append(aggregated[key])
-					else:
-						if slug not in aggregated[key]['sources']:
-							aggregated[key]['sources'].append(slug)
-						aggregated[key]['count'] += 1
-						aggregated[key]['raw'].append(suggestion)
+	def _plan_gate(
+		user: User,
+		*,
+		feature: str | None = None,
+		enforce_quota: bool = True,
+	) -> tuple[PlanConfig | None, DailyUsage | None, Any | None, int | None, int, date]:
+		plan_config = user.plan_config
+		today = datetime.utcnow().date()
+		usage = DailyUsage.for_day(user, today)
+		queries_used = usage.query_count if usage else 0
 
-			total_suggestion_count = sum(item['count'] for item in aggregated_list)
+		def _payload():
+			return user.plan_payload(include_usage=True, queries_used_today=queries_used)
 
+		if plan_config.slug == 'trial_expired':
+			return None, usage, jsonify({'error': 'trial_expired', 'plan': _payload()}), 402, queries_used, today
+
+		if feature and not user.has_feature(feature):
+			return None, usage, jsonify({
+				'error': 'plan_upgrade_required',
+				'plan': _payload(),
+				'missing_feature': feature,
+			}), 403, queries_used, today
+
+		if enforce_quota and plan_config.max_daily_queries is not None and plan_config.max_daily_queries >= 0:
+			if queries_used >= plan_config.max_daily_queries:
+				return None, usage, jsonify({'error': 'quota_exceeded', 'plan': _payload()}), 429, queries_used, today
+
+		return plan_config, usage, None, None, queries_used, today
+
+	def _increment_usage(user: User, usage: DailyUsage | None, usage_day: date) -> DailyUsage:
+		if usage is None:
+			usage = DailyUsage(user_id=user.id, date=usage_day, query_count=0)
+			db.session.add(usage)
+		usage.query_count += 1
+		try:
+			db.session.commit()
+		except Exception:
+			db.session.rollback()
+			raise
+		return usage
+
+	def _plan_snapshot(user: User, usage: DailyUsage | None) -> dict[str, Any]:
+		queries_used = usage.query_count if usage else 0
+		return user.plan_payload(include_usage=True, queries_used_today=queries_used)
+
+	@app.route('/api/free/search', methods=['POST'])
+	def free_search_keywords():
+		payload = request.get_json(silent=True)
+		if not isinstance(payload, dict):
+			payload = {}
+
+		keyword = str(payload.get('keyword', '')).strip()
+		if not keyword:
+			return jsonify({'error': 'keyword required'}), 400
+
+		language_raw = str(payload.get('language', '') or '').strip()
+		if language_raw:
+			language = language_raw.split('-')[0].lower()
+			if not language.isalpha() or len(language) != 2:
+				return jsonify({'error': 'language must be ISO 639-1'}), 400
+			if language not in _valid_language_codes():
+				return jsonify({'error': 'unsupported language'}), 400
+		else:
+			language = _preferred_language()
+
+		country_raw = str(payload.get('country', '') or '').strip()
+		if country_raw:
+			country = re.sub(r'[^A-Za-z]', '', country_raw).upper()
+			if len(country) != 2 or not country.isalpha():
+				return jsonify({'error': 'country must be ISO 3166-1 alpha-2'}), 400
+			if country not in _valid_country_codes():
+				return jsonify({'error': 'unsupported country'}), 400
+		else:
+			country = _detect_country() or ''
+			if country and country not in _valid_country_codes():
+				country = ''
+
+		user, _ = _resolve_user_optional()
+		plan_config: PlanConfig | None = None
+		usage: DailyUsage | None = None
+		plan_usage_day: date | None = None
+
+		if user:
+			plan_config, usage, error_response, error_status, _, plan_usage_day = _plan_gate(user, feature='free_search')
+			if error_response is not None:
+				return error_response, error_status or 403
+		else:
+			plan_config = get_plan_config('public')
+			plan_usage_day = None
+
+		extra_payload = payload.get('extras')
+		request_extras = extra_payload if isinstance(extra_payload, dict) else None
+
+		available_providers = dispatcher.list_providers()
+		providers_value = payload.get('providers')
+		if isinstance(providers_value, list):
+			requested = [str(slug).strip().lower() for slug in providers_value if str(slug).strip()]
+		else:
+			requested = list(FREE_DEFAULT_PROVIDERS)
+
+		if not requested:
+			return jsonify({'error': 'providers required'}), 400
+
+		unknown = [slug for slug in requested if slug not in available_providers]
+		if unknown:
+			return jsonify({'error': f'unknown providers: {", ".join(unknown)}'}), 400
+
+		blocked_providers: list[str] = []
+		if plan_config and plan_config.allowed_providers is not None:
+			allowed = set(plan_config.allowed_providers)
+			filtered = [slug for slug in requested if slug in allowed]
+			blocked_providers = [slug for slug in requested if slug not in allowed]
+			if not filtered:
+				plan_payload = _plan_snapshot(user, usage) if user else _anonymous_plan_payload(plan_config)
+				return jsonify({
+					'error': 'plan_providers_restricted',
+					'plan': plan_payload,
+					'blocked_providers': blocked_providers,
+				}), 403 if user else 400
+			requested = filtered
+
+		try:
+			result = _collect_provider_suggestions(
+				keyword=keyword,
+				language=language,
+				country=country or None,
+				requested=requested,
+				extras=request_extras,
+				available_providers=available_providers,
+			)
+		except Exception as exc:  # pragma: no cover - defensive safety net
+			logger.exception("Free search aggregation failed: %s", exc)
+			error_payload = [{
+				'provider': slug,
+				'message': 'provider unavailable',
+			} for slug in requested]
+			timestamp = datetime.utcnow().isoformat() + 'Z'
+			audience_score = 0.0
+			passes_threshold = False
+			threshold_reason = None
+			metadata_payload = {
+				'unique_suggestions': 0,
+				'total_suggestions': 0,
+				'providers_queried': len(requested),
+				'errors': error_payload,
+				'dedupe_strategy': 'case-insensitive-text',
+				'timestamp': timestamp,
+				'internal_error': True,
+				'audience_score': audience_score,
+				'audience_band': _audience_band(audience_score),
+				'passes_threshold': passes_threshold,
+				'threshold_reason': threshold_reason,
+			}
+			if blocked_providers:
+				metadata_payload['blocked_providers'] = blocked_providers
+			if user:
+				metadata_payload['plan'] = _plan_snapshot(user, usage)
+			elif plan_config:
+				metadata_payload['plan'] = _anonymous_plan_payload(plan_config)
+			log_id = _log_query_event(
+				keyword=keyword,
+				language=language,
+				country=country or None,
+				providers_queried=len(requested),
+				unique_suggestions=0,
+				total_suggestions=0,
+				audience_score=audience_score,
+				passes_threshold=passes_threshold,
+				threshold_reason=threshold_reason,
+				metadata={
+					'errors': error_payload,
+					'internal_error': True,
+					'timestamp': timestamp,
+					'source': 'free_search',
+				},
+			)
+			if log_id is not None:
+				metadata_payload['log_id'] = log_id
+			return jsonify({
+				'keyword': keyword,
+				'language': language,
+				'country': country or None,
+				'suggestions': [],
+				'providers': [],
+				'metadata': metadata_payload,
+			}), 200
+
+		timestamp = datetime.utcnow().isoformat() + 'Z'
+		audience_score = _score_audience_potential(
+			unique_suggestions=result['unique'],
+			total_suggestions=result['total'],
+			providers_queried=len(requested),
+		)
+		passes_threshold, threshold_reason = _evaluate_threshold(
+			unique_suggestions=result['unique'],
+			total_suggestions=result['total'],
+		)
+		metadata_payload = {
+			'unique_suggestions': result['unique'],
+			'total_suggestions': result['total'],
+			'providers_queried': len(requested),
+			'errors': result['errors'],
+			'dedupe_strategy': 'case-insensitive-text',
+			'timestamp': timestamp,
+			'audience_score': audience_score,
+			'audience_band': _audience_band(audience_score),
+			'passes_threshold': passes_threshold,
+			'threshold_reason': threshold_reason,
+		}
+		if blocked_providers:
+			metadata_payload['blocked_providers'] = blocked_providers
+		log_id = _log_query_event(
+			keyword=keyword,
+			language=language,
+			country=country or None,
+			providers_queried=len(requested),
+			unique_suggestions=result['unique'],
+			total_suggestions=result['total'],
+			audience_score=audience_score,
+			passes_threshold=passes_threshold,
+			threshold_reason=threshold_reason,
+			metadata={
+				'errors': result['errors'],
+				'providers': [provider['slug'] for provider in result['providers'] if provider.get('slug')],
+				'timestamp': timestamp,
+				'source': 'free_search',
+			},
+		)
+		if log_id is not None:
+			metadata_payload['log_id'] = log_id
+		usage_after = usage
+		if user and plan_config:
+			usage_after = _increment_usage(user, usage, plan_usage_day or datetime.utcnow().date())
+			metadata_payload['plan'] = _plan_snapshot(user, usage_after)
+		elif user:
+			metadata_payload['plan'] = _plan_snapshot(user, usage_after)
+		elif plan_config:
+			metadata_payload['plan'] = _anonymous_plan_payload(plan_config)
+		return jsonify({
+			'keyword': keyword,
+			'language': language,
+			'country': country or None,
+			'suggestions': result['aggregated'][:50],
+			'providers': result['providers'],
+			'metadata': metadata_payload,
+		})
+
+	@app.route('/api/platforms/aggregate', methods=['GET'])
+	def aggregate_platform_suggestions():
+		keyword = request.args.get('q', '').strip()
+		if not keyword:
+			return jsonify({'error': 'Geen zoekwoord opgegeven'}), 400
+
+		language = request.args.get('lang', '').strip().lower() or request.args.get('language', '').strip().lower()
+		if not language:
+			language = (_detect_lang() or 'en').lower()
+		language = language.split('-')[0]
+		language = re.sub(r'[^a-z]', '', language)[:2] or None
+
+		country = request.args.get('country', '').strip().upper()
+		if not country:
+			country = _detect_country() or ''
+		country = re.sub(r'[^A-Z]', '', country)
+		if len(country) > 2:
+			country = country[:2]
+		country = country or None
+
+		request_extras: dict[str, Any] = {}
+		for key in request.args:
+			if key in {'q', 'lang', 'language', 'country', 'providers'}:
+				continue
+			values = request.args.getlist(key)
+			request_extras[key] = values if len(values) > 1 else values[0]
+
+		providers_param = request.args.get('providers', '').strip()
+		available_providers = dispatcher.list_providers()
+		if providers_param:
+			requested = [slug.strip().lower() for slug in providers_param.split(',') if slug.strip()]
+		else:
+			requested = sorted(available_providers.keys())
+
+		if not requested:
+			return jsonify({'error': 'Geen geldige providers gekozen'}), 400
+
+		unknown = [slug for slug in requested if slug not in available_providers]
+		if unknown:
+			return jsonify({'error': f'Onbekende providers: {", ".join(unknown)}'}), 400
+
+		try:
+			result = _collect_provider_suggestions(
+				keyword=keyword,
+				language=language,
+				country=country,
+				requested=requested,
+				extras=request_extras or None,
+				available_providers=available_providers,
+			)
+		except Exception as exc:  # pragma: no cover - defensive safety net
+			logger.exception("Aggregate platform suggestions failed: %s", exc)
+			error_payload = [{
+				'provider': slug,
+				'message': 'provider unavailable',
+			} for slug in requested]
+			timestamp = datetime.utcnow().isoformat() + 'Z'
+			audience_score = 0.0
+			passes_threshold = False
+			threshold_reason = None
+			metadata_payload = {
+				'unique_suggestions': 0,
+				'total_suggestions': 0,
+				'providers_queried': len(requested),
+				'errors': error_payload,
+				'dedupe_strategy': 'case-insensitive-text',
+				'timestamp': timestamp,
+				'internal_error': True,
+				'audience_score': audience_score,
+				'audience_band': _audience_band(audience_score),
+				'passes_threshold': passes_threshold,
+				'threshold_reason': threshold_reason,
+			}
+			log_id = _log_query_event(
+				keyword=keyword,
+				language=language,
+				country=country,
+				providers_queried=len(requested),
+				unique_suggestions=0,
+				total_suggestions=0,
+				audience_score=audience_score,
+				passes_threshold=passes_threshold,
+				threshold_reason=threshold_reason,
+				metadata={
+					'errors': error_payload,
+					'internal_error': True,
+					'timestamp': timestamp,
+					'source': 'platforms_aggregate',
+				},
+			)
+			if log_id is not None:
+				metadata_payload['log_id'] = log_id
 			return jsonify({
 				'keyword': keyword,
 				'language': language,
 				'country': country,
-				'suggestions': aggregated_list,
-				'providers': provider_breakdown,
-				'metadata': {
-					'unique_suggestions': len(aggregated_list),
-					'total_suggestions': total_suggestion_count,
-					'providers_queried': len(requested),
-					'errors': errors,
-					'dedupe_strategy': 'case-insensitive-text',
-				}
-			})
+				'suggestions': [],
+				'providers': [],
+				'metadata': metadata_payload,
+			}), 200
+
+		timestamp = datetime.utcnow().isoformat() + 'Z'
+		audience_score = _score_audience_potential(
+			unique_suggestions=result['unique'],
+			total_suggestions=result['total'],
+			providers_queried=len(requested),
+		)
+		passes_threshold, threshold_reason = _evaluate_threshold(
+			unique_suggestions=result['unique'],
+			total_suggestions=result['total'],
+		)
+		metadata_payload = {
+			'unique_suggestions': result['unique'],
+			'total_suggestions': result['total'],
+			'providers_queried': len(requested),
+			'errors': result['errors'],
+			'dedupe_strategy': 'case-insensitive-text',
+			'timestamp': timestamp,
+			'audience_score': audience_score,
+			'audience_band': _audience_band(audience_score),
+			'passes_threshold': passes_threshold,
+			'threshold_reason': threshold_reason,
+		}
+		log_id = _log_query_event(
+			keyword=keyword,
+			language=language,
+			country=country,
+			providers_queried=len(requested),
+			unique_suggestions=result['unique'],
+			total_suggestions=result['total'],
+			audience_score=audience_score,
+			passes_threshold=passes_threshold,
+			threshold_reason=threshold_reason,
+			metadata={
+				'errors': result['errors'],
+				'providers': [provider['slug'] for provider in result['providers'] if provider.get('slug')],
+				'timestamp': timestamp,
+				'source': 'platforms_aggregate',
+			},
+		)
+		if log_id is not None:
+			metadata_payload['log_id'] = log_id
+
+		return jsonify({
+			'keyword': keyword,
+			'language': language,
+			'country': country,
+			'suggestions': result['aggregated'],
+			'providers': result['providers'],
+			'metadata': metadata_payload,
+		})
 
 	@app.route('/api/platforms/<provider_slug>', methods=['GET'])
 	def dynamic_platform_provider(provider_slug: str):
@@ -1796,6 +2454,12 @@ def create_app() -> Flask:
 		try:
 			if not advanced_tool:
 				return jsonify({'error': 'Advanced keyword tool niet beschikbaar'}), 500
+			user, _ = _resolve_user_optional()
+			if not user:
+				return jsonify({'error': 'auth_required'}), 401
+			plan_config, usage, error_response, error_status, _, usage_day = _plan_gate(user, feature='advanced')
+			if error_response is not None:
+				return error_response, error_status or 403
                 
 			data = request.json
 			main_keyword = data.get('keyword', '').strip()
@@ -1862,6 +2526,10 @@ def create_app() -> Flask:
 				},
 				'timestamp': datetime.now().isoformat()
 			}
+			usage_after = usage
+			if plan_config:
+				usage_after = _increment_usage(user, usage, usage_day or datetime.utcnow().date())
+				response['plan'] = _plan_snapshot(user, usage_after)
             
 			return jsonify(response)
             
@@ -1876,6 +2544,14 @@ def create_app() -> Flask:
 	def export_csv():
 		"""Export resultaten naar CSV"""
 		try:
+			user, _ = _resolve_user_optional()
+			if not user:
+				return jsonify({'error': 'auth_required'}), 401
+			plan_config, usage, error_response, error_status, _, _ = _plan_gate(user, feature='exports', enforce_quota=False)
+			if error_response is not None:
+				return error_response, error_status or 403
+			if not plan_config:
+				return jsonify({'error': 'plan_unavailable'}), 403
 			data = request.json
             
 			# Maak CSV in geheugen
@@ -1927,7 +2603,7 @@ def create_app() -> Flask:
 			'timestamp': datetime.now().isoformat(),
 			'tools': {
 				'advanced': advanced_tool is not None,
-				'free': free_tool is not None
+				'premium': premium_tool is not None
 			}
 		})
 
@@ -1959,12 +2635,16 @@ def create_app() -> Flask:
 	# Register blueprints
 	app.register_blueprint(projects_bp)
 	app.register_blueprint(auth_bp)
+	app.register_blueprint(billing_bp)
+	app.register_blueprint(growth_bp)
 
 	# Create database tables if not exist
 	with app.app_context():
 		try:
 			from . import models  # noqa: F401
 			db.create_all()
+			_ensure_plan_schema()
+			_ensure_growth_tables()
 		except Exception:
 			pass
 

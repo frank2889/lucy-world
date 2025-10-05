@@ -9,11 +9,11 @@
     },
     {
       "@type": "WebSite",
-      "name": "Lucy World",
+      "name": "Дослідження ключових слів - Lucy World",
       "url": "https://lucy.world/uk/",
       "inLanguage": "uk",
-      "description": "Keyword research made simple with Google data: suggestions, trends, and insights.",
-      "keywords": "keyword research, SEO, Google Trends, suggestions, search volume",
+      "description": "Lucy World tracks live search demand and AI clustering for Ukrainian audiences so teams plan weekly campaigns and sustainable growth with confidence.",
+      "keywords": "дослідження ключових слів, SEO Україна, Google Trends, пропозиції, обсяг пошуку",
       "publisher": {
         "@type": "Organization",
         "name": "Lucy World"
@@ -30,22 +30,22 @@
     },
     {
       "@type": "WebPage",
-      "name": "Lucy World",
+      "name": "Дослідження ключових слів - Lucy World",
       "url": "https://lucy.world/uk/",
       "inLanguage": "uk",
       "isPartOf": {
         "@type": "WebSite",
         "url": "https://lucy.world/uk/"
       },
-      "description": "Дослідження ключових слів для українського ринку та Google дані. Тенденції, аналітика та SEO оптимізація для пошуку в Україні.",
-      "keywords": "дослідження ключових слів, SEO Україна, Google Trends, пропозиції, обсяг пошуку, український ринок",
+      "description": "Lucy World tracks live search demand and AI clustering for Ukrainian audiences so teams plan weekly campaigns and sustainable growth with confidence.",
+      "keywords": "дослідження ключових слів, SEO Україна, Google Trends, пропозиції, обсяг пошуку",
       "aiSemantic": [
-        "Google.com.ua SEO оптимізація",
-        "Український ринок аналіз",
-        "Пошукові тенденції України",
-        "Українське дослідження ключових слів",
-        "Східноєвропейський SEO",
-        "Український цифровий маркетинг"
+        "Ukrainian keyword research",
+        "Ukrainian SEO insights",
+        "search trends platform",
+        "AI content planning",
+        "Ukrainian market analysis",
+        "Lucy World intelligence"
       ]
     }
   ]

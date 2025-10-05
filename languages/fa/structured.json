@@ -9,11 +9,11 @@
     },
     {
       "@type": "WebSite",
-      "name": "Lucy World",
+      "name": "Lucy World – تحلیل جستجوی محلی برای ایران",
       "url": "https://lucy.world/fa/",
       "inLanguage": "fa",
-      "description": "Keyword research made simple with Google data: suggestions, trends, and insights.",
-      "keywords": "keyword research, SEO, Google Trends, suggestions, search volume",
+      "description": "Lucy World tracks live search demand and AI clustering for Persian audiences so teams plan weekly campaigns and sustainable growth with confidence.",
+      "keywords": "کلمات کلیدی فارسی، سئو ایران، ترندهای گوگل، حجم جستجو، تحلیل هوش مصنوعی، استراتژی محتوای محلی",
       "publisher": {
         "@type": "Organization",
         "name": "Lucy World"
@@ -30,15 +30,23 @@
     },
     {
       "@type": "WebPage",
-      "name": "Lucy World",
+      "name": "Lucy World – تحلیل جستجوی محلی برای ایران",
       "url": "https://lucy.world/fa/",
       "inLanguage": "fa",
       "isPartOf": {
         "@type": "WebSite",
         "url": "https://lucy.world/fa/"
       },
-      "description": "Keyword research made simple with Google data: suggestions, trends, and insights.",
-      "keywords": "keyword research, SEO, Google Trends, suggestions, search volume"
+      "description": "Lucy World tracks live search demand and AI clustering for Persian audiences so teams plan weekly campaigns and sustainable growth with confidence.",
+      "keywords": "کلمات کلیدی فارسی، سئو ایران، ترندهای گوگل، حجم جستجو، تحلیل هوش مصنوعی، استراتژی محتوای محلی",
+      "aiSemantic": [
+        "Persian keyword research",
+        "Persian SEO insights",
+        "search trends platform",
+        "AI content planning",
+        "Persian market analysis",
+        "Lucy World intelligence"
+      ]
     }
   ]
 }

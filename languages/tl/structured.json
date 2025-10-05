@@ -9,11 +9,11 @@
     },
     {
       "@type": "WebSite",
-      "name": "Lucy World",
+      "name": "Pananaliksik ng Keyword - Lucy World",
       "url": "https://lucy.world/tl/",
       "inLanguage": "tl",
-      "description": "Keyword research made simple with Google data: suggestions, trends, and insights.",
-      "keywords": "keyword research, SEO, Google Trends, suggestions, search volume",
+      "description": "Lucy World tracks live search demand and AI clustering for Tagalog (Filipino) audiences so teams plan weekly campaigns and sustainable growth with confidence.",
+      "keywords": "pananaliksik ng keyword, SEO Pilipinas, Google Trends, mga mungkahi, search volume",
       "publisher": {
         "@type": "Organization",
         "name": "Lucy World"
@@ -30,22 +30,22 @@
     },
     {
       "@type": "WebPage",
-      "name": "Lucy World",
+      "name": "Pananaliksik ng Keyword - Lucy World",
       "url": "https://lucy.world/tl/",
       "inLanguage": "tl",
       "isPartOf": {
         "@type": "WebSite",
         "url": "https://lucy.world/tl/"
       },
-      "description": "Pananaliksik ng keyword para sa Pilipinas at Google data. Mga trend, insights, at SEO optimization para sa Filipino market at Google.com.ph.",
-      "keywords": "pananaliksik ng keyword, SEO Pilipinas, Google Trends, mga mungkahi, search volume, Filipino",
+      "description": "Lucy World tracks live search demand and AI clustering for Tagalog (Filipino) audiences so teams plan weekly campaigns and sustainable growth with confidence.",
+      "keywords": "pananaliksik ng keyword, SEO Pilipinas, Google Trends, mga mungkahi, search volume",
       "aiSemantic": [
-        "Google.com.ph SEO optimization",
-        "Pilipinas market analysis",
-        "Filipino search trends",
-        "Tagalog keyword research",
-        "Southeast Asia SEO",
-        "Philippine digital marketing"
+        "Tagalog (Filipino) keyword research",
+        "Tagalog (Filipino) SEO insights",
+        "search trends platform",
+        "AI content planning",
+        "Tagalog (Filipino) market analysis",
+        "Lucy World intelligence"
       ]
     }
   ]

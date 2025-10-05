@@ -9,11 +9,11 @@
     },
     {
       "@type": "WebSite",
-      "name": "Lucy World",
+      "name": "Lucy World – Analyse de recherche locale pour la France",
       "url": "https://lucy.world/fr/",
       "inLanguage": "fr",
-      "description": "Keyword research made simple with Google data: suggestions, trends, and insights.",
-      "keywords": "keyword research, SEO, Google Trends, suggestions, search volume",
+      "description": "Découvrez les données françaises Google avec suggestions, tendances et analyse IA qui renforcent les décisions de contenu et la croissance business.",
+      "keywords": "mots-clés français, SEO France, tendances Google, volume recherche, analyse IA, stratégie contenu local",
       "publisher": {
         "@type": "Organization",
         "name": "Lucy World"
@@ -30,15 +30,23 @@
     },
     {
       "@type": "WebPage",
-      "name": "Lucy World",
+      "name": "Lucy World – Analyse de recherche locale pour la France",
       "url": "https://lucy.world/fr/",
       "inLanguage": "fr",
       "isPartOf": {
         "@type": "WebSite",
         "url": "https://lucy.world/fr/"
       },
-      "description": "Keyword research made simple with Google data: suggestions, trends, and insights.",
-      "keywords": "keyword research, SEO, Google Trends, suggestions, search volume"
+      "description": "Découvrez les données françaises Google avec suggestions, tendances et analyse IA qui renforcent les décisions de contenu et la croissance business.",
+      "keywords": "mots-clés français, SEO France, tendances Google, volume recherche, analyse IA, stratégie contenu local",
+      "aiSemantic": [
+        "French keyword research",
+        "French SEO insights",
+        "search trends platform",
+        "AI content planning",
+        "French market analysis",
+        "Lucy World intelligence"
+      ]
     }
   ]
 }

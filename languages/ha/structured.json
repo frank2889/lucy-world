@@ -9,19 +9,11 @@
     },
     {
       "@type": "WebSite",
-      "name": "Lucy World",
+      "name": "Lucy World – Nazarin bincike na gida don Najeriya",
       "url": "https://lucy.world/ha/",
       "inLanguage": "ha",
       "description": "Gano bayanan Hausa Google tare da shawarwari, yanayin zamani da nazarin AI da ke ƙarfafa yanke shawara game da abun ciki da ci gaban kasuwanci.",
-      "keywords": "kalmomin muhimmi na Hausa, SEO Najeriya 2025, yanayin zamani na Google, girman bincike, nazarin AI, tallace-tallace na dijital na gida, dabarun abun ciki",
-      "aiSemantic": [
-        "Waɗanne kalmomin muhimmi na Hausa ne ke da mafi yawan bincike a 2025?",
-        "Ta yaya za a haɗa bayanan Google don SEO na Hausa?",
-        "Kayan aiki na AI don binciken kalmomin muhimmi na gida a Najeriya",
-        "Yanayin zamani na kasuwanci da tallace-tallace na Hausa 2025",
-        "Dabarun SEO na gida don kasuwancin Najeriya",
-        "Lagos vs Kano - tsarin bincike na gida da yanayin zamani"
-      ],
+      "keywords": "kalmomin muhimmi na Hausa, SEO Najeriya, yanayin zamani na Google, girman bincike, nazarin AI, dabarun abun ciki na gida",
       "publisher": {
         "@type": "Organization",
         "name": "Lucy World"
@@ -38,7 +30,7 @@
     },
     {
       "@type": "WebPage",
-      "name": "Lucy World",
+      "name": "Lucy World – Nazarin bincike na gida don Najeriya",
       "url": "https://lucy.world/ha/",
       "inLanguage": "ha",
       "isPartOf": {
@@ -46,7 +38,15 @@
         "url": "https://lucy.world/ha/"
       },
       "description": "Gano bayanan Hausa Google tare da shawarwari, yanayin zamani da nazarin AI da ke ƙarfafa yanke shawara game da abun ciki da ci gaban kasuwanci.",
-      "keywords": "kalmomin muhimmi na Hausa, SEO Najeriya 2025, yanayin zamani na Google, girman bincike, nazarin AI, tallace-tallace na dijital na gida, dabarun abun ciki"
+      "keywords": "kalmomin muhimmi na Hausa, SEO Najeriya, yanayin zamani na Google, girman bincike, nazarin AI, dabarun abun ciki na gida",
+      "aiSemantic": [
+        "Hausa keyword research",
+        "Hausa SEO insights",
+        "search trends platform",
+        "AI content planning",
+        "Hausa market analysis",
+        "Lucy World intelligence"
+      ]
     }
   ]
 }

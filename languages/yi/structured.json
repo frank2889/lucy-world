@@ -9,11 +9,11 @@
     },
     {
       "@type": "WebSite",
-      "name": "Lucy World",
+      "name": "שליסל ווערטער פארשונג - Lucy World",
       "url": "https://lucy.world/yi/",
       "inLanguage": "yi",
-      "description": "Keyword research made simple with Google data: suggestions, trends, and insights.",
-      "keywords": "keyword research, SEO, Google Trends, suggestions, search volume",
+      "description": "Lucy World tracks live search demand and AI clustering for Yiddish audiences so teams plan weekly campaigns and sustainable growth with confidence.",
+      "keywords": "שליסל ווערטער פארשונג, SEO יידיש, Google Trends, פארשלאגן, זוך כמות",
       "publisher": {
         "@type": "Organization",
         "name": "Lucy World"
@@ -30,22 +30,22 @@
     },
     {
       "@type": "WebPage",
-      "name": "Lucy World",
+      "name": "שליסל ווערטער פארשונג - Lucy World",
       "url": "https://lucy.world/yi/",
       "inLanguage": "yi",
       "isPartOf": {
         "@type": "WebSite",
         "url": "https://lucy.world/yi/"
       },
-      "description": "שליסל ווערטער פארשונג פאר יידישע געמיינדע און Google דאטע. טרענדס, איינזיכטן און SEO פאר יידישע קהילות ווײַט איבער.",
-      "keywords": "שליסל ווערטער פארשונג, SEO יידיש, Google Trends, פארשלאגן, זוך כמות, יידישע געמיינדע",
+      "description": "Lucy World tracks live search demand and AI clustering for Yiddish audiences so teams plan weekly campaigns and sustainable growth with confidence.",
+      "keywords": "שליסל ווערטער פארשונג, SEO יידיש, Google Trends, פארשלאגן, זוך כמות",
       "aiSemantic": [
-        "יידישע געמיינדע SEO",
-        "יידישע דיגיטאלע מארקעטינג",
-        "אשכנזישע זוך טרענדס",
-        "יידישע שפראך אנליטיק",
-        "חרדישע מארקט פארשונג",
-        "יידישע אינטערנעט זוכונג"
+        "Yiddish keyword research",
+        "Yiddish SEO insights",
+        "search trends platform",
+        "AI content planning",
+        "Yiddish market analysis",
+        "Lucy World intelligence"
       ]
     }
   ]

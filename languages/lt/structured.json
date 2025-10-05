@@ -9,11 +9,11 @@
     },
     {
       "@type": "WebSite",
-      "name": "Lucy World",
+      "name": "Lucy World – Vietinė paieškos analizė Lietuvai",
       "url": "https://lucy.world/lt/",
       "inLanguage": "lt",
-      "description": "Keyword research made simple with Google data: suggestions, trends, and insights.",
-      "keywords": "keyword research, SEO, Google Trends, suggestions, search volume",
+      "description": "Lucy World tracks live search demand and AI clustering for Lithuanian audiences so teams plan weekly campaigns and sustainable growth with confidence.",
+      "keywords": "lietuviški raktažodžiai, SEO Lietuva, Google tendencijos, paieškos kiekis, AI analizė, vietinė turinio strategija",
       "publisher": {
         "@type": "Organization",
         "name": "Lucy World"
@@ -30,15 +30,23 @@
     },
     {
       "@type": "WebPage",
-      "name": "Lucy World",
+      "name": "Lucy World – Vietinė paieškos analizė Lietuvai",
       "url": "https://lucy.world/lt/",
       "inLanguage": "lt",
       "isPartOf": {
         "@type": "WebSite",
         "url": "https://lucy.world/lt/"
       },
-      "description": "Raktažodžių tyrimai Lietuvai su Google duomenimis: rekomendacijos, tendencijos ir AI analizė, stiprinanti vietinio verslo sprendimus ir augimą.",
-      "keywords": "lietuviški raktažodžiai, SEO Lietuva, Google tendencijos, paieškos kiekis, AI analizė, vietinė turinio strategija, verslo augimas, skaitmeninis marketingas"
+      "description": "Lucy World tracks live search demand and AI clustering for Lithuanian audiences so teams plan weekly campaigns and sustainable growth with confidence.",
+      "keywords": "lietuviški raktažodžiai, SEO Lietuva, Google tendencijos, paieškos kiekis, AI analizė, vietinė turinio strategija",
+      "aiSemantic": [
+        "Lithuanian keyword research",
+        "Lithuanian SEO insights",
+        "search trends platform",
+        "AI content planning",
+        "Lithuanian market analysis",
+        "Lucy World intelligence"
+      ]
     }
   ]
 }

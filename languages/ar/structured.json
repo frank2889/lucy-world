@@ -12,7 +12,7 @@
       "name": "Lucy World – رؤى بحث محلية للشرق الأوسط",
       "url": "https://lucy.world/ar/",
       "inLanguage": "ar",
-      "description": "احصل على رؤى عربية دقيقة من Google وBing مع اقتراحات محلية واتجاهات وتحليلات ذكاء اصطناعي تدعم محتواك ونمو أعمالك.",
+      "description": "Lucy World tracks live search demand and AI clustering for Arabic audiences so teams plan weekly campaigns and sustainable growth with confidence.",
       "keywords": "الكلمات المفتاحية العربية, تحسين محركات البحث, اتجاهات جوجل, بحث Bing الخليجي, تحليل الذكاء الاصطناعي, استراتيجية محتوى محلية",
       "publisher": {
         "@type": "Organization",
@@ -37,8 +37,16 @@
         "@type": "WebSite",
         "url": "https://lucy.world/ar/"
       },
-      "description": "احصل على رؤى عربية دقيقة من Google وBing مع اقتراحات محلية واتجاهات وتحليلات ذكاء اصطناعي تدعم محتواك ونمو أعمالك.",
-      "keywords": "الكلمات المفتاحية العربية, تحسين محركات البحث, اتجاهات جوجل, بحث Bing الخليجي, تحليل الذكاء الاصطناعي, استراتيجية محتوى محلية"
+      "description": "Lucy World tracks live search demand and AI clustering for Arabic audiences so teams plan weekly campaigns and sustainable growth with confidence.",
+      "keywords": "الكلمات المفتاحية العربية, تحسين محركات البحث, اتجاهات جوجل, بحث Bing الخليجي, تحليل الذكاء الاصطناعي, استراتيجية محتوى محلية",
+      "aiSemantic": [
+        "Arabic keyword research",
+        "Arabic SEO insights",
+        "search trends platform",
+        "AI content planning",
+        "Arabic market analysis",
+        "Lucy World intelligence"
+      ]
     }
   ]
 }

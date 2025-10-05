@@ -9,11 +9,11 @@
     },
     {
       "@type": "WebSite",
-      "name": "Lucy World",
+      "name": "Lucy World – Analiză de căutare locală pentru România",
       "url": "https://lucy.world/ro/",
       "inLanguage": "ro",
-      "description": "Keyword research made simple with Google data: suggestions, trends, and insights.",
-      "keywords": "keyword research, SEO, Google Trends, suggestions, search volume",
+      "description": "Lucy World tracks live search demand and AI clustering for Romanian audiences so teams plan weekly campaigns and sustainable growth with confidence.",
+      "keywords": "cuvinte cheie românești, SEO România, Google Trends, volum căutare, analiză AI, strategie conținut local",
       "publisher": {
         "@type": "Organization",
         "name": "Lucy World"
@@ -30,15 +30,23 @@
     },
     {
       "@type": "WebPage",
-      "name": "Lucy World",
+      "name": "Lucy World – Analiză de căutare locală pentru România",
       "url": "https://lucy.world/ro/",
       "inLanguage": "ro",
       "isPartOf": {
         "@type": "WebSite",
         "url": "https://lucy.world/ro/"
       },
-      "description": "Cercetare cuvinte cheie pentru România cu date Google: sugestii, tendințe și analiză AI pentru creșterea afacerii locale și optimizarea conținutului.",
-      "keywords": "cuvinte cheie românești, SEO România, Google Trends, volum căutare, analiză AI, strategie conținut local, creștere afacere, marketing digital"
+      "description": "Lucy World tracks live search demand and AI clustering for Romanian audiences so teams plan weekly campaigns and sustainable growth with confidence.",
+      "keywords": "cuvinte cheie românești, SEO România, Google Trends, volum căutare, analiză AI, strategie conținut local",
+      "aiSemantic": [
+        "Romanian keyword research",
+        "Romanian SEO insights",
+        "search trends platform",
+        "AI content planning",
+        "Romanian market analysis",
+        "Lucy World intelligence"
+      ]
     }
   ]
 }

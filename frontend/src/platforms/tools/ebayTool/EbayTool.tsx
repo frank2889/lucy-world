@@ -26,14 +26,14 @@ const resolveDefaultSite = (country?: string) => {
 }
 
 const EbayTool: React.FC<PlatformToolProps> = (props) => {
-  const { keyword, setKeyword, country, ui } = props
+  const { keyword, setKeyword, country, ui, uiFallback } = props
   const normalizedKeyword = keyword ?? ''
   const [siteId, setSiteId] = useState(() => resolveDefaultSite(country))
   const [results, setResults] = useState<PlatformResultItem[]>([])
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const hasFetched = useRef(false)
-  const t = useMemo(() => createTranslator(ui), [ui])
+  const t = useMemo(() => createTranslator(ui, uiFallback), [ui, uiFallback])
 
   const selectedSite = useMemo(() => EBAY_SITES.find((item) => item.siteId === siteId) ?? EBAY_SITES[0], [siteId])
 
@@ -61,23 +61,23 @@ const EbayTool: React.FC<PlatformToolProps> = (props) => {
         const response = await fetch(`/api/platforms/ebay?${params.toString()}`)
         if (!response.ok) {
           const payload = await response.json().catch(() => null)
-          throw new Error(payload?.error || t('platform.ebay.error.fetch', 'Unable to fetch eBay suggestions'))
+          throw new Error(payload?.error || t('platform.ebay.error.fetch'))
         }
         const payload = await response.json()
         const suggestions: string[] = Array.isArray(payload?.suggestions) ? payload.suggestions : []
         const mapped: PlatformResultItem[] = suggestions.map((item, index) => ({
           title: item,
-          subtitle: t('platform.ebay.subtitle', 'Search suggestion from {{marketplace}}', {
+          subtitle: t('platform.ebay.subtitle', {
             marketplace: selectedSite.label
           }),
-          metric: t('platform.ebay.metric.rank', 'Popularity #{{rank}}', { rank: index + 1 })
+          metric: t('platform.ebay.metric.rank', { rank: index + 1 })
         }))
         setResults(mapped)
         if (mapped.length === 0) {
-          setError(t('platform.ebay.error.none', 'No eBay suggestions found for this keyword.'))
+          setError(t('platform.ebay.error.none'))
         }
       } catch (err) {
-        const message = err instanceof Error ? err.message : t('platform.ebay.error.generic', 'Unknown error')
+        const message = err instanceof Error ? err.message : t('platform.ebay.error.generic')
         setError(message)
         setResults([])
       } finally {
@@ -108,7 +108,7 @@ const EbayTool: React.FC<PlatformToolProps> = (props) => {
   const filters = (
     <div className="platform-tool__filters">
       <label htmlFor="ebay-site">
-        {t('platform.ebay.filters.marketplace', 'Marketplace')}
+  {t('platform.ebay.filters.marketplace')}
         <select
           id="ebay-site"
           value={siteId}
@@ -129,17 +129,17 @@ const EbayTool: React.FC<PlatformToolProps> = (props) => {
 
   return (
     <PlatformToolLayout
-      platformName={t('platform.ebay.meta.name', 'eBay')}
+  platformName={t('platform.ebay.meta.name')}
       keyword={normalizedKeyword}
       onKeywordChange={setKeyword}
       onSearch={performSearch}
-      description={t('platform.ebay.description', 'Listing and pricing insights for eBay.')}
+  description={t('platform.ebay.description')}
       extraFilters={filters}
       results={results}
-      placeholder={t('platform.ebay.placeholder', 'Which product are you selling on eBay?')}
+  placeholder={t('platform.ebay.placeholder')}
       loading={loading}
       error={error}
-      emptyState={t('platform.ebay.empty', 'Enter a keyword to see eBay insights.')}
+  emptyState={t('platform.ebay.empty')}
       controls={props.locationControls}
       onGlobalSearch={props.onGlobalSearch}
       globalLoading={props.globalLoading}

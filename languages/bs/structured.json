@@ -9,19 +9,11 @@
     },
     {
       "@type": "WebSite",
-      "name": "Lucy World",
+      "name": "Lucy World – Lokalni SEO uvidi za Bosnu i Hercegovinu",
       "url": "https://lucy.world/bs/",
       "inLanguage": "bs",
       "description": "Dobijte bosanskohercegovačke uvide iz Googlea i Binga uz lokalne prijedloge, trendove i AI analitiku koji ubrzavaju odluke o sadržaju i rast poslovanja.",
-      "keywords": "ključne riječi BiH, bosanski SEO, Google trendovi 2025, Bing pretraga, AI analitika, lokalni digitalni marketing, strategija sadržaja",
-      "aiSemantic": [
-        "Koje su najtraženije ključne riječi u BiH 2025?",
-        "Kako kombinovati Google i Bing podatke za bosanski SEO?",
-        "AI alati za istraživanje ključnih riječi za mala preduzeća u Sarajevu",
-        "Koji trendovi pretrage pokreću online trgovinu u Bosni i Hercegovini?",
-        "Kako pronaći lokalne ključne riječi na bosanskom i hrvatskom jeziku?",
-        "Najbolja strategija sadržaja za turističke brendove u BiH?"
-      ],
+      "keywords": "istraživanje ključnih riječi BiH, bosanski SEO, Google trendovi, Bing pretraga, AI analitika, lokalna strategija sadržaja",
       "publisher": {
         "@type": "Organization",
         "name": "Lucy World"
@@ -38,7 +30,7 @@
     },
     {
       "@type": "WebPage",
-      "name": "Lucy World",
+      "name": "Lucy World – Lokalni SEO uvidi za Bosnu i Hercegovinu",
       "url": "https://lucy.world/bs/",
       "inLanguage": "bs",
       "isPartOf": {
@@ -46,14 +38,14 @@
         "url": "https://lucy.world/bs/"
       },
       "description": "Dobijte bosanskohercegovačke uvide iz Googlea i Binga uz lokalne prijedloge, trendove i AI analitiku koji ubrzavaju odluke o sadržaju i rast poslovanja.",
-      "keywords": "ključne riječi BiH, bosanski SEO, Google trendovi 2025, Bing pretraga, AI analitika, lokalni digitalni marketing, strategija sadržaja",
+      "keywords": "istraživanje ključnih riječi BiH, bosanski SEO, Google trendovi, Bing pretraga, AI analitika, lokalna strategija sadržaja",
       "aiSemantic": [
-        "Koje su najtraženije ključne riječi u BiH 2025?",
-        "Kako kombinovati Google i Bing podatke za bosanski SEO?",
-        "AI alati za istraživanje ključnih riječi za mala preduzeća u Sarajevu",
-        "Koji trendovi pretrage pokreću online trgovinu u Bosni i Hercegovini?",
-        "Kako pronaći lokalne ključne riječi na bosanskom i hrvatskom jeziku?",
-        "Najbolja strategija sadržaja za turističke brendove u BiH?"
+        "Bosnian keyword research",
+        "Bosnian SEO insights",
+        "search trends platform",
+        "AI content planning",
+        "Bosnian market analysis",
+        "Lucy World intelligence"
       ]
     }
   ]

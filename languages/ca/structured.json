@@ -9,19 +9,11 @@
     },
     {
       "@type": "WebSite",
-      "name": "Lucy World",
+      "name": "Lucy World – Intel·ligència de cerca local per a Catalunya",
       "url": "https://lucy.world/ca/",
       "inLanguage": "ca",
       "description": "Descobreix dades catalanes de Google i Bing amb suggeriments, tendències i anàlisi amb IA que impulsen decisions de contingut i el creixement del teu negoci.",
-      "keywords": "paraules clau catalanes, SEO Catalunya, tendències Google 2025, cerca Bing, anàlisi IA, màrqueting digital local, estratègia de contingut",
-      "aiSemantic": [
-        "Quines paraules clau catalanes tenen més cerques el 2025?",
-        "Com combinar dades de Google i Bing per al SEO en català?",
-        "Eines d'IA per investigar paraules clau locals a Barcelona",
-        "Tendències de cerca que impulsen l'e-commerce a Catalunya",
-        "Com trobar paraules clau llargues en català i castellà?",
-        "Estratègies de contingut local per a startups catalanes"
-      ],
+      "keywords": "paraules clau catalanes, SEO Catalunya, tendències Google, cerca Bing, anàlisi IA, estratègia de contingut local",
       "publisher": {
         "@type": "Organization",
         "name": "Lucy World"
@@ -38,7 +30,7 @@
     },
     {
       "@type": "WebPage",
-      "name": "Lucy World",
+      "name": "Lucy World – Intel·ligència de cerca local per a Catalunya",
       "url": "https://lucy.world/ca/",
       "inLanguage": "ca",
       "isPartOf": {
@@ -46,14 +38,14 @@
         "url": "https://lucy.world/ca/"
       },
       "description": "Descobreix dades catalanes de Google i Bing amb suggeriments, tendències i anàlisi amb IA que impulsen decisions de contingut i el creixement del teu negoci.",
-      "keywords": "paraules clau catalanes, SEO Catalunya, tendències Google 2025, cerca Bing, anàlisi IA, màrqueting digital local, estratègia de contingut",
+      "keywords": "paraules clau catalanes, SEO Catalunya, tendències Google, cerca Bing, anàlisi IA, estratègia de contingut local",
       "aiSemantic": [
-        "Quines paraules clau catalanes tenen més cerques el 2025?",
-        "Com combinar dades de Google i Bing per al SEO en català?",
-        "Eines d'IA per investigar paraules clau locals a Barcelona",
-        "Tendències de cerca que impulsen l'e-commerce a Catalunya",
-        "Com trobar paraules clau llargues en català i castellà?",
-        "Estratègies de contingut local per a startups catalanes"
+        "Catalan keyword research",
+        "Catalan SEO insights",
+        "search trends platform",
+        "AI content planning",
+        "Catalan market analysis",
+        "Lucy World intelligence"
       ]
     }
   ]

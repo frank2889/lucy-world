@@ -9,19 +9,11 @@
     },
     {
       "@type": "WebSite",
-      "name": "Lucy World",
+      "name": "Lucy World – Кыргызстан үчүн жергиликтүү издөө анализи",
       "url": "https://lucy.world/ky/",
       "inLanguage": "ky",
-      "description": "Google кыргыз маалыматтарын сунуштар, тенденциялар жана AI анализи менен табып, мазмун чечимдерин жана бизнес өсүшүн күчөтүңүз.",
-      "keywords": "кыргыз негизги сөздөр, SEO Кыргызстан 2025, Google тенденциялары, издөө көлөмү, AI анализи, жергиликтүү санариптик маркетинг, мазмун стратегиясы",
-      "aiSemantic": [
-        "2025-жылы эң көп издөөгө алынган кыргыз негизги сөздөр кайсылар?",
-        "Кыргыз SEO үчүн Google маалыматтарын кантип бириктирүү керек?",
-        "Кыргызстандагы жергиликтүү негизги сөздөрдү изилдөө үчүн AI куралдары",
-        "Кыргыз электрондук соода жана маркетинг тенденциялары 2025",
-        "Кыргыз бизнеси үчүн жергиликтүү SEO стратегиялары",
-        "Бишкек vs Ош – жергиликтүү издөө үлгүлөрү жана тенденциялар"
-      ],
+      "description": "Lucy World tracks live search demand and AI clustering for Kyrgyz audiences so teams plan weekly campaigns and sustainable growth with confidence.",
+      "keywords": "кыргыз негизги сөздөр, SEO Кыргызстан, Google тенденциялары, издөө көлөмү, AI анализи, жергиликтүү мазмун стратегиясы",
       "publisher": {
         "@type": "Organization",
         "name": "Lucy World"
@@ -38,15 +30,23 @@
     },
     {
       "@type": "WebPage",
-      "name": "Lucy World",
+      "name": "Lucy World – Кыргызстан үчүн жергиликтүү издөө анализи",
       "url": "https://lucy.world/ky/",
       "inLanguage": "ky",
       "isPartOf": {
         "@type": "WebSite",
         "url": "https://lucy.world/ky/"
       },
-      "description": "Google кыргыз маалыматтарын сунуштар, тенденциялар жана AI анализи менен табып, мазмун чечимдерин жана бизнес өсүшүн күчөтүңүз.",
-      "keywords": "кыргыз негизги сөздөр, SEO Кыргызстан 2025, Google тенденциялары, издөө көлөмү, AI анализи, жергиликтүү санариптик маркетинг, мазмун стратегиясы"
+      "description": "Lucy World tracks live search demand and AI clustering for Kyrgyz audiences so teams plan weekly campaigns and sustainable growth with confidence.",
+      "keywords": "кыргыз негизги сөздөр, SEO Кыргызстан, Google тенденциялары, издөө көлөмү, AI анализи, жергиликтүү мазмун стратегиясы",
+      "aiSemantic": [
+        "Kyrgyz keyword research",
+        "Kyrgyz SEO insights",
+        "search trends platform",
+        "AI content planning",
+        "Kyrgyz market analysis",
+        "Lucy World intelligence"
+      ]
     }
   ]
 }

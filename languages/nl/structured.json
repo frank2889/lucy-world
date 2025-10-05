@@ -9,11 +9,11 @@
     },
     {
       "@type": "WebSite",
-      "name": "Lucy World",
+      "name": "Lucy World – Lokale zoekanalyse voor Nederland",
       "url": "https://lucy.world/nl/",
       "inLanguage": "nl",
-      "description": "Keyword research made simple with Google data: suggestions, trends, and insights.",
-      "keywords": "keyword research, SEO, Google Trends, suggestions, search volume",
+      "description": "Lucy World tracks live search demand and AI clustering for Dutch audiences so teams plan weekly campaigns and sustainable growth with confidence.",
+      "keywords": "Nederlandse keywords, SEO Nederland, Google Trends, zoekvolume, AI-analyse, lokale contentstrategie",
       "publisher": {
         "@type": "Organization",
         "name": "Lucy World"
@@ -30,15 +30,23 @@
     },
     {
       "@type": "WebPage",
-      "name": "Lucy World",
+      "name": "Lucy World – Lokale zoekanalyse voor Nederland",
       "url": "https://lucy.world/nl/",
       "inLanguage": "nl",
       "isPartOf": {
         "@type": "WebSite",
         "url": "https://lucy.world/nl/"
       },
-      "description": "Keyword onderzoek voor Nederland met Google data: suggesties, trends en AI-analyse voor lokale bedrijfsgroei en contentoptimalisatie.",
-      "keywords": "Nederlandse keywords, SEO Nederland, Google Trends, zoekvolume, AI-analyse, lokale contentstrategie, bedrijfsgroei, digitale marketing"
+      "description": "Lucy World tracks live search demand and AI clustering for Dutch audiences so teams plan weekly campaigns and sustainable growth with confidence.",
+      "keywords": "Nederlandse keywords, SEO Nederland, Google Trends, zoekvolume, AI-analyse, lokale contentstrategie",
+      "aiSemantic": [
+        "Dutch keyword research",
+        "Dutch SEO insights",
+        "search trends platform",
+        "AI content planning",
+        "Dutch market analysis",
+        "Lucy World intelligence"
+      ]
     }
   ]
 }

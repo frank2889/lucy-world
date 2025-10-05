@@ -9,11 +9,11 @@
     },
     {
       "@type": "WebSite",
-      "name": "Lucy World",
+      "name": "Lucy World – Paikallinen hakuanalyysi Suomelle",
       "url": "https://lucy.world/fi/",
       "inLanguage": "fi",
-      "description": "Keyword research made simple with Google data: suggestions, trends, and insights.",
-      "keywords": "keyword research, SEO, Google Trends, suggestions, search volume",
+      "description": "Lucy World tracks live search demand and AI clustering for Finnish audiences so teams plan weekly campaigns and sustainable growth with confidence.",
+      "keywords": "suomalaiset avainsanat, SEO Suomi, Google-trendit, hakuvolyymi, AI-analyysi, paikallinen sisältöstrategia",
       "publisher": {
         "@type": "Organization",
         "name": "Lucy World"
@@ -30,15 +30,23 @@
     },
     {
       "@type": "WebPage",
-      "name": "Lucy World",
+      "name": "Lucy World – Paikallinen hakuanalyysi Suomelle",
       "url": "https://lucy.world/fi/",
       "inLanguage": "fi",
       "isPartOf": {
         "@type": "WebSite",
         "url": "https://lucy.world/fi/"
       },
-      "description": "Keyword research made simple with Google data: suggestions, trends, and insights.",
-      "keywords": "keyword research, SEO, Google Trends, suggestions, search volume"
+      "description": "Lucy World tracks live search demand and AI clustering for Finnish audiences so teams plan weekly campaigns and sustainable growth with confidence.",
+      "keywords": "suomalaiset avainsanat, SEO Suomi, Google-trendit, hakuvolyymi, AI-analyysi, paikallinen sisältöstrategia",
+      "aiSemantic": [
+        "Finnish keyword research",
+        "Finnish SEO insights",
+        "search trends platform",
+        "AI content planning",
+        "Finnish market analysis",
+        "Lucy World intelligence"
+      ]
     }
   ]
 }

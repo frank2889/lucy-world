@@ -2,18 +2,19 @@ import React, { useMemo } from 'react'
 import type { PlatformToolProps } from '../../types'
 import { createTranslator } from '../../../i18n/translate'
 
-const TikTokTool: React.FC<PlatformToolProps> = ({ ui }) => {
-  const t = useMemo(() => createTranslator(ui), [ui])
+const TikTokTool: React.FC<PlatformToolProps> = ({ ui, uiFallback }) => {
+  const t = useMemo(() => createTranslator(ui, uiFallback), [ui, uiFallback])
+  const heading = t('platform.tiktok.heading')
+  const description = t('platform.tiktok.description')
+  const placeholder = t('platform.tiktok.placeholder')
   return (
     <section className="platform-tool">
       <header className="platform-tool__header">
-        <h3>{t('platform.tiktok.heading', 'TikTok keyword tool')}</h3>
-        <p className="platform-tool__description">
-          {t('platform.tiktok.description', 'This tool is currently unavailable because there is no public TikTok autocomplete API.')}
-        </p>
+        <h3>{heading}</h3>
+        <p className="platform-tool__description">{description}</p>
       </header>
       <div className="platform-tool__results">
-        <div className="platform-tool__placeholder">{t('platform.tiktok.placeholder', 'Not available')}</div>
+        <div className="platform-tool__placeholder">{placeholder}</div>
       </div>
     </section>
   )

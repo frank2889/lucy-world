@@ -9,11 +9,11 @@
     },
     {
       "@type": "WebSite",
-      "name": "Lucy World",
+      "name": "Lucy World – Lokalna analiza iskanja za Slovenijo",
       "url": "https://lucy.world/sl/",
       "inLanguage": "sl",
-      "description": "Keyword research made simple with Google data: suggestions, trends, and insights.",
-      "keywords": "keyword research, SEO, Google Trends, suggestions, search volume",
+      "description": "Lucy World tracks live search demand and AI clustering for Slovenian audiences so teams plan weekly campaigns and sustainable growth with confidence.",
+      "keywords": "slovenske ključne besede, SEO Slovenija, Google Trends, obseg iskanja, AI analiza, lokalna strategija vsebine",
       "publisher": {
         "@type": "Organization",
         "name": "Lucy World"
@@ -30,15 +30,23 @@
     },
     {
       "@type": "WebPage",
-      "name": "Lucy World",
+      "name": "Lucy World – Lokalna analiza iskanja za Slovenijo",
       "url": "https://lucy.world/sl/",
       "inLanguage": "sl",
       "isPartOf": {
         "@type": "WebSite",
         "url": "https://lucy.world/sl/"
       },
-      "description": "Raziskovanje ključnih besed za Slovenijo z Google podatki: predlogi, trendi in AI analiza za rast lokalnega poslovanja in optimizacijo vsebine.",
-      "keywords": "slovenske ključne besede, SEO Slovenija, Google Trends, obseg iskanja, AI analiza, lokalna strategija vsebine, rast poslovanja, digitalni marketing"
+      "description": "Lucy World tracks live search demand and AI clustering for Slovenian audiences so teams plan weekly campaigns and sustainable growth with confidence.",
+      "keywords": "slovenske ključne besede, SEO Slovenija, Google Trends, obseg iskanja, AI analiza, lokalna strategija vsebine",
+      "aiSemantic": [
+        "Slovenian keyword research",
+        "Slovenian SEO insights",
+        "search trends platform",
+        "AI content planning",
+        "Slovenian market analysis",
+        "Lucy World intelligence"
+      ]
     }
   ]
 }

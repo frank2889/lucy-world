@@ -9,19 +9,11 @@
     },
     {
       "@type": "WebSite",
-      "name": "Lucy World",
+      "name": "Lucy World – Nyocha ọchụchọ mpaghara maka Naịjirịa",
       "url": "https://lucy.world/ig/",
       "inLanguage": "ig",
-      "description": "Chọpụta data Google Igbo na aro, omume na nyocha AI nke na-eme ka mkpebi ọdịnaya na uto azụmahịa sie ike.",
-      "keywords": "okwu isi Igbo, SEO Naịjirịa 2025, omume Google, oke ọchụchọ, nyocha AI, ahịa dijitalụ mpaghara, atụmatụ ọdịnaya",
-      "aiSemantic": [
-        "Kedu okwu isi Igbo ndị kacha achọ na 2025?",
-        "Olee otu esi ejikọta data Google maka SEO Igbo?",
-        "Ngwa AI maka nyocha okwu isi mpaghara na Naịjirịa",
-        "Omume e-commerce na ahịa Igbo 2025",
-        "Atụmatụ SEO mpaghara maka azụmahịa Naịjirịa",
-        "Lagos vs Enugu – ụkpụrụ ọchụchọ mpaghara na omume"
-      ],
+      "description": "Lucy World tracks live search demand and AI clustering for Igbo audiences so teams plan weekly campaigns and sustainable growth with confidence.",
+      "keywords": "okwu isi Igbo, SEO Naịjirịa, omume Google, oke ọchụchọ, nyocha AI, atụmatụ ọdịnaya mpaghara",
       "publisher": {
         "@type": "Organization",
         "name": "Lucy World"
@@ -38,15 +30,23 @@
     },
     {
       "@type": "WebPage",
-      "name": "Lucy World",
+      "name": "Lucy World – Nyocha ọchụchọ mpaghara maka Naịjirịa",
       "url": "https://lucy.world/ig/",
       "inLanguage": "ig",
       "isPartOf": {
         "@type": "WebSite",
         "url": "https://lucy.world/ig/"
       },
-      "description": "Chọpụta data Google Igbo na aro, omume na nyocha AI nke na-eme ka mkpebi ọdịnaya na uto azụmahịa sie ike.",
-      "keywords": "okwu isi Igbo, SEO Naịjirịa 2025, omume Google, oke ọchụchọ, nyocha AI, ahịa dijitalụ mpaghara, atụmatụ ọdịnaya"
+      "description": "Lucy World tracks live search demand and AI clustering for Igbo audiences so teams plan weekly campaigns and sustainable growth with confidence.",
+      "keywords": "okwu isi Igbo, SEO Naịjirịa, omume Google, oke ọchụchọ, nyocha AI, atụmatụ ọdịnaya mpaghara",
+      "aiSemantic": [
+        "Igbo keyword research",
+        "Igbo SEO insights",
+        "search trends platform",
+        "AI content planning",
+        "Igbo market analysis",
+        "Lucy World intelligence"
+      ]
     }
   ]
 }

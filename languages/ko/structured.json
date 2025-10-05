@@ -9,19 +9,11 @@
     },
     {
       "@type": "WebSite",
-      "name": "Lucy World",
+      "name": "Lucy World – 한국을 위한 로컬 검색 분석",
       "url": "https://lucy.world/ko/",
       "inLanguage": "ko",
-      "description": "제안, 트렌드, AI 분석으로 한국 Google 데이터를 발견하여 콘텐츠 결정과 비즈니스 성장을 강화하세요.",
-      "keywords": "한국어 키워드, SEO 한국 2025, Google 트렌드, 검색량, AI 분석, 로컬 디지털 마케팅, 콘텐츠 전략",
-      "aiSemantic": [
-        "2025년에 가장 많이 검색되는 한국어 키워드는 무엇인가요?",
-        "한국 SEO를 위해 Google 데이터를 어떻게 결합하나요?",
-        "한국에서 로컬 키워드 연구를 위한 AI 도구",
-        "한국 전자상거래 및 마케팅 트렌드 2025",
-        "한국 기업을 위한 로컬 SEO 전략",
-        "서울 vs 부산 – 지역 검색 패턴과 트렌드"
-      ],
+      "description": "Lucy World tracks live search demand and AI clustering for Korean audiences so teams plan weekly campaigns and sustainable growth with confidence.",
+      "keywords": "한국어 키워드, SEO 한국, Google 트렌드, 검색량, AI 분석, 로컬 콘텐츠 전략",
       "publisher": {
         "@type": "Organization",
         "name": "Lucy World"
@@ -38,15 +30,23 @@
     },
     {
       "@type": "WebPage",
-      "name": "Lucy World",
+      "name": "Lucy World – 한국을 위한 로컬 검색 분석",
       "url": "https://lucy.world/ko/",
       "inLanguage": "ko",
       "isPartOf": {
         "@type": "WebSite",
         "url": "https://lucy.world/ko/"
       },
-      "description": "제안, 트렌드, AI 분석으로 한국 Google 데이터를 발견하여 콘텐츠 결정과 비즈니스 성장을 강화하세요.",
-      "keywords": "한국어 키워드, SEO 한국 2025, Google 트렌드, 검색량, AI 분석, 로컬 디지털 마케팅, 콘텐츠 전략"
+      "description": "Lucy World tracks live search demand and AI clustering for Korean audiences so teams plan weekly campaigns and sustainable growth with confidence.",
+      "keywords": "한국어 키워드, SEO 한국, Google 트렌드, 검색량, AI 분석, 로컬 콘텐츠 전략",
+      "aiSemantic": [
+        "Korean keyword research",
+        "Korean SEO insights",
+        "search trends platform",
+        "AI content planning",
+        "Korean market analysis",
+        "Lucy World intelligence"
+      ]
     }
   ]
 }

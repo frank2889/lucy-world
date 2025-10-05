@@ -9,11 +9,11 @@
     },
     {
       "@type": "WebSite",
-      "name": "Lucy World",
+      "name": "Açar söz gözlegi - Lucy World",
       "url": "https://lucy.world/tk/",
       "inLanguage": "tk",
-      "description": "Keyword research made simple with Google data: suggestions, trends, and insights.",
-      "keywords": "keyword research, SEO, Google Trends, suggestions, search volume",
+      "description": "Lucy World tracks live search demand and AI clustering for Turkmen audiences so teams plan weekly campaigns and sustainable growth with confidence.",
+      "keywords": "açar söz gözlegi, SEO türkmen, Google Trends, teklipnamalar, gözleg göwrümi",
       "publisher": {
         "@type": "Organization",
         "name": "Lucy World"
@@ -30,22 +30,22 @@
     },
     {
       "@type": "WebPage",
-      "name": "Lucy World",
+      "name": "Açar söz gözlegi - Lucy World",
       "url": "https://lucy.world/tk/",
       "inLanguage": "tk",
       "isPartOf": {
         "@type": "WebSite",
         "url": "https://lucy.world/tk/"
       },
-      "description": "Türkmenistan bazary üçin açar söz gözlegi we Google maglumatlary. Türkmen dilinde SEO optimizasiýasy üçin tendensiýalar we düşünjeler.",
-      "keywords": "açar söz gözlegi, SEO türkmen, Google Trends, teklipnamalar, gözleg göwrümi, Türkmenistan",
+      "description": "Lucy World tracks live search demand and AI clustering for Turkmen audiences so teams plan weekly campaigns and sustainable growth with confidence.",
+      "keywords": "açar söz gözlegi, SEO türkmen, Google Trends, teklipnamalar, gözleg göwrümi",
       "aiSemantic": [
-        "Google Türkmenistan SEO",
-        "Orta Aziýa bazar derňewi",
-        "Türkmen gözleg tendensiýalary",
-        "Türkmen açar sözler gözlegi",
-        "SEO Orta Aziýa",
-        "Türkmen sanly marketing"
+        "Turkmen keyword research",
+        "Turkmen SEO insights",
+        "search trends platform",
+        "AI content planning",
+        "Turkmen market analysis",
+        "Lucy World intelligence"
       ]
     }
   ]

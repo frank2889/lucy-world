@@ -9,19 +9,11 @@
     },
     {
       "@type": "WebSite",
-      "name": "Lucy World",
+      "name": "Lucy World – ગુજરાત માટે સ્થાનિક શોધ વિશ્લેષણ",
       "url": "https://lucy.world/gu/",
       "inLanguage": "gu",
-      "description": "Google ડેટા સાથે ગુજરાતી કીવર્ડ્સ શોધો - સૂચનો, વલણો અને AI વિશ્લેષણ જે સામગ્રીના નિર્ણયો અને વ્યવસાયિક વૃદ્ધિને મજબૂત બનાવે.",
-      "keywords": "ગુજરાતી કીવર્ડ્સ, SEO ગુજરાત 2025, Google વલણો, શોધ વોલ્યુમ, AI વિશ્લેષણ, સ્થાનિક ડિજિટલ માર્કેટિંગ, સામગ્રી વ્યૂહરચના",
-      "aiSemantic": [
-        "2025માં કયા ગુજરાતી કીવર્ડ્સને સૌથી વધુ શોધાય છે?",
-        "ગુજરાતી SEO માટે Google ડેટાને કેવી રીતે જોડવો?",
-        "ગુજરાતમાં સ્થાનિક કીવર્ડ સંશોધન માટે AI ટૂલ્સ",
-        "ગુજરાતી ઈ-કોમર્સ અને માર્કેટિંગ વલણો 2025",
-        "ગુજરાતી વ્યવસાયો માટે સ્થાનિક SEO વ્યૂહરચનાઓ",
-        "અમદાવાદ vs સુરત - સ્થાનિક શોધ પેટર્ન અને વલણો"
-      ],
+      "description": "Lucy World tracks live search demand and AI clustering for Gujarati audiences so teams plan weekly campaigns and sustainable growth with confidence.",
+      "keywords": "ગુજરાતી કીવર્ડ્સ, SEO ગુજરાત, Google વલણો, શોધ વોલ્યુમ, AI વિશ્લેષણ, સ્થાનિક સામગ્રી વ્યૂહરચના",
       "publisher": {
         "@type": "Organization",
         "name": "Lucy World"
@@ -38,15 +30,23 @@
     },
     {
       "@type": "WebPage",
-      "name": "Lucy World",
+      "name": "Lucy World – ગુજરાત માટે સ્થાનિક શોધ વિશ્લેષણ",
       "url": "https://lucy.world/gu/",
       "inLanguage": "gu",
       "isPartOf": {
         "@type": "WebSite",
         "url": "https://lucy.world/gu/"
       },
-      "description": "Google ડેટા સાથે ગુજરાતી કીવર્ડ્સ શોધો - સૂચનો, વલણો અને AI વિશ્લેષણ જે સામગ્રીના નિર્ણયો અને વ્યવસાયિક વૃદ્ધિને મજબૂત બનાવે.",
-      "keywords": "ગુજરાતી કીવર્ડ્સ, SEO ગુજરાત 2025, Google વલણો, શોધ વોલ્યુમ, AI વિશ્લેષણ, સ્થાનિક ડિજિટલ માર્કેટિંગ, સામગ્રી વ્યૂહરચના"
+      "description": "Lucy World tracks live search demand and AI clustering for Gujarati audiences so teams plan weekly campaigns and sustainable growth with confidence.",
+      "keywords": "ગુજરાતી કીવર્ડ્સ, SEO ગુજરાત, Google વલણો, શોધ વોલ્યુમ, AI વિશ્લેષણ, સ્થાનિક સામગ્રી વ્યૂહરચના",
+      "aiSemantic": [
+        "Gujarati keyword research",
+        "Gujarati SEO insights",
+        "search trends platform",
+        "AI content planning",
+        "Gujarati market analysis",
+        "Lucy World intelligence"
+      ]
     }
   ]
 }

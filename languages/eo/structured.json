@@ -9,19 +9,11 @@
     },
     {
       "@type": "WebSite",
-      "name": "Lucy World",
+      "name": "Lucy World – Loka serĉanalizo por Esperantujo",
       "url": "https://lucy.world/eo/",
       "inLanguage": "eo",
-      "description": "Malkovru Esperantajn Google-datenojn kun sugestoj, tendencoj kaj AI-analizo kiuj fortigas enhavo-decidojn kaj komercan kreskon.",
-      "keywords": "Esperantaj ĉefvortoj, SEO Esperantujo 2025, Google-tendencoj, serĉ-volumeno, AI-analizo, universala lingvo, enhavo-strategio",
-      "aiSemantic": [
-        "Kiuj Esperantaj ĉefvortoj havas plej multajn serĉojn en 2025?",
-        "Kiel kombini Google-datenojn por Esperanta SEO?",
-        "AI-iloj por loka Esperanta ĉefvorto-esplorado",
-        "Esperantaj komerco kaj reklamo-tendencoj 2025",
-        "Universalaj SEO-strategioj por Esperanta komunumo",
-        "Eŭropo vs Azio – lokaj Esperantaj serĉ-modeloj"
-      ],
+      "description": "Lucy World tracks live search demand and AI clustering for Esperanto audiences so teams plan weekly campaigns and sustainable growth with confidence.",
+      "keywords": "Esperantaj ĉefvortoj, SEO Esperantujo, Google-tendencoj, serĉ-volumeno, AI-analizo, loka enhavo-strategio",
       "publisher": {
         "@type": "Organization",
         "name": "Lucy World"
@@ -38,15 +30,23 @@
     },
     {
       "@type": "WebPage",
-      "name": "Lucy World",
+      "name": "Lucy World – Loka serĉanalizo por Esperantujo",
       "url": "https://lucy.world/eo/",
       "inLanguage": "eo",
       "isPartOf": {
         "@type": "WebSite",
         "url": "https://lucy.world/eo/"
       },
-      "description": "Malkovru Esperantajn Google-datenojn kun sugestoj, tendencoj kaj AI-analizo kiuj fortigas enhavo-decidojn kaj komercan kreskon.",
-      "keywords": "Esperantaj ĉefvortoj, SEO Esperantujo 2025, Google-tendencoj, serĉ-volumeno, AI-analizo, universala lingvo, enhavo-strategio"
+      "description": "Lucy World tracks live search demand and AI clustering for Esperanto audiences so teams plan weekly campaigns and sustainable growth with confidence.",
+      "keywords": "Esperantaj ĉefvortoj, SEO Esperantujo, Google-tendencoj, serĉ-volumeno, AI-analizo, loka enhavo-strategio",
+      "aiSemantic": [
+        "Esperanto keyword research",
+        "Esperanto SEO insights",
+        "search trends platform",
+        "AI content planning",
+        "Esperanto market analysis",
+        "Lucy World intelligence"
+      ]
     }
   ]
 }

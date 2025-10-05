@@ -8,7 +8,14 @@ from urllib.parse import urlencode
 from flask import Blueprint, jsonify, request
 
 from .extensions import db
-from .models import User, LoginToken
+from .models import DailyUsage, LoginToken, User
+
+
+def _plan_snapshot(user: User) -> dict:
+    today = datetime.utcnow().date()
+    usage = DailyUsage.for_day(user, today)
+    queries_used = usage.query_count if usage else 0
+    return user.plan_payload(include_usage=True, queries_used_today=queries_used)
 from .email_utils import send_email
 
 
@@ -69,7 +76,13 @@ def verify_magic_link():
     # If the client expects JSON (e.g., API call), return JSON
     accept = (request.headers.get('Accept') or '').lower()
     if 'application/json' in accept or request.method == 'POST':
-        return jsonify({'id': user.id, 'email': user.email, 'name': user.name, 'token': user.api_token})
+        return jsonify({
+            'id': user.id,
+            'email': user.email,
+            'name': user.name,
+            'token': user.api_token,
+            'plan': _plan_snapshot(user),
+        })
     else:
         # Otherwise return a small HTML page that stores token then redirects to /<lang>/
         # The page reads lw_lang from localStorage to pick the UI language.

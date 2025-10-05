@@ -3,11 +3,11 @@ import type { PlatformToolProps } from '../../types'
 import PlatformToolLayout, { type PlatformResultItem } from '../common/PlatformToolLayout'
 import { createTranslator } from '../../../i18n/translate'
 
-const CLIENT_OPTIONS = [
-  { value: 'opensearch', label: 'OpenSearch' },
-  { value: 'toolbar', label: 'Toolbar' },
-  { value: 'mobile', label: 'Mobile' }
-]
+const CLIENT_FALLBACK_LABELS: Record<string, string> = {
+  opensearch: 'OpenSearch',
+  toolbar: 'Toolbar',
+  mobile: 'Mobile'
+}
 
 const QwantTool: React.FC<PlatformToolProps> = (props) => {
   const {
@@ -15,6 +15,7 @@ const QwantTool: React.FC<PlatformToolProps> = (props) => {
     setKeyword,
     searchLanguage,
     ui,
+    uiFallback,
     locationControls,
     onGlobalSearch,
     globalLoading
@@ -25,15 +26,27 @@ const QwantTool: React.FC<PlatformToolProps> = (props) => {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const hasFetched = useRef(false)
-  const t = useMemo(() => createTranslator(ui), [ui])
-  const clientOptions = useMemo(
-    () =>
-      CLIENT_OPTIONS.map((item) => ({
-        ...item,
-        label: t(`platform.qwant.client.${item.value}`, item.label)
-      })),
-    [t]
-  )
+  const t = useMemo(() => createTranslator(ui, uiFallback), [ui, uiFallback])
+
+  const clientOptions = useMemo(() => {
+    const opensearch = t('platform.qwant.client.opensearch')
+    const toolbar = t('platform.qwant.client.toolbar')
+    const mobile = t('platform.qwant.client.mobile')
+    return [
+      {
+        value: 'opensearch',
+        label: opensearch === 'platform.qwant.client.opensearch' ? CLIENT_FALLBACK_LABELS.opensearch : opensearch
+      },
+      {
+        value: 'toolbar',
+        label: toolbar === 'platform.qwant.client.toolbar' ? CLIENT_FALLBACK_LABELS.toolbar : toolbar
+      },
+      {
+        value: 'mobile',
+        label: mobile === 'platform.qwant.client.mobile' ? CLIENT_FALLBACK_LABELS.mobile : mobile
+      }
+    ]
+  }, [t])
 
   const performSearch = useCallback(
     async (term: string) => {
@@ -54,23 +67,23 @@ const QwantTool: React.FC<PlatformToolProps> = (props) => {
         const response = await fetch(`/api/platforms/qwant?${params.toString()}`)
         if (!response.ok) {
           const payload = await response.json().catch(() => null)
-          throw new Error(payload?.error || t('platform.qwant.errors.fetch', 'Unable to fetch Qwant suggestions'))
+          throw new Error(payload?.error || t('platform.qwant.errors.fetch'))
         }
         const payload = await response.json()
         const suggestions: string[] = Array.isArray(payload?.suggestions) ? payload.suggestions : []
         const mapped: PlatformResultItem[] = suggestions.map((item, index) => ({
           title: item,
-          subtitle: t('platform.qwant.results.subtitle', 'Qwant ({{client}})', {
+          subtitle: t('platform.qwant.results.subtitle', {
             client: payload?.metadata?.client || client
           }),
-          metric: t('platform.qwant.results.rank', 'Suggestion #{{rank}}', { rank: index + 1 })
+          metric: t('platform.qwant.results.rank', { rank: index + 1 })
         }))
         setResults(mapped)
         if (mapped.length === 0) {
-          setError(t('platform.qwant.errors.noneFound', 'No Qwant suggestions found for this keyword.'))
+          setError(t('platform.qwant.errors.noneFound'))
         }
       } catch (err) {
-        const message = err instanceof Error ? err.message : t('platform.qwant.errors.generic', 'Unknown error')
+        const message = err instanceof Error ? err.message : t('platform.qwant.errors.generic')
         setError(message)
         setResults([])
       } finally {
@@ -101,7 +114,7 @@ const QwantTool: React.FC<PlatformToolProps> = (props) => {
   const filters = useMemo(() => (
     <div className="platform-tool__filters">
       <label htmlFor="qwant-client">
-        {t('platform.qwant.filters.client', 'Client')}
+  {t('platform.qwant.filters.client')}
         <select
           id="qwant-client"
           value={client}
@@ -122,17 +135,17 @@ const QwantTool: React.FC<PlatformToolProps> = (props) => {
 
   return (
     <PlatformToolLayout
-      platformName={t('platform.qwant.meta.name', 'Qwant')}
+  platformName={t('platform.qwant.meta.name')}
       keyword={normalizedKeyword}
       onKeywordChange={setKeyword}
       onSearch={performSearch}
-      description={t('platform.qwant.description', 'European search engine Qwant autocomplete.')}
+  description={t('platform.qwant.description')}
       extraFilters={filters}
       results={results}
-      placeholder={t('platform.qwant.placeholder', 'Which search term would you like to inspect?')}
+  placeholder={t('platform.qwant.placeholder')}
       loading={loading}
       error={error}
-      emptyState={t('platform.qwant.emptyState', 'Enter a keyword to see Qwant suggestions.')}
+  emptyState={t('platform.qwant.emptyState')}
       controls={locationControls}
       onGlobalSearch={onGlobalSearch}
       globalLoading={globalLoading}

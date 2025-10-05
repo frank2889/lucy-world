@@ -43,7 +43,51 @@ const PlatformToolLayout: React.FC<PlatformToolLayoutProps> = ({
   globalLoading = false,
   translate
 }) => {
-  const t = useMemo(() => translate ?? ((_: string, fallback: string) => fallback), [translate])
+  const t = useMemo(
+    () =>
+      translate ?? ((key: string, replacements?: Record<string, string | number>) => {
+        if (!replacements) return key
+        return key.replace(/{{\s*([a-zA-Z0-9_.-]+)\s*}}/g, (_, token: string) => {
+          if (Object.prototype.hasOwnProperty.call(replacements, token)) {
+            const value = replacements[token]
+            return value === undefined || value === null ? '' : String(value)
+          }
+          return ''
+        })
+      }),
+    [translate]
+  )
+
+  const heading = useMemo(
+    () => t('platforms.common.heading', { platform: platformName }),
+    [platformName, t]
+  )
+
+  const placeholderText = useMemo(
+    () => t('platforms.common.placeholder', { platform: platformName }),
+    [platformName, t]
+  )
+
+  const loadingButtonLabel = useMemo(
+    () => t('platforms.common.button.loading'),
+    [t]
+  )
+
+  const searchButtonLabel = useMemo(
+    () => t('platforms.common.button.submit'),
+    [t]
+  )
+
+  const loadingPlaceholder = useMemo(
+    () => t('platforms.common.placeholder.loading'),
+    [t]
+  )
+
+  const emptyPlaceholder = useMemo(
+    () => t('platforms.common.placeholder.empty'),
+    [t]
+  )
+
   const canSearch = keyword.trim().length > 0
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -63,11 +107,6 @@ const PlatformToolLayout: React.FC<PlatformToolLayoutProps> = ({
     }
   }
 
-  const heading = useMemo(
-    () => t('platforms.common.heading', '{{platform}} keyword tool', { platform: platformName }),
-    [platformName, t]
-  )
-
   return (
     <section className="platform-tool">
       <header className="platform-tool__header">
@@ -79,12 +118,12 @@ const PlatformToolLayout: React.FC<PlatformToolLayoutProps> = ({
           type="text"
           value={keyword}
           onChange={(event) => onKeywordChange(event.target.value)}
-          placeholder={placeholder ?? t('platforms.common.placeholder', 'Keyword for {{platform}}', { platform: platformName })}
+          placeholder={placeholder ?? placeholderText}
         />
         {controls}
         <div className="platform-tool__actions">
           <button type="submit" disabled={!canSearch || loading || globalLoading}>
-            {loading ? t('platforms.common.button.loading', 'Loading…') : t('platforms.common.button.submit', 'Search')}
+            {loading ? loadingButtonLabel : searchButtonLabel}
           </button>
         </div>
       </form>
@@ -95,9 +134,9 @@ const PlatformToolLayout: React.FC<PlatformToolLayoutProps> = ({
             {error}
           </div>
         )}
-        {loading && <div className="platform-tool__placeholder">{t('platforms.common.placeholder.loading', 'Loading results…')}</div>}
+        {loading && <div className="platform-tool__placeholder">{loadingPlaceholder}</div>}
         {!loading && !error && results.length === 0 && (
-          <div className="platform-tool__placeholder">{emptyState ?? t('platforms.common.placeholder.empty', 'Enter a keyword to see results.')}</div>
+          <div className="platform-tool__placeholder">{emptyState ?? emptyPlaceholder}</div>
         )}
         {!loading && !error && results.length > 0 && (
           <ul>

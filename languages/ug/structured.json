@@ -9,11 +9,11 @@
     },
     {
       "@type": "WebSite",
-      "name": "Lucy World",
+      "name": "ئاچقۇچلۇق سۆز تەتقىقاتى - Lucy World",
       "url": "https://lucy.world/ug/",
       "inLanguage": "ug",
-      "description": "Keyword research made simple with Google data: suggestions, trends, and insights.",
-      "keywords": "keyword research, SEO, Google Trends, suggestions, search volume",
+      "description": "Lucy World tracks live search demand and AI clustering for Uyghur audiences so teams plan weekly campaigns and sustainable growth with confidence.",
+      "keywords": "ئاچقۇچلۇق سۆز تەتقىقاتى, ئۇيغۇر SEO, Google Trends, تەكلىپلەر, ئىزدەش كۆلىمى",
       "publisher": {
         "@type": "Organization",
         "name": "Lucy World"
@@ -30,22 +30,22 @@
     },
     {
       "@type": "WebPage",
-      "name": "Lucy World",
+      "name": "ئاچقۇچلۇق سۆز تەتقىقاتى - Lucy World",
       "url": "https://lucy.world/ug/",
       "inLanguage": "ug",
       "isPartOf": {
         "@type": "WebSite",
         "url": "https://lucy.world/ug/"
       },
-      "description": "ئۇيغۇر بازىرى ئۈچۈن ئاچقۇچلۇق سۆز تەتقىقاتى ۋە Google سانلىق مەلۇماتلىرى. يۆنىلىشلەر، چۈشەنچىلەر ۋە ئۇيغۇر تىلى ئۈچۈن SEO ئەلالاشتۇرۇش.",
-      "keywords": "ئاچقۇچلۇق سۆز تەتقىقاتى, ئۇيغۇر SEO, Google Trends, تەكلىپلەر, ئىزدەش كۆلىمى, شىنجاڭ",
+      "description": "Lucy World tracks live search demand and AI clustering for Uyghur audiences so teams plan weekly campaigns and sustainable growth with confidence.",
+      "keywords": "ئاچقۇچلۇق سۆز تەتقىقاتى, ئۇيغۇر SEO, Google Trends, تەكلىپلەر, ئىزدەش كۆلىمى",
       "aiSemantic": [
-        "Google ئۇيغۇر SEO",
-        "ئۇيغۇر بازار تەھلىلى",
-        "ئۇيغۇر ئىزدەش يۆنىلىشلىرى",
-        "ئۇيغۇر ئاچقۇچلۇق سۆز تەتقىقاتى",
-        "غەربىي چىن SEO",
-        "ئۇيغۇر رەقەملىك مارکېتىنگ"
+        "Uyghur keyword research",
+        "Uyghur SEO insights",
+        "search trends platform",
+        "AI content planning",
+        "Uyghur market analysis",
+        "Lucy World intelligence"
       ]
     }
   ]

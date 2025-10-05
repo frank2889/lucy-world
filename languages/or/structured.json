@@ -9,11 +9,11 @@
     },
     {
       "@type": "WebSite",
-      "name": "Lucy World",
+      "name": "Lucy World – ଓଡିଶା ପାଇଁ ସ୍ଥାନୀୟ ସର୍ଚ ବିଶ୍ଲେଷଣ",
       "url": "https://lucy.world/or/",
       "inLanguage": "or",
-      "description": "Keyword research made simple with Google data: suggestions, trends, and insights.",
-      "keywords": "keyword research, SEO, Google Trends, suggestions, search volume",
+      "description": "Lucy World tracks live search demand and AI clustering for Odia (Oriya) audiences so teams plan weekly campaigns and sustainable growth with confidence.",
+      "keywords": "ଓଡିଆ କୀୱାର୍ଡ, SEO ଓଡିଶା, Google ଟ୍ରେଣ୍ଡ, ସର୍ଚ ଭଲ୍ୟୁମ, AI ବିଶ୍ଲେଷଣ, ସ୍ଥାନୀୟ କଣ୍ଟେଣ୍ଟ ରଣନୀତି",
       "publisher": {
         "@type": "Organization",
         "name": "Lucy World"
@@ -30,15 +30,23 @@
     },
     {
       "@type": "WebPage",
-      "name": "Lucy World",
+      "name": "Lucy World – ଓଡିଶା ପାଇଁ ସ୍ଥାନୀୟ ସର୍ଚ ବିଶ୍ଲେଷଣ",
       "url": "https://lucy.world/or/",
       "inLanguage": "or",
       "isPartOf": {
         "@type": "WebSite",
         "url": "https://lucy.world/or/"
       },
-      "description": "ଓଡିଶା ପାଇଁ କୀୱାର୍ଡ ଗବେଷଣା Google ଡାଟା ସହିତ: ସୁପାରିଶ, ଟ୍ରେଣ୍ଡ ଏବଂ AI ବିଶ୍ଲେଷଣ ସ୍ଥାନୀୟ ବ୍ୟବସାୟିକ ବୃଦ୍ଧି ପାଇଁ।",
-      "keywords": "ଓଡିଆ କୀୱାର୍ଡ, SEO ଓଡିଶା, Google ଟ୍ରେଣ୍ଡ, ସର୍ଚ ଭଲ୍ୟୁମ, AI ବିଶ୍ଲେଷଣ, ସ୍ଥାନୀୟ କଣ୍ଟେଣ୍ଟ ରଣନୀତି, ବ୍ୟବସାୟିକ ବୃଦ୍ଧି, ଡିଜିଟାଲ ମାର୍କେଟିଂ"
+      "description": "Lucy World tracks live search demand and AI clustering for Odia (Oriya) audiences so teams plan weekly campaigns and sustainable growth with confidence.",
+      "keywords": "ଓଡିଆ କୀୱାର୍ଡ, SEO ଓଡିଶା, Google ଟ୍ରେଣ୍ଡ, ସର୍ଚ ଭଲ୍ୟୁମ, AI ବିଶ୍ଲେଷଣ, ସ୍ଥାନୀୟ କଣ୍ଟେଣ୍ଟ ରଣନୀତି",
+      "aiSemantic": [
+        "Odia (Oriya) keyword research",
+        "Odia (Oriya) SEO insights",
+        "search trends platform",
+        "AI content planning",
+        "Odia (Oriya) market analysis",
+        "Lucy World intelligence"
+      ]
     }
   ]
 }

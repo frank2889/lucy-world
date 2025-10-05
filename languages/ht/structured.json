@@ -9,11 +9,11 @@
     },
     {
       "@type": "WebSite",
-      "name": "Lucy World",
+      "name": "Lucy World – Search intelligence for Haitian Creole",
       "url": "https://lucy.world/ht/",
       "inLanguage": "ht",
-      "description": "Keyword research made simple with Google data: suggestions, trends, and insights.",
-      "keywords": "keyword research, SEO, Google Trends, suggestions, search volume",
+      "description": "Lucy World reveals live search demand, AI clustering, and localization guidance for Haitian Creole audiences so teams plan smarter campaigns and consistent grow",
+      "keywords": "Haitian Creole keyword research, Haitian Creole SEO insights, search trends platform, AI content planning, Haitian Creole market analysis, Lucy World intelligence",
       "publisher": {
         "@type": "Organization",
         "name": "Lucy World"
@@ -30,15 +30,23 @@
     },
     {
       "@type": "WebPage",
-      "name": "Lucy World",
+      "name": "Lucy World – Search intelligence for Haitian Creole",
       "url": "https://lucy.world/ht/",
       "inLanguage": "ht",
       "isPartOf": {
         "@type": "WebSite",
         "url": "https://lucy.world/ht/"
       },
-      "description": "Keyword research made simple with Google data: suggestions, trends, and insights.",
-      "keywords": "keyword research, SEO, Google Trends, suggestions, search volume"
+      "description": "Lucy World reveals live search demand, AI clustering, and localization guidance for Haitian Creole audiences so teams plan smarter campaigns and consistent grow",
+      "keywords": "Haitian Creole keyword research, Haitian Creole SEO insights, search trends platform, AI content planning, Haitian Creole market analysis, Lucy World intelligence",
+      "aiSemantic": [
+        "Haitian Creole keyword research",
+        "Haitian Creole SEO insights",
+        "search trends platform",
+        "AI content planning",
+        "Haitian Creole market analysis",
+        "Lucy World intelligence"
+      ]
     }
   ]
 }

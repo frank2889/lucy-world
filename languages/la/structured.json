@@ -9,11 +9,11 @@
     },
     {
       "@type": "WebSite",
-      "name": "Lucy World",
+      "name": "Lucy World – Analysis quaestionum localium pro mundo Latino",
       "url": "https://lucy.world/la/",
       "inLanguage": "la",
-      "description": "Keyword research made simple with Google data: suggestions, trends, and insights.",
-      "keywords": "keyword research, SEO, Google Trends, suggestions, search volume",
+      "description": "Lucy World tracks live search demand and AI clustering for Latin audiences so teams plan weekly campaigns and sustainable growth with confidence.",
+      "keywords": "verba clavia Latina, SEO Latinum, tendentiae Google, volumen quaestionum, analysis AI, strategia contentus localis",
       "publisher": {
         "@type": "Organization",
         "name": "Lucy World"
@@ -30,15 +30,23 @@
     },
     {
       "@type": "WebPage",
-      "name": "Lucy World",
+      "name": "Lucy World – Analysis quaestionum localium pro mundo Latino",
       "url": "https://lucy.world/la/",
       "inLanguage": "la",
       "isPartOf": {
         "@type": "WebSite",
         "url": "https://lucy.world/la/"
       },
-      "description": "Investigatio verborum clavium cum analysibus Google: suggestiones, tendentiae, perspectivae academicae ad quaestionem intellectum adiuvandas.",
-      "keywords": "verba clavia Latina, SEO Latina, tendentiae Google, investigatio, suggestiones quaestionum, analysis AI, quaestio academica, verba significantia"
+      "description": "Lucy World tracks live search demand and AI clustering for Latin audiences so teams plan weekly campaigns and sustainable growth with confidence.",
+      "keywords": "verba clavia Latina, SEO Latinum, tendentiae Google, volumen quaestionum, analysis AI, strategia contentus localis",
+      "aiSemantic": [
+        "Latin keyword research",
+        "Latin SEO insights",
+        "search trends platform",
+        "AI content planning",
+        "Latin market analysis",
+        "Lucy World intelligence"
+      ]
     }
   ]
 }

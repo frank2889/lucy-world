@@ -17,7 +17,8 @@ const YahooTool: React.FC<PlatformToolProps> = (props) => {
     setKeyword,
     searchLanguage,
     country,
-    ui,
+  ui,
+  uiFallback,
     locationControls,
     onGlobalSearch,
     globalLoading
@@ -28,7 +29,7 @@ const YahooTool: React.FC<PlatformToolProps> = (props) => {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const hasFetched = useRef(false)
-  const t = useMemo(() => createTranslator(ui), [ui])
+  const t = useMemo(() => createTranslator(ui, uiFallback), [ui, uiFallback])
 
   const performSearch = useCallback(
     async (term: string) => {
@@ -50,23 +51,23 @@ const YahooTool: React.FC<PlatformToolProps> = (props) => {
         const response = await fetch(`/api/platforms/yahoo?${params.toString()}`)
         if (!response.ok) {
           const payload = await response.json().catch(() => null)
-          throw new Error(payload?.error || t('platform.yahoo.errors.fetch', 'Unable to fetch Yahoo suggestions'))
+          throw new Error(payload?.error || t('platform.yahoo.errors.fetch'))
         }
         const payload = await response.json()
         const suggestions: string[] = Array.isArray(payload?.suggestions) ? payload.suggestions : []
         const mapped: PlatformResultItem[] = suggestions.map((item, index) => ({
           title: item,
-          subtitle: t('platform.yahoo.results.subtitle', 'Yahoo ({{country}})', {
+          subtitle: t('platform.yahoo.results.subtitle', {
             country: payload?.country || country || 'global'
           }),
-          metric: t('platform.yahoo.results.rank', 'Suggestion #{{rank}}', { rank: index + 1 })
+          metric: t('platform.yahoo.results.rank', { rank: index + 1 })
         }))
         setResults(mapped)
         if (mapped.length === 0) {
-          setError(t('platform.yahoo.errors.noneFound', 'No Yahoo suggestions found for this keyword.'))
+          setError(t('platform.yahoo.errors.noneFound'))
         }
       } catch (err) {
-        const message = err instanceof Error ? err.message : t('platform.yahoo.errors.generic', 'Unknown error')
+        const message = err instanceof Error ? err.message : t('platform.yahoo.errors.generic')
         setError(message)
         setResults([])
       } finally {
@@ -97,7 +98,7 @@ const YahooTool: React.FC<PlatformToolProps> = (props) => {
   const filters = useMemo(() => (
     <div className="platform-tool__filters">
       <label htmlFor="yahoo-limit">
-        {t('platform.yahoo.filters.limit', 'Results')}
+  {t('platform.yahoo.filters.limit')}
         <select
           id="yahoo-limit"
           value={limit}
@@ -118,17 +119,17 @@ const YahooTool: React.FC<PlatformToolProps> = (props) => {
 
   return (
     <PlatformToolLayout
-      platformName={t('platform.yahoo.meta.name', 'Yahoo')}
+  platformName={t('platform.yahoo.meta.name')}
       keyword={normalizedKeyword}
       onKeywordChange={setKeyword}
       onSearch={performSearch}
-      description={t('platform.yahoo.description', 'Yahoo searches with autocomplete suggestions.')}
+  description={t('platform.yahoo.description')}
       extraFilters={filters}
       results={results}
-      placeholder={t('platform.yahoo.placeholder', 'What are you searching for?')}
+  placeholder={t('platform.yahoo.placeholder')}
       loading={loading}
       error={error}
-      emptyState={t('platform.yahoo.emptyState', 'Enter a keyword to see Yahoo suggestions.')}
+  emptyState={t('platform.yahoo.emptyState')}
       controls={locationControls}
       onGlobalSearch={onGlobalSearch}
       globalLoading={globalLoading}

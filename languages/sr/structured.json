@@ -9,11 +9,11 @@
     },
     {
       "@type": "WebSite",
-      "name": "Lucy World",
+      "name": "Lucy World – Локална анализа претраге за Србију",
       "url": "https://lucy.world/sr/",
       "inLanguage": "sr",
-      "description": "Keyword research made simple with Google data: suggestions, trends, and insights.",
-      "keywords": "keyword research, SEO, Google Trends, suggestions, search volume",
+      "description": "Lucy World tracks live search demand and AI clustering for Serbian audiences so teams plan weekly campaigns and sustainable growth with confidence.",
+      "keywords": "српске кључне речи, SEO Србија, Google трендови, обим претраге, AI анализа, локална стратегија садржаја",
       "publisher": {
         "@type": "Organization",
         "name": "Lucy World"
@@ -30,15 +30,23 @@
     },
     {
       "@type": "WebPage",
-      "name": "Lucy World",
+      "name": "Lucy World – Локална анализа претраге за Србију",
       "url": "https://lucy.world/sr/",
       "inLanguage": "sr",
       "isPartOf": {
         "@type": "WebSite",
         "url": "https://lucy.world/sr/"
       },
-      "description": "Истраживање кључних речи за Србију са Google подацима: предлози, трендови и AI анализа за раст локалног пословања и оптимизацију садржаја.",
-      "keywords": "српске кључне речи, SEO Србија, Google трендови, обим претраге, AI анализа, локална стратегија садржаја, раст пословања, дигитални маркетинг"
+      "description": "Lucy World tracks live search demand and AI clustering for Serbian audiences so teams plan weekly campaigns and sustainable growth with confidence.",
+      "keywords": "српске кључне речи, SEO Србија, Google трендови, обим претраге, AI анализа, локална стратегија садржаја",
+      "aiSemantic": [
+        "Serbian keyword research",
+        "Serbian SEO insights",
+        "search trends platform",
+        "AI content planning",
+        "Serbian market analysis",
+        "Lucy World intelligence"
+      ]
     }
   ]
 }

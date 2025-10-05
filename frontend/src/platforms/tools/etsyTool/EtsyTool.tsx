@@ -2,21 +2,19 @@ import React, { useMemo } from 'react'
 import type { PlatformToolProps } from '../../types'
 import { createTranslator } from '../../../i18n/translate'
 
-const EtsyTool: React.FC<PlatformToolProps> = ({ ui }) => {
-  const t = useMemo(() => createTranslator(ui), [ui])
+const EtsyTool: React.FC<PlatformToolProps> = ({ ui, uiFallback }) => {
+  const t = useMemo(() => createTranslator(ui, uiFallback), [ui, uiFallback])
+  const heading = t('platform.etsy.heading')
+  const description = t('platform.etsy.description')
+  const placeholder = t('platform.etsy.placeholder')
   return (
     <section className="platform-tool">
       <header className="platform-tool__header">
-        <h3>{t('platform.etsy.heading', 'Etsy keyword tool')}</h3>
-        <p className="platform-tool__description">
-          {t(
-            'platform.etsy.description',
-            'This tool is currently unavailable because Etsy does not offer a public suggestions API without authentication.'
-          )}
-        </p>
+        <h3>{heading}</h3>
+        <p className="platform-tool__description">{description}</p>
       </header>
       <div className="platform-tool__results">
-        <div className="platform-tool__placeholder">{t('platform.etsy.placeholder', 'Not available')}</div>
+        <div className="platform-tool__placeholder">{placeholder}</div>
       </div>
     </section>
   )

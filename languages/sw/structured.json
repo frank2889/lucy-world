@@ -9,11 +9,11 @@
     },
     {
       "@type": "WebSite",
-      "name": "Lucy World",
+      "name": "Utafiti wa Maneno Muhimu - Lucy World",
       "url": "https://lucy.world/sw/",
       "inLanguage": "sw",
-      "description": "Keyword research made simple with Google data: suggestions, trends, and insights.",
-      "keywords": "keyword research, SEO, Google Trends, suggestions, search volume",
+      "description": "Lucy World tracks live search demand and AI clustering for Swahili audiences so teams plan weekly campaigns and sustainable growth with confidence.",
+      "keywords": "utafiti maneno muhimu, SEO Kiswahili, Google Trends, mapendekezo, kiwango cha utafutaji",
       "publisher": {
         "@type": "Organization",
         "name": "Lucy World"
@@ -30,22 +30,22 @@
     },
     {
       "@type": "WebPage",
-      "name": "Lucy World",
+      "name": "Utafiti wa Maneno Muhimu - Lucy World",
       "url": "https://lucy.world/sw/",
       "inLanguage": "sw",
       "isPartOf": {
         "@type": "WebSite",
         "url": "https://lucy.world/sw/"
       },
-      "description": "Utafiti wa maneno muhimu kwa Afrika Mashariki na mitindo ya Google. Pata mapendekezo na uchambuzi wa data kwa lugha ya Kiswahili.",
-      "keywords": "utafiti maneno muhimu, SEO Kiswahili, Google Trends, mapendekezo, kiwango cha utafutaji, Afrika Mashariki",
+      "description": "Lucy World tracks live search demand and AI clustering for Swahili audiences so teams plan weekly campaigns and sustainable growth with confidence.",
+      "keywords": "utafiti maneno muhimu, SEO Kiswahili, Google Trends, mapendekezo, kiwango cha utafutaji",
       "aiSemantic": [
-        "Google Afrika uchambuzi",
-        "Mitindo ya Kiswahili",
-        "SEO Asia Mashariki",
-        "Utafutaji Afrika",
-        "Maneno muhimu Tanzania",
-        "Uchambuzi wa soko"
+        "Swahili keyword research",
+        "Swahili SEO insights",
+        "search trends platform",
+        "AI content planning",
+        "Swahili market analysis",
+        "Lucy World intelligence"
       ]
     }
   ]

@@ -9,19 +9,11 @@
     },
     {
       "@type": "WebSite",
-      "name": "Lucy World",
+      "name": "Lucy World – شیکردنەوەی گەڕانی ناوخۆیی بۆ کوردستان",
       "url": "https://lucy.world/ku/",
       "inLanguage": "ku",
-      "description": "داتای کوردی Google بدۆزەرەوە بە پێشنیار، ڕەوت و شیکردنەوەی AI کە بڕیارەکانی ناوەڕۆک و گەشەکردنی بازرگانی بەهێز دەکات.",
-      "keywords": "وشە کلیلییە کوردییەکان، SEO کوردستان 2025، ڕەوتەکانی Google، قەبارەی گەڕان، شیکردنەوەی AI، بازاڕگەری دیجیتاڵی ناوخۆیی، ستراتیژی ناوەڕۆک",
-      "aiSemantic": [
-        "کام وشە کلیلییە کوردییەکان زۆرترین گەڕان دەبن لە ٢٠٢٥دا؟",
-        "چۆن داتای Google بۆ SEOی کوردی یەکبخەین؟",
-        "ئامرازەکانی AI بۆ لێکۆڵینەوەی وشە کلیلییە ناوخۆییەکان لە کوردستان",
-        "ڕەوتەکانی بازرگانی ئەلیکترۆنی و بازاڕگەری کوردی ٢٠٢٥",
-        "ستراتیژەکانی SEOی ناوخۆیی بۆ بازرگانەکانی کوردستان",
-        "هەولێر vs سلێمانی – نموونەکانی گەڕانی ناوخۆیی و ڕەوتەکان"
-      ],
+      "description": "Lucy World tracks live search demand and AI clustering for Kurdish audiences so teams plan weekly campaigns and sustainable growth with confidence.",
+      "keywords": "وشە کلیلییە کوردییەکان، SEO کوردستان، ڕەوتەکانی Google، قەبارەی گەڕان، شیکردنەوەی AI، ستراتیژی ناوەڕۆکی ناوخۆیی",
       "publisher": {
         "@type": "Organization",
         "name": "Lucy World"
@@ -38,15 +30,23 @@
     },
     {
       "@type": "WebPage",
-      "name": "Lucy World",
+      "name": "Lucy World – شیکردنەوەی گەڕانی ناوخۆیی بۆ کوردستان",
       "url": "https://lucy.world/ku/",
       "inLanguage": "ku",
       "isPartOf": {
         "@type": "WebSite",
         "url": "https://lucy.world/ku/"
       },
-      "description": "داتای کوردی Google بدۆزەرەوە بە پێشنیار، ڕەوت و شیکردنەوەی AI کە بڕیارەکانی ناوەڕۆک و گەشەکردنی بازرگانی بەهێز دەکات.",
-      "keywords": "وشە کلیلییە کوردییەکان، SEO کوردستان 2025، ڕەوتەکانی Google، قەبارەی گەڕان، شیکردنەوەی AI، بازاڕگەری دیجیتاڵی ناوخۆیی، ستراتیژی ناوەڕۆک"
+      "description": "Lucy World tracks live search demand and AI clustering for Kurdish audiences so teams plan weekly campaigns and sustainable growth with confidence.",
+      "keywords": "وشە کلیلییە کوردییەکان، SEO کوردستان، ڕەوتەکانی Google، قەبارەی گەڕان، شیکردنەوەی AI، ستراتیژی ناوەڕۆکی ناوخۆیی",
+      "aiSemantic": [
+        "Kurdish keyword research",
+        "Kurdish SEO insights",
+        "search trends platform",
+        "AI content planning",
+        "Kurdish market analysis",
+        "Lucy World intelligence"
+      ]
     }
   ]
 }

@@ -9,11 +9,11 @@
     },
     {
       "@type": "WebSite",
-      "name": "Lucy World",
+      "name": "Lucy World – Монгол орны орон нутгийн хайлтын шинжилгээ",
       "url": "https://lucy.world/mn/",
       "inLanguage": "mn",
-      "description": "Keyword research made simple with Google data: suggestions, trends, and insights.",
-      "keywords": "keyword research, SEO, Google Trends, suggestions, search volume",
+      "description": "Lucy World tracks live search demand and AI clustering for Mongolian audiences so teams plan weekly campaigns and sustainable growth with confidence.",
+      "keywords": "монгол түлхүүр үгс, SEO Монгол, Google чиг хандлага, хайлтын эзлэхүүн, AI шинжилгээ, орон нутгийн контент стратеги",
       "publisher": {
         "@type": "Organization",
         "name": "Lucy World"
@@ -30,15 +30,23 @@
     },
     {
       "@type": "WebPage",
-      "name": "Lucy World",
+      "name": "Lucy World – Монгол орны орон нутгийн хайлтын шинжилгээ",
       "url": "https://lucy.world/mn/",
       "inLanguage": "mn",
       "isPartOf": {
         "@type": "WebSite",
         "url": "https://lucy.world/mn/"
       },
-      "description": "Монгол орны түлхүүр үгийн судалгаа Google өгөгдлөөр: зөвлөмж, чиг хандлага, AI шинжилгээ орон нутгийн бизнесийн өсөлтөд зориулсан.",
-      "keywords": "монгол түлхүүр үгс, SEO Монгол, Google чиг хандлага, хайлтын эзлэхүүн, AI шинжилгээ, орон нутгийн контент стратеги, бизнесийн өсөлт, дижитал маркетинг"
+      "description": "Lucy World tracks live search demand and AI clustering for Mongolian audiences so teams plan weekly campaigns and sustainable growth with confidence.",
+      "keywords": "монгол түлхүүр үгс, SEO Монгол, Google чиг хандлага, хайлтын эзлэхүүн, AI шинжилгээ, орон нутгийн контент стратеги",
+      "aiSemantic": [
+        "Mongolian keyword research",
+        "Mongolian SEO insights",
+        "search trends platform",
+        "AI content planning",
+        "Mongolian market analysis",
+        "Lucy World intelligence"
+      ]
     }
   ]
 }

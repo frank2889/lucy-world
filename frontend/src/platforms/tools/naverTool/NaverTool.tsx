@@ -9,7 +9,8 @@ const NaverTool: React.FC<PlatformToolProps> = (props) => {
     setKeyword,
     searchLanguage,
     country,
-    ui,
+  ui,
+  uiFallback,
     locationControls,
     onGlobalSearch,
     globalLoading
@@ -19,7 +20,7 @@ const NaverTool: React.FC<PlatformToolProps> = (props) => {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const hasFetched = useRef(false)
-  const t = useMemo(() => createTranslator(ui), [ui])
+  const t = useMemo(() => createTranslator(ui, uiFallback), [ui, uiFallback])
 
   const performSearch = useCallback(
     async (term: string) => {
@@ -44,21 +45,21 @@ const NaverTool: React.FC<PlatformToolProps> = (props) => {
         const response = await fetch(`/api/platforms/naver?${params.toString()}`)
         if (!response.ok) {
           const payload = await response.json().catch(() => null)
-          throw new Error(payload?.error || t('platform.naver.errors.fetch', 'Unable to fetch Naver suggestions'))
+          throw new Error(payload?.error || t('platform.naver.errors.fetch'))
         }
         const payload = await response.json()
         const suggestions: string[] = Array.isArray(payload?.suggestions) ? payload.suggestions : []
         const mapped: PlatformResultItem[] = suggestions.map((item, index) => ({
           title: item,
-          subtitle: t('platform.naver.results.subtitle', 'Naver autosuggest result'),
-          metric: t('platform.naver.results.rank', 'Popular #{{rank}}', { rank: index + 1 })
+          subtitle: t('platform.naver.results.subtitle'),
+          metric: t('platform.naver.results.rank', { rank: index + 1 })
         }))
         setResults(mapped)
         if (mapped.length === 0) {
-          setError(t('platform.naver.errors.noneFound', 'No Naver suggestions found for this keyword.'))
+          setError(t('platform.naver.errors.noneFound'))
         }
       } catch (err) {
-        const message = err instanceof Error ? err.message : t('platform.naver.errors.generic', 'Unknown error')
+        const message = err instanceof Error ? err.message : t('platform.naver.errors.generic')
         setError(message)
         setResults([])
       } finally {
@@ -88,16 +89,16 @@ const NaverTool: React.FC<PlatformToolProps> = (props) => {
 
   return (
     <PlatformToolLayout
-      platformName={t('platform.naver.meta.name', 'Naver')}
+  platformName={t('platform.naver.meta.name')}
       keyword={normalizedKeyword}
       onKeywordChange={setKeyword}
       onSearch={performSearch}
-      description={t('platform.naver.description', 'Search behaviour and content formats for Naver.')}
+  description={t('platform.naver.description')}
       results={results}
-      placeholder={t('platform.naver.placeholder', 'Which Korean term are you analysing?')}
+  placeholder={t('platform.naver.placeholder')}
       loading={loading}
       error={error}
-      emptyState={t('platform.naver.emptyState', 'Enter a keyword to see Naver opportunities.')}
+  emptyState={t('platform.naver.emptyState')}
       controls={locationControls}
       onGlobalSearch={onGlobalSearch}
       globalLoading={globalLoading}

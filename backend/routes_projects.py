@@ -1,41 +1,35 @@
 from __future__ import annotations
 
-from functools import wraps
-from typing import Callable, Optional
-
+from datetime import datetime
 from flask import Blueprint, jsonify, request
 
 from .extensions import db
-from .models import User, Project
+from .models import DailyUsage, Project, User
+from .routes_helpers import auth_required
+
+
+def _plan_snapshot(user: User) -> dict:
+    today = datetime.utcnow().date()
+    usage = DailyUsage.for_day(user, today)
+    queries_used = usage.query_count if usage else 0
+    return user.plan_payload(include_usage=True, queries_used_today=queries_used)
 
 
 bp = Blueprint('projects', __name__, url_prefix='/api')
-
-
-def auth_required(fn: Callable):
-    @wraps(fn)
-    def wrapper(*args, **kwargs):
-        auth = request.headers.get('Authorization', '')
-        token = ''
-        if auth.startswith('Bearer '):
-            token = auth.split(' ', 1)[1].strip()
-        if not token:
-            token = request.args.get('token', '')
-        if not token:
-            return jsonify({'error': 'Unauthorized'}), 401
-        user: Optional[User] = User.query.filter_by(api_token=token).first()
-        if not user:
-            return jsonify({'error': 'Invalid token'}), 401
-        request.user = user  # type: ignore[attr-defined]
-        return fn(*args, **kwargs)
-    return wrapper
 
 
 @bp.route('/me', methods=['GET'])
 @auth_required
 def me():
     u: User = request.user  # type: ignore
-    return jsonify({'id': u.id, 'email': u.email, 'name': u.name, 'token': u.api_token})
+    usage_snapshot = _plan_snapshot(u)
+    return jsonify({
+        'id': u.id,
+        'email': u.email,
+        'name': u.name,
+        'token': u.api_token,
+        'plan': usage_snapshot,
+    })
 
 
 @bp.route('/users', methods=['POST'])
@@ -47,15 +41,29 @@ def create_user():
         return jsonify({'error': 'email required'}), 400
     existing = User.query.filter_by(email=email).first()
     if existing:
-        return jsonify({'id': existing.id, 'email': existing.email, 'name': existing.name, 'token': existing.api_token})
+        return jsonify({
+            'id': existing.id,
+            'email': existing.email,
+            'name': existing.name,
+            'token': existing.api_token,
+            'plan': _plan_snapshot(existing),
+        })
     user = User.create(email=email, name=name)
-    return jsonify({'id': user.id, 'email': user.email, 'name': user.name, 'token': user.api_token}), 201
+    return jsonify({
+        'id': user.id,
+        'email': user.email,
+        'name': user.name,
+        'token': user.api_token,
+        'plan': _plan_snapshot(user),
+    }), 201
 
 
 @bp.route('/projects', methods=['GET'])
 @auth_required
 def list_projects():
     u: User = request.user  # type: ignore
+    if not u.has_feature('projects'):
+        return jsonify({'error': 'plan_upgrade_required', 'plan': u.plan_payload()}), 403
     projs = Project.query.filter_by(user_id=u.id).order_by(Project.updated_at.desc()).all()
     return jsonify([
         {
@@ -73,6 +81,8 @@ def list_projects():
 @auth_required
 def create_project():
     u: User = request.user  # type: ignore
+    if not u.has_feature('projects'):
+        return jsonify({'error': 'plan_upgrade_required', 'plan': u.plan_payload()}), 403
     data = request.get_json() or {}
     name = (data.get('name') or '').strip()
     if not name:
@@ -89,6 +99,8 @@ def create_project():
 @auth_required
 def get_project(pid: int):
     u: User = request.user  # type: ignore
+    if not u.has_feature('projects'):
+        return jsonify({'error': 'plan_upgrade_required', 'plan': u.plan_payload()}), 403
     p = Project.query.filter_by(id=pid, user_id=u.id).first()
     if not p:
         return jsonify({'error': 'not found'}), 404
@@ -108,6 +120,8 @@ def get_project(pid: int):
 @auth_required
 def update_project(pid: int):
     u: User = request.user  # type: ignore
+    if not u.has_feature('projects'):
+        return jsonify({'error': 'plan_upgrade_required', 'plan': u.plan_payload()}), 403
     p = Project.query.filter_by(id=pid, user_id=u.id).first()
     if not p:
         return jsonify({'error': 'not found'}), 404
@@ -133,6 +147,8 @@ def update_project(pid: int):
 @auth_required
 def delete_project(pid: int):
     u: User = request.user  # type: ignore
+    if not u.has_feature('projects'):
+        return jsonify({'error': 'plan_upgrade_required', 'plan': u.plan_payload()}), 403
     p = Project.query.filter_by(id=pid, user_id=u.id).first()
     if not p:
         return jsonify({'error': 'not found'}), 404

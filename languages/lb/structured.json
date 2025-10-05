@@ -9,11 +9,11 @@
     },
     {
       "@type": "WebSite",
-      "name": "Lucy World",
+      "name": "Lucy World – Lokal Sich-Analyse fir Lëtzebuerg",
       "url": "https://lucy.world/lb/",
       "inLanguage": "lb",
-      "description": "Keyword research made simple with Google data: suggestions, trends, and insights.",
-      "keywords": "keyword research, SEO, Google Trends, suggestions, search volume",
+      "description": "Lucy World tracks live search demand and AI clustering for Luxembourgish audiences so teams plan weekly campaigns and sustainable growth with confidence.",
+      "keywords": "lëtzebuergesch Schlësselwierder, SEO Lëtzebuerg, Google-Trends, Sich-Volume, AI-Analyse, lokal Inhaltsstrategie",
       "publisher": {
         "@type": "Organization",
         "name": "Lucy World"
@@ -30,15 +30,23 @@
     },
     {
       "@type": "WebPage",
-      "name": "Lucy World",
+      "name": "Lucy World – Lokal Sich-Analyse fir Lëtzebuerg",
       "url": "https://lucy.world/lb/",
       "inLanguage": "lb",
       "isPartOf": {
         "@type": "WebSite",
         "url": "https://lucy.world/lb/"
       },
-      "description": "Schlësselwuert-Recherche fir Lëtzebuerg mat Google-Donnéeën: Virschléi, Trends an AI-Analysen déi lokal Geschäftsentscheedungen ënnerstëtzen.",
-      "keywords": "lëtzebuergesch Schlësselwierder, SEO Lëtzebuerg, Google Trends, Sich-Volume, AI-Analyse, lokal Inhaltsstrategie, Geschäftswuesstem, digital Marketing"
+      "description": "Lucy World tracks live search demand and AI clustering for Luxembourgish audiences so teams plan weekly campaigns and sustainable growth with confidence.",
+      "keywords": "lëtzebuergesch Schlësselwierder, SEO Lëtzebuerg, Google-Trends, Sich-Volume, AI-Analyse, lokal Inhaltsstrategie",
+      "aiSemantic": [
+        "Luxembourgish keyword research",
+        "Luxembourgish SEO insights",
+        "search trends platform",
+        "AI content planning",
+        "Luxembourgish market analysis",
+        "Lucy World intelligence"
+      ]
     }
   ]
 }

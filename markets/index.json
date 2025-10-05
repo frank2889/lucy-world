@@ -271,9 +271,11 @@
     },
     {
       "code": "BT",
-      "defaultLocale": null,
-      "canonical": null,
-      "locales": []
+      "defaultLocale": "en-BT",
+      "canonical": "https://lucy.world/en",
+      "locales": [
+        "en"
+      ]
     },
     {
       "code": "BV",
@@ -698,9 +700,12 @@
     },
     {
       "code": "GL",
-      "defaultLocale": null,
-      "canonical": null,
-      "locales": []
+      "defaultLocale": "da-GL",
+      "canonical": "https://lucy.world/da",
+      "locales": [
+        "da",
+        "en"
+      ]
     },
     {
       "code": "GM",
@@ -1302,9 +1307,11 @@
     },
     {
       "code": "MV",
-      "defaultLocale": null,
-      "canonical": null,
-      "locales": []
+      "defaultLocale": "en-MV",
+      "canonical": "https://lucy.world/en",
+      "locales": [
+        "en"
+      ]
     },
     {
       "code": "MW",

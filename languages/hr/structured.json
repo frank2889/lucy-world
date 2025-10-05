@@ -9,19 +9,11 @@
     },
     {
       "@type": "WebSite",
-      "name": "Lucy World",
+      "name": "Lucy World – Lokalna analiza pretrage za Hrvatsku",
       "url": "https://lucy.world/hr/",
       "inLanguage": "hr",
-      "description": "Otkrijte hrvatske Google podatke s prijedlozima, trendovima i AI analizom koji jačaju odluke o sadržaju i poslovni rast.",
-      "keywords": "hrvatske ključne riječi, SEO Hrvatska 2025, Google trendovi, volumen pretrage, AI analiza, lokalni digitalni marketing, strategija sadržaja",
-      "aiSemantic": [
-        "Koje hrvatske ključne riječi imaju najviše pretraga u 2025?",
-        "Kako kombinirati Google podatke za hrvatski SEO?",
-        "AI alati za istraživanje lokalnih ključnih riječi u Hrvatskoj",
-        "Hrvatski e-commerce i marketing trendovi 2025",
-        "Lokalne SEO strategije za hrvatska poduzeća",
-        "Zagreb vs Split - lokalni obrasci pretrage i trendovi"
-      ],
+      "description": "Lucy World tracks live search demand and AI clustering for Croatian audiences so teams plan weekly campaigns and sustainable growth with confidence.",
+      "keywords": "hrvatske ključne riječi, SEO Hrvatska, Google trendovi, volumen pretrage, AI analiza, strategija lokalnog sadržaja",
       "publisher": {
         "@type": "Organization",
         "name": "Lucy World"
@@ -38,15 +30,23 @@
     },
     {
       "@type": "WebPage",
-      "name": "Lucy World",
+      "name": "Lucy World – Lokalna analiza pretrage za Hrvatsku",
       "url": "https://lucy.world/hr/",
       "inLanguage": "hr",
       "isPartOf": {
         "@type": "WebSite",
         "url": "https://lucy.world/hr/"
       },
-      "description": "Otkrijte hrvatske Google podatke s prijedlozima, trendovima i AI analizom koji jačaju odluke o sadržaju i poslovni rast.",
-      "keywords": "hrvatske ključne riječi, SEO Hrvatska 2025, Google trendovi, volumen pretrage, AI analiza, lokalni digitalni marketing, strategija sadržaja"
+      "description": "Lucy World tracks live search demand and AI clustering for Croatian audiences so teams plan weekly campaigns and sustainable growth with confidence.",
+      "keywords": "hrvatske ključne riječi, SEO Hrvatska, Google trendovi, volumen pretrage, AI analiza, strategija lokalnog sadržaja",
+      "aiSemantic": [
+        "Croatian keyword research",
+        "Croatian SEO insights",
+        "search trends platform",
+        "AI content planning",
+        "Croatian market analysis",
+        "Lucy World intelligence"
+      ]
     }
   ]
 }

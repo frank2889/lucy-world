@@ -9,11 +9,11 @@
     },
     {
       "@type": "WebSite",
-      "name": "Lucy World",
+      "name": "Тадқиқоти калимаҳои калидӣ - Lucy World",
       "url": "https://lucy.world/tg/",
       "inLanguage": "tg",
-      "description": "Keyword research made simple with Google data: suggestions, trends, and insights.",
-      "keywords": "keyword research, SEO, Google Trends, suggestions, search volume",
+      "description": "Lucy World tracks live search demand and AI clustering for Tajik audiences so teams plan weekly campaigns and sustainable growth with confidence.",
+      "keywords": "тадқиқоти калимаҳои калидӣ, SEO тоҷикӣ, Google Trends, пешниҳодҳо, ҳаҷми ҷустуҷӯ",
       "publisher": {
         "@type": "Organization",
         "name": "Lucy World"
@@ -30,22 +30,22 @@
     },
     {
       "@type": "WebPage",
-      "name": "Lucy World",
+      "name": "Тадқиқоти калимаҳои калидӣ - Lucy World",
       "url": "https://lucy.world/tg/",
       "inLanguage": "tg",
       "isPartOf": {
         "@type": "WebSite",
         "url": "https://lucy.world/tg/"
       },
-      "description": "Тадқиқоти калимаҳои калидӣ барои бозори Тоҷикистон ва маълумоти Google. Таҳлил ва тамоюлот барои беҳтар кардани SEO бо забони тоҷикӣ.",
-      "keywords": "тадқиқоти калимаҳои калидӣ, SEO тоҷикӣ, Google Trends, пешниҳодҳо, ҳаҷми ҷустуҷӯ, Тоҷикистон",
+      "description": "Lucy World tracks live search demand and AI clustering for Tajik audiences so teams plan weekly campaigns and sustainable growth with confidence.",
+      "keywords": "тадқиқоти калимаҳои калидӣ, SEO тоҷикӣ, Google Trends, пешниҳодҳо, ҳаҷми ҷустуҷӯ",
       "aiSemantic": [
-        "Google Тоҷикистон SEO",
-        "Таҳлили бозори тоҷик",
-        "Тамоюлоти ҷустуҷӯии Осиёи Марказӣ",
-        "Тадқиқоти калимаҳо дар забони тоҷикӣ",
-        "SEO Осиёи Марказӣ",
-        "Маркетинги рақамии тоҷик"
+        "Tajik keyword research",
+        "Tajik SEO insights",
+        "search trends platform",
+        "AI content planning",
+        "Tajik market analysis",
+        "Lucy World intelligence"
       ]
     }
   ]

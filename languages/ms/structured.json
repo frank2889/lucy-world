@@ -9,11 +9,11 @@
     },
     {
       "@type": "WebSite",
-      "name": "Lucy World",
+      "name": "Lucy World – Analisis carian tempatan untuk Malaysia",
       "url": "https://lucy.world/ms/",
       "inLanguage": "ms",
-      "description": "Keyword research made simple with Google data: suggestions, trends, and insights.",
-      "keywords": "keyword research, SEO, Google Trends, suggestions, search volume",
+      "description": "Terokai data Google Malaysia dengan cadangan, trend dan analisis AI yang mengukuhkan keputusan kandungan dan pertumbuhan perniagaan tempatan.",
+      "keywords": "kata kunci Melayu, SEO Malaysia, Google Trends, volum carian, analisis AI, strategi kandungan tempatan",
       "publisher": {
         "@type": "Organization",
         "name": "Lucy World"
@@ -30,15 +30,23 @@
     },
     {
       "@type": "WebPage",
-      "name": "Lucy World",
+      "name": "Lucy World – Analisis carian tempatan untuk Malaysia",
       "url": "https://lucy.world/ms/",
       "inLanguage": "ms",
       "isPartOf": {
         "@type": "WebSite",
         "url": "https://lucy.world/ms/"
       },
-      "description": "Penyelidikan kata kunci untuk Malaysia dengan data Google: cadangan, trend dan analisis AI untuk pertumbuhan perniagaan tempatan.",
-      "keywords": "kata kunci Melayu, SEO Malaysia, Google Trends, volum carian, analisis AI, strategi kandungan tempatan, pertumbuhan perniagaan, pemasaran digital"
+      "description": "Terokai data Google Malaysia dengan cadangan, trend dan analisis AI yang mengukuhkan keputusan kandungan dan pertumbuhan perniagaan tempatan.",
+      "keywords": "kata kunci Melayu, SEO Malaysia, Google Trends, volum carian, analisis AI, strategi kandungan tempatan",
+      "aiSemantic": [
+        "Malay keyword research",
+        "Malay SEO insights",
+        "search trends platform",
+        "AI content planning",
+        "Malay market analysis",
+        "Lucy World intelligence"
+      ]
     }
   ]
 }

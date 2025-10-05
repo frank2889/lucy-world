@@ -509,26 +509,27 @@ class FreeSEODataCollector:
         
         return list(set(related_terms))[:10]  # Unieke terms, max 10
     
-    def _generate_backup_suggestions(self, keyword: str) -> List[str]:
-        """Backup suggesties als APIs falen"""
-        prefixes = ["beste", "goedkope", "professionele", "lokale"]
-        suffixes = ["online", "Nederland", "kopen", "bestellen", "service"]
-        locations = ["Amsterdam", "Rotterdam", "Utrecht", "Den Haag"]
-        
+    def _generate_backup_suggestions(self, keyword: str, language: str | None = None, country: str | None = None) -> List[str]:
+        """Backup suggesties als APIs falen, afgestemd op taal waar mogelijk."""
+        lang_code = _normalize_language_code(language)
+        profile = LANGUAGE_PROFILES.get(lang_code) or LANGUAGE_PROFILES.get('en', {})
+
+        prefixes = profile.get('backup_prefixes') or ["best", "cheap", "professional", "local"]
+        suffixes = profile.get('backup_suffixes') or ["online", "buy", "near me", "service", "reviews"]
+        locations = profile.get('backup_locations') or ["New York", "Los Angeles", "Chicago", country or "USA"]
+
         suggestions = []
-        
-        # Prefix combinaties
+
         for prefix in prefixes:
             suggestions.append(f"{prefix} {keyword}")
-        
-        # Suffix combinaties  
+
         for suffix in suffixes:
             suggestions.append(f"{keyword} {suffix}")
-        
-        # Locatie combinaties
+
         for location in locations:
-            suggestions.append(f"{keyword} {location}")
-        
+            if location:
+                suggestions.append(f"{keyword} {location}")
+
         return suggestions[:15]
     
     def estimate_search_volume_smart(self, keyword: str, trends_data: Dict = None) -> int:

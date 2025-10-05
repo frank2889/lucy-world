@@ -9,11 +9,11 @@
     },
     {
       "@type": "WebSite",
-      "name": "Lucy World",
+      "name": "Nghiên cứu từ khóa - Lucy World",
       "url": "https://lucy.world/vi/",
       "inLanguage": "vi",
-      "description": "Keyword research made simple with Google data: suggestions, trends, and insights.",
-      "keywords": "keyword research, SEO, Google Trends, suggestions, search volume",
+      "description": "Lucy World tracks live search demand and AI clustering for Vietnamese audiences so teams plan weekly campaigns and sustainable growth with confidence.",
+      "keywords": "nghiên cứu từ khóa, SEO Việt Nam, Google Trends, gợi ý, lưu lượng tìm kiếm",
       "publisher": {
         "@type": "Organization",
         "name": "Lucy World"
@@ -30,22 +30,22 @@
     },
     {
       "@type": "WebPage",
-      "name": "Lucy World",
+      "name": "Nghiên cứu từ khóa - Lucy World",
       "url": "https://lucy.world/vi/",
       "inLanguage": "vi",
       "isPartOf": {
         "@type": "WebSite",
         "url": "https://lucy.world/vi/"
       },
-      "description": "Nghiên cứu từ khóa cho thị trường Việt Nam và dữ liệu Google. Xu hướng, phân tích và tối ưu SEO cho Google.com.vn.",
-      "keywords": "nghiên cứu từ khóa, SEO Việt Nam, Google Trends, gợi ý, lưu lượng tìm kiếm, thị trường Việt",
+      "description": "Lucy World tracks live search demand and AI clustering for Vietnamese audiences so teams plan weekly campaigns and sustainable growth with confidence.",
+      "keywords": "nghiên cứu từ khóa, SEO Việt Nam, Google Trends, gợi ý, lưu lượng tìm kiếm",
       "aiSemantic": [
-        "Google.com.vn SEO tối ưu",
-        "Phân tích thị trường Việt Nam",
-        "Xu hướng tìm kiếm Việt Nam",
-        "Nghiên cứu từ khóa tiếng Việt",
-        "SEO Đông Nam Á",
-        "Marketing số Việt Nam"
+        "Vietnamese keyword research",
+        "Vietnamese SEO insights",
+        "search trends platform",
+        "AI content planning",
+        "Vietnamese market analysis",
+        "Lucy World intelligence"
       ]
     }
   ]

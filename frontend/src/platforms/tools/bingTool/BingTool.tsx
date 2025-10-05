@@ -37,14 +37,14 @@ const resolveDefaultMarket = (language?: string, country?: string) => {
 }
 
 const BingTool: React.FC<PlatformToolProps> = (props) => {
-  const { keyword, setKeyword, searchLanguage, country, ui } = props
+  const { keyword, setKeyword, searchLanguage, country, ui, uiFallback } = props
   const normalizedKeyword = keyword ?? ''
   const [market, setMarket] = useState(() => resolveDefaultMarket(searchLanguage, country))
   const [results, setResults] = useState<PlatformResultItem[]>([])
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const hasFetched = useRef(false)
-  const t = useMemo(() => createTranslator(ui), [ui])
+  const t = useMemo(() => createTranslator(ui, uiFallback), [ui, uiFallback])
 
   useEffect(() => {
     setMarket(resolveDefaultMarket(searchLanguage, country))
@@ -69,21 +69,21 @@ const BingTool: React.FC<PlatformToolProps> = (props) => {
         const response = await fetch(`/api/platforms/bing?${params.toString()}`)
         if (!response.ok) {
           const payload = await response.json().catch(() => null)
-          throw new Error(payload?.error || t('platform.bing.error.fetch', 'Unable to fetch Bing suggestions'))
+          throw new Error(payload?.error || t('platform.bing.error.fetch'))
         }
         const payload = await response.json()
         const suggestions: string[] = Array.isArray(payload?.suggestions) ? payload.suggestions : []
         const mapped: PlatformResultItem[] = suggestions.map((item, index) => ({
           title: item,
-          subtitle: t('platform.bing.subtitle', 'Autocompletion ({{market}})', { market: payload?.market || market }),
-          metric: t('platform.bing.metric.rank', 'Popularity #{{rank}}', { rank: index + 1 })
+          subtitle: t('platform.bing.subtitle', { market: payload?.market || market }),
+          metric: t('platform.bing.metric.rank', { rank: index + 1 })
         }))
         setResults(mapped)
         if (mapped.length === 0) {
-          setError(t('platform.bing.error.none', 'No Bing suggestions found for this keyword.'))
+          setError(t('platform.bing.error.none'))
         }
       } catch (err) {
-        const message = err instanceof Error ? err.message : t('platform.bing.error.generic', 'Unknown error')
+        const message = err instanceof Error ? err.message : t('platform.bing.error.generic')
         setError(message)
         setResults([])
       } finally {
@@ -114,7 +114,7 @@ const BingTool: React.FC<PlatformToolProps> = (props) => {
   const filters = (
     <div className="platform-tool__filters">
       <label htmlFor="bing-market">
-        {t('platform.bing.filters.market', 'Market')}
+  {t('platform.bing.filters.market')}
         <select
           id="bing-market"
           value={market}
@@ -135,17 +135,17 @@ const BingTool: React.FC<PlatformToolProps> = (props) => {
 
   return (
     <PlatformToolLayout
-      platformName={t('platform.bing.meta.name', 'Bing')}
+  platformName={t('platform.bing.meta.name')}
       keyword={normalizedKeyword}
       onKeywordChange={setKeyword}
       onSearch={performSearch}
-      description={t('platform.bing.description', 'Search optimization insights for Microsoft Bing.')}
+  description={t('platform.bing.description')}
       extraFilters={filters}
       results={results}
-      placeholder={t('platform.bing.placeholder', 'Which keyword do you want to rank on Bing?')}
+  placeholder={t('platform.bing.placeholder')}
       loading={loading}
       error={error}
-      emptyState={t('platform.bing.empty', 'Enter a keyword to uncover Bing opportunities.')}
+  emptyState={t('platform.bing.empty')}
       controls={props.locationControls}
       onGlobalSearch={props.onGlobalSearch}
       globalLoading={props.globalLoading}

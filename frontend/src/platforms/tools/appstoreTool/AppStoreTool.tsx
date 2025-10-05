@@ -35,14 +35,14 @@ type ITunesApp = {
 }
 
 const AppStoreTool: React.FC<PlatformToolProps> = (props) => {
-  const { keyword, setKeyword, country, ui } = props
+  const { keyword, setKeyword, country, ui, uiFallback } = props
   const normalizedKeyword = keyword ?? ''
   const [store, setStore] = useState(() => resolveDefaultStore(country))
   const [results, setResults] = useState<PlatformResultItem[]>([])
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const hasFetched = useRef(false)
-  const t = useMemo(() => createTranslator(ui), [ui])
+  const t = useMemo(() => createTranslator(ui, uiFallback), [ui, uiFallback])
 
   const storeOptions = useMemo(() => APP_STORE_COUNTRIES, [])
 
@@ -69,7 +69,7 @@ const AppStoreTool: React.FC<PlatformToolProps> = (props) => {
         const response = await fetch(`/api/platforms/appstore?${params.toString()}`)
         if (!response.ok) {
           const payload = await response.json().catch(() => null)
-          throw new Error(payload?.error || t('platform.appstore.error.fetch', 'Unable to fetch App Store data'))
+          throw new Error(payload?.error || t('platform.appstore.error.fetch'))
         }
         const payload = await response.json()
         const apps: ITunesApp[] = Array.isArray(payload?.results) ? payload.results : []
@@ -82,22 +82,22 @@ const AppStoreTool: React.FC<PlatformToolProps> = (props) => {
           const price = app.formattedPrice
             || (typeof app.price === 'number'
               ? (app.price === 0
-                ? t('platform.appstore.price.free', 'Free')
+                ? t('platform.appstore.price.included')
                 : `${app.price} ${app.currency || ''}`)
               : null)
           const metricParts = [rating, price].filter(Boolean)
           return {
             title,
             subtitle: subtitleParts.join(' • ') || undefined,
-            metric: metricParts.join(' • ') || t('platform.appstore.metric.rank', 'Popularity #{{rank}}', { rank: index + 1 })
+            metric: metricParts.join(' • ') || t('platform.appstore.metric.rank', { rank: index + 1 })
           }
         })
         setResults(mapped)
         if (mapped.length === 0) {
-          setError(t('platform.appstore.error.none', 'No App Store suggestions found for this keyword.'))
+          setError(t('platform.appstore.error.none'))
         }
       } catch (err) {
-        const message = err instanceof Error ? err.message : t('platform.appstore.error.generic', 'Unknown error')
+        const message = err instanceof Error ? err.message : t('platform.appstore.error.generic')
         setError(message)
         setResults([])
       } finally {
@@ -128,7 +128,7 @@ const AppStoreTool: React.FC<PlatformToolProps> = (props) => {
   const filters = (
     <div className="platform-tool__filters">
       <label htmlFor="appstore-country">
-        {t('platform.appstore.filters.store', 'Store')}
+  {t('platform.appstore.filters.store')}
         <select
           id="appstore-country"
           value={store}
@@ -149,17 +149,17 @@ const AppStoreTool: React.FC<PlatformToolProps> = (props) => {
 
   return (
     <PlatformToolLayout
-      platformName={t('platform.appstore.meta.name', 'App Store')}
+  platformName={t('platform.appstore.meta.name')}
       keyword={normalizedKeyword}
       onKeywordChange={setKeyword}
       onSearch={performSearch}
-      description={t('platform.appstore.description', 'App Store Optimization insights for iOS apps.')}
+  description={t('platform.appstore.description')}
       extraFilters={filters}
       results={results}
-      placeholder={t('platform.appstore.placeholder', 'Which app keyword are you exploring?')}
+  placeholder={t('platform.appstore.placeholder')}
       loading={loading}
       error={error}
-      emptyState={t('platform.appstore.empty', 'Enter a keyword to see App Store suggestions.')}
+  emptyState={t('platform.appstore.empty')}
       controls={props.locationControls}
       onGlobalSearch={props.onGlobalSearch}
       globalLoading={props.globalLoading}

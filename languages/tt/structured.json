@@ -9,11 +9,11 @@
     },
     {
       "@type": "WebSite",
-      "name": "Lucy World",
+      "name": "Ачкыч сүзләр тикшеренүе - Lucy World",
       "url": "https://lucy.world/tt/",
       "inLanguage": "tt",
-      "description": "Keyword research made simple with Google data: suggestions, trends, and insights.",
-      "keywords": "keyword research, SEO, Google Trends, suggestions, search volume",
+      "description": "Lucy World tracks live search demand and AI clustering for Tatar audiences so teams plan weekly campaigns and sustainable growth with confidence.",
+      "keywords": "ачкыч сүзләр тикшеренүе, SEO татар, Google Trends, тәкъдимнәр, эзләү күләме",
       "publisher": {
         "@type": "Organization",
         "name": "Lucy World"
@@ -30,22 +30,22 @@
     },
     {
       "@type": "WebPage",
-      "name": "Lucy World",
+      "name": "Ачкыч сүзләр тикшеренүе - Lucy World",
       "url": "https://lucy.world/tt/",
       "inLanguage": "tt",
       "isPartOf": {
         "@type": "WebSite",
         "url": "https://lucy.world/tt/"
       },
-      "description": "Татарстан базары өчен ачкыч сүзләр тикшеренүе һәм Google мәгълүматлары. Тенденцияләр, күзаллаулар һәм татар теле өчен SEO оптимизацияләү.",
-      "keywords": "ачкыч сүзләр тикшеренүе, SEO татар, Google Trends, тәкъдимнәр, эзләү күләме, Татарстан",
+      "description": "Lucy World tracks live search demand and AI clustering for Tatar audiences so teams plan weekly campaigns and sustainable growth with confidence.",
+      "keywords": "ачкыч сүзләр тикшеренүе, SEO татар, Google Trends, тәкъдимнәр, эзләү күләме",
       "aiSemantic": [
-        "Google Татарстан SEO",
-        "Татар базары анализы",
-        "Татар эзләү тенденцияләре",
-        "Татар ачкыч сүзләр тикшеренүе",
-        "Идел-Урал SEO",
-        "Татар санлы маркетинг"
+        "Tatar keyword research",
+        "Tatar SEO insights",
+        "search trends platform",
+        "AI content planning",
+        "Tatar market analysis",
+        "Lucy World intelligence"
       ]
     }
   ]

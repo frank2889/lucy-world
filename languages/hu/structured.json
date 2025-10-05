@@ -9,19 +9,11 @@
     },
     {
       "@type": "WebSite",
-      "name": "Lucy World",
+      "name": "Lucy World – Helyi keresési elemzés Magyarországnak",
       "url": "https://lucy.world/hu/",
       "inLanguage": "hu",
       "description": "Fedezze fel a magyar Google adatokat javaslatokkal, trendekkel és AI elemzéssel, amelyek erősítik a tartalmi döntéseket és az üzleti növekedést.",
-      "keywords": "magyar kulcsszavak, SEO Magyarország 2025, Google trendek, keresési forgalom, AI elemzés, helyi digitális marketing, tartalomstratégia",
-      "aiSemantic": [
-        "Mely magyar kulcsszavakra keresnek a legtöbbet 2025-ben?",
-        "Hogyan kombináljuk a Google adatokat magyar SEO-hoz?",
-        "AI eszközök helyi kulcsszó kutatáshoz Magyarországon",
-        "Magyar e-kereskedelmi és marketing trendek 2025",
-        "Helyi SEO stratégiák magyar vállalkozások számára",
-        "Budapest vs Debrecen – helyi keresési minták és trendek"
-      ],
+      "keywords": "magyar kulcsszavak, SEO Magyarország, Google trendek, keresési forgalom, AI elemzés, helyi tartalomstratégia",
       "publisher": {
         "@type": "Organization",
         "name": "Lucy World"
@@ -38,7 +30,7 @@
     },
     {
       "@type": "WebPage",
-      "name": "Lucy World",
+      "name": "Lucy World – Helyi keresési elemzés Magyarországnak",
       "url": "https://lucy.world/hu/",
       "inLanguage": "hu",
       "isPartOf": {
@@ -46,7 +38,15 @@
         "url": "https://lucy.world/hu/"
       },
       "description": "Fedezze fel a magyar Google adatokat javaslatokkal, trendekkel és AI elemzéssel, amelyek erősítik a tartalmi döntéseket és az üzleti növekedést.",
-      "keywords": "magyar kulcsszavak, SEO Magyarország 2025, Google trendek, keresési forgalom, AI elemzés, helyi digitális marketing, tartalomstratégia"
+      "keywords": "magyar kulcsszavak, SEO Magyarország, Google trendek, keresési forgalom, AI elemzés, helyi tartalomstratégia",
+      "aiSemantic": [
+        "Hungarian keyword research",
+        "Hungarian SEO insights",
+        "search trends platform",
+        "AI content planning",
+        "Hungarian market analysis",
+        "Lucy World intelligence"
+      ]
     }
   ]
 }

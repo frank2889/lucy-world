@@ -4,6 +4,7 @@ import { AMAZON_MARKETPLACE_CODES } from './platforms/data/amazonMarketplaces'
 import PlatformSidebar from './platforms/Sidebar/PlatformSidebar'
 import { usePlatformHandler } from './platforms/handlers/platformHandler'
 import { createTranslator } from './i18n/translate'
+import type { UIState } from './platforms/types'
 
 type CategoryItem = {
   keyword: string
@@ -14,7 +15,7 @@ type CategoryItem = {
   trend?: string
 }
 
-type FreeSearchResponse = {
+type PremiumSearchResponse = {
   keyword: string
   language: string
   categories: Record<string, CategoryItem[]>
@@ -33,8 +34,8 @@ type FreeSearchResponse = {
   }
 }
 
-async function freeSearch(keyword: string, language: string): Promise<FreeSearchResponse> {
-  const res = await fetch('/api/free/search', {
+async function premiumSearch(keyword: string, language: string): Promise<PremiumSearchResponse> {
+  const res = await fetch('/api/premium/search', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ keyword, language })
@@ -50,7 +51,26 @@ function nl(n?: number) {
 export default function App() {
   // Detect UI language from URL prefix: /<lang>/ ... fallback to saved preference, then 'en'
   const urlLang = (typeof window !== 'undefined' ? window.location.pathname.split('/').filter(Boolean)[0] : '')
-  const [ui, setUi] = useState<{ lang: string; dir: 'ltr' | 'rtl'; strings: Record<string,string> } | null>(null)
+  const [ui, setUi] = useState<UIState | null>(null)
+  const [uiFallback, setUiFallback] = useState<UIState | null>(null)
+  useEffect(() => {
+    let cancelled = false
+    fetch('/meta/content/en.json')
+      .then((r) => (r.ok ? r.json() : Promise.reject()))
+      .then((data) => {
+        if (!cancelled) {
+          setUiFallback(data)
+        }
+      })
+      .catch(() => {
+        if (!cancelled) {
+          setUiFallback({ lang: 'en', dir: 'ltr', strings: {} })
+        }
+      })
+    return () => {
+      cancelled = true
+    }
+  }, [])
   useEffect(() => {
     // Prefer URL language when present; otherwise prefer saved UI language; else 'en'
     let lang = (urlLang || '').split('-')[0].toLowerCase()
@@ -126,7 +146,7 @@ export default function App() {
   const [showCountryDropdown, setShowCountryDropdown] = useState(false)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
-  const [data, setData] = useState<FreeSearchResponse | null>(null)
+  const [data, setData] = useState<PremiumSearchResponse | null>(null)
   const [token, setToken] = useState<string | null>(() => {
     try { return localStorage.getItem('lw_token') } catch { return null }
   })
@@ -158,30 +178,78 @@ export default function App() {
   const isSignedIn = !!token
   const { platforms, activePlatform, activePlatformId, setActivePlatformId } = usePlatformHandler()
   const ActivePlatformTool = activePlatform?.tool
-  const translate = useMemo(() => createTranslator(ui), [ui])
-  const localizedPlatforms = useMemo(
-    () =>
-      platforms.map((platform) => ({
+  const translate = useMemo(() => createTranslator(ui, uiFallback), [ui, uiFallback])
+  const localizedPlatforms = useMemo(() => {
+    const googleDescription = translate('platform.google.description')
+    const duckduckgoDescription = translate('platform.duckduckgo.description')
+    const yahooDescription = translate('platform.yahoo.description')
+    const braveDescription = translate('platform.brave.description')
+    const qwantDescription = translate('platform.qwant.description')
+    const youtubeDescription = translate('platform.youtube.description')
+    const amazonDescription = translate('platform.amazon.description')
+    const tiktokDescription = translate('platform.tiktok.description')
+    const instagramDescription = translate('platform.instagram.description')
+    const pinterestDescription = translate('platform.pinterest.description')
+    const bingDescription = translate('platform.bing.description')
+    const baiduDescription = translate('platform.baidu.description')
+    const yandexDescription = translate('platform.yandex.description')
+    const naverDescription = translate('platform.naver.description')
+    const ebayDescription = translate('platform.ebay.description')
+    const appStoreDescription = translate('platform.appstore.description')
+    const googlePlayDescription = translate('platform.googlePlay.description')
+    const etsyDescription = translate('platform.etsy.description')
+
+    const descriptionMap: Record<string, { key: string; value: string }> = {
+      google: { key: 'platform.google.description', value: googleDescription },
+      duckduckgo: { key: 'platform.duckduckgo.description', value: duckduckgoDescription },
+      yahoo: { key: 'platform.yahoo.description', value: yahooDescription },
+      brave: { key: 'platform.brave.description', value: braveDescription },
+      qwant: { key: 'platform.qwant.description', value: qwantDescription },
+      youtube: { key: 'platform.youtube.description', value: youtubeDescription },
+      amazon: { key: 'platform.amazon.description', value: amazonDescription },
+      tiktok: { key: 'platform.tiktok.description', value: tiktokDescription },
+      instagram: { key: 'platform.instagram.description', value: instagramDescription },
+      pinterest: { key: 'platform.pinterest.description', value: pinterestDescription },
+      bing: { key: 'platform.bing.description', value: bingDescription },
+      baidu: { key: 'platform.baidu.description', value: baiduDescription },
+      yandex: { key: 'platform.yandex.description', value: yandexDescription },
+      naver: { key: 'platform.naver.description', value: naverDescription },
+      ebay: { key: 'platform.ebay.description', value: ebayDescription },
+      appstore: { key: 'platform.appstore.description', value: appStoreDescription },
+      googleplay: { key: 'platform.googlePlay.description', value: googlePlayDescription },
+      etsy: { key: 'platform.etsy.description', value: etsyDescription }
+    }
+
+    return platforms.map((platform) => {
+      const fallback = platform.description || platform.name
+      const translated = descriptionMap[platform.id]
+      if (!translated) {
+        return {
+          ...platform,
+          description: fallback
+        }
+      }
+      return {
         ...platform,
-        description: translate(`platform.${platform.id}.sidebar_description`, platform.description || platform.name)
-      })),
-    [platforms, translate]
-  )
-  const locationUnknownLabel = useMemo(() => translate('topbar.location_unknown', 'Location unknown'), [translate])
-  const openNavigationLabel = useMemo(() => translate('aria.open_navigation', 'Open navigation'), [translate])
-  const myProjectsLabel = useMemo(() => translate('projects.button.my_projects', 'My projects'), [translate])
-  const saveProjectLabel = useMemo(() => translate('projects.button.save', 'Save project'), [translate])
-  const closeLabel = useMemo(() => translate('modal.close', 'Close'), [translate])
-  const signInTitle = useMemo(() => translate('auth.signin.title', 'Sign in'), [translate])
-  const signInDescription = useMemo(() => translate('auth.signin.description', 'Enter your email to get a one-time sign-in link. No password needed.'), [translate])
-  const signInPlaceholder = useMemo(() => translate('auth.signin.placeholder', 'you@example.com'), [translate])
-  const sendLinkLabel = useMemo(() => translate('auth.signin.submit', 'Send link'), [translate])
-  const projectsTitle = useMemo(() => translate('projects.modal.title', 'My projects'), [translate])
-  const projectsEmptyMessage = useMemo(() => translate('projects.modal.empty', 'No projects yet. Run a search and click "{{save}}" to create one.', { save: saveProjectLabel }), [translate, saveProjectLabel])
-  const openLabel = useMemo(() => translate('projects.modal.open', 'Open'), [translate])
-  const renameLabel = useMemo(() => translate('projects.modal.rename', 'Rename'), [translate])
-  const deleteLabel = useMemo(() => translate('projects.modal.delete', 'Delete'), [translate])
-  const getCountryAriaLabel = useCallback((code: string) => translate('aria.country_label', 'Country {{code}}', { code: code.toUpperCase() }), [translate])
+        description: translated.value === translated.key ? fallback : translated.value
+      }
+    })
+  }, [platforms, translate])
+  const locationUnknownLabel = useMemo(() => translate('topbar.location_unknown'), [translate])
+  const openNavigationLabel = useMemo(() => translate('aria.open_navigation'), [translate])
+  const myProjectsLabel = useMemo(() => translate('projects.button.my_projects'), [translate])
+  const saveProjectLabel = useMemo(() => translate('projects.button.save'), [translate])
+  const closeLabel = useMemo(() => translate('modal.close'), [translate])
+  const signInTitle = useMemo(() => translate('auth.signin.title'), [translate])
+  const signInDescription = useMemo(() => translate('auth.signin.description'), [translate])
+  const signInPlaceholder = useMemo(() => translate('auth.signin.placeholder'), [translate])
+  const sendLinkLabel = useMemo(() => translate('auth.signin.submit'), [translate])
+  const projectsTitle = useMemo(() => translate('projects.modal.title'), [translate])
+  const projectsEmptyMessage = useMemo(() => translate('projects.modal.empty', { save: saveProjectLabel }), [translate, saveProjectLabel])
+  const openLabel = useMemo(() => translate('projects.modal.open'), [translate])
+  const renameLabel = useMemo(() => translate('projects.modal.rename'), [translate])
+  const deleteLabel = useMemo(() => translate('projects.modal.delete'), [translate])
+  const getCountryAriaLabel = useCallback((code: string) => translate('aria.country_label', { code: code.toUpperCase() }), [translate])
 
   // Priority countries (mix of major regions + active marketplace coverage - no bias)
   const priorityCountries = useMemo(() => {
@@ -308,9 +376,9 @@ export default function App() {
           className="select flag-select"
           onClick={() => setShowCountryDropdown(!showCountryDropdown)}
           style={{ cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}
-          title={country ? `${flagEmoji(country)} ${getCountryName(country)}` : translate('controls.country.select_title', 'Select country')}
+          title={country ? `${flagEmoji(country)} ${getCountryName(country)}` : translate('controls.country.select_title')}
         >
-          <span>{country ? `${flagEmoji(country)} ${getCountryName(country)}` : `🌍 ${translate('controls.country.select_placeholder', 'Select country')}`}</span>
+          <span>{country ? `${flagEmoji(country)} ${getCountryName(country)}` : `🌍 ${translate('controls.country.select_placeholder')}`}</span>
           <span style={{ marginLeft: 8, fontSize: 12 }}>▼</span>
         </div>
         {showCountryDropdown && (
@@ -331,7 +399,7 @@ export default function App() {
           >
             <input
               type="text"
-              placeholder={translate('controls.country.search_placeholder', 'Search countries…')}
+              placeholder={translate('controls.country.search_placeholder')}
               value={countrySearchTerm}
               onChange={(e) => setCountrySearchTerm(e.target.value)}
               onKeyDown={(e) => {
@@ -387,7 +455,7 @@ export default function App() {
               ))}
               {filteredCountries.length === 0 && (
                 <div style={{ padding: 16, textAlign: 'center', color: 'var(--text-secondary)' }}>
-                  {translate('controls.country.no_results', 'No countries found')}
+                  {translate('controls.country.no_results')}
                 </div>
               )}
             </div>
@@ -419,7 +487,7 @@ export default function App() {
     if (!submittedKeyword) return
 
     if (!country) {
-      alert(translate('alerts.country_required', 'Please select a country first'))
+      alert(translate('alerts.country_required'))
       return
     }
 
@@ -440,12 +508,12 @@ export default function App() {
     const searchStartTime = Date.now()
 
     try {
-      const res = await fetch('/api/free/search', {
+      const res = await fetch('/api/premium/search', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ keyword: submittedKeyword, language: searchLanguage, country })
       })
-      if (!res.ok) throw new Error(translate('errors.search_failed', 'Search failed'))
+  if (!res.ok) throw new Error(translate('errors.search_failed'))
       const result = await res.json()
       setData(result)
 
@@ -462,16 +530,16 @@ export default function App() {
         console.log('✅ GTM: Search successful', totalKeywords, 'results')
       }
     } catch (err: any) {
-      setError(err?.message || translate('errors.generic', 'Something went wrong'))
+      setError(err?.message || translate('errors.generic'))
 
       if (typeof window !== 'undefined' && (window as any).dataLayer) {
         ;(window as any).dataLayer.push({
           event: 'search_error',
           search_keyword: submittedKeyword,
-          error_message: err?.message || 'Search failed',
+          error_message: err?.message || translate('errors.search_failed'),
           response_time: Date.now() - searchStartTime
         })
-        console.log('❌ GTM: Search failed', err?.message)
+        console.log('❌ GTM:', translate('errors.search_failed'), err?.message)
       }
     } finally {
       setLoading(false)
@@ -487,11 +555,11 @@ export default function App() {
         method: 'POST', headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email })
       })
-      if (!res.ok) throw new Error(translate('auth.magic_link.failed', 'Failed to send sign-in link'))
-      alert(translate('auth.magic_link.sent', 'Check your email for a sign-in link. After clicking it, you will be redirected back here and signed in automatically.'))
+      if (!res.ok) throw new Error(translate('auth.magic_link.failed'))
+      alert(translate('auth.magic_link.sent'))
       setShowSignin(false)
     } catch (err: any) {
-      alert(err?.message || translate('auth.magic_link.error', 'Unable to send sign-in link'))
+      alert(err?.message || translate('auth.magic_link.error'))
     }
   }
 
@@ -526,35 +594,35 @@ export default function App() {
         setShowSignin(true)
         return
       }
-      const res = await fetch('/api/projects', { headers: { 'Authorization': `Bearer ${t}` } })
-      if (!res.ok) throw new Error(translate('projects.error.load', 'Failed to load projects'))
+  const res = await fetch('/api/projects', { headers: { 'Authorization': `Bearer ${t}` } })
+  if (!res.ok) throw new Error(translate('projects.error.load'))
       const j = await res.json()
       setProjects(Array.isArray(j) ? j : [])
       setShowProjects(true)
     } catch (err: any) {
-      alert(err?.message || translate('projects.error.load_generic', 'Could not load projects'))
+      alert(err?.message || translate('projects.error.load_generic'))
     }
   }
 
   const openProject = async (pid: number) => {
     try {
-      const t = token || localStorage.getItem('lw_token')
-      if (!t) { setShowSignin(true); return }
-      const res = await fetch(`/api/projects/${pid}`, { headers: { 'Authorization': `Bearer ${t}` } })
-      if (!res.ok) throw new Error(translate('projects.error.open', 'Failed to open project'))
+    const t = token || localStorage.getItem('lw_token')
+    if (!t) { setShowSignin(true); return }
+    const res = await fetch(`/api/projects/${pid}`, { headers: { 'Authorization': `Bearer ${t}` } })
+    if (!res.ok) throw new Error(translate('projects.error.open'))
       const j = await res.json()
-      // Restore search context
-  if (j.language) updateSearchLanguage(String(j.language), true)
+    // Restore search context
+    if (j.language) updateSearchLanguage(String(j.language), true)
       if (j.country) setCountry(String(j.country))
       if (j.data) setData(j.data)
       setShowProjects(false)
     } catch (err: any) {
-      alert(err?.message || translate('projects.error.open_generic', 'Unable to open project'))
+      alert(err?.message || translate('projects.error.open_generic'))
     }
   }
 
   const renameProject = async (pid: number) => {
-    const newName = prompt(translate('projects.rename.prompt', 'New project name:'))
+    const newName = prompt(translate('projects.rename.prompt'))
     if (!newName) return
     try {
       const t = token || localStorage.getItem('lw_token')
@@ -564,16 +632,16 @@ export default function App() {
         headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${t}` },
         body: JSON.stringify({ name: newName.trim() })
       })
-      if (!res.ok) throw new Error(translate('projects.error.rename', 'Rename failed'))
+  if (!res.ok) throw new Error(translate('projects.error.rename'))
       // update locally
       setProjects(prev => prev.map(p => p.id === pid ? { ...p, name: newName.trim() } : p))
     } catch (err: any) {
-      alert(err?.message || translate('projects.error.rename_generic', 'Rename failed'))
+      alert(err?.message || translate('projects.error.rename_generic'))
     }
   }
 
   const deleteProject = async (pid: number) => {
-    if (!confirm(translate('projects.delete.confirm', 'Delete this project?'))) return
+    if (!confirm(translate('projects.delete.confirm'))) return
     try {
       const t = token || localStorage.getItem('lw_token')
       if (!t) { setShowSignin(true); return }
@@ -581,10 +649,10 @@ export default function App() {
         method: 'DELETE',
         headers: { 'Authorization': `Bearer ${t}` }
       })
-      if (!res.ok) throw new Error(translate('projects.error.delete', 'Delete failed'))
+  if (!res.ok) throw new Error(translate('projects.error.delete'))
       setProjects(prev => prev.filter(p => p.id !== pid))
     } catch (err: any) {
-      alert(err?.message || translate('projects.error.delete_generic', 'Delete failed'))
+      alert(err?.message || translate('projects.error.delete_generic'))
     }
   }
 
@@ -596,7 +664,7 @@ export default function App() {
         return
       }
       if (!data) {
-        alert(translate('projects.save.missing_search', 'Run a search first before saving a project'))
+        alert(translate('projects.save.missing_search'))
         return
       }
       const res = await fetch('/api/projects', {
@@ -604,22 +672,21 @@ export default function App() {
         headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${t}` },
         body: JSON.stringify({
           name: `${data.keyword} (${searchLanguage}-${country})`,
-          description: translate('projects.save.default_description', 'Saved from Lucy World'),
+          description: translate('projects.save.default_description'),
           language: searchLanguage,
           country,
           data
         })
       })
-      if (!res.ok) throw new Error(translate('projects.error.save', 'Failed to save project'))
+      if (!res.ok) throw new Error(translate('projects.error.save'))
       const j = await res.json()
-      const success = translate('projects.save.success', 'Project saved')
       if (j?.id) {
-        alert(`${success} (ID ${j.id})`)
+        alert(translate('projects.save.success_with_id', { id: j.id }))
       } else {
-        alert(success)
+        alert(translate('projects.save.success'))
       }
     } catch (err: any) {
-      alert(err?.message || translate('projects.error.save_generic', 'Save failed'))
+      alert(err?.message || translate('projects.error.save_generic'))
     }
   }
 
@@ -798,7 +865,7 @@ export default function App() {
   <aside id="sidebar" className={`sidebar ${sidebarOpen ? 'open' : ''}`} aria-hidden={!sidebarOpen}>
         <div className="sidebar-brand">Lucy <span>World</span></div>
         <PlatformSidebar
-          title={translate('platforms.sidebar.title', 'Platforms')}
+          title={translate('platforms.sidebar.title')}
           platforms={localizedPlatforms}
           activePlatformId={activePlatformId}
           onSelect={(platformId) => {
@@ -1082,9 +1149,7 @@ export default function App() {
             <Suspense
               fallback={
                 <div className="card" style={{ marginTop: 24, padding: 24 }}>
-                  {translate('platforms.loading_fallback', 'Loading {{platform}}…', {
-                    platform: activePlatform?.name || translate('platforms.loading_generic', 'platform')
-                  })}
+                  {translate('platforms.common.placeholder.loading')}
                 </div>
               }
             >
@@ -1092,6 +1157,7 @@ export default function App() {
                 keyword={keyword}
                 setKeyword={setKeyword}
                 ui={ui}
+                uiFallback={uiFallback}
                 loading={loading}
                 error={error}
                 data={data}
@@ -1116,7 +1182,7 @@ export default function App() {
                 locationControls={locationControls}
               />
             </Suspense>
-            <div className="hint" style={{ marginTop: 12 }}>{ui?.strings['search.hint'] || 'Free suggestions and trends. Results appear below.'}</div>
+            <div className="hint" style={{ marginTop: 12 }}>{ui?.strings['search.hint'] || 'Premium suggestions and trends. Results appear below.'}</div>
             <div className="hint" style={{ opacity: 0.8 }}>
               {ui?.strings['hint.site_vs_search'] || 'Use the selectors to choose the search country and language. Change the site interface language from the top menu.'}
             </div>

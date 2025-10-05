@@ -9,19 +9,11 @@
     },
     {
       "@type": "WebSite",
-      "name": "Lucy World",
+      "name": "Lucy World – Análise de busca local para Galicia",
       "url": "https://lucy.world/gl/",
       "inLanguage": "gl",
       "description": "Descobre datos galegos de Google con suxerencias, tendencias e análise de IA que reforzam as decisións de contido e o crecemento empresarial.",
-      "keywords": "palabras clave galegas, SEO Galicia 2025, tendencias Google, volume de busca, análise IA, marketing dixital local, estratexia de contido",
-      "aiSemantic": [
-        "Que palabras clave galegas teñen máis buscas en 2025?",
-        "Como combinar datos de Google para SEO en galego?",
-        "Ferramentas IA para investigación local de palabras clave en Galicia",
-        "Tendencias e-commerce e marketing galego 2025",
-        "Estratexias SEO locais para empresas galegas",
-        "A Coruña vs Vigo – patróns de busca locais e tendencias"
-      ],
+      "keywords": "palabras clave galegas, SEO Galicia, tendencias Google, volume de busca, análise IA, estratexia de contido local",
       "publisher": {
         "@type": "Organization",
         "name": "Lucy World"
@@ -38,7 +30,7 @@
     },
     {
       "@type": "WebPage",
-      "name": "Lucy World",
+      "name": "Lucy World – Análise de busca local para Galicia",
       "url": "https://lucy.world/gl/",
       "inLanguage": "gl",
       "isPartOf": {
@@ -46,7 +38,15 @@
         "url": "https://lucy.world/gl/"
       },
       "description": "Descobre datos galegos de Google con suxerencias, tendencias e análise de IA que reforzam as decisións de contido e o crecemento empresarial.",
-      "keywords": "palabras clave galegas, SEO Galicia 2025, tendencias Google, volume de busca, análise IA, marketing dixital local, estratexia de contido"
+      "keywords": "palabras clave galegas, SEO Galicia, tendencias Google, volume de busca, análise IA, estratexia de contido local",
+      "aiSemantic": [
+        "Galician keyword research",
+        "Galician SEO insights",
+        "search trends platform",
+        "AI content planning",
+        "Galician market analysis",
+        "Lucy World intelligence"
+      ]
     }
   ]
 }

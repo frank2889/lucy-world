@@ -9,11 +9,11 @@
     },
     {
       "@type": "WebSite",
-      "name": "Lucy World",
+      "name": "Lucy World – Fanadihadiana fikarohana eo an-toerana ho an'i Madagasikara",
       "url": "https://lucy.world/mg/",
       "inLanguage": "mg",
-      "description": "Keyword research made simple with Google data: suggestions, trends, and insights.",
-      "keywords": "keyword research, SEO, Google Trends, suggestions, search volume",
+      "description": "Jereo ny angon-drakitra Google Malagasy miaraka amin'ny soso-kevitra, fironana ary fanadihadiana AI izay manatanjaka ny fanapahan-kevitra votoaty sy ny fitomboa",
+      "keywords": "teny fototra Malagasy, SEO Madagasikara, Google Trends, habetsaky ny fikarohana, fanadihadiana AI, paikady votoaty eo an-toerana",
       "publisher": {
         "@type": "Organization",
         "name": "Lucy World"
@@ -30,15 +30,23 @@
     },
     {
       "@type": "WebPage",
-      "name": "Lucy World",
+      "name": "Lucy World – Fanadihadiana fikarohana eo an-toerana ho an'i Madagasikara",
       "url": "https://lucy.world/mg/",
       "inLanguage": "mg",
       "isPartOf": {
         "@type": "WebSite",
         "url": "https://lucy.world/mg/"
       },
-      "description": "Fikarohana teny fototra ho an'i Madagasikara miaraka amin'ny angon-drakitra Google: soso-kevitra, fironana ary fanadihadiana AI ho an'ny fitomboan'ny orinasa eo an-toerana.",
-      "keywords": "teny fototra Malagasy, SEO Madagasikara, Google Trends, habetsaky ny fikarohana, fanadihadiana AI, paikady votoaty eo an-toerana, fitomboan'ny orinasa, marketing digital"
+      "description": "Jereo ny angon-drakitra Google Malagasy miaraka amin'ny soso-kevitra, fironana ary fanadihadiana AI izay manatanjaka ny fanapahan-kevitra votoaty sy ny fitomboa",
+      "keywords": "teny fototra Malagasy, SEO Madagasikara, Google Trends, habetsaky ny fikarohana, fanadihadiana AI, paikady votoaty eo an-toerana",
+      "aiSemantic": [
+        "Malagasy keyword research",
+        "Malagasy SEO insights",
+        "search trends platform",
+        "AI content planning",
+        "Malagasy market analysis",
+        "Lucy World intelligence"
+      ]
     }
   ]
 }

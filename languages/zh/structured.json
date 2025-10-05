@@ -9,11 +9,11 @@
     },
     {
       "@type": "WebSite",
-      "name": "Lucy World",
+      "name": "关键词研究 - Lucy World",
       "url": "https://lucy.world/zh/",
       "inLanguage": "zh",
-      "description": "Keyword research made simple with Google data: suggestions, trends, and insights.",
-      "keywords": "keyword research, SEO, Google Trends, suggestions, search volume",
+      "description": "Lucy World tracks live search demand and AI clustering for Chinese audiences so teams plan weekly campaigns and sustainable growth with confidence.",
+      "keywords": "关键词研究, 中文SEO, Google Trends, 建议, 搜索量",
       "publisher": {
         "@type": "Organization",
         "name": "Lucy World"
@@ -30,22 +30,22 @@
     },
     {
       "@type": "WebPage",
-      "name": "Lucy World",
+      "name": "关键词研究 - Lucy World",
       "url": "https://lucy.world/zh/",
       "inLanguage": "zh",
       "isPartOf": {
         "@type": "WebSite",
         "url": "https://lucy.world/zh/"
       },
-      "description": "中文市场关键词研究和Google数据分析。为中国大陆、台湾、香港提供搜索趋势、洞察和SEO优化策略。",
-      "keywords": "关键词研究, 中文SEO, Google Trends, 建议, 搜索量, 中文市场",
+      "description": "Lucy World tracks live search demand and AI clustering for Chinese audiences so teams plan weekly campaigns and sustainable growth with confidence.",
+      "keywords": "关键词研究, 中文SEO, Google Trends, 建议, 搜索量",
       "aiSemantic": [
-        "百度和Google中文SEO",
-        "中华圈市场分析",
-        "中文搜索趋势",
-        "简繁体关键词研究",
-        "大中华区SEO",
-        "中文数字营销"
+        "Chinese keyword research",
+        "Chinese SEO insights",
+        "search trends platform",
+        "AI content planning",
+        "Chinese market analysis",
+        "Lucy World intelligence"
       ]
     }
   ]

@@ -9,11 +9,11 @@
     },
     {
       "@type": "WebSite",
-      "name": "Lucy World",
+      "name": "Lucy World – Search intelligence for English",
       "url": "https://lucy.world/en/",
       "inLanguage": "en",
-  "description": "Practical insights for search and content strategies with trends, suggestions, and analysis to support better decisions and steady growth.",
-  "keywords": "keyword research, SEO, Google Trends, AI search, local search, suggestions, content strategy",
+      "description": "Lucy World tracks live search demand and AI clustering for English audiences so teams plan weekly campaigns and sustainable growth with confidence.",
+      "keywords": "keyword research, SEO, Google Trends, AI search, local search, suggestions, content strategy",
       "publisher": {
         "@type": "Organization",
         "name": "Lucy World"
@@ -30,15 +30,23 @@
     },
     {
       "@type": "WebPage",
-      "name": "Lucy World",
+      "name": "Lucy World – Search intelligence for English",
       "url": "https://lucy.world/en/",
       "inLanguage": "en",
       "isPartOf": {
         "@type": "WebSite",
         "url": "https://lucy.world/en/"
       },
-  "description": "Practical insights for search and content strategies with trends, suggestions, and analysis to support better decisions and steady growth.",
-  "keywords": "keyword research, SEO, Google Trends, AI search, local search, suggestions, content strategy"
+      "description": "Lucy World tracks live search demand and AI clustering for English audiences so teams plan weekly campaigns and sustainable growth with confidence.",
+      "keywords": "keyword research, SEO, Google Trends, AI search, local search, suggestions, content strategy",
+      "aiSemantic": [
+        "English keyword research",
+        "English SEO insights",
+        "search trends platform",
+        "AI content planning",
+        "English market analysis",
+        "Lucy World intelligence"
+      ]
     }
   ]
 }

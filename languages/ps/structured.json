@@ -9,11 +9,11 @@
     },
     {
       "@type": "WebSite",
-      "name": "Lucy World",
+      "name": "Lucy World – د افغانستان لپاره سیمه ایز لټون تحلیل",
       "url": "https://lucy.world/ps/",
       "inLanguage": "ps",
-      "description": "Keyword research made simple with Google data: suggestions, trends, and insights.",
-      "keywords": "keyword research, SEO, Google Trends, suggestions, search volume",
+      "description": "Lucy World tracks live search demand and AI clustering for Pashto audiences so teams plan weekly campaigns and sustainable growth with confidence.",
+      "keywords": "پښتو کلیدي ټکي, SEO افغانستان, Google رجحانات, د لټون حجم, AI تحلیل, سیمه ایز مینځپانګې ستراتیژي",
       "publisher": {
         "@type": "Organization",
         "name": "Lucy World"
@@ -30,15 +30,23 @@
     },
     {
       "@type": "WebPage",
-      "name": "Lucy World",
+      "name": "Lucy World – د افغانستان لپاره سیمه ایز لټون تحلیل",
       "url": "https://lucy.world/ps/",
       "inLanguage": "ps",
       "isPartOf": {
         "@type": "WebSite",
         "url": "https://lucy.world/ps/"
       },
-      "description": "د افغانستان لپاره د کلیدي ټکو څېړنه د Google معلوماتو سره: وړاندیزونه، رجحانات او AI تحلیل د سیمه ایز سوداګریز ودې لپاره.",
-      "keywords": "پښتو کلیدي ټکي, SEO افغانستان, Google رجحانات, د لټون حجم, AI تحلیل, سیمه ایز مینځپانګې ستراتیژي, سوداګریز وده, ډیجیټل بازارموندنه"
+      "description": "Lucy World tracks live search demand and AI clustering for Pashto audiences so teams plan weekly campaigns and sustainable growth with confidence.",
+      "keywords": "پښتو کلیدي ټکي, SEO افغانستان, Google رجحانات, د لټون حجم, AI تحلیل, سیمه ایز مینځپانګې ستراتیژي",
+      "aiSemantic": [
+        "Pashto keyword research",
+        "Pashto SEO insights",
+        "search trends platform",
+        "AI content planning",
+        "Pashto market analysis",
+        "Lucy World intelligence"
+      ]
     }
   ]
 }

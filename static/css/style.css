@@ -1,6 +1,6 @@
 /* ========================================
-   FREE KEYWORD RESEARCH TOOL - MAIN STYLES
-   ======================================== */
+    PREMIUM KEYWORD RESEARCH TOOL - MAIN STYLES
+    ======================================== */
 
 /* Reset & Base */
 * {
@@ -67,7 +67,7 @@ body {
 }
 
 .nowrap {
-    #e8e8e8-space: nowrap;
+    white-space: nowrap;
 }
 
 .hero-title {
@@ -223,7 +223,7 @@ body {
    BADGES & INDICATORS
    ======================================== */
 
-.free-badge {
+.premium-badge {
     background: #ff0037;
     color: #e8e8e8;
     padding: 5px 15px;
@@ -243,7 +243,7 @@ body {
     text-align: center;
 }
 
-.free-indicator {
+.premium-indicator {
     background: #ff0037;
     color: #e8e8e8;
     padding: 3px 8px;

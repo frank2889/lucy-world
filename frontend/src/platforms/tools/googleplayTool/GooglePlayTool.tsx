@@ -3,24 +3,12 @@ import type { PlatformToolProps } from '../../types'
 import { createTranslator } from '../../../i18n/translate'
 import PlatformToolLayout, { type PlatformResultItem } from '../common/PlatformToolLayout'
 
-const GOOGLE_PLAY_REGIONS = [
-  { code: 'US', label: 'United States' },
-  { code: 'GB', label: 'United Kingdom' },
-  { code: 'CA', label: 'Canada' },
-  { code: 'AU', label: 'Australia' },
-  { code: 'DE', label: 'Germany' },
-  { code: 'FR', label: 'France' },
-  { code: 'ES', label: 'Spain' },
-  { code: 'IT', label: 'Italy' },
-  { code: 'NL', label: 'Netherlands' },
-  { code: 'BR', label: 'Brazil' },
-  { code: 'IN', label: 'India' }
-]
+const GOOGLE_PLAY_REGIONS = ['US', 'GB', 'CA', 'AU', 'DE', 'FR', 'ES', 'IT', 'NL', 'BR', 'IN'] as const
 
 const resolveDefaultRegion = (country?: string) => {
   const normalized = (country || '').toUpperCase()
-  const match = GOOGLE_PLAY_REGIONS.find((item) => item.code === normalized)
-  return match?.code ?? 'US'
+  const match = GOOGLE_PLAY_REGIONS.find((code) => code === normalized)
+  return match ?? 'US'
 }
 
 const GooglePlayTool: React.FC<PlatformToolProps> = (props) => {
@@ -30,26 +18,35 @@ const GooglePlayTool: React.FC<PlatformToolProps> = (props) => {
     searchLanguage,
     country,
     ui,
+    uiFallback,
     locationControls,
     onGlobalSearch,
     globalLoading,
     getCountryName
   } = props
   const normalizedKeyword = keyword ?? ''
-  const [region, setRegion] = useState(() => resolveDefaultRegion(country))
+  const [region, setRegion] = useState<string>(() => resolveDefaultRegion(country))
   const [results, setResults] = useState<PlatformResultItem[]>([])
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const hasFetched = useRef(false)
 
-  const t = useMemo(() => createTranslator(ui), [ui])
+  const t = useMemo(() => createTranslator(ui, uiFallback), [ui, uiFallback])
 
   const regionOptions = useMemo(
-    () =>
-      GOOGLE_PLAY_REGIONS.map((item) => ({
-        code: item.code,
-        label: getCountryName?.(item.code) ?? t(`platform.googlePlay.regions.${item.code}`, item.label)
-      })),
+    () => [
+      { code: 'US', label: getCountryName?.('US') ?? t('platform.googlePlay.regions.US') },
+      { code: 'GB', label: getCountryName?.('GB') ?? t('platform.googlePlay.regions.GB') },
+      { code: 'CA', label: getCountryName?.('CA') ?? t('platform.googlePlay.regions.CA') },
+      { code: 'AU', label: getCountryName?.('AU') ?? t('platform.googlePlay.regions.AU') },
+      { code: 'DE', label: getCountryName?.('DE') ?? t('platform.googlePlay.regions.DE') },
+      { code: 'FR', label: getCountryName?.('FR') ?? t('platform.googlePlay.regions.FR') },
+      { code: 'ES', label: getCountryName?.('ES') ?? t('platform.googlePlay.regions.ES') },
+      { code: 'IT', label: getCountryName?.('IT') ?? t('platform.googlePlay.regions.IT') },
+      { code: 'NL', label: getCountryName?.('NL') ?? t('platform.googlePlay.regions.NL') },
+      { code: 'BR', label: getCountryName?.('BR') ?? t('platform.googlePlay.regions.BR') },
+      { code: 'IN', label: getCountryName?.('IN') ?? t('platform.googlePlay.regions.IN') }
+    ],
     [getCountryName, t]
   )
 
@@ -77,23 +74,23 @@ const GooglePlayTool: React.FC<PlatformToolProps> = (props) => {
         const response = await fetch(`/api/platforms/googleplay?${params.toString()}`)
         if (!response.ok) {
           const payload = await response.json().catch(() => null)
-          throw new Error(payload?.error || t('platform.googlePlay.errors.unknownResponse', 'Unknown Google Play error'))
+          throw new Error(payload?.error || t('platform.googlePlay.errors.unknownResponse'))
         }
         const payload = await response.json()
         const suggestions: string[] = Array.isArray(payload?.suggestions) ? payload.suggestions : []
         const mapped: PlatformResultItem[] = suggestions.map((item, index) => ({
           title: item,
-          subtitle: t('platform.googlePlay.results.subtitle', 'Search suggestion ({{country}})', {
+          subtitle: t('platform.googlePlay.results.subtitle', {
             country: (payload?.country?.toUpperCase() || region) ?? region
           }),
-          metric: t('platform.googlePlay.results.rank', 'Popularity #{{rank}}', { rank: index + 1 })
+          metric: t('platform.googlePlay.results.rank', { rank: index + 1 })
         }))
         setResults(mapped)
         if (mapped.length === 0) {
-          setError(t('platform.googlePlay.errors.noneFound', 'No Google Play suggestions found for this keyword.'))
+          setError(t('platform.googlePlay.errors.noneFound'))
         }
       } catch (err) {
-        const message = err instanceof Error ? err.message : t('platform.googlePlay.errors.generic', 'Unknown error')
+        const message = err instanceof Error ? err.message : t('platform.googlePlay.errors.generic')
         setError(message)
         setResults([])
       } finally {
@@ -124,7 +121,7 @@ const GooglePlayTool: React.FC<PlatformToolProps> = (props) => {
   const filters = (
     <div className="platform-tool__filters">
       <label htmlFor="google-play-region">
-  {t('platform.googlePlay.filters.region', 'Region')}
+        {t('platform.googlePlay.filters.region')}
         <select
           id="google-play-region"
           value={region}
@@ -145,17 +142,17 @@ const GooglePlayTool: React.FC<PlatformToolProps> = (props) => {
 
   return (
     <PlatformToolLayout
-  platformName={t('platform.googlePlay.meta.name', 'Google Play')}
+      platformName={t('platform.googlePlay.meta.name')}
       keyword={normalizedKeyword}
       onKeywordChange={setKeyword}
       onSearch={performSearch}
-  description={t('platform.googlePlay.description', 'ASO for Android apps in Google Play.')}
+      description={t('platform.googlePlay.description')}
       extraFilters={filters}
       results={results}
-  placeholder={t('platform.googlePlay.form.placeholder', 'Which Android keyword are you researching?')}
+      placeholder={t('platform.googlePlay.form.placeholder')}
       loading={loading}
       error={error}
-  emptyState={t('platform.googlePlay.emptyState', 'Enter a keyword to see Google Play opportunities.')}
+      emptyState={t('platform.googlePlay.emptyState')}
       controls={locationControls}
       onGlobalSearch={onGlobalSearch}
       globalLoading={globalLoading}

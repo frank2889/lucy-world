@@ -9,11 +9,11 @@
     },
     {
       "@type": "WebSite",
-      "name": "Lucy World",
+      "name": "Lucy World – महाराष्ट्रासाठी स्थानिक शोध विश्लेषण",
       "url": "https://lucy.world/mr/",
       "inLanguage": "mr",
-      "description": "Keyword research made simple with Google data: suggestions, trends, and insights.",
-      "keywords": "keyword research, SEO, Google Trends, suggestions, search volume",
+      "description": "Lucy World tracks live search demand and AI clustering for Marathi audiences so teams plan weekly campaigns and sustainable growth with confidence.",
+      "keywords": "मराठी कीवर्ड, SEO महाराष्ट्र, Google ट्रेंड, शोध व्हॉल्यूम, AI विश्लेषण, स्थानिक सामग्री धोरण",
       "publisher": {
         "@type": "Organization",
         "name": "Lucy World"
@@ -30,15 +30,23 @@
     },
     {
       "@type": "WebPage",
-      "name": "Lucy World",
+      "name": "Lucy World – महाराष्ट्रासाठी स्थानिक शोध विश्लेषण",
       "url": "https://lucy.world/mr/",
       "inLanguage": "mr",
       "isPartOf": {
         "@type": "WebSite",
         "url": "https://lucy.world/mr/"
       },
-      "description": "महाराष्ट्रासाठी कीवर्ड संशोधन Google डेटासह: सूचना, ट्रेंड आणि AI विश्लेषण स्थानिक व्यवसाय वाढीसाठी.",
-      "keywords": "मराठी कीवर्ड, SEO महाराष्ट्र, Google ट्रेंड, शोध व्हॉल्यूम, AI विश्लेषण, स्थानिक सामग्री धोरण, व्यवसाय वाढ, डिजिटल मार्केटिंग"
+      "description": "Lucy World tracks live search demand and AI clustering for Marathi audiences so teams plan weekly campaigns and sustainable growth with confidence.",
+      "keywords": "मराठी कीवर्ड, SEO महाराष्ट्र, Google ट्रेंड, शोध व्हॉल्यूम, AI विश्लेषण, स्थानिक सामग्री धोरण",
+      "aiSemantic": [
+        "Marathi keyword research",
+        "Marathi SEO insights",
+        "search trends platform",
+        "AI content planning",
+        "Marathi market analysis",
+        "Lucy World intelligence"
+      ]
     }
   ]
 }

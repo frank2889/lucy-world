@@ -9,19 +9,11 @@
     },
     {
       "@type": "WebSite",
-      "name": "Lucy World",
+      "name": "Lucy World – Analisis pencarian lokal untuk Indonesia",
       "url": "https://lucy.world/id/",
       "inLanguage": "id",
-      "description": "Temukan data Google Indonesia dengan saran, tren, dan analisis AI yang memperkuat keputusan konten dan pertumbuhan bisnis.",
-      "keywords": "kata kunci Indonesia, SEO Indonesia 2025, tren Google, volume pencarian, analisis AI, pemasaran digital lokal, strategi konten",
-      "aiSemantic": [
-        "Kata kunci Indonesia mana yang paling banyak dicari di 2025?",
-        "Bagaimana menggabungkan data Google untuk SEO Indonesia?",
-        "Tools AI untuk riset kata kunci lokal di Indonesia",
-        "Tren e-commerce dan marketing Indonesia 2025",
-        "Strategi SEO lokal untuk bisnis Indonesia",
-        "Jakarta vs Surabaya – pola pencarian lokal dan tren"
-      ],
+      "description": "Lucy World tracks live search demand and AI clustering for Indonesian audiences so teams plan weekly campaigns and sustainable growth with confidence.",
+      "keywords": "kata kunci Indonesia, SEO Indonesia, tren Google, volume pencarian, analisis AI, strategi konten lokal",
       "publisher": {
         "@type": "Organization",
         "name": "Lucy World"
@@ -38,15 +30,23 @@
     },
     {
       "@type": "WebPage",
-      "name": "Lucy World",
+      "name": "Lucy World – Analisis pencarian lokal untuk Indonesia",
       "url": "https://lucy.world/id/",
       "inLanguage": "id",
       "isPartOf": {
         "@type": "WebSite",
         "url": "https://lucy.world/id/"
       },
-      "description": "Temukan data Google Indonesia dengan saran, tren, dan analisis AI yang memperkuat keputusan konten dan pertumbuhan bisnis.",
-      "keywords": "kata kunci Indonesia, SEO Indonesia 2025, tren Google, volume pencarian, analisis AI, pemasaran digital lokal, strategi konten"
+      "description": "Lucy World tracks live search demand and AI clustering for Indonesian audiences so teams plan weekly campaigns and sustainable growth with confidence.",
+      "keywords": "kata kunci Indonesia, SEO Indonesia, tren Google, volume pencarian, analisis AI, strategi konten lokal",
+      "aiSemantic": [
+        "Indonesian keyword research",
+        "Indonesian SEO insights",
+        "search trends platform",
+        "AI content planning",
+        "Indonesian market analysis",
+        "Lucy World intelligence"
+      ]
     }
   ]
 }

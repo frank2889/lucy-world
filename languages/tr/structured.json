@@ -9,11 +9,11 @@
     },
     {
       "@type": "WebSite",
-      "name": "Lucy World",
+      "name": "Anahtar Kelime Araştırması - Lucy World",
       "url": "https://lucy.world/tr/",
       "inLanguage": "tr",
-      "description": "Keyword research made simple with Google data: suggestions, trends, and insights.",
-      "keywords": "keyword research, SEO, Google Trends, suggestions, search volume",
+      "description": "Lucy World tracks live search demand and AI clustering for Turkish audiences so teams plan weekly campaigns and sustainable growth with confidence.",
+      "keywords": "anahtar kelime araştırması, SEO Türkiye, Google Trends, öneriler, arama hacmi",
       "publisher": {
         "@type": "Organization",
         "name": "Lucy World"
@@ -30,22 +30,22 @@
     },
     {
       "@type": "WebPage",
-      "name": "Lucy World",
+      "name": "Anahtar Kelime Araştırması - Lucy World",
       "url": "https://lucy.world/tr/",
       "inLanguage": "tr",
       "isPartOf": {
         "@type": "WebSite",
         "url": "https://lucy.world/tr/"
       },
-      "description": "Türkiye pazarı için anahtar kelime araştırması ve Google verileri. Trendler, içgörüler ve Google.com.tr için SEO optimizasyonu.",
-      "keywords": "anahtar kelime araştırması, SEO Türkiye, Google Trends, öneriler, arama hacmi, Türk pazarı",
+      "description": "Lucy World tracks live search demand and AI clustering for Turkish audiences so teams plan weekly campaigns and sustainable growth with confidence.",
+      "keywords": "anahtar kelime araştırması, SEO Türkiye, Google Trends, öneriler, arama hacmi",
       "aiSemantic": [
-        "Google.com.tr SEO optimizasyonu",
-        "Türkiye pazar analizi",
-        "Türk arama trendleri",
-        "Türkçe anahtar kelime araştırması",
-        "Anadolu SEO",
-        "Türk dijital pazarlama"
+        "Turkish keyword research",
+        "Turkish SEO insights",
+        "search trends platform",
+        "AI content planning",
+        "Turkish market analysis",
+        "Lucy World intelligence"
       ]
     }
   ]

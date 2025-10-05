@@ -1,7 +1,14 @@
 {
   "country": "MV",
-  "defaultLocale": null,
-  "locales": [],
+  "defaultLocale": "en-MV",
+  "locales": [
+    {
+      "code": "en",
+      "hreflang": "en-MV",
+      "path": "/en",
+      "canonical": "https://lucy.world/en"
+    }
+  ],
   "alternate": [
     {
       "hreflang": "x-default",

@@ -9,11 +9,11 @@
     },
     {
       "@type": "WebSite",
-      "name": "Lucy World",
+      "name": "Lucy World – Tātaritanga rapu taiao mō Aotearoa",
       "url": "https://lucy.world/mi/",
       "inLanguage": "mi",
-      "description": "Keyword research made simple with Google data: suggestions, trends, and insights.",
-      "keywords": "keyword research, SEO, Google Trends, suggestions, search volume",
+      "description": "Tirohia nga raraunga Google Māori me nga whakataki, ahuatanga me nga tātaritanga AI hei whakakaha i nga whakatau ihirangi me te tipu pakihi taiao.",
+      "keywords": "kupu matua Māori, SEO Aotearoa, Google Trends, rahi rapu, tātaritanga AI, rautaki ihirangi taiao",
       "publisher": {
         "@type": "Organization",
         "name": "Lucy World"
@@ -30,15 +30,23 @@
     },
     {
       "@type": "WebPage",
-      "name": "Lucy World",
+      "name": "Lucy World – Tātaritanga rapu taiao mō Aotearoa",
       "url": "https://lucy.world/mi/",
       "inLanguage": "mi",
       "isPartOf": {
         "@type": "WebSite",
         "url": "https://lucy.world/mi/"
       },
-      "description": "Rangahau kupu matua mō Aotearoa me nga raraunga Google: whakataki, ahuatanga me nga tātaritanga AI hei whakakaha i nga whakatau pakihi taiao.",
-      "keywords": "kupu matua Māori, SEO Aotearoa, Google Trends, rahi rapu, tātaritanga AI, rautaki ihirangi taiao, tipu pakihi, whakangāwari taiao"
+      "description": "Tirohia nga raraunga Google Māori me nga whakataki, ahuatanga me nga tātaritanga AI hei whakakaha i nga whakatau ihirangi me te tipu pakihi taiao.",
+      "keywords": "kupu matua Māori, SEO Aotearoa, Google Trends, rahi rapu, tātaritanga AI, rautaki ihirangi taiao",
+      "aiSemantic": [
+        "Maori keyword research",
+        "Maori SEO insights",
+        "search trends platform",
+        "AI content planning",
+        "Maori market analysis",
+        "Lucy World intelligence"
+      ]
     }
   ]
 }
