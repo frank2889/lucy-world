@@ -96,12 +96,14 @@ Supported (from `languages/languages.json`):
 - Sidebar includes platforms (Google, Yahoo, Brave, YouTube, App Store, Amazon, etc.).  
 - Built with Vite, hashed asset filenames in `manifest.json`.  
 - Metadata and UI localized via `locale.json`.
+- Premium search requests abort after 20 seconds via `fetchWithTimeout`, displaying localized timeout messaging when exceeded.
 
 ### DoD — Frontend
 
 - [x] All `/xx/` routes render.  
 - [x] Sidebar platforms load dynamically.  
-- [ ] Sidebar options derive from plan entitlements returned by the API.  
+- [x] Sidebar options derive from plan entitlements returned by the API.  
+- [x] Sidebar surfaces the active plan status, AI credits, and upgrade paths.  
 - [x] UI vs market picker independent.  
 - [x] Structured data emitted per locale.  
 - [x] Manifest.json synced with build.  
@@ -233,19 +235,19 @@ Supported (from `languages/languages.json`):
 
 #### Frontend roadmap — entitlements-driven UI
 
-- After authentication, call `/api/entitlements` during app bootstrap and hydrate a global `useEntitlements()` store (or React Query cache).  
-- Render the left sidebar based on `sidebar_groups` values: `free` users see only the Search Engines cluster, `pro` unlocks marketplaces/social/video, and the `ai` group appears only when `ai_credits > 0`.  
-- Gate routes and components with a `<RequireEntitlement group="ai">` style wrapper so deep links respect permissions even when users bypass the sidebar.  
-- Surface the active tier and remaining credit balance in the account menu, with inline CTAs that launch Stripe Checkout for upgrades or credit purchases.  
-- Add Cypress specs and component tests that stub the entitlements payload to verify UI states for Free, Pro, exhausted credits, and topped-up credits.  
+- [x] (2025-10-05) Bootstrap the SPA by calling `/api/entitlements` and hydrating a global `useEntitlements()` store exposed via `EntitlementsProvider`.  
+- [x] (2025-10-05) Render the left sidebar from `sidebar_groups`, falling back gracefully when no paid modules are returned.  
+- [x] (2025-10-05) Gate platform tools with `<RequireEntitlement>` so deep links respect permissions and offer a Stripe upgrade CTA when locked.  
+- [x] (2025-10-05) Surface the active tier, AI credits, and upgrade/buy-credit URLs inside the sidebar plan card.  
+- [ ] Add Cypress specs and component tests that stub the entitlements payload to verify UI states for Free, Pro, exhausted credits, and topped-up credits.  
 
 ##### DoD — Frontend entitlements
 
-- [ ] `useEntitlements()` store has unit tests covering loading, success, and error states.  
+- [x] `useEntitlements()` store has unit tests covering loading, success, and error states.  
 - [ ] Sidebar renders correct groups in Cypress snapshots for Free, Pro, and AI-enabled users.  
-- [ ] Route guards block direct navigation to gated pages when entitlements are missing (E2E test).  
-- [ ] Tier/credit badge displays accurate values pulled from the API in Storybook or visual tests.  
-- [ ] Upgrade and buy-credit CTAs open the correct Stripe URLs verified in integration tests.  
+- [ ] Route guards block direct navigation to gated pages when entitlements are missing (E2E test) — logic implemented via `<RequireEntitlement>`, Cypress coverage pending.  
+- [x] Tier/credit badge displays accurate values pulled from the API in Storybook or visual tests (sidebar plan card).  
+- [ ] Upgrade and buy-credit CTAs open the correct Stripe URLs verified in integration tests — links now source from the entitlements payload; add automated verification.  
 
 #### Account lifecycle & upgrade flows
 

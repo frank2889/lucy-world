@@ -10,7 +10,8 @@ export const platformsConfig: PlatformConfig[] = [
     icon: icon('google'),
     description: 'Algemene web zoekwoorden',
     descriptionKey: 'platform.google.description',
-    tool: lazy(() => import('../tools/googleTool/GoogleTool'))
+    tool: lazy(() => import('../tools/googleTool/GoogleTool')),
+    group: 'search'
   },
   {
     id: 'duckduckgo',
@@ -18,7 +19,8 @@ export const platformsConfig: PlatformConfig[] = [
     icon: icon('duckduckgo'),
     description: 'Privacyvriendelijke zoekmachine',
     descriptionKey: 'platform.duckduckgo.description',
-    tool: lazy(() => import('../tools/duckduckgoTool/DuckDuckGoTool'))
+    tool: lazy(() => import('../tools/duckduckgoTool/DuckDuckGoTool')),
+    group: 'search'
   },
   {
     id: 'yahoo',
@@ -26,7 +28,8 @@ export const platformsConfig: PlatformConfig[] = [
     icon: icon('yahoo'),
     description: 'Yahoo zoekmachine',
     descriptionKey: 'platform.yahoo.description',
-    tool: lazy(() => import('../tools/yahooTool/YahooTool'))
+    tool: lazy(() => import('../tools/yahooTool/YahooTool')),
+    group: 'search'
   },
   {
     id: 'brave',
@@ -34,7 +37,8 @@ export const platformsConfig: PlatformConfig[] = [
     icon: icon('brave'),
     description: 'Brave zoekmachine',
     descriptionKey: 'platform.brave.description',
-    tool: lazy(() => import('../tools/braveTool/BraveTool'))
+    tool: lazy(() => import('../tools/braveTool/BraveTool')),
+    group: 'search'
   },
   {
     id: 'qwant',
@@ -42,7 +46,8 @@ export const platformsConfig: PlatformConfig[] = [
     icon: icon('qwant'),
     description: 'Europese zoekmachine',
     descriptionKey: 'platform.qwant.description',
-    tool: lazy(() => import('../tools/qwantTool/QwantTool'))
+    tool: lazy(() => import('../tools/qwantTool/QwantTool')),
+    group: 'search'
   },
   {
     id: 'youtube',
@@ -50,7 +55,8 @@ export const platformsConfig: PlatformConfig[] = [
     icon: icon('youtube'),
     description: 'Video zoekwoorden',
     descriptionKey: 'platform.youtube.description',
-    tool: lazy(() => import('../tools/youtubeTool/YouTubeTool'))
+    tool: lazy(() => import('../tools/youtubeTool/YouTubeTool')),
+    group: 'video'
   },
   {
     id: 'amazon',
@@ -58,7 +64,8 @@ export const platformsConfig: PlatformConfig[] = [
     icon: icon('amazon'),
     description: 'Product zoekwoorden',
     descriptionKey: 'platform.amazon.description',
-    tool: lazy(() => import('../tools/amazonTool/AmazonTool'))
+    tool: lazy(() => import('../tools/amazonTool/AmazonTool')),
+    group: 'marketplaces'
   },
   {
     id: 'tiktok',
@@ -66,7 +73,8 @@ export const platformsConfig: PlatformConfig[] = [
     icon: icon('tiktok'),
     description: 'Short-form video zoekwoorden',
     descriptionKey: 'platform.tiktok.description',
-    tool: lazy(() => import('../tools/tiktokTool/TikTokTool'))
+    tool: lazy(() => import('../tools/tiktokTool/TikTokTool')),
+    group: 'social'
   },
   {
     id: 'instagram',
@@ -74,7 +82,8 @@ export const platformsConfig: PlatformConfig[] = [
     icon: icon('instagram'),
     description: 'Hashtags en visuele zoekwoorden',
     descriptionKey: 'platform.instagram.description',
-    tool: lazy(() => import('../tools/instagramTool/InstagramTool'))
+    tool: lazy(() => import('../tools/instagramTool/InstagramTool')),
+    group: 'social'
   },
   {
     id: 'pinterest',
@@ -82,7 +91,8 @@ export const platformsConfig: PlatformConfig[] = [
     icon: icon('pinterest'),
     description: 'Inspiratie en beeld zoekwoorden',
     descriptionKey: 'platform.pinterest.description',
-    tool: lazy(() => import('../tools/pinterestTool/PinterestTool'))
+    tool: lazy(() => import('../tools/pinterestTool/PinterestTool')),
+    group: 'social'
   },
   {
     id: 'bing',
@@ -90,7 +100,8 @@ export const platformsConfig: PlatformConfig[] = [
     icon: icon('bing'),
     description: 'Microsoft zoekmachine',
     descriptionKey: 'platform.bing.description',
-    tool: lazy(() => import('../tools/bingTool/BingTool'))
+    tool: lazy(() => import('../tools/bingTool/BingTool')),
+    group: 'search'
   },
   {
     id: 'baidu',
@@ -98,7 +109,8 @@ export const platformsConfig: PlatformConfig[] = [
     icon: icon('baidu'),
     description: 'Chinese zoekmachine',
     descriptionKey: 'platform.baidu.description',
-    tool: lazy(() => import('../tools/baiduTool/BaiduTool'))
+    tool: lazy(() => import('../tools/baiduTool/BaiduTool')),
+    group: 'search'
   },
   {
     id: 'yandex',
@@ -106,7 +118,8 @@ export const platformsConfig: PlatformConfig[] = [
     icon: icon('yandex'),
     description: 'Russische zoekmachine',
     descriptionKey: 'platform.yandex.description',
-    tool: lazy(() => import('../tools/yandexTool/YandexTool'))
+    tool: lazy(() => import('../tools/yandexTool/YandexTool')),
+    group: 'search'
   },
   {
     id: 'naver',
@@ -114,7 +127,8 @@ export const platformsConfig: PlatformConfig[] = [
     icon: icon('naver'),
     description: 'Koreaanse zoekmachine',
     descriptionKey: 'platform.naver.description',
-    tool: lazy(() => import('../tools/naverTool/NaverTool'))
+    tool: lazy(() => import('../tools/naverTool/NaverTool')),
+    group: 'search'
   },
   {
     id: 'ebay',
@@ -122,7 +136,8 @@ export const platformsConfig: PlatformConfig[] = [
     icon: icon('ebay'),
     description: 'E-commerce zoekwoorden',
     descriptionKey: 'platform.ebay.description',
-    tool: lazy(() => import('../tools/ebayTool/EbayTool'))
+    tool: lazy(() => import('../tools/ebayTool/EbayTool')),
+    group: 'marketplaces'
   },
   {
     id: 'appstore',
@@ -130,7 +145,8 @@ export const platformsConfig: PlatformConfig[] = [
     icon: icon('appstore'),
     description: 'iOS app zoekwoorden',
     descriptionKey: 'platform.appstore.description',
-    tool: lazy(() => import('../tools/appstoreTool/AppStoreTool'))
+    tool: lazy(() => import('../tools/appstoreTool/AppStoreTool')),
+    group: 'marketplaces'
   },
   {
     id: 'googleplay',
@@ -138,7 +154,8 @@ export const platformsConfig: PlatformConfig[] = [
     icon: icon('googleplay'),
     description: 'Android app zoekwoorden',
     descriptionKey: 'platform.googlePlay.description',
-    tool: lazy(() => import('../tools/googleplayTool/GooglePlayTool'))
+    tool: lazy(() => import('../tools/googleplayTool/GooglePlayTool')),
+    group: 'marketplaces'
   },
   {
     id: 'etsy',
@@ -146,7 +163,8 @@ export const platformsConfig: PlatformConfig[] = [
     icon: icon('etsy'),
     description: 'Marktplaats zoekwoorden',
     descriptionKey: 'platform.etsy.description',
-    tool: lazy(() => import('../tools/etsyTool/EtsyTool'))
+    tool: lazy(() => import('../tools/etsyTool/EtsyTool')),
+    group: 'marketplaces'
   }
 ]
 

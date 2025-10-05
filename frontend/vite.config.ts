@@ -1,6 +1,9 @@
-import { defineConfig } from 'vite';
+import { defineConfig } from 'vitest/config';
 import react from '@vitejs/plugin-react';
 import { resolve } from 'path';
+import { fileURLToPath } from 'url';
+
+const baseDir = fileURLToPath(new URL('.', import.meta.url));
 
 export default defineConfig({
   plugins: [react()],
@@ -15,8 +18,14 @@ export default defineConfig({
     }
   },
   build: {
-    outDir: resolve(__dirname, '../static/app'),
+    outDir: resolve(baseDir, '../static/app'),
     emptyOutDir: true,
     manifest: true,
+  },
+  test: {
+    environment: 'jsdom',
+    globals: true,
+    setupFiles: resolve(baseDir, './vitest.setup.ts'),
+    clearMocks: true
   },
 });

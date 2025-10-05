@@ -66,6 +66,8 @@ export interface PlatformToolProps {
   locationControls?: ReactNode
 }
 
+export type PlatformGroup = 'search' | 'marketplaces' | 'social' | 'video' | 'ai' | 'enterprise'
+
 export interface PlatformConfig {
   id: string
   name: string
@@ -73,4 +75,5 @@ export interface PlatformConfig {
   description?: string
   descriptionKey?: string
   tool: LazyExoticComponent<ComponentType<PlatformToolProps>>
+  group: PlatformGroup
 }

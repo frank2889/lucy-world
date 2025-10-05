@@ -4,6 +4,9 @@ import { AMAZON_MARKETPLACE_CODES } from './platforms/data/amazonMarketplaces'
 import PlatformSidebar from './platforms/Sidebar/PlatformSidebar'
 import { usePlatformHandler } from './platforms/handlers/platformHandler'
 import { createTranslator } from './i18n/translate'
+import { useEntitlements } from './entitlements/useEntitlements'
+import { EntitlementsProvider } from './entitlements/context'
+import { RequireEntitlement } from './entitlements/RequireEntitlement'
 import type { UIState } from './platforms/types'
 
 type CategoryItem = {
@@ -34,8 +37,42 @@ type PremiumSearchResponse = {
   }
 }
 
+const SEARCH_TIMEOUT_MS = 20_000
+
+async function fetchWithTimeout(resource: RequestInfo, options: RequestInit = {}, timeout = SEARCH_TIMEOUT_MS): Promise<Response> {
+  const { signal: externalSignal, ...rest } = options
+  const controller = new AbortController()
+  let timedOut = false
+
+  const timeoutId = setTimeout(() => {
+    timedOut = true
+    controller.abort()
+  }, timeout)
+
+  if (externalSignal) {
+    if (externalSignal.aborted) {
+      controller.abort()
+    } else {
+      externalSignal.addEventListener('abort', () => controller.abort(), { once: true })
+    }
+  }
+
+  try {
+    return await fetch(resource, { ...rest, signal: controller.signal })
+  } catch (error) {
+    if (timedOut) {
+      const timeoutError = new DOMException('Request timed out', 'AbortError')
+      ;(timeoutError as unknown as { isTimeout?: boolean }).isTimeout = true
+      throw timeoutError
+    }
+    throw error
+  } finally {
+    clearTimeout(timeoutId)
+  }
+}
+
 async function premiumSearch(keyword: string, language: string): Promise<PremiumSearchResponse> {
-  const res = await fetch('/api/premium/search', {
+  const res = await fetchWithTimeout('/api/premium/search', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ keyword, language })
@@ -158,6 +195,8 @@ export default function App() {
   const [langMenuAnchor, setLangMenuAnchor] = useState<'desktop' | 'mobile' | null>(null)
   const [marketLocales, setMarketLocales] = useState<Map<string, string[]>>(() => new Map())
 
+  const entitlementsResult = useEntitlements(token)
+
   const updateSearchLanguage = useCallback((lang: string, manual = false) => {
     const normalized = (lang || '').split('-')[0].toLowerCase() || 'en'
     setSearchLanguageState((prev) => (prev === normalized ? prev : normalized))
@@ -179,6 +218,10 @@ export default function App() {
   const { platforms, activePlatform, activePlatformId, setActivePlatformId } = usePlatformHandler()
   const ActivePlatformTool = activePlatform?.tool
   const translate = useMemo(() => createTranslator(ui, uiFallback), [ui, uiFallback])
+  const getTranslated = useCallback((key: string, fallback: string) => {
+    const value = translate(key)
+    return value === key ? fallback : value
+  }, [translate])
   const localizedPlatforms = useMemo(() => {
     const googleDescription = translate('platform.google.description')
     const duckduckgoDescription = translate('platform.duckduckgo.description')
@@ -235,6 +278,45 @@ export default function App() {
       }
     })
   }, [platforms, translate])
+  const visiblePlatforms = useMemo(() => {
+    if (!localizedPlatforms.length) {
+      return localizedPlatforms
+    }
+    const allowedGroups = new Set(entitlementsResult.entitlements.sidebar_groups)
+    const filtered = localizedPlatforms.filter((platform) => allowedGroups.has(platform.group))
+    return filtered.length ? filtered : localizedPlatforms
+  }, [localizedPlatforms, entitlementsResult.entitlements.sidebar_groups])
+
+  useEffect(() => {
+    if (!visiblePlatforms.length) return
+    if (!visiblePlatforms.some((platform) => platform.id === activePlatformId)) {
+      setActivePlatformId(visiblePlatforms[0].id)
+    }
+  }, [visiblePlatforms, activePlatformId, setActivePlatformId])
+
+  const entitlementsData = entitlementsResult.entitlements
+  const entitlementsPlanLabel = useMemo(() => getTranslated('entitlements.sidebar.plan_label', 'Your plan'), [getTranslated])
+  const entitlementsStatus = entitlementsResult.status
+  const entitlementsTierLabel = useMemo(() => {
+    const tier = entitlementsData.tier
+    const fallback = tier === 'enterprise' ? 'Enterprise' : tier === 'pro' ? 'Pro' : 'Free'
+    return getTranslated(`entitlements.tier.${tier}`, fallback)
+  }, [entitlementsData.tier, getTranslated])
+  const aiCreditsLabel = useMemo(() => getTranslated('entitlements.sidebar.ai_credits', 'AI credits'), [getTranslated])
+  const upgradeCtaLabel = useMemo(() => getTranslated('entitlements.actions.upgrade', 'Upgrade plan'), [getTranslated])
+  const buyCreditsCtaLabel = useMemo(() => getTranslated('entitlements.actions.buy_credits', 'Get AI credits'), [getTranslated])
+  const aiUnlockedLabel = useMemo(() => getTranslated('entitlements.sidebar.ai_unlocked', 'AI workspace unlocked'), [getTranslated])
+  const aiLockedLabel = useMemo(() => getTranslated('entitlements.sidebar.ai_locked', 'Unlock AI workspace with credits'), [getTranslated])
+  const entitlementsLoadingLabel = useMemo(() => getTranslated('entitlements.status.loading', 'Loading plan…'), [getTranslated])
+  const entitlementsErrorLabel = useMemo(() => getTranslated('entitlements.status.error', 'Unable to load plan'), [getTranslated])
+  const lockedModuleMessage = useMemo(() => getTranslated('entitlements.locked.module', 'Upgrade your plan to access this module.'), [getTranslated])
+  const upgradeNowLabel = useMemo(() => getTranslated('entitlements.actions.upgrade_now', 'Upgrade now'), [getTranslated])
+  const entitlementsExpiresLabel = useMemo(() => {
+    if (!entitlementsData.expires_at) return null
+    const parsed = new Date(entitlementsData.expires_at)
+    const formatted = Number.isNaN(parsed.getTime()) ? entitlementsData.expires_at : parsed.toLocaleDateString()
+    return getTranslated('entitlements.sidebar.expires', `Renews on ${formatted}`)
+  }, [entitlementsData.expires_at, getTranslated])
   const locationUnknownLabel = useMemo(() => translate('topbar.location_unknown'), [translate])
   const openNavigationLabel = useMemo(() => translate('aria.open_navigation'), [translate])
   const myProjectsLabel = useMemo(() => translate('projects.button.my_projects'), [translate])
@@ -508,12 +590,12 @@ export default function App() {
     const searchStartTime = Date.now()
 
     try {
-      const res = await fetch('/api/premium/search', {
+      const res = await fetchWithTimeout('/api/premium/search', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ keyword: submittedKeyword, language: searchLanguage, country })
       })
-  if (!res.ok) throw new Error(translate('errors.search_failed'))
+      if (!res.ok) throw new Error(translate('errors.search_failed'))
       const result = await res.json()
       setData(result)
 
@@ -530,16 +612,27 @@ export default function App() {
         console.log('✅ GTM: Search successful', totalKeywords, 'results')
       }
     } catch (err: any) {
-      setError(err?.message || translate('errors.generic'))
+      const timeoutTranslation = translate('errors.search_timeout')
+      const timeoutMessage = timeoutTranslation === 'errors.search_timeout'
+        ? 'The search took too long. Please try again.'
+        : timeoutTranslation
+      const isTimeout = err?.name === 'AbortError' && (err?.isTimeout || /timeout/i.test(err?.message || ''))
+      const resolvedMessage = isTimeout ? timeoutMessage : (err?.message || translate('errors.generic'))
+
+      setError(resolvedMessage)
 
       if (typeof window !== 'undefined' && (window as any).dataLayer) {
         ;(window as any).dataLayer.push({
           event: 'search_error',
           search_keyword: submittedKeyword,
-          error_message: err?.message || translate('errors.search_failed'),
+          error_message: resolvedMessage,
           response_time: Date.now() - searchStartTime
         })
-        console.log('❌ GTM:', translate('errors.search_failed'), err?.message)
+        if (isTimeout) {
+          console.log('⏱️ GTM: Search timeout after 20s')
+        } else {
+          console.log('❌ GTM:', translate('errors.search_failed'), err?.message)
+        }
       }
     } finally {
       setLoading(false)
@@ -861,12 +954,101 @@ export default function App() {
   }, [])
 
   return (
-    <div className="layout">
-  <aside id="sidebar" className={`sidebar ${sidebarOpen ? 'open' : ''}`} aria-hidden={!sidebarOpen}>
-        <div className="sidebar-brand">Lucy <span>World</span></div>
-        <PlatformSidebar
+    <EntitlementsProvider value={entitlementsResult}>
+      <div className="layout">
+        <aside id="sidebar" className={`sidebar ${sidebarOpen ? 'open' : ''}`} aria-hidden={!sidebarOpen}>
+          <div className="sidebar-brand">Lucy <span>World</span></div>
+          <div
+            className="sidebar-plan-card"
+            style={{
+              marginTop: 16,
+              marginBottom: 16,
+              padding: 16,
+              borderRadius: 12,
+              border: '1px solid var(--line)',
+              background: 'rgba(255,255,255,0.04)',
+              display: 'grid',
+              gap: 10
+            }}
+          >
+            <div style={{ fontSize: 12, textTransform: 'uppercase', letterSpacing: 0.6, fontWeight: 600, color: 'var(--text-secondary)' }}>
+              {entitlementsPlanLabel}
+            </div>
+            {entitlementsStatus === 'loading' ? (
+              <div style={{ fontSize: 14, color: 'var(--text-secondary)' }}>{entitlementsLoadingLabel}</div>
+            ) : entitlementsStatus === 'error' ? (
+              <div style={{ fontSize: 14, color: '#ffb3b3' }}>{entitlementsErrorLabel}</div>
+            ) : (
+              <>
+                <div style={{ fontSize: 20, fontWeight: 700, color: 'var(--text)' }}>{entitlementsTierLabel}</div>
+                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 13, color: 'var(--text-secondary)' }}>
+                  <span>{aiCreditsLabel}</span>
+                  <span style={{ fontWeight: 600, color: 'var(--text)' }}>{entitlementsData.ai_credits}</span>
+                </div>
+                {entitlementsExpiresLabel && (
+                  <div style={{ fontSize: 12, color: 'var(--text-secondary)' }}>{entitlementsExpiresLabel}</div>
+                )}
+                <RequireEntitlement
+                  group="ai"
+                  minimumAiCredits={1}
+                  fallback={(
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: 13, color: 'var(--text-secondary)' }}>
+                      <span aria-hidden>⚡</span>
+                      <span>{aiLockedLabel}</span>
+                    </div>
+                  )}
+                >
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: 13, color: 'var(--text)' }}>
+                    <span aria-hidden>✨</span>
+                    <span>{aiUnlockedLabel}</span>
+                  </div>
+                </RequireEntitlement>
+              </>
+            )}
+            <div style={{ display: 'grid', gap: 8, marginTop: 4 }}>
+              <a
+                href={entitlementsData.upgrade_url}
+                target="_blank"
+                rel="noreferrer"
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  gap: 8,
+                  padding: '8px 12px',
+                  borderRadius: 8,
+                  border: '1px solid var(--line)',
+                  color: 'var(--text)',
+                  textDecoration: 'none',
+                  fontSize: 13
+                }}
+              >
+                ⬆️ {upgradeCtaLabel}
+              </a>
+              <a
+                href={entitlementsData.buy_credits_url}
+                target="_blank"
+                rel="noreferrer"
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  gap: 8,
+                  padding: '8px 12px',
+                  borderRadius: 8,
+                  border: '1px solid var(--line)',
+                  color: 'var(--text)',
+                  textDecoration: 'none',
+                  fontSize: 13
+                }}
+              >
+                💡 {buyCreditsCtaLabel}
+              </a>
+            </div>
+          </div>
+          <PlatformSidebar
           title={translate('platforms.sidebar.title')}
-          platforms={localizedPlatforms}
+          platforms={visiblePlatforms}
           activePlatformId={activePlatformId}
           onSelect={(platformId) => {
             setActivePlatformId(platformId)
@@ -1144,49 +1326,77 @@ export default function App() {
           <div className="error">{error}</div>
         )}
 
-        {ActivePlatformTool && (
-          <>
-            <Suspense
-              fallback={
-                <div className="card" style={{ marginTop: 24, padding: 24 }}>
-                  {translate('platforms.common.placeholder.loading')}
-                </div>
-              }
-            >
-              <ActivePlatformTool
-                keyword={keyword}
-                setKeyword={setKeyword}
-                ui={ui}
-                uiFallback={uiFallback}
-                loading={loading}
-                error={error}
-                data={data}
-                setData={setData}
-                searchLanguage={searchLanguage}
-                setSearchLanguage={updateSearchLanguage}
-                languagesList={languagesList}
-                country={country}
-                setCountry={setCountry}
-                countriesList={countriesList}
-                filteredCountries={filteredCountries}
-                showCountryDropdown={showCountryDropdown}
-                setShowCountryDropdown={setShowCountryDropdown}
-                countrySearchTerm={countrySearchTerm}
-                setCountrySearchTerm={setCountrySearchTerm}
-                getCountryName={getCountryName}
-                flagEmoji={flagEmoji}
-                categoryOrder={categoryOrder}
-                formatNumber={nl}
-                onGlobalSearch={runGlobalSearch}
-                globalLoading={loading}
-                locationControls={locationControls}
-              />
-            </Suspense>
-            <div className="hint" style={{ marginTop: 12 }}>{ui?.strings['search.hint'] || 'Premium suggestions and trends. Results appear below.'}</div>
-            <div className="hint" style={{ opacity: 0.8 }}>
-              {ui?.strings['hint.site_vs_search'] || 'Use the selectors to choose the search country and language. Change the site interface language from the top menu.'}
-            </div>
-          </>
+        {ActivePlatformTool && activePlatform && (
+          <RequireEntitlement
+            group={activePlatform.group}
+            fallback={(
+              <div className="card" style={{ marginTop: 24, padding: 24, textAlign: 'center' }}>
+                <p style={{ marginBottom: 16 }}>{lockedModuleMessage}</p>
+                <a
+                  href={entitlementsData.upgrade_url}
+                  target="_blank"
+                  rel="noreferrer"
+                  style={{
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    gap: 8,
+                    padding: '10px 16px',
+                    borderRadius: 10,
+                    border: '1px solid var(--line)',
+                    color: 'var(--text)',
+                    textDecoration: 'none',
+                    fontWeight: 600
+                  }}
+                >
+                  🚀 {upgradeNowLabel}
+                </a>
+              </div>
+            )}
+          >
+            <>
+              <Suspense
+                fallback={
+                  <div className="card" style={{ marginTop: 24, padding: 24 }}>
+                    {translate('platforms.common.placeholder.loading')}
+                  </div>
+                }
+              >
+                <ActivePlatformTool
+                  keyword={keyword}
+                  setKeyword={setKeyword}
+                  ui={ui}
+                  uiFallback={uiFallback}
+                  loading={loading}
+                  error={error}
+                  data={data}
+                  setData={setData}
+                  searchLanguage={searchLanguage}
+                  setSearchLanguage={updateSearchLanguage}
+                  languagesList={languagesList}
+                  country={country}
+                  setCountry={setCountry}
+                  countriesList={countriesList}
+                  filteredCountries={filteredCountries}
+                  showCountryDropdown={showCountryDropdown}
+                  setShowCountryDropdown={setShowCountryDropdown}
+                  countrySearchTerm={countrySearchTerm}
+                  setCountrySearchTerm={setCountrySearchTerm}
+                  getCountryName={getCountryName}
+                  flagEmoji={flagEmoji}
+                  categoryOrder={categoryOrder}
+                  formatNumber={nl}
+                  onGlobalSearch={runGlobalSearch}
+                  globalLoading={loading}
+                  locationControls={locationControls}
+                />
+              </Suspense>
+              <div className="hint" style={{ marginTop: 12 }}>{ui?.strings['search.hint'] || 'Premium suggestions and trends. Results appear below.'}</div>
+              <div className="hint" style={{ opacity: 0.8 }}>
+                {ui?.strings['hint.site_vs_search'] || 'Use the selectors to choose the search country and language. Change the site interface language from the top menu.'}
+              </div>
+            </>
+          </RequireEntitlement>
         )}
 
         {data && (
@@ -1241,9 +1451,9 @@ export default function App() {
         <footer className="footer">
           © {new Date().getFullYear()} Lucy World
         </footer>
-        </div>
-        
       </div>
     </div>
+      </div>
+    </EntitlementsProvider>
   )
 }

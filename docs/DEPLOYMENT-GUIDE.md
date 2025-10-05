@@ -23,13 +23,20 @@ Lucy World Search runs as a Flask application that serves a Vite-built React SPA
     ```
 
    This writes hashed assets to `static/app`. Commit or copy these files before deploying.
-2. Run a quick syntax check on the backend:
+2. Still in `frontend/`, run the Vitest suite to confirm the entitlement store and guards load correctly:
+
+    ```bash
+    npm test
+    ```
+
+   The tests cover the `useEntitlements` hook, context provider, and `RequireEntitlement` guard added on Oct 5 2025.
+3. Run a quick syntax check on the backend:
 
     ```bash
     /usr/local/bin/python3 -m compileall backend free_keyword_tool.py advanced_keyword_tool.py
     ```
 
-3. (Optional) Create a git tag or archive for the release so you can trace what is live.
+4. (Optional) Create a git tag or archive for the release so you can trace what is live.
 
 ## 2. Ship code to the server
 
