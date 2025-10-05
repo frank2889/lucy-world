@@ -216,6 +216,31 @@ Supported (from `languages/languages.json`):
 - Environment variables: `STRIPE_SECRET_KEY`, `STRIPE_PUBLISHABLE_KEY`, `STRIPE_PRICE_PRO`, optional `STRIPE_PRICE_PRO_USAGE`, `STRIPE_WEBHOOK_SECRET`, plus `PUBLIC_BASE_URL` for redirect URLs.  
 - For local experiments, clone Stripe's official samples (see [stripe-samples on GitHub](https://github.com/stripe-samples)) rather than bundling vendor code into this repo.  
 
+##### Stripe Checkout task list (strict)
+1. **Secrets & configuration**
+
+    - [ ] Create or update the secrets entry for `STRIPE_SECRET_KEY`, `STRIPE_PUBLISHABLE_KEY`, `STRIPE_PRICE_PRO`, and (if applicable) `STRIPE_PRICE_PRO_USAGE` in the deployment environment (do not commit plaintext keys).  
+    - [ ] Configure `STRIPE_WEBHOOK_SECRET` from the live webhook endpoint and set `PUBLIC_BASE_URL` to the production origin.  
+    - [ ] Validate prices exist in the Stripe dashboard and match the plan matrix documented above.  
+
+1. **Backend readiness**
+
+    - [ ] Run `python -m compileall backend` locally to ensure the billing modules compile.  
+    - [ ] Execute the billing test suite (`pytest backend/tests/billing` when added) or at minimum hit `/api/billing/checkout-session` and `/api/billing/customer-portal` with authenticated requests in staging.  
+    - [ ] Start `stripe listen --forward-to localhost:5000/api/billing/webhook` in development and confirm webhook events update the `payments` and `users.plan_metadata` tables as expected.  
+
+1. **Frontend & localization**
+
+    - [ ] Place all checkout CTA copy in `languages/{lang}/locale.json` and reference via locale keys—no hardcoded strings in components.  
+    - [ ] Ensure the React billing entry point loads `STRIPE_PUBLISHABLE_KEY` from `/api/billing/config` and never embeds it statically.  
+    - [ ] Verify the checkout button state handles loading, success redirect (adds `session_id`), and localized error surfaces.  
+
+1. **Deploy & monitor**
+
+    - [ ] Redeploy to staging, execute a full trial → pro upgrade using Stripe test cards, and confirm invoices generate with localized metadata.  
+    - [ ] Enable required alerts: webhook failure notifications in Stripe and application logs for `billing` blueprint errors.  
+    - [ ] After production deploy, reconcile the first live invoice against `payments` to verify amounts/net/tax persist correctly.  
+
 ---
 
 ## 10. Costs & Margins
