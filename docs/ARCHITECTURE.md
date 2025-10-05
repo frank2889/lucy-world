@@ -101,6 +101,7 @@ Supported (from `languages/languages.json`):
 
 - [x] All `/xx/` routes render.  
 - [x] Sidebar platforms load dynamically.  
+- [ ] Sidebar options derive from plan entitlements returned by the API.  
 - [x] UI vs market picker independent.  
 - [x] Structured data emitted per locale.  
 - [x] Manifest.json synced with build.  
@@ -170,43 +171,155 @@ Supported (from `languages/languages.json`):
 
 ## 9. Feature Plan Matrix
 
-**Free Trial (14d)**  
+**Free (always-on)**  
 
-- 20 queries/day  
-- Google only  
-- 105+ languages  
-- All countries  
+- Search engines only (Google, Bing, Yahoo, Brave Search).  
+- 20 queries/day cap.  
+- 105+ languages, all countries.  
+- Left sidebar shows only the Search Engines group.  
 
 **Pro (€7.99/month via Stripe Checkout)**  
 
-- 1,000 queries/day  
-- All platforms  
-- 105+ languages  
-- All countries  
-- Exports (CSV/JSON)  
-- AI clustering  
-- Trend forecasting  
-- Save projects  
+- 1,000 queries/day.  
+- Full platform library (Search + Marketplaces + Social + Video).  
+- 105+ languages, all countries.  
+- Exports (CSV/JSON).  
+- AI clustering + trend forecasting.  
+- Save projects with collaboration.  
+- Left sidebar unlocks all non-AI modules.  
+
+**AI Credits (usage-based)**  
+
+- Price determined by credit packs (TBD in Stripe).  
+- Grants access to AI-assisted generation (insights, briefs, clustering boosts).  
+- Credits decrement via `ai_usage` ledger.  
+- Left sidebar reveals AI workspace entries when credits > 0.  
 
 **Enterprise (Custom)**  
 
-- Custom queries  
-- All platforms + local connectors (Bol, Marktplaats, eBay, Amazon regional)  
-- All languages + variants  
-- API access, XLSX/API exports  
-- Priority GPU processing  
-- Team dashboards  
-- SSO, RBAC, audit logging  
-- SLA, support, white-label  
-- Compliance (SOC 2, GDPR, ISO)  
+- Custom queries.  
+- All platforms + local connectors (Bol, Marktplaats, eBay, Amazon regional).  
+- All languages + variants.  
+- API access, XLSX/API exports.  
+- Priority GPU processing.  
+- Team dashboards.  
+- SSO, RBAC, audit logging.  
+- SLA, support, white-label.  
+- Compliance (SOC 2, GDPR, ISO).  
 
 ### DoD — Feature Plan
 
-- [x] Trial expires after 14 days.  
-- [x] Trial → Pro conversion via Stripe Checkout.  
-- [x] Pro unlocks exports, clustering, projects.  
-- [ ] Enterprise gates advanced features.  
-- [ ] Billing hooks validated.  
+- [x] Free tier limits sidebar to Search Engines only.  
+- [x] Pro unlocks full non-AI sidebar modules after successful billing activation.  
+- [ ] AI credit balance controls visibility & usage of AI modules.  
+- [ ] Enterprise gates advanced connectors and RBAC features.  
+- [ ] Billing hooks validated across subscription + credit purchases.  
+
+#### Backend roadmap — plan & credit state
+
+- Extend `users.plan_metadata` (or create `user_entitlements`) to store `{ tier: "free" | "pro" | "enterprise", ai_credits: int, expires_at }`; write an Alembic migration that defaults new accounts to `free` with zero credits.  
+- Introduce an entitlement resolver (`entitlements.get_for_user(user)`) that merges subscription status, Stripe customer metadata, and credit balances into a normalized object.  
+- Add a protected `GET /api/entitlements` endpoint returning `{ tier, sidebar_groups, ai_credits, upgrade_url, buy_credits_url }`; for anonymous visitors, respond with the Free payload so the SPA can render marketing CTAs.  
+- Update Stripe webhook handlers to mutate entitlements atomically on `checkout.session.completed`, `customer.subscription.updated`, `invoice.payment_succeeded`, and AI credit purchases.  
+- Provide an admin CLI (e.g., `flask entitlements adjust --user ...`) for support-driven tier/credit corrections, and persist an audit trail in `entitlement_events` with before/after snapshots.  
+
+##### DoD — Backend entitlements
+
+- [ ] Alembic migration runs automatically and seeds existing users with valid `{ tier, ai_credits }`.  
+- [ ] `GET /api/entitlements` returns complete payloads in manual curl + unit tests.  
+- [ ] Stripe webhook replay from staging produces expected entitlement mutations without manual intervention.  
+- [ ] Admin CLI writes `entitlement_events` rows with before/after JSON for every mutation.  
+- [ ] Nightly reconciliation job compares Stripe state vs database and reports zero discrepancies.  
+
+#### Frontend roadmap — entitlements-driven UI
+
+- After authentication, call `/api/entitlements` during app bootstrap and hydrate a global `useEntitlements()` store (or React Query cache).  
+- Render the left sidebar based on `sidebar_groups` values: `free` users see only the Search Engines cluster, `pro` unlocks marketplaces/social/video, and the `ai` group appears only when `ai_credits > 0`.  
+- Gate routes and components with a `<RequireEntitlement group="ai">` style wrapper so deep links respect permissions even when users bypass the sidebar.  
+- Surface the active tier and remaining credit balance in the account menu, with inline CTAs that launch Stripe Checkout for upgrades or credit purchases.  
+- Add Cypress specs and component tests that stub the entitlements payload to verify UI states for Free, Pro, exhausted credits, and topped-up credits.  
+
+##### DoD — Frontend entitlements
+
+- [ ] `useEntitlements()` store has unit tests covering loading, success, and error states.  
+- [ ] Sidebar renders correct groups in Cypress snapshots for Free, Pro, and AI-enabled users.  
+- [ ] Route guards block direct navigation to gated pages when entitlements are missing (E2E test).  
+- [ ] Tier/credit badge displays accurate values pulled from the API in Storybook or visual tests.  
+- [ ] Upgrade and buy-credit CTAs open the correct Stripe URLs verified in integration tests.  
+
+#### Account lifecycle & upgrade flows
+
+- Signup flow provisions a Stripe customer and stores the Free entitlement snapshot immediately after email verification.  
+- “Upgrade to Pro” CTA launches Stripe Checkout with price `price_pro_monthly` (€7.99); the webhook flips the tier to `pro` on success and back to `free` when a subscription is canceled or lapses.  
+- AI credit purchases use usage-based products (e.g., `price_ai_credit_pack_100`); webhook increments `ai_credits`, and downstream AI jobs decrement credits via a centralized `consume_ai_credit(user, amount)` helper.  
+- Offer the Stripe customer portal for downgrades/refunds; when the portal reports a churned subscription, schedule a job to revoke Pro sidebar groups at period end.  
+- Seed marketing pages with anonymous entitlements so logged-out visitors still see accurate feature gating copy.  
+
+##### DoD — Account lifecycle
+
+- [ ] New user signup flow produces Stripe customer + Free entitlement verified via smoke test.  
+- [ ] Successful Pro checkout updates tier and grants sidebar access in under one minute (monitored).  
+- [ ] AI credit purchase increases `ai_credits` and consumption decrements via `consume_ai_credit`.  
+- [ ] Downgrade/cancel events remove Pro entitlements at the correct billing boundary.  
+- [ ] Anonymous marketing pages match current feature gating copy (checked during release QA).  
+
+#### Observability, QA & support
+
+- Emit structured logs (`entitlement_change`, `ai_credit_consumed`) and push them to the monitoring stack; alert on negative balances, failed webhook syncs, or tier mismatches.  
+- Dashboard metrics to include daily upgrades, credit burn rate, AI module adoption, and sidebar unlock counts.  
+- Build integration tests that simulate webhook payloads end-to-end and assert database entitlements match the expected state.  
+- Document a support runbook linking entitlement IDs to Stripe customers, with remediation steps when discrepancies occur.  
+- Backfill a nightly audit job that reconciles Stripe subscriptions, credit balances, and local entitlements, emitting discrepancies to Slack or Opsgenie.  
+
+##### DoD — Observability & support
+
+- [ ] Structured logs for entitlement changes appear in the centralized logger with correlation IDs.  
+- [ ] Metrics dashboard visualizes upgrades, credit burn, and AI adoption with seven-day retention.  
+- [ ] Webhook replay integration test is part of CI and passes.  
+- [ ] Support runbook published in `docs/support/entitlements.md` and linked from this section.  
+- [ ] Nightly audit job produces a clean report (no unresolved discrepancies) for seven consecutive days.  
+
+#### Entitlements data contract
+
+```json
+{
+    "tier": "pro",
+    "ai_credits": 240,
+    "sidebar_groups": ["search", "marketplaces", "social", "video", "ai"],
+    "upgrade_url": "https://billing.stripe.com/p/session/pro",
+    "buy_credits_url": "https://billing.stripe.com/p/session/ai_credits",
+    "expires_at": "2025-12-01T00:00:00Z"
+}
+```
+
+- `tier` — current subscription tier (`free`, `pro`, or `enterprise`).  
+- `ai_credits` — integer remaining credits; zero hides AI modules.  
+- `sidebar_groups` — ordered list of module keys rendered by the SPA.  
+- `upgrade_url` / `buy_credits_url` — Stripe-hosted Checkout or Portal routes for self-serve actions.  
+- `expires_at` — ISO timestamp when the tier downgrades; omitted for perpetual tiers.  
+
+##### DoD — Data contract
+
+- [ ] API responses validated against a JSON Schema stored in `docs/contracts/entitlements.schema.json`.  
+- [ ] Contract tests in CI ensure the backend never removes required keys without bumping the schema version.  
+- [ ] Frontend type definitions derive from the schema (e.g., via `zod-to-ts`) to eliminate drift.  
+
+#### Testing matrix — entitlements rollout
+
+| Layer | Scenario | Tooling | Owner |
+|-------|----------|---------|-------|
+| Unit  | Entitlement resolver combinations (free → pro, pro → churn, credits negative) | `pytest` | Backend |
+| Unit  | `useEntitlements` store loading/error states | Vitest/Jest | Frontend |
+| Integration | Stripe webhook replay (`checkout.session.completed`, credit purchase) | `pytest` + Stripe CLI fixtures | Backend |
+| E2E | Sidebar visibility for Free/Pro/AI users | Cypress | Frontend |
+| E2E | Upgrade + credit purchase happy path | Cypress + Stripe test keys | Growth |
+| Monitoring | Nightly reconciliation job success | Scheduled job + Grafana alert | DevOps |
+
+##### DoD — Testing matrix
+
+- [ ] Each row has an implemented test with a reliable pass/fail signal.  
+- [ ] Failing tests block deployment via CI.  
+- [ ] QA checklist references this table during release reviews.  
 
 #### Implementation Notes — Stripe Billing
 
@@ -217,6 +330,7 @@ Supported (from `languages/languages.json`):
 - For local experiments, clone Stripe's official samples (see [stripe-samples on GitHub](https://github.com/stripe-samples)) rather than bundling vendor code into this repo.  
 
 ##### Stripe Checkout task list (strict)
+
 1. **Secrets & configuration**
 
     - [ ] Create or update the secrets entry for `STRIPE_SECRET_KEY`, `STRIPE_PUBLISHABLE_KEY`, `STRIPE_PRICE_PRO`, and (if applicable) `STRIPE_PRICE_PRO_USAGE` in the deployment environment (do not commit plaintext keys).  
