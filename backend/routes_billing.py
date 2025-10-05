@@ -273,7 +273,7 @@ def _handle_invoice_paid(invoice: Dict[str, Any]) -> bool:
             net_amount=net_amount,
             tax_amount=tax_amount,
             currency=currency,
-            metadata={"stripe": invoice},
+            metadata_payload={"stripe": invoice},
         )
         db.session.add(payment)
     else:
@@ -282,9 +282,9 @@ def _handle_invoice_paid(invoice: Dict[str, Any]) -> bool:
         payment.net_amount = net_amount
         payment.tax_amount = tax_amount
         payment.currency = currency
-        metadata = payment.metadata or {}
+        metadata = payment.metadata_payload or {}
         metadata["stripe"] = invoice
-        payment.metadata = metadata
+        payment.metadata_payload = metadata
 
     payment.payer_email = ((invoice.get("customer_email") or user.email) or None)
     payment.invoice_number = invoice.get("number") or payment.invoice_number

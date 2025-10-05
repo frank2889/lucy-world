@@ -214,7 +214,7 @@ Supported (from `languages/languages.json`):
 - `POST /api/billing/customer-portal` returns a Stripe Billing customer portal session so users can self-manage subscriptions.  
 - `POST /api/billing/webhook` processes Checkout, invoice, and subscription events to keep the `users` and `payments` tables in sync.  
 - Environment variables: `STRIPE_SECRET_KEY`, `STRIPE_PUBLISHABLE_KEY`, `STRIPE_PRICE_PRO`, optional `STRIPE_PRICE_PRO_USAGE`, `STRIPE_WEBHOOK_SECRET`, plus `PUBLIC_BASE_URL` for redirect URLs.  
-- A reference implementation lives in `docs/examples/stripe-checkout/` alongside the official Stripe sample.  
+- For local experiments, clone Stripe's official samples (see [stripe-samples on GitHub](https://github.com/stripe-samples)) rather than bundling vendor code into this repo.  
 
 ---
 

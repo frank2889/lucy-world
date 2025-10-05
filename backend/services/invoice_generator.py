@@ -105,7 +105,7 @@ def generate_invoice_pdf(payment: Payment, user: User, *, output_dir: str | None
     text.textLine(f"Subtotal: {_format_decimal(net_amount)} {currency}")
     text.textLine(f"Tax: {_format_decimal(tax_amount)} {currency}")
     text.textLine(f"Total: {_format_decimal(amount)} {currency}")
-    if metadata := payment.metadata or {}:
+    if metadata := payment.metadata_payload or {}:
         invoice_note = metadata.get("note")
         if invoice_note:
             text.moveCursor(0, 10)

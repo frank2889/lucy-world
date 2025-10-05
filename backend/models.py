@@ -5,7 +5,7 @@ import re
 from dataclasses import dataclass
 from datetime import datetime, date, timedelta
 from decimal import Decimal
-from typing import FrozenSet, Optional
+from typing import Any, FrozenSet, Optional
 
 from sqlalchemy import func
 
@@ -284,7 +284,7 @@ class Payment(db.Model):
     tax_amount = db.Column(db.Numeric(10, 2), nullable=True)
     currency = db.Column(db.String(3), nullable=False)
     payer_email = db.Column(db.String(255), nullable=True)
-    metadata = db.Column(db.JSON, nullable=True)
+    metadata_payload = db.Column('metadata', db.JSON, nullable=True)
     created_at = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
     updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow, nullable=False)
     invoice_number = db.Column(db.String(64), nullable=True, unique=True)
@@ -305,6 +305,12 @@ class Payment(db.Model):
         if self.tax_amount is None:
             return Decimal('0')
         return Decimal(str(self.tax_amount))
+
+    def metadata_dict(self) -> dict[str, Any]:
+        payload = self.metadata_payload
+        if isinstance(payload, dict):
+            return payload
+        return {}
 
 
 class CandidateQuery(db.Model):
