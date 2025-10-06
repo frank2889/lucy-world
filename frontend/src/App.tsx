@@ -7,6 +7,7 @@ import { createTranslator } from './i18n/translate'
 import { useEntitlements } from './entitlements/useEntitlements'
 import { EntitlementsProvider } from './entitlements/context'
 import { RequireEntitlement } from './entitlements/RequireEntitlement'
+import { filterPlatformsByEntitlements } from './entitlements/platformVisibility'
 import type { UIState } from './platforms/types'
 
 type CategoryItem = {
@@ -278,14 +279,10 @@ export default function App() {
       }
     })
   }, [platforms, translate])
-  const visiblePlatforms = useMemo(() => {
-    if (!localizedPlatforms.length) {
-      return localizedPlatforms
-    }
-    const allowedGroups = new Set(entitlementsResult.entitlements.sidebar_groups)
-    const filtered = localizedPlatforms.filter((platform) => allowedGroups.has(platform.group))
-    return filtered.length ? filtered : localizedPlatforms
-  }, [localizedPlatforms, entitlementsResult.entitlements.sidebar_groups])
+  const visiblePlatforms = useMemo(
+    () => filterPlatformsByEntitlements(localizedPlatforms, entitlementsResult.entitlements.sidebar_groups),
+    [localizedPlatforms, entitlementsResult.entitlements.sidebar_groups]
+  )
 
   useEffect(() => {
     if (!visiblePlatforms.length) return
