@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import os
-from datetime import datetime
 from decimal import Decimal
 from pathlib import Path
 from typing import Dict
@@ -11,6 +10,7 @@ from reportlab.lib.units import mm
 from reportlab.pdfgen import canvas
 
 from ..models import Payment, User
+from ..utils import utcnow
 
 
 DEFAULT_OUTPUT_DIR = "invoices"
@@ -82,7 +82,7 @@ def generate_invoice_pdf(payment: Payment, user: User, *, output_dir: str | None
     text.textLine("Invoice")
     text.setFont("Helvetica", 10)
     text.textLine(f"Invoice number: {invoice_number}")
-    text.textLine(f"Invoice date: {datetime.utcnow().strftime('%Y-%m-%d')}")
+    text.textLine(f"Invoice date: {utcnow().strftime('%Y-%m-%d')}")
     text.textLine(f"Payment reference: {payment.order_id}")
     text.moveCursor(0, 20)
 

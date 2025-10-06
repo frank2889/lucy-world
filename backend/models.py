@@ -10,6 +10,7 @@ from typing import Any, FrozenSet, Optional
 from sqlalchemy import func
 
 from .extensions import db
+from .utils import to_utc_isoformat, utcnow
 
 
 TRIAL_DURATION_DAYS = 14
@@ -79,8 +80,8 @@ def effective_plan_slug(plan: str | None, plan_started_at: Optional[datetime]) -
     if base_slug not in PLAN_CONFIGS:
         base_slug = 'trial'
     if base_slug == 'trial':
-        started = plan_started_at or datetime.utcnow()
-        if datetime.utcnow() >= started + timedelta(days=TRIAL_DURATION_DAYS):
+        started = plan_started_at or utcnow()
+        if utcnow() >= started + timedelta(days=TRIAL_DURATION_DAYS):
             return 'trial_expired'
     return base_slug
 
@@ -97,10 +98,10 @@ class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(255), unique=True, nullable=False, index=True)
     name = db.Column(db.String(255), nullable=True)
-    created_at = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
+    created_at = db.Column(db.DateTime, default=utcnow, nullable=False)
     api_token = db.Column(db.String(64), unique=True, nullable=False, index=True)
     plan = db.Column(db.String(32), nullable=False, default='trial', index=True)
-    plan_started_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+    plan_started_at = db.Column(db.DateTime, nullable=False, default=utcnow)
     plan_metadata = db.Column(db.JSON, nullable=True)
     stripe_customer_id = db.Column(db.String(64), unique=True, nullable=True, index=True)
     stripe_subscription_id = db.Column(db.String(64), unique=True, nullable=True, index=True)
@@ -121,7 +122,7 @@ class User(db.Model):
     @staticmethod
     def create(email: str, name: Optional[str] = None) -> 'User':
         token = secrets.token_hex(24)
-        now = datetime.utcnow()
+        now = utcnow()
         user = User(
             email=email.strip().lower(),
             name=name,
@@ -155,7 +156,7 @@ class User(db.Model):
         expiry = calculate_trial_expiry(self.plan_started_at, self.created_at)
         if not expiry:
             return 0
-        remaining = expiry - datetime.utcnow()
+        remaining = expiry - utcnow()
         if remaining.total_seconds() <= 0:
             return 0
         days = remaining.days
@@ -177,12 +178,12 @@ class User(db.Model):
         if config.slug == 'trial':
             expiry = calculate_trial_expiry(self.plan_started_at, self.created_at)
             if expiry:
-                payload['trial_expires_at'] = expiry.replace(microsecond=0).isoformat() + 'Z'
+                payload['trial_expires_at'] = to_utc_isoformat(expiry)
                 payload['trial_days_remaining'] = self.trial_days_remaining()
         if config.slug == 'trial_expired':
             expiry = calculate_trial_expiry(self.plan_started_at, self.created_at)
             if expiry:
-                payload['trial_expired_at'] = expiry.replace(microsecond=0).isoformat() + 'Z'
+                payload['trial_expired_at'] = to_utc_isoformat(expiry)
             payload['trial_expired'] = True
         if isinstance(self.plan_metadata, dict) and self.plan_metadata:
             payload['metadata'] = self.plan_metadata
@@ -205,8 +206,8 @@ class Project(db.Model):
     language = db.Column(db.String(8), nullable=True)
     country = db.Column(db.String(2), nullable=True)
     data = db.Column(db.JSON, nullable=True)
-    created_at = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
-    updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow, nullable=False)
+    created_at = db.Column(db.DateTime, default=utcnow, nullable=False)
+    updated_at = db.Column(db.DateTime, default=utcnow, onupdate=utcnow, nullable=False)
 
     @staticmethod
     def create(user: User, name: str, description: Optional[str] = None, language: Optional[str] = None, country: Optional[str] = None, data: Optional[dict] = None) -> 'Project':
@@ -221,7 +222,7 @@ class LoginToken(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(255), index=True, nullable=False)
     token = db.Column(db.String(128), unique=True, index=True, nullable=False)
-    created_at = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
+    created_at = db.Column(db.DateTime, default=utcnow, nullable=False)
     expires_at = db.Column(db.DateTime, nullable=False)
     used = db.Column(db.Boolean, default=False, nullable=False)
 
@@ -238,7 +239,7 @@ class QueryLog(db.Model):
     total_suggestions = db.Column(db.Integer, nullable=False, default=0)
     audience_score = db.Column(db.Float, nullable=False, default=0.0)
     context_json = db.Column(db.JSON, nullable=True)
-    created_at = db.Column(db.DateTime, default=datetime.utcnow, nullable=False, index=True)
+    created_at = db.Column(db.DateTime, default=utcnow, nullable=False, index=True)
     passes_threshold = db.Column(db.Boolean, default=False, nullable=False, index=True)
     threshold_reason = db.Column(db.String(128), nullable=True)
 
@@ -289,8 +290,8 @@ class Payment(db.Model):
     currency = db.Column(db.String(3), nullable=False)
     payer_email = db.Column(db.String(255), nullable=True)
     metadata_payload = db.Column('metadata', db.JSON, nullable=True)
-    created_at = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
-    updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow, nullable=False)
+    created_at = db.Column(db.DateTime, default=utcnow, nullable=False)
+    updated_at = db.Column(db.DateTime, default=utcnow, onupdate=utcnow, nullable=False)
     invoice_number = db.Column(db.String(64), nullable=True, unique=True)
     invoice_path = db.Column(db.String(255), nullable=True)
 
@@ -328,8 +329,8 @@ class CandidateQuery(db.Model):
     audience_score = db.Column(db.Float, nullable=False, default=0.0)
     threshold_reason = db.Column(db.String(128), nullable=True)
     status = db.Column(db.String(32), nullable=False, default='pending', index=True)
-    created_at = db.Column(db.DateTime, default=datetime.utcnow, nullable=False, index=True)
-    updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow, nullable=False, index=True)
+    created_at = db.Column(db.DateTime, default=utcnow, nullable=False, index=True)
+    updated_at = db.Column(db.DateTime, default=utcnow, onupdate=utcnow, nullable=False, index=True)
 
     drafts = db.relationship('ContentDraft', backref='candidate', lazy=True, cascade='all, delete-orphan')
 
@@ -380,8 +381,8 @@ class ContentDraft(db.Model):
     author_name = db.Column(db.String(128), nullable=True)
     tags = db.Column(db.JSON, nullable=True)
     status = db.Column(db.String(32), nullable=False, default='draft', index=True)
-    created_at = db.Column(db.DateTime, default=datetime.utcnow, nullable=False, index=True)
-    updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow, nullable=False, index=True)
+    created_at = db.Column(db.DateTime, default=utcnow, nullable=False, index=True)
+    updated_at = db.Column(db.DateTime, default=utcnow, onupdate=utcnow, nullable=False, index=True)
     published_at = db.Column(db.DateTime, nullable=True, index=True)
 
     @staticmethod

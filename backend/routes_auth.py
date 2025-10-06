@@ -2,17 +2,18 @@ from __future__ import annotations
 
 import os
 import secrets
-from datetime import datetime, timedelta
+from datetime import timedelta
 from urllib.parse import urlencode
 
 from flask import Blueprint, jsonify, request
 
 from .extensions import db
 from .models import DailyUsage, LoginToken, User
+from .utils import utc_today, utcnow
 
 
 def _plan_snapshot(user: User) -> dict:
-    today = datetime.utcnow().date()
+    today = utc_today()
     usage = DailyUsage.for_day(user, today)
     queries_used = usage.query_count if usage else 0
     return user.plan_payload(include_usage=True, queries_used_today=queries_used)
@@ -36,7 +37,7 @@ def request_magic_link():
         user = User.create(email=email, name=name)
     # Create login token
     token = secrets.token_urlsafe(24)
-    expires = datetime.utcnow() + timedelta(minutes=20)
+    expires = utcnow() + timedelta(minutes=20)
     lt = LoginToken(email=email, token=token, expires_at=expires)
     db.session.add(lt)
     db.session.commit()
@@ -63,7 +64,7 @@ def verify_magic_link():
     lt = LoginToken.query.filter_by(token=token).first()
     if not lt or lt.used:
         return jsonify({'error': 'invalid token'}), 400
-    if lt.expires_at < datetime.utcnow():
+    if lt.expires_at < utcnow():
         return jsonify({'error': 'token expired'}), 400
     # Get or create user
     user = User.query.filter_by(email=lt.email).first()

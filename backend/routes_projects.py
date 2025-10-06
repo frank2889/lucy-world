@@ -1,15 +1,15 @@
 from __future__ import annotations
 
-from datetime import datetime
 from flask import Blueprint, jsonify, request
 
 from .extensions import db
 from .models import DailyUsage, Project, User
 from .routes_helpers import auth_required
+from .utils import utc_today
 
 
 def _plan_snapshot(user: User) -> dict:
-    today = datetime.utcnow().date()
+    today = utc_today()
     usage = DailyUsage.for_day(user, today)
     queries_used = usage.query_count if usage else 0
     return user.plan_payload(include_usage=True, queries_used_today=queries_used)

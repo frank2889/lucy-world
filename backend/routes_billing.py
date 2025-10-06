@@ -2,16 +2,17 @@ from __future__ import annotations
 
 import json
 import os
-from datetime import datetime
 from decimal import Decimal
 from typing import Any, Dict, Optional
 
-import stripe
+import stripe  # type: ignore
 from flask import Blueprint, current_app, jsonify, request
 
 from .extensions import db
 from .models import Payment, User
 from .routes_helpers import auth_required, get_current_user
+from .services.credits import ensure_plan_metadata, grant_ai_credits
+from .utils import from_timestamp_utc, structured_log, to_utc_isoformat, utcnow
 
 bp = Blueprint("billing", __name__, url_prefix="/api/billing")
 
@@ -19,21 +20,10 @@ bp = Blueprint("billing", __name__, url_prefix="/api/billing")
 class StripeConfigurationError(RuntimeError):
     """Raised when Stripe is not configured correctly."""
 
-def _ensure_metadata(user: User) -> Dict[str, Any]:
-    raw_meta = user.plan_metadata if isinstance(user.plan_metadata, dict) else {}
-    meta = dict(raw_meta or {})
-    if "tier" not in meta:
-        meta["tier"] = "free"
-    if "ai_credits" not in meta:
-        meta["ai_credits"] = 0
-    user.plan_metadata = meta
-    return meta
-
 
 def _set_subscription_expiry(meta: Dict[str, Any], period_end: Any) -> None:
     if isinstance(period_end, (int, float)):
-        expires_at = datetime.utcfromtimestamp(period_end).replace(microsecond=0).isoformat() + "Z"
-        meta["expires_at"] = expires_at
+        meta["expires_at"] = to_utc_isoformat(from_timestamp_utc(period_end))
     elif isinstance(period_end, str):
         meta["expires_at"] = period_end
     else:
@@ -80,7 +70,7 @@ def _find_user_by_stripe(
     user: Optional[User] = None
     if user_id:
         try:
-            user = User.query.get(int(user_id))
+            user = db.session.get(User, int(user_id))
         except (ValueError, TypeError):
             user = None
         if user:
@@ -246,7 +236,7 @@ def _handle_checkout_completed(session: Dict[str, Any]) -> bool:
     user.stripe_customer_id = session.get("customer") or user.stripe_customer_id
     user.stripe_subscription_id = session.get("subscription") or user.stripe_subscription_id
     user.plan = "pro"
-    user.plan_started_at = datetime.utcnow()
+    user.plan_started_at = utcnow()
 
     user.billing_name = customer_details.get("name") or user.billing_name or user.name
     user.billing_address_line1 = address.get("line1") or user.billing_address_line1
@@ -260,7 +250,7 @@ def _handle_checkout_completed(session: Dict[str, Any]) -> bool:
     if tax_ids:
         user.billing_tax_id = tax_ids[0].get("value") or user.billing_tax_id
 
-    metadata = _ensure_metadata(user)
+    metadata = ensure_plan_metadata(user)
     metadata["tier"] = "pro"
     metadata["stripe"] = {
         "customer_id": user.stripe_customer_id,
@@ -269,6 +259,15 @@ def _handle_checkout_completed(session: Dict[str, Any]) -> bool:
     }
     _set_subscription_expiry(metadata, session.get("subscription") and session.get("expires_at"))
     user.plan_metadata = metadata
+
+    structured_log(
+        "entitlement_change",
+        action="upgrade_to_pro",
+        user_id=user.id,
+        stripe_customer_id=user.stripe_customer_id,
+        stripe_subscription_id=user.stripe_subscription_id,
+        checkout_session=session.get("id"),
+    )
 
     return True
 
@@ -312,17 +311,59 @@ def _handle_invoice_paid(invoice: Dict[str, Any]) -> bool:
     payment.payer_email = ((invoice.get("customer_email") or user.email) or None)
     payment.invoice_number = invoice.get("number") or payment.invoice_number
     payment.invoice_path = invoice.get("hosted_invoice_url") or payment.invoice_path
-    payment.updated_at = datetime.utcnow()
+    payment.updated_at = utcnow()
 
     # Ensure subscription remains active
     user.plan = "pro"
-    user.plan_started_at = datetime.utcnow()
-    meta = _ensure_metadata(user)
+    user.plan_started_at = utcnow()
+    meta = ensure_plan_metadata(user)
     meta.setdefault("stripe", {})["latest_invoice"] = invoice_id
     meta["tier"] = "pro"
     period_end = (invoice.get("lines", {}).get("data", [{}])[0].get("period") or {}).get("end")
     _set_subscription_expiry(meta, period_end)
     user.plan_metadata = meta
+
+    usage_price_id = (os.getenv("STRIPE_PRICE_PRO_USAGE") or "").strip()
+    credits_per_unit_env = os.getenv("STRIPE_AI_CREDITS_PER_UNIT") or "100"
+    try:
+        credits_per_unit = max(int(credits_per_unit_env), 0)
+    except ValueError:
+        credits_per_unit = 0
+
+    if usage_price_id and credits_per_unit > 0:
+        purchased_units = 0
+        for line in invoice.get("lines", {}).get("data", []):
+            price_info = line.get("price")
+            if isinstance(price_info, dict):
+                price_id = price_info.get("id") or ""
+            else:
+                price_id = price_info or ""
+            if price_id != usage_price_id:
+                continue
+            quantity = line.get("quantity")
+            if quantity is None:
+                quantity = line.get("usage")
+            try:
+                units = int(quantity or 0)
+            except (TypeError, ValueError):
+                units = 0
+            if units > 0:
+                purchased_units += units
+        if purchased_units > 0:
+            grant_ai_credits(
+                user,
+                purchased_units * credits_per_unit,
+                source="stripe_invoice",
+                reference=invoice_id,
+            )
+    structured_log(
+        "entitlement_change",
+        action="invoice_paid",
+        user_id=user.id,
+        invoice_id=invoice_id,
+        plan=user.plan,
+        ai_credits=user.plan_metadata.get("ai_credits") if isinstance(user.plan_metadata, dict) else None,
+    )
     return True
 
 
@@ -331,9 +372,16 @@ def _handle_invoice_failed(invoice: Dict[str, Any]) -> bool:
     user = _find_user_by_stripe(customer_id=customer_id)
     if not user:
         return False
-    meta = _ensure_metadata(user)
-    meta.setdefault("stripe", {})["payment_failed_at"] = datetime.utcnow().isoformat() + "Z"
+    meta = ensure_plan_metadata(user)
+    meta.setdefault("stripe", {})["payment_failed_at"] = to_utc_isoformat()
     user.plan_metadata = meta
+    structured_log(
+        "entitlement_change",
+        action="invoice_failed",
+        user_id=user.id,
+        invoice_id=invoice.get("id"),
+        plan=user.plan,
+    )
     return True
 
 
@@ -345,12 +393,19 @@ def _handle_subscription_cancelled(subscription: Dict[str, Any]) -> bool:
     if not user:
         return False
     user.plan = "trial_expired"
-    meta = _ensure_metadata(user)
+    meta = ensure_plan_metadata(user)
     meta.setdefault("stripe", {})["subscription_status"] = subscription.get("status")
-    meta["stripe"]["ended_at"] = datetime.utcnow().isoformat() + "Z"
+    meta["stripe"]["ended_at"] = to_utc_isoformat()
     meta["tier"] = "free"
     meta.pop("expires_at", None)
     user.plan_metadata = meta
+    structured_log(
+        "entitlement_change",
+        action="subscription_cancelled",
+        user_id=user.id,
+        stripe_subscription_id=subscription_id,
+        plan=user.plan,
+    )
     return True
 
 
@@ -362,7 +417,7 @@ def _handle_subscription_updated(subscription: Dict[str, Any]) -> bool:
     if not user:
         return False
     status = subscription.get("status")
-    meta = _ensure_metadata(user)
+    meta = ensure_plan_metadata(user)
     meta.setdefault("stripe", {})["subscription_status"] = status
     period = subscription.get("current_period_end")
     _set_subscription_expiry(meta, period)
@@ -374,4 +429,12 @@ def _handle_subscription_updated(subscription: Dict[str, Any]) -> bool:
         user.plan = "trial_expired"
         meta["tier"] = "free"
         meta.pop("expires_at", None)
+    structured_log(
+        "entitlement_change",
+        action="subscription_updated",
+        user_id=user.id,
+        stripe_subscription_id=subscription_id,
+        status=status,
+        plan=user.plan,
+    )
     return True

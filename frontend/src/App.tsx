@@ -9,6 +9,7 @@ import { EntitlementsProvider } from './entitlements/context'
 import { RequireEntitlement } from './entitlements/RequireEntitlement'
 import { filterPlatformsByEntitlements } from './entitlements/platformVisibility'
 import type { UIState } from './platforms/types'
+import { launchUpgradeCheckout } from './billing/checkoutLauncher'
 
 type CategoryItem = {
   keyword: string
@@ -195,6 +196,7 @@ export default function App() {
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [langMenuAnchor, setLangMenuAnchor] = useState<'desktop' | 'mobile' | null>(null)
   const [marketLocales, setMarketLocales] = useState<Map<string, string[]>>(() => new Map())
+  const [billingLoading, setBillingLoading] = useState(false)
 
   const entitlementsResult = useEntitlements(token)
 
@@ -302,12 +304,35 @@ export default function App() {
   const aiCreditsLabel = useMemo(() => getTranslated('entitlements.sidebar.ai_credits', 'AI credits'), [getTranslated])
   const upgradeCtaLabel = useMemo(() => getTranslated('entitlements.actions.upgrade', 'Upgrade plan'), [getTranslated])
   const buyCreditsCtaLabel = useMemo(() => getTranslated('entitlements.actions.buy_credits', 'Get AI credits'), [getTranslated])
+  const upgradeUnavailableLabel = useMemo(() => getTranslated('billing.error.upgrade_unavailable', 'Upgrade is currently unavailable. Please contact support.'), [getTranslated])
+  const upgradeRequiresSigninLabel = useMemo(() => getTranslated('billing.error.signin_required', 'Please sign in to upgrade.'), [getTranslated])
+  const checkoutLaunchingLabel = useMemo(() => getTranslated('billing.status.launching_checkout', 'Opening checkout…'), [getTranslated])
+  const checkoutFailedLabel = useMemo(() => getTranslated('billing.error.checkout_failed', 'Unable to open checkout. Please try again.'), [getTranslated])
   const aiUnlockedLabel = useMemo(() => getTranslated('entitlements.sidebar.ai_unlocked', 'AI workspace unlocked'), [getTranslated])
   const aiLockedLabel = useMemo(() => getTranslated('entitlements.sidebar.ai_locked', 'Unlock AI workspace with credits'), [getTranslated])
   const entitlementsLoadingLabel = useMemo(() => getTranslated('entitlements.status.loading', 'Loading plan…'), [getTranslated])
   const entitlementsErrorLabel = useMemo(() => getTranslated('entitlements.status.error', 'Unable to load plan'), [getTranslated])
   const lockedModuleMessage = useMemo(() => getTranslated('entitlements.locked.module', 'Upgrade your plan to access this module.'), [getTranslated])
   const upgradeNowLabel = useMemo(() => getTranslated('entitlements.actions.upgrade_now', 'Upgrade now'), [getTranslated])
+  const normalizedUpgradeUrl = useMemo(() => {
+    const raw = entitlementsData.upgrade_url
+    return typeof raw === 'string' ? raw.trim() : ''
+  }, [entitlementsData.upgrade_url])
+  const handleUpgradeClick = useCallback(async () => {
+    await launchUpgradeCheckout({
+      upgradeUrl: normalizedUpgradeUrl,
+      token,
+      billingLoading,
+      setBillingLoading,
+      setError,
+      setShowSignin,
+      labels: {
+        upgradeUnavailable: upgradeUnavailableLabel,
+        upgradeRequiresSignin: upgradeRequiresSigninLabel,
+        checkoutFailed: checkoutFailedLabel
+      }
+    })
+  }, [normalizedUpgradeUrl, token, billingLoading, setBillingLoading, setError, setShowSignin, upgradeUnavailableLabel, upgradeRequiresSigninLabel, checkoutFailedLabel])
   const entitlementsExpiresLabel = useMemo(() => {
     if (!entitlementsData.expires_at) return null
     const parsed = new Date(entitlementsData.expires_at)
@@ -1003,10 +1028,10 @@ export default function App() {
               </>
             )}
             <div style={{ display: 'grid', gap: 8, marginTop: 4 }}>
-              <a
-                href={entitlementsData.upgrade_url}
-                target="_blank"
-                rel="noreferrer"
+              <button
+                type="button"
+                onClick={handleUpgradeClick}
+                disabled={billingLoading}
                 style={{
                   display: 'inline-flex',
                   alignItems: 'center',
@@ -1016,12 +1041,13 @@ export default function App() {
                   borderRadius: 8,
                   border: '1px solid var(--line)',
                   color: 'var(--text)',
-                  textDecoration: 'none',
-                  fontSize: 13
+                  background: 'transparent',
+                  fontSize: 13,
+                  cursor: billingLoading ? 'wait' : 'pointer'
                 }}
               >
-                ⬆️ {upgradeCtaLabel}
-              </a>
+                ⬆️ {billingLoading ? checkoutLaunchingLabel : upgradeCtaLabel}
+              </button>
               <a
                 href={entitlementsData.buy_credits_url}
                 target="_blank"
@@ -1329,10 +1355,10 @@ export default function App() {
             fallback={(
               <div className="card" style={{ marginTop: 24, padding: 24, textAlign: 'center' }}>
                 <p style={{ marginBottom: 16 }}>{lockedModuleMessage}</p>
-                <a
-                  href={entitlementsData.upgrade_url}
-                  target="_blank"
-                  rel="noreferrer"
+                <button
+                  type="button"
+                  onClick={handleUpgradeClick}
+                  disabled={billingLoading}
                   style={{
                     display: 'inline-flex',
                     alignItems: 'center',
@@ -1342,12 +1368,13 @@ export default function App() {
                     borderRadius: 10,
                     border: '1px solid var(--line)',
                     color: 'var(--text)',
-                    textDecoration: 'none',
-                    fontWeight: 600
+                    background: 'transparent',
+                    fontWeight: 600,
+                    cursor: billingLoading ? 'wait' : 'pointer'
                   }}
                 >
-                  🚀 {upgradeNowLabel}
-                </a>
+                  🚀 {billingLoading ? checkoutLaunchingLabel : upgradeNowLabel}
+                </button>
               </div>
             )}
           >

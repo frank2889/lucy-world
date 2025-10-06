@@ -12,16 +12,16 @@ import re
 import time
 import functools
 from collections import defaultdict
+from pathlib import Path
+from datetime import date
 import ipaddress
 import requests
-from datetime import datetime, date, timedelta
 from math import log1p
 from typing import Any
-from flask import Flask, render_template, request, jsonify, send_file, redirect, abort
+from flask import Flask, render_template, request, jsonify, send_file, redirect, abort, g
 from flask import send_from_directory
 from werkzeug.middleware.proxy_fix import ProxyFix
 from sqlalchemy import inspect, text
-
 from backend.services.advanced_keyword_tool import AdvancedKeywordTool
 from backend.services.ai_blog_pipeline import AIBlogPipeline
 from backend.services.premium_keyword_tool import PremiumKeywordTool
@@ -34,6 +34,7 @@ from .routes_auth import bp as auth_bp
 from .routes_billing import bp as billing_bp
 from .routes_entitlements import bp as entitlements_bp
 from .routes_growth import bp as growth_bp
+from .utils import correlation_id, to_utc_isoformat, utc_today, utcnow
 
 
 def create_app() -> Flask:
@@ -47,6 +48,16 @@ def create_app() -> Flask:
 	logger = logging.getLogger(__name__)
 
 	app = Flask(__name__, static_folder=static_folder, template_folder=templates_folder)
+
+	@app.before_request
+	def _assign_correlation_id() -> None:
+		correlation_id()
+
+	@app.after_request
+	def _propagate_request_id(response):
+		if getattr(g, "correlation_id", None):
+			response.headers.setdefault("X-Request-ID", g.correlation_id)
+		return response
 
 	# Accept both trailing and non-trailing slash variants for all routes
 	try:
@@ -662,6 +673,14 @@ def create_app() -> Flask:
 		path = os.path.join(dir_path, filename)
 		return path if os.path.exists(path) else None
 
+	def _send_lang_asset(path: str, mimetype: str):
+		"""Return a response with the asset contents, ensuring file handles are closed."""
+		if mimetype.startswith('text/') or mimetype.endswith('json'):  # simple heuristic
+			data = Path(path).read_text(encoding='utf-8')
+		else:
+			data = Path(path).read_bytes()
+		return app.response_class(data, mimetype=mimetype)
+
 	@app.route('/')
 	def index_root():
 		"""Detect language and redirect to /<lang>/ with GTM tracking"""
@@ -699,7 +718,7 @@ def create_app() -> Flask:
 			abort(404)
 		override = _lang_asset_path(lang, 'robots.txt')
 		if override:
-			return send_file(override, mimetype='text/plain')
+			return _send_lang_asset(override, 'text/plain')
 		relations, path_map = _hreflang_relations()
 		allowed = relations.get(lang, {lang})
 		base = _base_url()
@@ -743,10 +762,10 @@ def create_app() -> Flask:
 			abort(404)
 		override = _lang_asset_path(lang, 'sitemap.xml')
 		if override:
-			return send_file(override, mimetype='application/xml')
+			return _send_lang_asset(override, 'application/xml')
 		# Default: include the localized homepage for this language
 		base = _base_url()
-		now = datetime.utcnow().strftime('%Y-%m-%d')
+		now = utcnow().strftime('%Y-%m-%d')
 		loc = f"{base}/{lang}/"
 		xml = (
 			"<?xml version=\"1.0\" encoding=\"UTF-8\"?>"
@@ -764,7 +783,7 @@ def create_app() -> Flask:
 			abort(404)
 		override = _lang_asset_path(lang, 'structured.json')
 		if override:
-			return send_file(override, mimetype='application/json')
+			return _send_lang_asset(override, 'application/json')
 		# Default: localized website JSON-LD referencing the language homepage
 		base = _base_url()
 		home = f"{base}/{lang}/"
@@ -869,7 +888,7 @@ def create_app() -> Flask:
 	def meta_sitemap():
 		"""XML sitemap with language-specific home URLs (only available locales)."""
 		base = _base_url()
-		now = datetime.utcnow().strftime('%Y-%m-%d')
+		now = utcnow().strftime('%Y-%m-%d')
 		langs = _available_locales()
 		if not langs:
 			langs = ['en']
@@ -905,7 +924,7 @@ def create_app() -> Flask:
 	def meta_feed():
 		"""Minimal Atom feed"""
 		base = _base_url()
-		now = datetime.utcnow().isoformat() + 'Z'
+		now = to_utc_isoformat()
 		feed = f"""
 		<?xml version="1.0" encoding="utf-8"?>
 		<feed xmlns="http://www.w3.org/2005/Atom">
@@ -955,7 +974,7 @@ def create_app() -> Flask:
 	def meta_ai_manifest():
 		"""AI manifest describing available API endpoints and metadata."""
 		base = _base_url()
-		now = datetime.utcnow().isoformat() + 'Z'
+		now = to_utc_isoformat()
 		manifest = {
 			"name": "Lucy World",
 			"description": "Keyword research tool powered by Google data (Trends, Suggest, Wikipedia).",
@@ -1237,7 +1256,7 @@ def create_app() -> Flask:
 					'total_keywords': 0,
 					'real_data_keywords': 0
 				},
-				'timestamp': datetime.now().isoformat()
+				'timestamp': to_utc_isoformat()
 			}
 
 			# Verwerk alle categorieën
@@ -1284,7 +1303,7 @@ def create_app() -> Flask:
 			response_data['summary']['real_data_keywords'] = real_data_keywords
 			usage_after = usage
 			if plan_config:
-				usage_after = _increment_usage(user, usage, usage_day or datetime.utcnow().date())
+				usage_after = _increment_usage(user, usage, usage_day or utc_today())
 				response_data['plan'] = _plan_snapshot(user, usage_after)
 
 			return jsonify(response_data)
@@ -2009,7 +2028,7 @@ def create_app() -> Flask:
 		enforce_quota: bool = True,
 	) -> tuple[PlanConfig | None, DailyUsage | None, Any | None, int | None, int, date]:
 		plan_config = user.plan_config
-		today = datetime.utcnow().date()
+		today = utc_today()
 		usage = DailyUsage.for_day(user, today)
 		queries_used = usage.query_count if usage else 0
 
@@ -2139,7 +2158,7 @@ def create_app() -> Flask:
 				'provider': slug,
 				'message': 'provider unavailable',
 			} for slug in requested]
-			timestamp = datetime.utcnow().isoformat() + 'Z'
+			timestamp = to_utc_isoformat()
 			audience_score = 0.0
 			passes_threshold = False
 			threshold_reason = None
@@ -2190,7 +2209,7 @@ def create_app() -> Flask:
 				'metadata': metadata_payload,
 			}), 200
 
-		timestamp = datetime.utcnow().isoformat() + 'Z'
+		timestamp = to_utc_isoformat()
 		audience_score = _score_audience_potential(
 			unique_suggestions=result['unique'],
 			total_suggestions=result['total'],
@@ -2235,7 +2254,7 @@ def create_app() -> Flask:
 			metadata_payload['log_id'] = log_id
 		usage_after = usage
 		if user and plan_config:
-			usage_after = _increment_usage(user, usage, plan_usage_day or datetime.utcnow().date())
+			usage_after = _increment_usage(user, usage, plan_usage_day or utc_today())
 			metadata_payload['plan'] = _plan_snapshot(user, usage_after)
 		elif user:
 			metadata_payload['plan'] = _plan_snapshot(user, usage_after)
@@ -2306,7 +2325,7 @@ def create_app() -> Flask:
 				'provider': slug,
 				'message': 'provider unavailable',
 			} for slug in requested]
-			timestamp = datetime.utcnow().isoformat() + 'Z'
+			timestamp = to_utc_isoformat()
 			audience_score = 0.0
 			passes_threshold = False
 			threshold_reason = None
@@ -2351,7 +2370,7 @@ def create_app() -> Flask:
 				'metadata': metadata_payload,
 			}), 200
 
-		timestamp = datetime.utcnow().isoformat() + 'Z'
+		timestamp = to_utc_isoformat()
 		audience_score = _score_audience_potential(
 			unique_suggestions=result['unique'],
 			total_suggestions=result['total'],
@@ -2528,11 +2547,11 @@ def create_app() -> Flask:
 					'avg_difficulty': round(avg_difficulty, 1),
 					'avg_volume': total_volume // len(all_keywords_data) if all_keywords_data else 0
 				},
-				'timestamp': datetime.now().isoformat()
+				'timestamp': to_utc_isoformat()
 			}
 			usage_after = usage
 			if plan_config:
-				usage_after = _increment_usage(user, usage, usage_day or datetime.utcnow().date())
+				usage_after = _increment_usage(user, usage, usage_day or utc_today())
 				response['plan'] = _plan_snapshot(user, usage_after)
             
 			return jsonify(response)
@@ -2604,7 +2623,7 @@ def create_app() -> Flask:
 		"""Health check voor load balancer"""
 		return jsonify({
 			'status': 'healthy',
-			'timestamp': datetime.now().isoformat(),
+			'timestamp': to_utc_isoformat(),
 			'tools': {
 				'advanced': advanced_tool is not None,
 				'premium': premium_tool is not None

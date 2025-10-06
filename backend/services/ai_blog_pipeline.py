@@ -4,7 +4,6 @@ import json
 import logging
 import os
 import re
-from datetime import datetime
 from pathlib import Path
 from typing import Any, Dict, List, Optional
 
@@ -18,6 +17,7 @@ except ImportError:  # pragma: no cover
 
 from backend.extensions import db
 from backend.models import CandidateQuery, ContentDraft
+from backend.utils import to_utc_isoformat, utcnow
 
 
 class DraftGenerationError(RuntimeError):
@@ -124,7 +124,7 @@ class AIBlogPipeline:
             return None
 
     def _fallback_payload(self, candidate: CandidateQuery) -> Dict[str, Any]:
-        year = datetime.utcnow().year
+        year = utcnow().year
         title = f"{candidate.keyword.title()} Strategy Playbook for {year}"
         summary = (
             f"See how privacy-first teams can turn interest in '{candidate.keyword}' into pipeline and revenue. "
@@ -264,7 +264,7 @@ class AIBlogPipeline:
             .all()
         )
         payload = {
-            "generated_at": datetime.utcnow().isoformat() + "Z",
+            "generated_at": to_utc_isoformat(),
             "posts": [
                 {
                     "id": post.id,
@@ -354,7 +354,7 @@ class AIBlogPipeline:
             draft.country = country.strip().upper()
 
         draft.status = "published"
-        draft.published_at = datetime.utcnow()
+        draft.published_at = utcnow()
         if draft.candidate:
             draft.candidate.status = "published"
 
