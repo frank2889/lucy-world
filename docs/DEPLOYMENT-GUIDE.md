@@ -30,13 +30,30 @@ Lucy World Search runs as a Flask application that serves a Vite-built React SPA
     ```
 
    The tests cover the `useEntitlements` hook, context provider, and `RequireEntitlement` guard added on Oct 5 2025.
-3. Run a quick syntax check on the backend:
+3. Regenerate locale SEO assets and validate crawl discipline (this also rewrites every `languages/*/robots.txt` with the latest `Disallow: /*?q=` rule):
+
+    ```bash
+    python3 scripts/generate_site_assets.py
+    python3 scripts/validate_robots.py
+    ```
+
+   The validator fails if any locale is missing the query-string disallow, sitemap pointer, or hreflang permissions.
+4. Run a quick syntax check on the backend:
 
     ```bash
     /usr/local/bin/python3 -m compileall backend free_keyword_tool.py advanced_keyword_tool.py
     ```
 
-4. (Optional) Create a git tag or archive for the release so you can trace what is live.
+5. (Optional) Spin up the lightweight `.pytest-venv` and run the crawl/indexing regression suite before shipping:
+
+    ```bash
+    python3 -m venv .pytest-venv
+    .pytest-venv/bin/pip install -r requirements.txt pytest markdown stripe
+    .pytest-venv/bin/python -m pytest backend/tests/test_indexing.py backend/tests/test_entitlements.py
+    ```
+
+   This confirms search-result pages emit `noindex, nofollow` and the entitlements API keeps expiry metadata stable.
+6. (Optional) Create a git tag or archive for the release so you can trace what is live.
 
 ## 2. Ship code to the server
 
@@ -106,6 +123,15 @@ STRIPE_WEBHOOK_SECRET=<stripe_webhook_secret>
 # SMTP_PASSWORD=...
 # SMTP_FROM=no-reply@lucy.world
 EOF
+
+# Align the legacy SQLite schema with the current app model
+python3 scripts/migrate_add_user_plan_columns.py --db lucy.sqlite3
+
+# Inspect the results (optional dry run)
+# python3 scripts/migrate_add_user_plan_columns.py --db lucy.sqlite3 --dry-run
+
+# Confirm the required columns exist
+sqlite3 lucy.sqlite3 "PRAGMA table_info(users);"
 ```
 
 ### Systemd service

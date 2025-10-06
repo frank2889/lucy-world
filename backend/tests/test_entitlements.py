@@ -1,30 +1,8 @@
 from __future__ import annotations
 
-from typing import Generator
-
-import pytest  # type: ignore
-
-from backend import create_app
+from datetime import datetime
 from backend.extensions import db
 from backend.models import User
-
-
-@pytest.fixture
-def app(monkeypatch, tmp_path) -> Generator:
-    db_file = tmp_path / "test.sqlite3"
-    monkeypatch.setenv("DATABASE_URL", f"sqlite:///{db_file}")
-    monkeypatch.setenv("PUBLIC_BASE_URL", "https://example.com")
-    app = create_app()
-    app.config.update(TESTING=True)
-    with app.app_context():
-        yield app
-        db.session.remove()
-        db.drop_all()
-
-
-@pytest.fixture
-def client(app):
-    return app.test_client()
 
 
 def test_entitlements_anonymous_defaults(client):
@@ -72,4 +50,34 @@ def test_entitlements_handles_invalid_token(client):
     payload = response.get_json()
     assert payload["tier"] == "free"
     assert payload["ai_credits"] == 0
+
+
+def test_entitlements_custom_urls_and_expiry(client, app, monkeypatch):
+    monkeypatch.setenv("ENTITLEMENTS_UPGRADE_URL", "https://billing.example.com/upgrade")
+    monkeypatch.setenv("ENTITLEMENTS_BUY_CREDITS_URL", "https://billing.example.com/credits")
+
+    with app.app_context():
+        user = User.create("vip@example.com")
+        user.plan = "enterprise"
+        meta = dict(user.plan_metadata or {})
+        meta.update({
+            "tier": "enterprise",
+            "ai_credits": 250,
+            "expires_at": "2026-01-01T12:30:45Z",
+        })
+        user.plan_metadata = meta
+        db.session.commit()
+        token = user.api_token
+
+    response = client.get(
+        "/api/entitlements",
+        headers={"Authorization": f"Bearer {token}"},
+    )
+    assert response.status_code == 200
+    payload = response.get_json()
+    assert payload["tier"] == "enterprise"
+    assert payload["ai_credits"] == 250
+    assert payload["upgrade_url"] == "https://billing.example.com/upgrade"
+    assert payload["buy_credits_url"] == "https://billing.example.com/credits"
+    assert payload["expires_at"] == "2026-01-01T12:30:45Z"
 

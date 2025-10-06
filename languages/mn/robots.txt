@@ -106,6 +106,7 @@ Disallow: /xh/
 Disallow: /yi/
 Disallow: /yo/
 Disallow: /zu/
+Disallow: /*?q=
 Disallow: /*/*/
 
 Sitemap: https://lucy.world/mn/sitemap.xml

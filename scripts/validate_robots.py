@@ -104,6 +104,8 @@ def validate_locale(lang: str, all_locales: list[str], relations: dict[str, set[
 
     if "/*/*/" not in disallow_paths:
         issues.append(f"[{lang}] missing 'Disallow: /*/*/'")
+    if "/*?q=" not in disallow_paths:
+        issues.append(f"[{lang}] missing 'Disallow: /*?q='")
 
     # All unrelated locales must be disallowed.
     unrelated = set(all_locales) - expected_codes

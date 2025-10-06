@@ -388,8 +388,9 @@ Supported (from `languages/languages.json`):
 1. `Allow: /{lang}/`  
 2. Allow valid hreflang alternates for shared markets (from `/markets/{CC}/hreflang.json`).  
 3. `Disallow: /{yy}/` for all other language roots not listed as alternates.  
-4. `Disallow: /*/*/` → block everything deeper than `/xx/`.  
-5. `Sitemap: https://lucy.world/{lang}/sitemap.xml`
+4. `Disallow: /*?q=` → prevent query-string search result URLs from being crawled.  
+5. `Disallow: /*/*/` → block everything deeper than `/xx/`.  
+6. `Sitemap: https://lucy.world/{lang}/sitemap.xml`
 
 ### DoD — Robots & Crawl
 
@@ -397,8 +398,10 @@ Supported (from `languages/languages.json`):
 - [x] Each robots allows its own `/xx/`.  
 - [x] Each robots allows hreflang alternates for shared markets.  
 - [x] Each robots disallows all unrelated `/yy/`.  
+- [x] Each robots disallows query-string search URLs (`/*?q=`).  
 - [x] Each robots disallows indexing deeper than `/xx/`.  
 - [x] Each robots includes sitemap.  
+- [x] `/xx/?q=` responses render `meta name="robots" content="noindex, nofollow"`.  
 - [x] CI ensures consistency across 105+ languages.  
 - [ ] GSC shows no cannibalisation *(monitor via `scripts/gsc_monitor.py` to flag duplicate queries).*  
 

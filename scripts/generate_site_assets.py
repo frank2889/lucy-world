@@ -230,6 +230,7 @@ def _build_robots(lang: str, all_locales: list[str], relations: dict[str, set[st
     for code in disallowed:
         lines.append(f"Disallow: /{code}/")
 
+    lines.append("Disallow: /*?q=")
     lines.append("Disallow: /*/*/")
     lines.append("")
     lines.append(f"Sitemap: {BASE_URL}/{lang}/sitemap.xml")

@@ -10,6 +10,7 @@ Update the list here to add/remove languages. The backend reads this file to gen
 
 - `/meta/sitemap.xml` entries per language.
 - `<link rel="alternate" hreflang="...">` tags on pages.
+- Locale-specific SEO assets (`languages/<lang>/robots.txt` and `sitemap.xml`) with the enforced `Disallow: /*?q=` crawl rule via `scripts/generate_site_assets.py`.
 
 The frontend falls back to English if a translation file is missing.
 

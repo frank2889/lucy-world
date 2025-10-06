@@ -620,6 +620,8 @@ def create_app() -> Flask:
 		meta_description = meta_defaults.get('description')
 		meta_keywords = meta_defaults.get('keywords')
 		meta_robots = meta_defaults.get('robots') or 'index, follow'
+		if 'q' in request.args:
+			meta_robots = 'noindex, nofollow'
 		try:
 			graph = structured.get('@graph') if isinstance(structured, dict) else None
 			if isinstance(graph, list):
@@ -726,6 +728,7 @@ def create_app() -> Flask:
 		for code in sorted(available - allowed):
 			lines.append(f"Disallow: /{code}/")
 
+		lines.append("Disallow: /*?q=")
 		lines.append("Disallow: /*/*/")
 		lines.append("")
 		lines.append(f"Sitemap: {base}/{lang}/sitemap.xml")
