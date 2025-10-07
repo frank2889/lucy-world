@@ -1371,6 +1371,44 @@ export default function App() {
           <div className="error">{error}</div>
         )}
 
+        {!isSignedIn && (
+          <div
+            className="card"
+            style={{
+              marginTop: 24,
+              padding: 24,
+              display: 'flex',
+              flexWrap: 'wrap',
+              alignItems: 'center',
+              gap: 16,
+              justifyContent: 'space-between'
+            }}
+          >
+            <div style={{ flex: '1 1 220px', minWidth: 220 }}>
+              <h3 style={{ marginTop: 0, marginBottom: 8 }}>{signInTitle}</h3>
+              <p style={{ margin: 0, opacity: 0.85 }}>{signInDescription}</p>
+            </div>
+            <button
+              type="button"
+              onClick={() => setShowSignin(true)}
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: 8,
+                background: 'var(--accent)',
+                color: '#050607',
+                border: 0,
+                borderRadius: 10,
+                padding: '10px 18px',
+                fontWeight: 600,
+                cursor: 'pointer'
+              }}
+            >
+              🔐 {signInTitle}
+            </button>
+          </div>
+        )}
+
         {ActivePlatformTool && activePlatform && (
           <RequireEntitlement
             group={activePlatform.group}
