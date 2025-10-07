@@ -1,5 +1,21 @@
 # Lucy.world Changelog
 
+## 2025-10-07
+
+### Added — Observability
+
+- Entitlement metrics aggregation service (`backend/services/metrics.py`) that produces plan, trial, and revenue counters for observability dashboards.
+- Backend unit coverage (`backend/tests/test_metrics.py`) validating trial expiry buckets and payment rollups.
+
+### Documentation — Observability
+
+- Updated architecture observability section to reference the metrics service JSON payloads.
+- Expanded support runbook with a quick metrics sampling command for on-call engineers.
+
+### Testing — Observability
+
+- `python3 -m pytest backend/tests/test_metrics.py` — passes (new coverage).
+
 ## 2025-10-06
 
 ### Added

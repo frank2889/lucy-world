@@ -75,7 +75,23 @@ stripe events resend EVENT_ID --forward-to https://staging.lucy.world/api/billin
 - Credit balance negative or stuck → data platform.
 - Repeated webhook signature failures → open Stripe support ticket.
 
-## 6. Post-resolution checklist
+## 6. Observability quick check
+
+Run the metrics service from a Flask shell when you need a snapshot of plan upgrade velocity or payment volume:
+
+```python
+from backend.services.metrics import collect_entitlement_metrics
+
+metrics = collect_entitlement_metrics()
+print({
+    "plan_breakdown": metrics["users"]["plans"],
+    "recent_payments": metrics["payments"],
+})
+```
+
+The call executes a single aggregation query set (covers plan counts, expiring trials, and payment rollups over the default seven-day window). Share notable anomalies in the #billing-support channel and attach the JSON snippet to the ticket.
+
+## 7. Post-resolution checklist
 
 - Confirm the customer sees the correct tier/credits in the UI.
 - Add a summary of actions (including CLI commands) to the support ticket.

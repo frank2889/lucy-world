@@ -307,6 +307,7 @@ Supported (from `languages/languages.json`):
 #### Observability, QA & support
 
 - Emit structured logs (`entitlement_change`, `ai_credit_consumed`) and push them to the monitoring stack; alert on negative balances, failed webhook syncs, or tier mismatches.  
+- Expose aggregated plan + billing counters via `backend.services.metrics.collect_entitlement_metrics` so dashboards and support tooling can query a single JSON payload.  
 - Dashboard metrics to include daily upgrades, credit burn rate, AI module adoption, and sidebar unlock counts.  
 - Build integration tests that simulate webhook payloads end-to-end and assert database entitlements match the expected state.  
 - Document a support runbook linking entitlement IDs to Stripe customers, with remediation steps when discrepancies occur.  
