@@ -263,7 +263,7 @@ python3 scripts/gsc_monitor.py --site https://lucy.world/ --lookback 14
 
 ### GitHub Actions workflow (preferred)
 
-A first-class GitHub Actions workflow (`.github/workflows/deploy.yml`) now ships every push to `main`:
+A first-class GitHub Actions workflow (`.github/workflows/deploy.yml`) now ships every push to `main` (the repository currently keeps the file renamed to `deploy.yml.disabled` so it does not run automatically until secrets are configured—rename it back when you are ready):
 
 1. **Provision SSH access** dedicated to CI. Create a deploy user on the droplet with read/write access to `/var/www/lucy-world-search`, install the GitHub Action public key, and confirm passwordless SSH.
 2. **Set repository secrets** (`Settings → Secrets and variables → Actions`):
