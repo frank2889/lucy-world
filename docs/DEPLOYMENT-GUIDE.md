@@ -2,7 +2,7 @@
 
 Lucy World Search runs as a Flask application that serves a Vite-built React SPA and exposes `/api/*` endpoints. Locale handling is done on the server—`/` redirects to `/&lt;lang&gt;/` based on `Accept-Language`—so the web server must proxy *all* non-static requests to the Flask app. The steps below describe how to get a droplet ready, ship a new release, and keep deployments repeatable.
 
-> **⚠️ Heads-up:** `deploy.sh`, `auto-deploy.sh`, and `quick-deploy.sh` are legacy helpers. They still assume a `/search` homepage and refer to `requirements-prod.txt`, which no longer exists. Treat them as templates and update them before running in production.
+> **⚠️ Heads-up:** `deploy.sh` and `quick-deploy.sh` are legacy helpers. They still assume a `/search` homepage and refer to `requirements-prod.txt`, which no longer exists. Treat them as templates and update them before running in production. `auto-deploy.sh` **is maintained** and now powers the automated workflow described below.
 
 ## 0. Prerequisites
 
@@ -261,45 +261,34 @@ python3 scripts/gsc_monitor.py --site https://lucy.world/ --lookback 14
 
 ## 5. Automating deployments
 
-Automation keeps production in sync with `main` after each push:
+### GitHub Actions workflow (preferred)
 
-1. **Attach the Git remote** on the droplet (once):
+A first-class GitHub Actions workflow (`.github/workflows/deploy.yml`) now ships every push to `main`:
+
+1. **Provision SSH access** dedicated to CI. Create a deploy user on the droplet with read/write access to `/var/www/lucy-world-search`, install the GitHub Action public key, and confirm passwordless SSH.
+2. **Set repository secrets** (`Settings → Secrets and variables → Actions`):
+   - `DEPLOY_HOST`: droplet IP or hostname.
+   - `DEPLOY_USER`: deploy username (for example, `deploy`).
+   - `DEPLOY_KEY`: private key that matches the server’s authorized key.
+   - Optional overrides: `DEPLOY_PORT`, `DEPLOY_APP_DIR`, `DEPLOY_REPO_URL`, `DEPLOY_HEALTH_URL`, `DEPLOY_SERVICE_NAME`, `DEPLOY_NGINX_SERVICE`, `DEPLOY_VENV_PATH`, `DEPLOY_REQUIREMENTS_FILE`.
+3. **Verify server prerequisites**: the droplet must already contain the repo at `/var/www/lucy-world-search` (or your override), a working virtual environment, and the refreshed `auto-deploy.sh`. Run once:
 
     ```bash
     cd /var/www/lucy-world-search
-    git remote set-url origin https://github.com/frank2889/lucy-world.git
-    git fetch origin
-    git reset --hard origin/main
-    ```
-
-2. **Refresh the helper scripts**: update `deploy.sh`, `auto-deploy.sh`, and `quick-deploy.sh` to reference `requirements.txt`, drop hard-coded passwords, and call `systemctl restart lucy-world-search` at the end. Install the reviewed `auto-deploy.sh` to `/usr/local/bin/`:
-
-    ```bash
     sudo install -m 755 auto-deploy.sh /usr/local/bin/auto-deploy-lucy
     ```
 
-3. **Configure the webhook service**. Create `/etc/systemd/system/lucy-webhook.service`:
+    The workflow calls `auto-deploy.sh` remotely, so it must remain up to date in the repository and on the server.
+4. **Trigger a deployment**. Push to `main` or click “Run workflow” in GitHub. The Action connects over SSH, exports the supplied environment variables, and executes `auto-deploy.sh`, which pulls the latest commit, installs dependencies from `requirements.txt`, optionally builds the frontend, restarts `systemd` services, and performs a health check.
 
-    ```ini
-    [Unit]
-    Description=Lucy World Deploy Webhook
-    After=network.target
+Deployment logs appear in the Actions run and the server journal (`journalctl -u lucy-world-search`).
 
-    [Service]
-    WorkingDirectory=/var/www/lucy-world-search
-    Environment="WEBHOOK_SECRET=<set-this>"
-    ExecStart=/var/www/lucy-world-search/venv/bin/python webhook.py
-    Restart=on-failure
+### Webhook fallback (legacy)
 
-    [Install]
-    WantedBy=multi-user.target
-    ```
+If you prefer to keep the self-hosted webhook (`webhook.py`), reuse steps 1–2 above, then:
 
-    Enable it with `sudo systemctl enable --now lucy-webhook`.
-
-4. **Add the GitHub webhook** (repo → Settings → Webhooks): URL `https://lucy.world:9000/webhook`, content type `application/json`, secret matching the environment variable, events = push. Verify with the “Recent Deliveries” tab.
-
-5. **Developer loop**: `git add`, `git commit`, `git push origin main`. The webhook runs `auto-deploy.sh`, pulls the new commit, reinstalls dependencies when needed, and restarts the Gunicorn service. Keep smoke-test commands in pull requests so deploy logs show what was validated upstream.
+1. Create `/etc/systemd/system/lucy-webhook.service` as shown previously, enable it, and ensure the process listens on port `9000`.
+2. Add a GitHub webhook pointing to `https://lucy.world:9000/webhook` with the shared secret. The webhook also invokes `auto-deploy.sh` whenever it receives a push event.
 
 See `operations.md` for operational monitoring and scheduled maintenance once automation is live.
 
@@ -364,7 +353,7 @@ Keeping the UI strings in sync is now a two-step process. Run these checks local
 
 ## 7. Known gaps / TODOs
 
-- Update `deploy.sh` and `auto-deploy.sh` to reference `requirements.txt`, respect the new locale-aware routing, and drop the password-based SSH usage in `quick-deploy.sh`.
+- Update `deploy.sh` and `quick-deploy.sh` to reference `requirements.txt`, respect the new locale-aware routing, and drop the password-based SSH usage in `quick-deploy.sh`.
 - Consider creating a dedicated deploy user with limited permissions instead of running everything as `root`/`www-data`.
 - Add health probes for `/meta/detect.json` and `/api/free/search` to DigitalOcean monitoring once production is cut over.
 - Document rollback steps (e.g., keep the previous git commit hash handy and restart the service after `git checkout`).

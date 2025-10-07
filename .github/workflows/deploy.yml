@@ -1,0 +1,47 @@
+name: Deploy to Production
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    name: Run server deployment
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout (for reference)
+        uses: actions/checkout@v4
+
+      - name: Deploy via SSH
+        uses: appleboy/ssh-action@v1.0.0
+        with:
+          host: ${{ secrets.DEPLOY_HOST }}
+          username: ${{ secrets.DEPLOY_USER }}
+          key: ${{ secrets.DEPLOY_KEY }}
+          port: ${{ secrets.DEPLOY_PORT != '' && secrets.DEPLOY_PORT || '22' }}
+          envs: APP_DIR=${{ secrets.DEPLOY_APP_DIR }},REPO_URL=${{ secrets.DEPLOY_REPO_URL }},HEALTHCHECK_URL=${{ secrets.DEPLOY_HEALTH_URL }},SERVICE_NAME=${{ secrets.DEPLOY_SERVICE_NAME }},NGINX_SERVICE=${{ secrets.DEPLOY_NGINX_SERVICE }},VENV_PATH=${{ secrets.DEPLOY_VENV_PATH }},REQUIREMENTS_FILE=${{ secrets.DEPLOY_REQUIREMENTS_FILE }}
+          script: |
+            set -euo pipefail
+            APP_DIR="${APP_DIR:-/var/www/lucy-world-search}"
+
+            if [ ! -d "$APP_DIR" ]; then
+              echo "❌ Application directory $APP_DIR does not exist on the server."
+              exit 1
+            fi
+
+            if [ ! -f "$APP_DIR/auto-deploy.sh" ]; then
+              echo "❌ auto-deploy.sh not found in $APP_DIR; run the bootstrap instructions first."
+              exit 1
+            fi
+
+            echo "🚀 Running auto-deploy from $APP_DIR"
+            REPO_URL="${REPO_URL:-https://github.com/frank2889/lucy-world.git}" \
+            APP_DIR="$APP_DIR" \
+            HEALTHCHECK_URL="${HEALTHCHECK_URL:-https://lucy.world/health}" \
+            SERVICE_NAME="${SERVICE_NAME:-lucy-world-search}" \
+            NGINX_SERVICE="${NGINX_SERVICE:-nginx}" \
+            VENV_PATH="${VENV_PATH:-$APP_DIR/venv}" \
+            REQUIREMENTS_FILE="${REQUIREMENTS_FILE:-requirements.txt}" \
+            bash "$APP_DIR/auto-deploy.sh"

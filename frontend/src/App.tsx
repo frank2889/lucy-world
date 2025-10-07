@@ -1144,6 +1144,15 @@ export default function App() {
                 </button>
               </>
             )}
+            {!isSignedIn && (
+              <button
+                type="button"
+                onClick={() => setShowSignin(true)}
+                style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: 'transparent', color: 'var(--text)', border: '1px solid var(--line)', padding: '8px 10px', borderRadius: 10 }}
+              >
+                🔐 {signInTitle}
+              </button>
+            )}
             {/* Language switch button (always visible) */}
             <button
               type="button"
@@ -1252,6 +1261,19 @@ export default function App() {
                 <span aria-hidden>🌐</span>
                 <span style={{ fontWeight: 600 }}>{currentLangLabel}</span>
               </button>
+              {!isSignedIn && (
+                <button
+                  type="button"
+                  onClick={() => setShowSignin(true)}
+                  style={{
+                    display: 'inline-flex', alignItems: 'center', gap: 8,
+                    background: 'transparent', color: 'var(--text)',
+                    border: '1px solid var(--line)', padding: '8px 10px', borderRadius: 10,
+                  }}
+                >
+                  🔐 {signInTitle}
+                </button>
+              )}
               {langMenuAnchor === 'mobile' && (
                 <div
                   className="lang-menu"
