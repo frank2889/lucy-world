@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import type { EntitlementsPayload, EntitlementsStatus, SidebarGroupKey, SubscriptionTier } from './types'
 
-const VALID_SIDEBAR_GROUPS: readonly SidebarGroupKey[] = ['search', 'marketplaces', 'social', 'video', 'ai', 'enterprise'] as const
+export const VALID_SIDEBAR_GROUPS: readonly SidebarGroupKey[] = ['search', 'marketplaces', 'social', 'video', 'ai', 'enterprise'] as const
 const VALID_TIERS: readonly SubscriptionTier[] = ['free', 'pro', 'enterprise'] as const
 
 const DEFAULT_GROUP: SidebarGroupKey = 'search'

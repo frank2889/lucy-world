@@ -9,7 +9,7 @@ Lucy World Search runs as a Flask application that serves a Vite-built React SPA
 - **Infrastructure**: Ubuntu 22.04 LTS droplet (1 GB RAM is fine for low traffic) + DNS `A` record pointing `lucy.world` to the droplet (see `DNS-SETUP.md`).
 - **Access**: SSH key with root or deploy-user privileges on the droplet. Avoid password auth and update the server’s `sshd_config` accordingly.
 - **Local tooling**: Node 20+, npm 10+, Python 3.11+ (project currently uses 3.13), Git, and `zip`/`rsync` if you prefer artifact deployments.
-- **Secrets**: Prepare values for `SECRET_KEY`, optional `DATABASE_URL`, SMTP credentials (for magic links), the Search Console service-account variables (`GSC_TYPE`, `GSC_PROJECT_ID`, `GSC_PRIVATE_KEY_ID`, `GSC_PRIVATE_KEY`, `GSC_CLIENT_EMAIL`, `GSC_CLIENT_ID`, `GSC_AUTH_URI`, `GSC_TOKEN_URI`, `GSC_AUTH_PROVIDER_CERT_URL`, `GSC_CLIENT_CERT_URL`, `GSC_UNIVERSE_DOMAIN`), and the Stripe Billing keys: `STRIPE_SECRET_KEY`, `STRIPE_PUBLISHABLE_KEY`, `STRIPE_PRICE_PRO`, optional `STRIPE_PRICE_PRO_USAGE`, and `STRIPE_WEBHOOK_SECRET`.
+- **Secrets**: Prepare values for `SECRET_KEY`, optional `DATABASE_URL`, SMTP credentials (for magic links) including optional `SMTP_REPLY_TO`, `SMTP_USE_TLS`, and `SMTP_USE_SSL`, the Search Console service-account variables (`GSC_TYPE`, `GSC_PROJECT_ID`, `GSC_PRIVATE_KEY_ID`, `GSC_PRIVATE_KEY`, `GSC_CLIENT_EMAIL`, `GSC_CLIENT_ID`, `GSC_AUTH_URI`, `GSC_TOKEN_URI`, `GSC_AUTH_PROVIDER_CERT_URL`, `GSC_CLIENT_CERT_URL`, `GSC_UNIVERSE_DOMAIN`), and the Stripe Billing keys: `STRIPE_SECRET_KEY`, `STRIPE_PUBLISHABLE_KEY`, `STRIPE_PRICE_PRO`, optional `STRIPE_PRICE_PRO_USAGE`, and `STRIPE_WEBHOOK_SECRET`.
 
 ## 1. Prepare a release locally
 
@@ -122,6 +122,9 @@ STRIPE_WEBHOOK_SECRET=<stripe_webhook_secret>
 # SMTP_USERNAME=...
 # SMTP_PASSWORD=...
 # SMTP_FROM=no-reply@lucy.world
+# SMTP_REPLY_TO=support@lucy.world
+# SMTP_USE_TLS=true
+# SMTP_USE_SSL=false
 EOF
 
 # Align the legacy SQLite schema with the current app model
