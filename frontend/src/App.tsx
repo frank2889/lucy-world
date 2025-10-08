@@ -1912,6 +1912,25 @@ export default function App() {
                 <div className="platform-chip">+{localizedPlatforms.length - 4}</div>
               </div>
             </div>
+
+            {/* Feature Grid */}
+            <div className="feature-grid">
+              <div className="feature-card">
+                <div className="feature-icon">🧠</div>
+                <h3 className="feature-title">{translate('features.semantic.title')}</h3>
+                <p className="feature-description">{translate('features.semantic.description')}</p>
+              </div>
+              <div className="feature-card">
+                <div className="feature-icon">🌐</div>
+                <h3 className="feature-title">{translate('features.localization.title')}</h3>
+                <p className="feature-description">{translate('features.localization.description')}</p>
+              </div>
+              <div className="feature-card">
+                <div className="feature-icon">✨</div>
+                <h3 className="feature-title">{translate('features.ai_briefs.title')}</h3>
+                <p className="feature-description">{translate('features.ai_briefs.description')}</p>
+              </div>
+            </div>
           </div>
         )}
 

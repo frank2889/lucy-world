@@ -294,6 +294,12 @@
     "hero.cta_secondary": "Bekijk prijzen & abonnementen",
     "hero.trust_markets": "{{count}}+ markten",
     "hero.trust_refresh": "Real-time gegevens",
-    "hero.trust_teams": "Teams lanceren wekelijks"
+    "hero.trust_teams": "Teams lanceren wekelijks",
+    "features.semantic.title": "Semantische clustering",
+    "features.semantic.description": "AI-gestuurde zoekwoord groepering die zoekintentie en gebruikersgedrag begrijpt",
+    "features.localization.title": "Wereldwijde lokalisatie",
+    "features.localization.description": "Onderzoek zoekwoorden in 100+ landen met moedertaalondersteuning en regionale inzichten",
+    "features.ai_briefs.title": "AI-contentbriefings",
+    "features.ai_briefs.description": "Krijg datagestuurde aanbevelingen gebaseerd op live SERP-analyse en concurrentieonderzoek"
   }
 }

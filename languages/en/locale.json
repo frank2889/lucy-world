@@ -286,6 +286,12 @@
     "hero.cta_secondary": "See pricing & plans",
     "hero.trust_markets": "{{count}}+ markets",
     "hero.trust_refresh": "Real-time data",
-    "hero.trust_teams": "Teams shipping weekly"
+    "hero.trust_teams": "Teams shipping weekly",
+    "features.semantic.title": "Semantic Clustering",
+    "features.semantic.description": "AI-powered keyword grouping that understands search intent and user behavior patterns",
+    "features.localization.title": "Global Localization",
+    "features.localization.description": "Research keywords in 100+ countries with native language support and regional insights",
+    "features.ai_briefs.title": "AI Content Briefs",
+    "features.ai_briefs.description": "Get data-driven content recommendations based on live SERP analysis and competitor research"
   }
 }
