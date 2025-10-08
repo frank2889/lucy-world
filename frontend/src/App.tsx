@@ -1850,41 +1850,68 @@ export default function App() {
           <div className="error">{error}</div>
         )}
 
-        {!isSignedIn && (
-          <div
-            className="card"
-            style={{
-              marginTop: 24,
-              padding: 24,
-              display: 'flex',
-              flexWrap: 'wrap',
-              alignItems: 'center',
-              gap: 16,
-              justifyContent: 'space-between'
-            }}
-          >
-            <div style={{ flex: '1 1 220px', minWidth: 220 }}>
-              <h3 style={{ marginTop: 0, marginBottom: 8 }}>{signInTitle}</h3>
-              <p style={{ margin: 0, opacity: 0.85 }}>{signInDescription}</p>
+        {!isSignedIn && !loading && !error && (
+          <div className="hero-deck">
+            <div className="hero-content">
+              <h1 className="hero-title">{translate('hero.title')}</h1>
+              <p className="hero-subtitle">{translate('hero.subtitle')}</p>
+              
+              <div className="hero-ctas">
+                <button
+                  type="button"
+                  className="hero-cta-primary"
+                  onClick={() => {
+                    const searchInput = document.querySelector('input[type="text"]') as HTMLInputElement
+                    if (searchInput) {
+                      searchInput.focus()
+                      searchInput.scrollIntoView({ behavior: 'smooth', block: 'center' })
+                    }
+                    const dl = (window as any).dataLayer
+                    if (Array.isArray(dl)) {
+                      dl.push({ event: 'hero_cta_clicked', cta_type: 'start_exploring' })
+                    }
+                  }}
+                >
+                  {translate('hero.cta_primary')}
+                </button>
+                <button
+                  type="button"
+                  className="hero-cta-secondary"
+                  onClick={() => {
+                    handleUpgradeClick()
+                    const dl = (window as any).dataLayer
+                    if (Array.isArray(dl)) {
+                      dl.push({ event: 'hero_cta_clicked', cta_type: 'see_pricing' })
+                    }
+                  }}
+                >
+                  {translate('hero.cta_secondary')}
+                </button>
+              </div>
+
+              <div className="hero-trust-strip">
+                <div className="trust-chip">
+                  <span className="trust-chip-icon">🌍</span>
+                  <span className="trust-chip-text">{translate('hero.trust_markets', { count: countriesList.length })}</span>
+                </div>
+                <div className="trust-chip">
+                  <span className="trust-chip-icon">⚡</span>
+                  <span className="trust-chip-text">{translate('hero.trust_refresh')}</span>
+                </div>
+                <div className="trust-chip">
+                  <span className="trust-chip-icon">🚀</span>
+                  <span className="trust-chip-text">{translate('hero.trust_teams')}</span>
+                </div>
+              </div>
+
+              <div className="hero-platforms">
+                <div className="platform-chip">Google</div>
+                <div className="platform-chip">TikTok</div>
+                <div className="platform-chip">Amazon</div>
+                <div className="platform-chip">YouTube</div>
+                <div className="platform-chip">+{localizedPlatforms.length - 4}</div>
+              </div>
             </div>
-            <button
-              type="button"
-              onClick={() => setShowSignin(true)}
-              style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: 8,
-                background: 'var(--accent)',
-                color: '#050607',
-                border: 0,
-                borderRadius: 10,
-                padding: '10px 18px',
-                fontWeight: 600,
-                cursor: 'pointer'
-              }}
-            >
-              🔐 {signInTitle}
-            </button>
           </div>
         )}
 

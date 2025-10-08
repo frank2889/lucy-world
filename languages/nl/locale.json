@@ -287,6 +287,13 @@
     "unknown_location": "Locatie onbekend",
     "cta.upgrade_title": "Ontgrendel de volledige kracht",
     "cta.upgrade_description": "Krijg onbeperkte zoekopdrachten en AI-inzichten",
-    "cta.upgrade_button": "Nu upgraden"
+    "cta.upgrade_button": "Nu upgraden",
+    "hero.title": "Multi-Market Keyword Intelligence",
+    "hero.subtitle": "Onderzoek zoekwoorden in 100+ landen en platformen. Krijg real-time zoekgegevens van Google, YouTube, Amazon en meer.",
+    "hero.cta_primary": "Begin met zoekwoorden verkennen",
+    "hero.cta_secondary": "Bekijk prijzen & abonnementen",
+    "hero.trust_markets": "{{count}}+ markten",
+    "hero.trust_refresh": "Real-time gegevens",
+    "hero.trust_teams": "Teams lanceren wekelijks"
   }
 }

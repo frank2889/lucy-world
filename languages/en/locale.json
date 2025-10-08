@@ -279,6 +279,13 @@
     "platform.youtube.results.metric": "Popularity: {{volume}}",
     "cta.upgrade_title": "Unlock Full Power",
     "cta.upgrade_description": "Get unlimited searches and AI insights",
-    "cta.upgrade_button": "Upgrade Now"
+    "cta.upgrade_button": "Upgrade Now",
+    "hero.title": "Multi-Market Keyword Intelligence",
+    "hero.subtitle": "Research keywords across 100+ countries and platforms. Get real-time search data from Google, YouTube, Amazon, and more.",
+    "hero.cta_primary": "Start exploring keywords",
+    "hero.cta_secondary": "See pricing & plans",
+    "hero.trust_markets": "{{count}}+ markets",
+    "hero.trust_refresh": "Real-time data",
+    "hero.trust_teams": "Teams shipping weekly"
   }
 }
