@@ -51,7 +51,7 @@
 - **Checkout flow handlers** for both plan upgrades (`/api/billing/upgrade-checkout`) and credit purchases (`/api/billing/credit-checkout`).
 - **Top-bar layout refactor** consolidating plan/billing controls into consistent mobile and desktop UX.
 
-### Changed — Frontend Architecture
+### Changed — App.tsx Billing Components
 
 - `App.tsx` now renders `renderPlanSummary()` and `renderBillingActions()` helper functions for both mobile and desktop contexts.
 - Entitlements hook (`useEntitlements`) integrated throughout the component tree with proper loading/error states.
