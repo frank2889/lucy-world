@@ -1,5 +1,45 @@
 # Lucy.world Changelog
 
+## 2025-10-08 (Language Equality & Clean Design Philosophy)
+
+### Added — Translation System Overhaul
+
+- **Zero fallback architecture** - Removed ALL language fallbacks. Every language is self-contained.
+- **Missing translation markers** - Show `[MISSING: key]` instead of English text when translations are incomplete.
+- **Complete Dutch entitlements** - Added all `entitlements.*` translation keys to Dutch locale.
+- **SMTP email integration** - Configured Gmail SMTP for magic link authentication via DigitalOcean environment variables.
+
+### Changed — Frontend Architecture
+
+- Removed `uiFallback` state completely from App.tsx
+- Updated `createTranslator()` to only use current language, never fallback to another
+- Removed `uiFallback` from `PlatformToolProps` interface
+- Updated all 18 platform tools (Google, DuckDuckGo, Bing, Amazon, etc.) to use single-language approach
+- Fixed hardcoded English string in timeout error handler
+
+### Fixed — Language System
+
+- Translation keys no longer flicker during load - each language stands alone
+- English, Dutch, and all other languages treated equally - no priority
+- Incomplete translations immediately visible with `[MISSING: key]` placeholders
+- Removed final hardcoded English fallback: "The search took too long. Please try again."
+
+### Documentation — Design Philosophy
+
+- **NEW:** Created `docs/DESIGN.md` with Lucy World's clean, professional design philosophy
+- **Core principle:** Daily-use business tool, not flashy marketing site
+- **Guidelines:** No gradients, minimal animations, flat surfaces, data-first layouts
+- **Enterprise focus:** Reliability, clarity, consistency over novelty
+- **Anti-patterns documented:** What NOT to do (consumer app styling, trendy effects, etc.)
+
+### Technical Standards Established
+
+- **Translation rule:** Every user-facing string MUST be in locale files, no hardcoded text
+- **Design rule:** Clean and functional over decorative and flashy
+- **Loading states:** Skeleton loaders only, no fancy spinners
+- **Color usage:** WCAG AA minimum contrast (4.5:1 for body text)
+- **Spacing system:** 8px base unit grid
+
 ## 2025-10-08 (Frontend-Backend Integration & Billing UX)
 
 ### Added — Billing & Entitlements UI

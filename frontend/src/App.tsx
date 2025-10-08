@@ -1028,9 +1028,8 @@ export default function App() {
       }
     } catch (err: any) {
       const timeoutTranslation = translate('errors.search_timeout')
-      const timeoutMessage = timeoutTranslation === 'errors.search_timeout'
-        ? 'The search took too long. Please try again.'
-        : timeoutTranslation
+      // Never hardcode English - use translation key or show [MISSING: key]
+      const timeoutMessage = timeoutTranslation === 'errors.search_timeout' ? '[MISSING: errors.search_timeout]' : timeoutTranslation
       const isTimeout = err?.name === 'AbortError' && (err?.isTimeout || /timeout/i.test(err?.message || ''))
       const resolvedMessage = isTimeout ? timeoutMessage : (err?.message || translate('errors.generic'))
 
