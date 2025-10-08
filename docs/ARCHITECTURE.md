@@ -199,8 +199,8 @@ Supported (from `languages/languages.json`):
 - [x] Auto-deploy works on push.  
 - [x] Health check `/meta/detect.json` = 200.  
 - [x] TLS auto-renewed.  
-- [ ] `/billing/credits` serves localized copy + Stripe purchase URLs (no JSON 404s) and records credit grants.  
-- [ ] `/billing/upgrade` redirects to `/pricing` (localized) or launches Stripe Checkout when entitlements omit a hosted URL.  
+- [x] `/billing/credits` serves localized copy + Stripe purchase URLs (no JSON 404s) and records credit grants.  
+- [x] `/billing/upgrade` redirects to `/pricing` (localized) or launches Stripe Checkout when entitlements omit a hosted URL.  
 - [ ] Search dispatcher integration tests cover Google/Bing/DuckDuckGo happy paths and the blank-page regression no longer reproduces.  
 - [ ] API responses validated against jsonschema (`docs/contracts/*.json`) and rejected responses log structured errors.  
 - [ ] Sentry (or chosen APM) receives error events with correlation IDs in staging + production.  

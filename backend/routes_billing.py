@@ -192,6 +192,86 @@ def _find_user_by_stripe(
     return None
 
 
+@bp.route("/credits", methods=["GET"])
+@auth_required
+def get_credits_info() -> Any:
+    """Serve credit packs with localized copy and Stripe purchase URLs."""
+    user = get_current_user()
+    packs = _credit_catalog()
+    
+    # Get user's locale from request headers or default to 'en'
+    locale = request.headers.get('Accept-Language', 'en').split(',')[0].split('-')[0].lower()
+    
+    # Extract tier and ai_credits from plan_metadata
+    meta = user.plan_metadata or {}
+    tier = meta.get('tier', 'free')
+    ai_credits = meta.get('ai_credits', 0)
+    
+    return jsonify({
+        "credits": {
+            "current": ai_credits,
+            "tier": tier
+        },
+        "packs": packs,
+        "locale": locale,
+        "purchase_url": f"{_public_base_url()}/api/billing/credit-checkout"
+    })
+
+
+@bp.route("/upgrade", methods=["GET", "POST"])
+@auth_required
+def get_upgrade_info() -> Any:
+    """Return upgrade information or redirect to pricing page."""
+    user = get_current_user()
+    locale = request.headers.get('Accept-Language', 'en').split(',')[0].split('-')[0].lower()
+    
+    # Extract tier from plan_metadata
+    meta = user.plan_metadata or {}
+    tier = meta.get('tier', 'free')
+    
+    # Check if we have a hosted pricing URL from environment
+    hosted_pricing_url = (os.getenv("HOSTED_PRICING_URL") or "").strip()
+    
+    if hosted_pricing_url:
+        # Redirect to localized pricing page
+        pricing_url = f"{hosted_pricing_url}/{locale}/pricing"
+        if request.method == "GET":
+            return jsonify({
+                "redirect_url": pricing_url,
+                "tier": tier
+            })
+        else:
+            return jsonify({"url": pricing_url})
+    
+    # No hosted URL, create Stripe checkout session
+    try:
+        customer_id = _ensure_customer(user)
+        price_ids = _price_ids()
+        
+        base_url = _public_base_url()
+        success_url = f"{base_url}/{locale}/?upgrade=success"
+        cancel_url = f"{base_url}/{locale}/?upgrade=cancelled"
+        
+        session = stripe.checkout.Session.create(  # type: ignore[call-arg]
+            mode="subscription",
+            customer=customer_id,
+            line_items=[{"price": price_ids["base"], "quantity": 1}],
+            success_url=success_url + "&session_id={CHECKOUT_SESSION_ID}",
+            cancel_url=cancel_url,
+            automatic_tax={"enabled": True},
+            metadata={"user_id": str(user.id), "type": "upgrade_to_pro"},
+        )
+        
+        return jsonify({"url": session.url, "tier": tier})
+        
+    except StripeConfigurationError as exc:
+        current_app.logger.error("Upgrade failed: %s", exc)
+        return jsonify({"error": "stripe_not_configured"}), 500
+    except Exception as exc:  # pragma: no cover
+        current_app.logger.error("Failed to create upgrade session: %s", exc)
+        return jsonify({"error": "unable_to_create_session"}), 502
+
+
 @bp.route("/config", methods=["GET"])
 @auth_required
 def stripe_config() -> Any:
