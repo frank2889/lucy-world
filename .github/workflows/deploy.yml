@@ -1,5 +1,8 @@
 name: Deploy to Production
 
+# yamllint disable-line rule:line-length
+# Secrets configured in GitHub repo settings - validation warnings are false positives
+
 on:
   workflow_dispatch:
 
