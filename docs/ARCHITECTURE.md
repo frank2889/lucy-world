@@ -130,10 +130,10 @@ Supported (from `languages/languages.json`):
 - [x] Credit pack pricing formatted per user's UI locale (nl-NL, en-US, etc.).
 - [x] Loading states prevent double-submission during checkout initiation.
 - [x] Search loader animation covers each query (fetchWithTimeout with 20s timeout).
-- [ ] Search error copy differentiates "no results" vs transport failures for every locale (including RTL).
+- [x] Search error copy differentiates "no results" vs transport failures for every locale (including RTL).
 - [ ] Result cards expose a detail drawer with localized metrics and export controls; keyboard navigation works across languages.
 - [ ] CTA ribbon sticks within the sidebar and mirrors translations for "Upgrade", "Koop AI-credits", etc.
-- [ ] Default locale detection seeds Dutch visitors with `nl-NL` while falling back correctly for other markets.
+- [x] Default locale detection seeds visitors with correct locale based on geo-IP/CDN headers while respecting persisted preferences.
 
 
 ### UX Experience Baseline (Marketing + Product Surface Area)
