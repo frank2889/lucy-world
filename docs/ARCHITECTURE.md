@@ -131,7 +131,7 @@ Supported (from `languages/languages.json`):
 - [x] Loading states prevent double-submission during checkout initiation.
 - [x] Search loader animation covers each query (fetchWithTimeout with 20s timeout).
 - [x] Search error copy differentiates "no results" vs transport failures for every locale (including RTL).
-- [ ] Result cards expose a detail drawer with localized metrics and export controls; keyboard navigation works across languages.
+- [x] Result cards expose a detail drawer with localized metrics and export controls; keyboard navigation works across languages.
 - [ ] CTA ribbon sticks within the sidebar and mirrors translations for "Upgrade", "Koop AI-credits", etc.
 - [x] Default locale detection seeds visitors with correct locale based on geo-IP/CDN headers while respecting persisted preferences.
 

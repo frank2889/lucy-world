@@ -671,3 +671,67 @@ html[dir='rtl'] .pill {
   from { transform: translateX(100%); }
   to { transform: translateX(0); }
 }
+
+/* Sidebar CTA Ribbon */
+.sidebar-cta {
+  position: sticky;
+  bottom: 60px; /* Above footer */
+  margin: 0 12px 12px;
+  padding: 16px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 12px;
+  animation: fadeIn 0.3s ease-out;
+}
+
+.sidebar-cta-content {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.sidebar-cta-icon {
+  font-size: 24px;
+  flex-shrink: 0;
+}
+
+.sidebar-cta-text {
+  flex: 1;
+}
+
+.sidebar-cta-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 4px;
+}
+
+.sidebar-cta-description {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.9);
+  line-height: 1.4;
+}
+
+.sidebar-cta-button {
+  display: block;
+  width: 100%;
+  padding: 10px 16px;
+  background: rgba(255, 255, 255, 0.95);
+  color: #667eea;
+  font-weight: 600;
+  font-size: 14px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.sidebar-cta-button:hover {
+  background: #ffffff;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.sidebar-cta-button:active {
+  transform: translateY(0);
+}

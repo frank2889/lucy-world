@@ -284,6 +284,9 @@
     "search.placeholder": "Voer een zoekwoord in (bijv. pizza bezorging)",
     "search.title": "Keyword onderzoek",
     "topbar.location_unknown": "Locatie onbekend",
-    "unknown_location": "Locatie onbekend"
+    "unknown_location": "Locatie onbekend",
+    "cta.upgrade_title": "Ontgrendel de volledige kracht",
+    "cta.upgrade_description": "Krijg onbeperkte zoekopdrachten en AI-inzichten",
+    "cta.upgrade_button": "Nu upgraden"
   }
 }

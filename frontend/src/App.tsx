@@ -1409,6 +1409,36 @@ export default function App() {
             setSidebarOpen(false)
           }}
         />
+        {/* CTA Ribbon for free tier users */}
+        {entitlementsData.tier === 'free' && (
+          <div className="sidebar-cta">
+            <div className="sidebar-cta-content">
+              <div className="sidebar-cta-icon">⚡</div>
+              <div className="sidebar-cta-text">
+                <div className="sidebar-cta-title">{translate('cta.upgrade_title')}</div>
+                <div className="sidebar-cta-description">{translate('cta.upgrade_description')}</div>
+              </div>
+            </div>
+            <button
+              type="button"
+              className="sidebar-cta-button"
+              onClick={() => {
+                handleUpgradeClick()
+                const dl = (window as any).dataLayer
+                if (Array.isArray(dl)) {
+                  dl.push({
+                    event: 'cta_clicked',
+                    cta_location: 'sidebar',
+                    cta_type: 'upgrade',
+                    user_tier: entitlementsData.tier
+                  })
+                }
+              }}
+            >
+              {translate('cta.upgrade_button')}
+            </button>
+          </div>
+        )}
         <div className="sidebar-footer">
           <span className="sidebar-footer-copy">© {new Date().getFullYear()} Lucy World</span>
         </div>

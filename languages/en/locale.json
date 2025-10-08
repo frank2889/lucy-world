@@ -276,6 +276,9 @@
     "platform.youtube.errors.fetch": "Unable to fetch YouTube suggestions",
     "platform.youtube.errors.generic": "Unable to fetch YouTube suggestions",
     "platform.youtube.results.subtitle": "YouTube search suggestion",
-    "platform.youtube.results.metric": "Popularity: {{volume}}"
+    "platform.youtube.results.metric": "Popularity: {{volume}}",
+    "cta.upgrade_title": "Unlock Full Power",
+    "cta.upgrade_description": "Get unlimited searches and AI insights",
+    "cta.upgrade_button": "Upgrade Now"
   }
 }
