@@ -394,9 +394,10 @@ export default function App() {
   const { platforms, activePlatform, activePlatformId, setActivePlatformId } = usePlatformHandler()
   const ActivePlatformTool = activePlatform?.tool
   const translate = useMemo(() => createTranslator(ui, uiFallback), [ui, uiFallback])
-  const getTranslated = useCallback((key: string, fallback: string) => {
+  const getTranslated = useCallback((key: string, _fallback?: string) => {
     const value = translate(key)
-    return value === key ? fallback : value
+    // Never use English fallback - show missing translation marker instead
+    return value === key ? `[MISSING: ${key}]` : value
   }, [translate])
   const localizedPlatforms = useMemo(() => {
     const googleDescription = translate('platform.google.description')
