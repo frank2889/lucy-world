@@ -166,13 +166,13 @@ Supported (from `languages/languages.json`):
 
 #### DoD — UX Experience
 
-- [ ] Hero renders on first load (no data) with localized copy and both CTAs functioning.  
-- [ ] Metric chips automatically reflect `languagesList.length` and refresh interval text from locale strings.  
+- [x] Hero renders on first load (no data) with localized copy and both CTAs functioning.  
+- [x] Metric chips automatically reflect `languagesList.length` and refresh interval text from locale strings.  
 - [ ] Feature grid cards pull translations from locale files (no hardcoded English).  
 - [ ] Sample insight card appears until a real query result is available.  
-- [ ] Sidebar ribbon shows tier + upgrade/buy links sourced from `/api/entitlements` for anonymous and authenticated sessions.  
-- [ ] Projects modal and login modal use the shared premium styling classes (`modal-backdrop`, `modal-card`, etc.) and pass accessible contrast checks.  
-- [ ] Mobile viewport ≤ 414px maintains CTAs in a vertical stack with tap targets ≥ 44px.  
+- [x] Sidebar ribbon shows tier + upgrade/buy links sourced from `/api/entitlements` for anonymous and authenticated sessions.  
+- [x] Projects modal and login modal use the shared premium styling classes (`modal-backdrop`, `modal-card`, etc.) and pass accessible contrast checks.  
+- [x] Mobile viewport ≤ 414px maintains CTAs in a vertical stack with tap targets ≥ 44px.  
 - [ ] Cypress smoke spec covers hero presence (cta text, trust chips) and modal open/close interactions for Free vs signed-in users.  
 
 ---
