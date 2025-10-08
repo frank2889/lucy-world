@@ -1027,26 +1027,31 @@ export default function App() {
         console.log('✅ GTM: Search successful', totalKeywords, 'results')
       }
     } catch (err: any) {
-      const timeoutTranslation = translate('errors.search_timeout')
-      // Never hardcode English - use translation key or show [MISSING: key]
-      const timeoutMessage = timeoutTranslation === 'errors.search_timeout' ? '[MISSING: errors.search_timeout]' : timeoutTranslation
-      const isTimeout = err?.name === 'AbortError' && (err?.isTimeout || /timeout/i.test(err?.message || ''))
-      const resolvedMessage = isTimeout ? timeoutMessage : (err?.message || translate('errors.generic'))
+      // Differentiate error types for proper localized messaging
+      let errorKey = 'errors.generic'
+      
+      if (err?.name === 'AbortError' || /timeout/i.test(err?.message || '')) {
+        errorKey = 'errors.search_timeout'
+      } else if (err?.message?.includes('NetworkError') || err?.message?.includes('Failed to fetch')) {
+        errorKey = 'errors.network_error'
+      } else if (err?.status === 404 || err?.message?.includes('no results')) {
+        errorKey = 'errors.search_no_results'
+      } else if (err?.status >= 400 && err?.status < 500) {
+        errorKey = 'errors.search_failed'
+      }
 
-      setError(resolvedMessage)
+      const errorMessage = translate(errorKey)
+      setError(errorMessage === errorKey ? `[MISSING: ${errorKey}]` : errorMessage)
 
       if (typeof window !== 'undefined' && (window as any).dataLayer) {
         ;(window as any).dataLayer.push({
           event: 'search_error',
           search_keyword: submittedKeyword,
-          error_message: resolvedMessage,
+          error_type: errorKey,
+          error_message: errorMessage,
           response_time: Date.now() - searchStartTime
         })
-        if (isTimeout) {
-          console.log('⏱️ GTM: Search timeout after 20s')
-        } else {
-          console.log('❌ GTM:', translate('errors.search_failed'), err?.message)
-        }
+        console.log('❌ GTM: Search error', errorKey, errorMessage)
       }
     } finally {
       setLoading(false)
