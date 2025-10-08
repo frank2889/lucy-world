@@ -253,6 +253,7 @@ export default function App() {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [data, setData] = useState<PremiumSearchResponse | null>(null)
+  const [selectedKeyword, setSelectedKeyword] = useState<{ keyword: string; search_volume: number; category: string } | null>(null)
   const [token, setToken] = useState<string | null>(() => {
     try { return localStorage.getItem('lw_token') } catch { return null }
   })
@@ -1233,9 +1234,13 @@ export default function App() {
   useEffect(() => {
     const handleEsc = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
-        setSidebarOpen(false)
-        setLangMenuAnchor(null)
-        setShowCountryDropdown(false)
+        if (selectedKeyword) {
+          setSelectedKeyword(null)
+        } else {
+          setSidebarOpen(false)
+          setLangMenuAnchor(null)
+          setShowCountryDropdown(false)
+        }
       }
     }
     document.addEventListener('keydown', handleEsc)
@@ -1963,15 +1968,80 @@ export default function App() {
                       <h4>{title}</h4>
                       <div>
                         {items.map((it, idx) => (
-                          <span key={idx} className="pill">
+                          <button
+                            key={idx}
+                            className="pill pill-clickable"
+                            onClick={() => {
+                              setSelectedKeyword({ keyword: it.keyword, search_volume: it.search_volume || 0, category: cat })
+                              if (typeof window !== 'undefined' && (window as any).dataLayer) {
+                                ;(window as any).dataLayer.push({
+                                  event: 'keyword_detail_opened',
+                                  keyword: it.keyword,
+                                  category: cat
+                                })
+                              }
+                            }}
+                          >
                             {it.keyword} · {nl(it.search_volume)}
-                          </span>
+                          </button>
                         ))}
                       </div>
                     </div>
                   )
                 })}
             </section>
+
+            {/* Keyword Detail Drawer */}
+            {selectedKeyword && (
+              <div className="keyword-drawer-backdrop" onClick={() => setSelectedKeyword(null)}>
+                <div className="keyword-drawer" onClick={(e) => e.stopPropagation()}>
+                  <div className="drawer-header">
+                    <h3>{selectedKeyword.keyword}</h3>
+                    <button className="btn-close" onClick={() => setSelectedKeyword(null)} aria-label={translate('actions.close') || 'Close'}>
+                      ×
+                    </button>
+                  </div>
+                  <div className="drawer-content">
+                    <div className="metric-grid">
+                      <div className="metric-card">
+                        <label>{translate('metrics.search_volume') || 'Search Volume'}</label>
+                        <div className="metric-value">{nl(selectedKeyword.search_volume)}</div>
+                      </div>
+                      <div className="metric-card">
+                        <label>{translate('metrics.category') || 'Category'}</label>
+                        <div className="metric-value">{selectedKeyword.category.replace(/_/g, ' ')}</div>
+                      </div>
+                    </div>
+                    <div className="drawer-actions">
+                      <button 
+                        className="btn-secondary"
+                        onClick={() => {
+                          navigator.clipboard.writeText(selectedKeyword.keyword)
+                          alert(translate('actions.copied') || 'Copied to clipboard!')
+                        }}
+                      >
+                        {translate('actions.copy') || 'Copy Keyword'}
+                      </button>
+                      <button 
+                        className="btn-primary"
+                        onClick={() => {
+                          const csv = `keyword,search_volume,category\n"${selectedKeyword.keyword}",${selectedKeyword.search_volume},"${selectedKeyword.category}"`
+                          const blob = new Blob([csv], { type: 'text/csv' })
+                          const url = URL.createObjectURL(blob)
+                          const a = document.createElement('a')
+                          a.href = url
+                          a.download = `${selectedKeyword.keyword}.csv`
+                          a.click()
+                          URL.revokeObjectURL(url)
+                        }}
+                      >
+                        {translate('actions.export') || 'Export CSV'}
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
           </>
         )}
 
