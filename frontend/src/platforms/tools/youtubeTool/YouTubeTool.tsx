@@ -9,7 +9,7 @@ const YouTubeTool: React.FC<PlatformToolProps> = (props) => {
     setKeyword,
     searchLanguage,
   ui,
-  uiFallback,
+  
     locationControls,
     onGlobalSearch,
     globalLoading
@@ -17,7 +17,7 @@ const YouTubeTool: React.FC<PlatformToolProps> = (props) => {
   const [results, setResults] = useState<PlatformResultItem[]>([])
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
-  const t = useMemo(() => createTranslator(ui, uiFallback), [ui, uiFallback])
+  const t = useMemo(() => createTranslator(ui), [ui])
 
   const resolvedLanguage = useMemo(() => {
     return (searchLanguage || ui?.lang || 'en').split('-')[0].toLowerCase()

@@ -37,14 +37,14 @@ const resolveDefaultMarket = (language?: string, country?: string) => {
 }
 
 const BingTool: React.FC<PlatformToolProps> = (props) => {
-  const { keyword, setKeyword, searchLanguage, country, ui, uiFallback } = props
+  const { keyword, setKeyword, searchLanguage, country, ui } = props
   const normalizedKeyword = keyword ?? ''
   const [market, setMarket] = useState(() => resolveDefaultMarket(searchLanguage, country))
   const [results, setResults] = useState<PlatformResultItem[]>([])
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const hasFetched = useRef(false)
-  const t = useMemo(() => createTranslator(ui, uiFallback), [ui, uiFallback])
+  const t = useMemo(() => createTranslator(ui), [ui])
 
   useEffect(() => {
     setMarket(resolveDefaultMarket(searchLanguage, country))

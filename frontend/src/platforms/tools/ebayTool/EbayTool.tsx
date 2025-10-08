@@ -26,14 +26,14 @@ const resolveDefaultSite = (country?: string) => {
 }
 
 const EbayTool: React.FC<PlatformToolProps> = (props) => {
-  const { keyword, setKeyword, country, ui, uiFallback } = props
+  const { keyword, setKeyword, country, ui } = props
   const normalizedKeyword = keyword ?? ''
   const [siteId, setSiteId] = useState(() => resolveDefaultSite(country))
   const [results, setResults] = useState<PlatformResultItem[]>([])
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const hasFetched = useRef(false)
-  const t = useMemo(() => createTranslator(ui, uiFallback), [ui, uiFallback])
+  const t = useMemo(() => createTranslator(ui), [ui])
 
   const selectedSite = useMemo(() => EBAY_SITES.find((item) => item.siteId === siteId) ?? EBAY_SITES[0], [siteId])
 

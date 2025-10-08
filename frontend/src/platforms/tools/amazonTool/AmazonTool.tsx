@@ -7,7 +7,7 @@ import { createTranslator } from '../../../i18n/translate'
 const MARKETPLACES = AMAZON_MARKETPLACES
 
 const AmazonTool: React.FC<PlatformToolProps> = (props) => {
-  const { keyword, setKeyword, country, ui, uiFallback } = props
+  const { keyword, setKeyword, country, ui } = props
   const normalizedKeyword = keyword ?? ''
   const [marketplace, setMarketplace] = useState(() => {
     const preferred = (country ?? '').toUpperCase()
@@ -17,7 +17,7 @@ const AmazonTool: React.FC<PlatformToolProps> = (props) => {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const initialFetchRef = useRef(false)
-  const t = useMemo(() => createTranslator(ui, uiFallback), [ui, uiFallback])
+  const t = useMemo(() => createTranslator(ui), [ui])
 
   const selectedMarketplace = useMemo(() => {
     return MARKETPLACES.find((m) => m.code === marketplace) ?? MARKETPLACES[0]

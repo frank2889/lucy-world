@@ -2,8 +2,8 @@ import React, { useMemo } from 'react'
 import type { PlatformToolProps } from '../../types'
 import { createTranslator } from '../../../i18n/translate'
 
-const EtsyTool: React.FC<PlatformToolProps> = ({ ui, uiFallback }) => {
-  const t = useMemo(() => createTranslator(ui, uiFallback), [ui, uiFallback])
+const EtsyTool: React.FC<PlatformToolProps> = ({ ui }) => {
+  const t = useMemo(() => createTranslator(ui), [ui])
   const heading = t('platform.etsy.heading')
   const description = t('platform.etsy.description')
   const placeholder = t('platform.etsy.placeholder')

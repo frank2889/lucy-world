@@ -45,14 +45,14 @@ const resolveDefaultRegion = (language?: string, country?: string) => {
 }
 
 const DuckDuckGoTool: React.FC<PlatformToolProps> = (props) => {
-  const { keyword, setKeyword, searchLanguage, country, ui, uiFallback } = props
+  const { keyword, setKeyword, searchLanguage, country, ui } = props
   const normalizedKeyword = keyword ?? ''
   const [region, setRegion] = useState(() => resolveDefaultRegion(searchLanguage, country))
   const [results, setResults] = useState<PlatformResultItem[]>([])
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const hasFetched = useRef(false)
-  const t = useMemo(() => createTranslator(ui, uiFallback), [ui, uiFallback])
+  const t = useMemo(() => createTranslator(ui), [ui])
   const regionOptions = useMemo(
     () => [
       { code: 'wt-wt', label: t('platform.duckduckgo.region.wt-wt') },

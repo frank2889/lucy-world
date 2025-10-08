@@ -15,7 +15,7 @@ const QwantTool: React.FC<PlatformToolProps> = (props) => {
     setKeyword,
     searchLanguage,
     ui,
-    uiFallback,
+    
     locationControls,
     onGlobalSearch,
     globalLoading
@@ -26,7 +26,7 @@ const QwantTool: React.FC<PlatformToolProps> = (props) => {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const hasFetched = useRef(false)
-  const t = useMemo(() => createTranslator(ui, uiFallback), [ui, uiFallback])
+  const t = useMemo(() => createTranslator(ui), [ui])
 
   const clientOptions = useMemo(() => {
     const opensearch = t('platform.qwant.client.opensearch')

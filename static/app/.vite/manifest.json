@@ -3,8 +3,8 @@
     "file": "assets/PlatformToolLayout-BbEmRa-A.css",
     "src": "_PlatformToolLayout-BbEmRa-A.css"
   },
-  "_PlatformToolLayout-Z7gxyS7o.js": {
-    "file": "assets/PlatformToolLayout-Z7gxyS7o.js",
+  "_PlatformToolLayout-CfVQsyVx.js": {
+    "file": "assets/PlatformToolLayout-CfVQsyVx.js",
     "name": "PlatformToolLayout",
     "imports": [
       "index.html"
@@ -14,7 +14,7 @@
     ]
   },
   "index.html": {
-    "file": "assets/index-C6i-a171.js",
+    "file": "assets/index-CnZ5Rj5g.js",
     "name": "index",
     "src": "index.html",
     "isEntry": true,
@@ -43,77 +43,77 @@
     ]
   },
   "src/platforms/tools/amazonTool/AmazonTool.tsx": {
-    "file": "assets/AmazonTool-CNrc3HWx.js",
+    "file": "assets/AmazonTool-DRXMP1Z3.js",
     "name": "AmazonTool",
     "src": "src/platforms/tools/amazonTool/AmazonTool.tsx",
     "isDynamicEntry": true,
     "imports": [
       "index.html",
-      "_PlatformToolLayout-Z7gxyS7o.js"
+      "_PlatformToolLayout-CfVQsyVx.js"
     ]
   },
   "src/platforms/tools/appstoreTool/AppStoreTool.tsx": {
-    "file": "assets/AppStoreTool-DIXl0Xjy.js",
+    "file": "assets/AppStoreTool-DnqcUeZn.js",
     "name": "AppStoreTool",
     "src": "src/platforms/tools/appstoreTool/AppStoreTool.tsx",
     "isDynamicEntry": true,
     "imports": [
       "index.html",
-      "_PlatformToolLayout-Z7gxyS7o.js"
+      "_PlatformToolLayout-CfVQsyVx.js"
     ]
   },
   "src/platforms/tools/baiduTool/BaiduTool.tsx": {
-    "file": "assets/BaiduTool-DFklN59L.js",
+    "file": "assets/BaiduTool-CEOgqhAf.js",
     "name": "BaiduTool",
     "src": "src/platforms/tools/baiduTool/BaiduTool.tsx",
     "isDynamicEntry": true,
     "imports": [
       "index.html",
-      "_PlatformToolLayout-Z7gxyS7o.js"
+      "_PlatformToolLayout-CfVQsyVx.js"
     ]
   },
   "src/platforms/tools/bingTool/BingTool.tsx": {
-    "file": "assets/BingTool-0186-45L.js",
+    "file": "assets/BingTool-DSIAy9Wm.js",
     "name": "BingTool",
     "src": "src/platforms/tools/bingTool/BingTool.tsx",
     "isDynamicEntry": true,
     "imports": [
       "index.html",
-      "_PlatformToolLayout-Z7gxyS7o.js"
+      "_PlatformToolLayout-CfVQsyVx.js"
     ]
   },
   "src/platforms/tools/braveTool/BraveTool.tsx": {
-    "file": "assets/BraveTool-d1qKwPXV.js",
+    "file": "assets/BraveTool-BHz5qp2E.js",
     "name": "BraveTool",
     "src": "src/platforms/tools/braveTool/BraveTool.tsx",
     "isDynamicEntry": true,
     "imports": [
       "index.html",
-      "_PlatformToolLayout-Z7gxyS7o.js"
+      "_PlatformToolLayout-CfVQsyVx.js"
     ]
   },
   "src/platforms/tools/duckduckgoTool/DuckDuckGoTool.tsx": {
-    "file": "assets/DuckDuckGoTool-BOXDGxwS.js",
+    "file": "assets/DuckDuckGoTool-CqRTnbve.js",
     "name": "DuckDuckGoTool",
     "src": "src/platforms/tools/duckduckgoTool/DuckDuckGoTool.tsx",
     "isDynamicEntry": true,
     "imports": [
       "index.html",
-      "_PlatformToolLayout-Z7gxyS7o.js"
+      "_PlatformToolLayout-CfVQsyVx.js"
     ]
   },
   "src/platforms/tools/ebayTool/EbayTool.tsx": {
-    "file": "assets/EbayTool-qs06QgBr.js",
+    "file": "assets/EbayTool-DScLsI13.js",
     "name": "EbayTool",
     "src": "src/platforms/tools/ebayTool/EbayTool.tsx",
     "isDynamicEntry": true,
     "imports": [
       "index.html",
-      "_PlatformToolLayout-Z7gxyS7o.js"
+      "_PlatformToolLayout-CfVQsyVx.js"
     ]
   },
   "src/platforms/tools/etsyTool/EtsyTool.tsx": {
-    "file": "assets/EtsyTool-B1cMBPZL.js",
+    "file": "assets/EtsyTool-BzidM2d8.js",
     "name": "EtsyTool",
     "src": "src/platforms/tools/etsyTool/EtsyTool.tsx",
     "isDynamicEntry": true,
@@ -122,27 +122,27 @@
     ]
   },
   "src/platforms/tools/googleTool/GoogleTool.tsx": {
-    "file": "assets/GoogleTool-yK41tsIP.js",
+    "file": "assets/GoogleTool-D8_Hd_Ta.js",
     "name": "GoogleTool",
     "src": "src/platforms/tools/googleTool/GoogleTool.tsx",
     "isDynamicEntry": true,
     "imports": [
       "index.html",
-      "_PlatformToolLayout-Z7gxyS7o.js"
+      "_PlatformToolLayout-CfVQsyVx.js"
     ]
   },
   "src/platforms/tools/googleplayTool/GooglePlayTool.tsx": {
-    "file": "assets/GooglePlayTool-BSguUno7.js",
+    "file": "assets/GooglePlayTool-DDrB1_5v.js",
     "name": "GooglePlayTool",
     "src": "src/platforms/tools/googleplayTool/GooglePlayTool.tsx",
     "isDynamicEntry": true,
     "imports": [
       "index.html",
-      "_PlatformToolLayout-Z7gxyS7o.js"
+      "_PlatformToolLayout-CfVQsyVx.js"
     ]
   },
   "src/platforms/tools/instagramTool/InstagramTool.tsx": {
-    "file": "assets/InstagramTool-8zk4i4E4.js",
+    "file": "assets/InstagramTool-1C0qZpLA.js",
     "name": "InstagramTool",
     "src": "src/platforms/tools/instagramTool/InstagramTool.tsx",
     "isDynamicEntry": true,
@@ -151,17 +151,17 @@
     ]
   },
   "src/platforms/tools/naverTool/NaverTool.tsx": {
-    "file": "assets/NaverTool-vWIQNRyf.js",
+    "file": "assets/NaverTool-B2bPOd74.js",
     "name": "NaverTool",
     "src": "src/platforms/tools/naverTool/NaverTool.tsx",
     "isDynamicEntry": true,
     "imports": [
       "index.html",
-      "_PlatformToolLayout-Z7gxyS7o.js"
+      "_PlatformToolLayout-CfVQsyVx.js"
     ]
   },
   "src/platforms/tools/pinterestTool/PinterestTool.tsx": {
-    "file": "assets/PinterestTool-CfnOv8hv.js",
+    "file": "assets/PinterestTool-DC6ok0bo.js",
     "name": "PinterestTool",
     "src": "src/platforms/tools/pinterestTool/PinterestTool.tsx",
     "isDynamicEntry": true,
@@ -170,17 +170,17 @@
     ]
   },
   "src/platforms/tools/qwantTool/QwantTool.tsx": {
-    "file": "assets/QwantTool-DJNVSO5B.js",
+    "file": "assets/QwantTool-BFXU5mQT.js",
     "name": "QwantTool",
     "src": "src/platforms/tools/qwantTool/QwantTool.tsx",
     "isDynamicEntry": true,
     "imports": [
       "index.html",
-      "_PlatformToolLayout-Z7gxyS7o.js"
+      "_PlatformToolLayout-CfVQsyVx.js"
     ]
   },
   "src/platforms/tools/tiktokTool/TikTokTool.tsx": {
-    "file": "assets/TikTokTool-DXf6cLA6.js",
+    "file": "assets/TikTokTool-CgQjc3mn.js",
     "name": "TikTokTool",
     "src": "src/platforms/tools/tiktokTool/TikTokTool.tsx",
     "isDynamicEntry": true,
@@ -189,33 +189,33 @@
     ]
   },
   "src/platforms/tools/yahooTool/YahooTool.tsx": {
-    "file": "assets/YahooTool-C2Lwhfk3.js",
+    "file": "assets/YahooTool-DTRcuyR6.js",
     "name": "YahooTool",
     "src": "src/platforms/tools/yahooTool/YahooTool.tsx",
     "isDynamicEntry": true,
     "imports": [
       "index.html",
-      "_PlatformToolLayout-Z7gxyS7o.js"
+      "_PlatformToolLayout-CfVQsyVx.js"
     ]
   },
   "src/platforms/tools/yandexTool/YandexTool.tsx": {
-    "file": "assets/YandexTool-bdFoqdkE.js",
+    "file": "assets/YandexTool-CBZ3t7gM.js",
     "name": "YandexTool",
     "src": "src/platforms/tools/yandexTool/YandexTool.tsx",
     "isDynamicEntry": true,
     "imports": [
       "index.html",
-      "_PlatformToolLayout-Z7gxyS7o.js"
+      "_PlatformToolLayout-CfVQsyVx.js"
     ]
   },
   "src/platforms/tools/youtubeTool/YouTubeTool.tsx": {
-    "file": "assets/YouTubeTool-B7RCe4ea.js",
+    "file": "assets/YouTubeTool-C5SplTYD.js",
     "name": "YouTubeTool",
     "src": "src/platforms/tools/youtubeTool/YouTubeTool.tsx",
     "isDynamicEntry": true,
     "imports": [
       "index.html",
-      "_PlatformToolLayout-Z7gxyS7o.js"
+      "_PlatformToolLayout-CfVQsyVx.js"
     ]
   }
 }

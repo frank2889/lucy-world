@@ -176,29 +176,9 @@ function nl(n?: number) {
 }
 
 export default function App() {
-  // Detect UI language from URL prefix: /<lang>/ ... fallback to saved preference, then DEFAULT_LANGUAGE
+  // Detect UI language from URL prefix - no fallbacks, all languages are equal
   const urlLang = (typeof window !== 'undefined' ? window.location.pathname.split('/').filter(Boolean)[0] : '')
   const [ui, setUi] = useState<UIState | null>(null)
-  const [uiFallback, setUiFallback] = useState<UIState | null>(null)
-  useEffect(() => {
-    let cancelled = false
-    const fallbackLang = DEFAULT_LANGUAGE
-    fetch(`/meta/content/${fallbackLang}.json`)
-      .then((r) => (r.ok ? r.json() : Promise.reject()))
-      .then((data) => {
-        if (!cancelled) {
-          setUiFallback(data)
-        }
-      })
-      .catch(() => {
-        if (!cancelled) {
-          setUiFallback({ lang: fallbackLang, dir: 'ltr', strings: {} })
-        }
-      })
-    return () => {
-      cancelled = true
-    }
-  }, [])
   useEffect(() => {
     // Prefer URL language when present; otherwise prefer saved UI language; else DEFAULT_LANGUAGE
     let lang = (urlLang || '').split('-')[0].toLowerCase()
@@ -393,7 +373,7 @@ export default function App() {
   const isSignedIn = !!token
   const { platforms, activePlatform, activePlatformId, setActivePlatformId } = usePlatformHandler()
   const ActivePlatformTool = activePlatform?.tool
-  const translate = useMemo(() => createTranslator(ui, uiFallback), [ui, uiFallback])
+  const translate = useMemo(() => createTranslator(ui), [ui])
   const getTranslated = useCallback((key: string, _fallback?: string) => {
     const value = translate(key)
     // Never use English fallback - show missing translation marker instead
@@ -1910,7 +1890,6 @@ export default function App() {
                   keyword={keyword}
                   setKeyword={setKeyword}
                   ui={ui}
-                  uiFallback={uiFallback}
                   loading={loading}
                   error={error}
                   data={data}

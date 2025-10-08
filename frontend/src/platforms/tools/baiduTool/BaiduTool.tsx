@@ -4,13 +4,13 @@ import PlatformToolLayout, { type PlatformResultItem } from '../common/PlatformT
 import { createTranslator } from '../../../i18n/translate'
 
 const BaiduTool: React.FC<PlatformToolProps> = (props) => {
-  const { keyword, setKeyword, searchLanguage, ui, uiFallback } = props
+  const { keyword, setKeyword, searchLanguage, ui } = props
   const normalizedKeyword = keyword ?? ''
   const [results, setResults] = useState<PlatformResultItem[]>([])
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const hasFetched = useRef(false)
-  const t = useMemo(() => createTranslator(ui, uiFallback), [ui, uiFallback])
+  const t = useMemo(() => createTranslator(ui), [ui])
 
   const performSearch = useCallback(
     async (term: string) => {

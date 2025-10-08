@@ -4,11 +4,11 @@ import PlatformToolLayout, { type PlatformResultItem } from '../common/PlatformT
 import { createTranslator } from '../../../i18n/translate'
 
 const GoogleTool: React.FC<PlatformToolProps> = (props) => {
-  const { keyword, setKeyword, searchLanguage, country, ui, uiFallback } = props
+  const { keyword, setKeyword, searchLanguage, country, ui } = props
   const [results, setResults] = useState<PlatformResultItem[]>([])
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
-  const t = useMemo(() => createTranslator(ui, uiFallback), [ui, uiFallback])
+  const t = useMemo(() => createTranslator(ui), [ui])
 
   const resolvedLanguage = useMemo(() => {
     return (searchLanguage || ui?.lang || 'en').split('-')[0].toLowerCase()

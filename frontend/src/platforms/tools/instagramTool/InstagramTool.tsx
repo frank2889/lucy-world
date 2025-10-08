@@ -2,8 +2,8 @@ import React, { useMemo } from 'react'
 import type { PlatformToolProps } from '../../types'
 import { createTranslator } from '../../../i18n/translate'
 
-const InstagramTool: React.FC<PlatformToolProps> = ({ ui, uiFallback }) => {
-  const t = useMemo(() => createTranslator(ui, uiFallback), [ui, uiFallback])
+const InstagramTool: React.FC<PlatformToolProps> = ({ ui }) => {
+  const t = useMemo(() => createTranslator(ui), [ui])
   const heading = t('platform.instagram.heading')
   const description = t('platform.instagram.description')
   const placeholder = t('platform.instagram.placeholder')

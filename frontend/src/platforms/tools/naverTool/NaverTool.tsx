@@ -10,7 +10,7 @@ const NaverTool: React.FC<PlatformToolProps> = (props) => {
     searchLanguage,
     country,
   ui,
-  uiFallback,
+  
     locationControls,
     onGlobalSearch,
     globalLoading
@@ -20,7 +20,7 @@ const NaverTool: React.FC<PlatformToolProps> = (props) => {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const hasFetched = useRef(false)
-  const t = useMemo(() => createTranslator(ui, uiFallback), [ui, uiFallback])
+  const t = useMemo(() => createTranslator(ui), [ui])
 
   const performSearch = useCallback(
     async (term: string) => {

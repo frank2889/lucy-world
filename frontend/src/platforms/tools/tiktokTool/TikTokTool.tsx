@@ -2,8 +2,8 @@ import React, { useMemo } from 'react'
 import type { PlatformToolProps } from '../../types'
 import { createTranslator } from '../../../i18n/translate'
 
-const TikTokTool: React.FC<PlatformToolProps> = ({ ui, uiFallback }) => {
-  const t = useMemo(() => createTranslator(ui, uiFallback), [ui, uiFallback])
+const TikTokTool: React.FC<PlatformToolProps> = ({ ui }) => {
+  const t = useMemo(() => createTranslator(ui), [ui])
   const heading = t('platform.tiktok.heading')
   const description = t('platform.tiktok.description')
   const placeholder = t('platform.tiktok.placeholder')

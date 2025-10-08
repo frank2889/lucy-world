@@ -40,7 +40,6 @@ export interface PlatformToolProps {
   keyword: string
   setKeyword: (value: string) => void
   ui?: UIState | null
-  uiFallback?: UIState | null
   loading?: boolean
   error?: string | null
   data?: FreeSearchResponse | null

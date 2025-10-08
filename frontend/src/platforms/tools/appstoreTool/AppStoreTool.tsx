@@ -35,14 +35,14 @@ type ITunesApp = {
 }
 
 const AppStoreTool: React.FC<PlatformToolProps> = (props) => {
-  const { keyword, setKeyword, country, ui, uiFallback } = props
+  const { keyword, setKeyword, country, ui } = props
   const normalizedKeyword = keyword ?? ''
   const [store, setStore] = useState(() => resolveDefaultStore(country))
   const [results, setResults] = useState<PlatformResultItem[]>([])
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const hasFetched = useRef(false)
-  const t = useMemo(() => createTranslator(ui, uiFallback), [ui, uiFallback])
+  const t = useMemo(() => createTranslator(ui), [ui])
 
   const storeOptions = useMemo(() => APP_STORE_COUNTRIES, [])
 
