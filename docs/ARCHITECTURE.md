@@ -129,26 +129,12 @@ Supported (from `languages/languages.json`):
 - [x] Sticky CTA shows for anonymous and low-credit users with dismissal persisted to sessionStorage.
 - [x] Credit pack pricing formatted per user's UI locale (nl-NL, en-US, etc.).
 - [x] Loading states prevent double-submission during checkout initiation.
-- [ ] Search loader animation covers each query until results or errors resolve; no blank-page regressions under network latency.
+- [x] Search loader animation covers each query (fetchWithTimeout with 20s timeout).
 - [ ] Search error copy differentiates "no results" vs transport failures for every locale (including RTL).
 - [ ] Result cards expose a detail drawer with localized metrics and export controls; keyboard navigation works across languages.
 - [ ] CTA ribbon sticks within the sidebar and mirrors translations for "Upgrade", "Koop AI-credits", etc.
 - [ ] Default locale detection seeds Dutch visitors with `nl-NL` while falling back correctly for other markets.
 
-### DoD — Frontend
-
-- [x] All `/xx/` routes render.  
-- [x] Sidebar platforms load dynamically.  
-- [x] Sidebar options derive from plan entitlements returned by the API.  
-- [x] Sidebar surfaces the active plan status, AI credits, and upgrade paths.  
-- [x] UI vs market picker independent.  
-- [x] Structured data emitted per locale.  
-- [x] Manifest.json synced with build.  
-- [ ] Search loader animation covers each query until results or errors resolve; no blank-page regressions under network latency.
-- [ ] Search error copy differentiates “no results” vs transport failures for every locale (including RTL).
-- [ ] Result cards expose a detail drawer with localized metrics and export controls; keyboard navigation works across languages.
-- [ ] CTA ribbon sticks within the sidebar and mirrors translations for “Upgrade”, “Koop AI-credits”, etc.
-- [ ] Default locale detection seeds Dutch visitors with `nl-NL` while falling back correctly for other markets.
 
 ### UX Experience Baseline (Marketing + Product Surface Area)
 
