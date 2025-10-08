@@ -39,7 +39,105 @@ type PremiumSearchResponse = {
   }
 }
 
+type CreditPack = {
+  price_id: string
+  credits: number
+  currency?: string
+  unit_amount?: number | null
+  nickname?: string | null
+  mode?: string | null
+  description?: string | null
+}
+
+const DEFAULT_LANGUAGE = 'nl' as const
+
 const SEARCH_TIMEOUT_MS = 20_000
+
+const LANGUAGE_FLAG_OVERRIDES: Record<string, string> = {
+  af: 'ZA',
+  sq: 'AL',
+  am: 'ET',
+  ar: 'SA',
+  hy: 'AM',
+  eu: 'ES',
+  be: 'BY',
+  bn: 'BD',
+  bs: 'BA',
+  my: 'MM',
+  ca: 'ES',
+  zh: 'CN',
+  co: 'FR',
+  en: 'US',
+  eo: '🌐',
+  fy: 'NL',
+  gl: 'ES',
+  ka: 'GE',
+  gu: 'IN',
+  ha: 'NG',
+  he: 'IL',
+  hi: 'IN',
+  ig: 'NG',
+  id: 'ID',
+  ga: 'IE',
+  jv: 'ID',
+  kn: 'IN',
+  kk: 'KZ',
+  km: 'KH',
+  rw: 'RW',
+  ko: 'KR',
+  ku: 'IQ',
+  ky: 'KG',
+  lo: 'LA',
+  la: 'VA',
+  mg: 'MG',
+  ms: 'MY',
+  ml: 'IN',
+  mi: 'NZ',
+  mr: 'IN',
+  ne: 'NP',
+  ny: 'MW',
+  or: 'IN',
+  ps: 'AF',
+  fa: 'IR',
+  pt: 'PT',
+  pa: 'IN',
+  sm: 'WS',
+  gd: 'GB',
+  st: 'ZA',
+  sn: 'ZW',
+  sd: 'PK',
+  si: 'LK',
+  su: 'ID',
+  sw: 'KE',
+  tl: 'PH',
+  tg: 'TJ',
+  ta: 'IN',
+  tt: 'RU',
+  te: 'IN',
+  ug: 'CN',
+  cy: 'GB',
+  xh: 'ZA',
+  yi: 'IL',
+  yo: 'NG',
+  zu: 'ZA'
+}
+
+const getLanguageFlag = (code: string): string => {
+  const normalized = (code || '').split('-')[0].toLowerCase()
+  if (!normalized) return '🌐'
+  const override = LANGUAGE_FLAG_OVERRIDES[normalized]
+  if (override) {
+    if (/^[A-Z]{2}$/.test(override)) {
+      return flagEmoji(override)
+    }
+    return override
+  }
+  const cc = normalized.toUpperCase()
+  if (COUNTRY_CODES.includes(cc)) {
+    return flagEmoji(cc)
+  }
+  return '🌐'
+}
 
 async function fetchWithTimeout(resource: RequestInfo, options: RequestInit = {}, timeout = SEARCH_TIMEOUT_MS): Promise<Response> {
   const { signal: externalSignal, ...rest } = options
@@ -73,28 +171,19 @@ async function fetchWithTimeout(resource: RequestInfo, options: RequestInit = {}
   }
 }
 
-async function premiumSearch(keyword: string, language: string): Promise<PremiumSearchResponse> {
-  const res = await fetchWithTimeout('/api/premium/search', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ keyword, language })
-  })
-  if (!res.ok) throw new Error('Search failed')
-  return res.json()
-}
-
 function nl(n?: number) {
   return Number(n || 0).toLocaleString('nl-NL')
 }
 
 export default function App() {
-  // Detect UI language from URL prefix: /<lang>/ ... fallback to saved preference, then 'en'
+  // Detect UI language from URL prefix: /<lang>/ ... fallback to saved preference, then DEFAULT_LANGUAGE
   const urlLang = (typeof window !== 'undefined' ? window.location.pathname.split('/').filter(Boolean)[0] : '')
   const [ui, setUi] = useState<UIState | null>(null)
   const [uiFallback, setUiFallback] = useState<UIState | null>(null)
   useEffect(() => {
     let cancelled = false
-    fetch('/meta/content/en.json')
+    const fallbackLang = DEFAULT_LANGUAGE
+    fetch(`/meta/content/${fallbackLang}.json`)
       .then((r) => (r.ok ? r.json() : Promise.reject()))
       .then((data) => {
         if (!cancelled) {
@@ -103,7 +192,7 @@ export default function App() {
       })
       .catch(() => {
         if (!cancelled) {
-          setUiFallback({ lang: 'en', dir: 'ltr', strings: {} })
+          setUiFallback({ lang: fallbackLang, dir: 'ltr', strings: {} })
         }
       })
     return () => {
@@ -111,7 +200,7 @@ export default function App() {
     }
   }, [])
   useEffect(() => {
-    // Prefer URL language when present; otherwise prefer saved UI language; else 'en'
+    // Prefer URL language when present; otherwise prefer saved UI language; else DEFAULT_LANGUAGE
     let lang = (urlLang || '').split('-')[0].toLowerCase()
     if (!lang || !/^[a-z]{2}$/i.test(lang)) {
       try {
@@ -123,10 +212,10 @@ export default function App() {
         /* ignore */
       }
     }
-    if (!lang) lang = 'en'
+    if (!lang) lang = DEFAULT_LANGUAGE
     fetch(`/meta/content/${lang}.json`).then(r => r.json()).then((data) => {
       setUi(data)
-      const resolvedLang = (data?.lang || lang || 'en').toLowerCase()
+      const resolvedLang = (data?.lang || lang || DEFAULT_LANGUAGE).toLowerCase()
       setLanguage(prev => {
         const prevLower = (prev || '').toLowerCase()
         return prevLower !== resolvedLang ? resolvedLang : prev
@@ -139,7 +228,7 @@ export default function App() {
       setUi({ lang, dir: 'ltr', strings: {} })
       setLanguage(prev => {
         const prevLower = (prev || '').toLowerCase()
-        const resolved = (lang || 'en').toLowerCase()
+        const resolved = (lang || DEFAULT_LANGUAGE).toLowerCase()
         return prevLower !== resolved ? resolved : prev
       })
     })
@@ -150,10 +239,10 @@ export default function App() {
     try {
       const stored = localStorage.getItem('lw_search_lang')
       if (stored) return stored.toLowerCase()
-      const fallback = localStorage.getItem('lw_lang') || urlLang || 'en'
-      return (fallback || 'en').toLowerCase()
+      const fallback = localStorage.getItem('lw_lang') || urlLang || DEFAULT_LANGUAGE
+      return (fallback || DEFAULT_LANGUAGE).toLowerCase()
     } catch {
-      return (urlLang || 'en').toLowerCase()
+      return (urlLang || DEFAULT_LANGUAGE).toLowerCase()
     }
   })
   const [languageManuallySelected, setLanguageManuallySelected] = useState(() => {
@@ -165,9 +254,9 @@ export default function App() {
   })
   const [language, setLanguage] = useState(() => {
     try {
-      return (localStorage.getItem('lw_lang') || urlLang || 'en').toLowerCase()
+      return (localStorage.getItem('lw_lang') || urlLang || DEFAULT_LANGUAGE).toLowerCase()
     } catch {
-      return (urlLang || 'en').toLowerCase()
+      return (urlLang || DEFAULT_LANGUAGE).toLowerCase()
     }
   })
   const [country, setCountry] = useState(() => {
@@ -177,8 +266,6 @@ export default function App() {
       return ''
     }
   })
-  // Detected country (geo/IP/headers) for display; separate from user-selected country used in searches
-  const [detectedCountry, setDetectedCountry] = useState<string>('')
   const [languagesList, setLanguagesList] = useState(GOOGLE_LANGUAGES)
   const [countriesList, setCountriesList] = useState(COUNTRY_CODES)
   const [countrySearchTerm, setCountrySearchTerm] = useState('')
@@ -191,17 +278,103 @@ export default function App() {
   })
   const [showSignin, setShowSignin] = useState(false)
   const [signinEmail, setSigninEmail] = useState('')
+  const [signinStatus, setSigninStatus] = useState<'idle' | 'sending' | 'sent' | 'error'>('idle')
+  const [signinFeedback, setSigninFeedback] = useState<string | null>(null)
   const [showProjects, setShowProjects] = useState(false)
   const [projects, setProjects] = useState<Array<{ id: number; name: string; description?: string | null; language?: string | null; country?: string | null; updated_at?: string }>>([])
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [langMenuAnchor, setLangMenuAnchor] = useState<'desktop' | 'mobile' | null>(null)
   const [marketLocales, setMarketLocales] = useState<Map<string, string[]>>(() => new Map())
   const [billingLoading, setBillingLoading] = useState(false)
+  const [creditPacks, setCreditPacks] = useState<CreditPack[]>([])
+  const [creditPacksLoading, setCreditPacksLoading] = useState(false)
+  const [creditCheckoutLoading, setCreditCheckoutLoading] = useState(false)
+  const [stickyCtaDismissed, setStickyCtaDismissed] = useState<boolean>(() => {
+    if (typeof window === 'undefined') return false
+    try {
+      return sessionStorage.getItem('lw_sticky_cta_dismissed') === '1'
+    } catch {
+      return false
+    }
+  })
+
+  useEffect(() => {
+    if (showSignin) {
+      setSigninStatus('idle')
+      setSigninFeedback(null)
+    }
+  }, [showSignin])
+
+  const closeSigninModal = useCallback(() => {
+    setShowSignin(false)
+    setSigninStatus('idle')
+    setSigninFeedback(null)
+  }, [])
 
   const entitlementsResult = useEntitlements(token)
 
+  useEffect(() => {
+    let cancelled = false
+    const controller = new AbortController()
+
+    if (!token) {
+      setCreditPacks([])
+      setCreditPacksLoading(false)
+      return () => {
+        cancelled = true
+        controller.abort()
+      }
+    }
+
+    setCreditPacksLoading(true)
+
+    fetch('/api/billing/credit-packs', {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${token}`
+      },
+      signal: controller.signal
+    })
+      .then(async (response) => {
+        if (response.status === 401) {
+          throw new Error('unauthorized')
+        }
+        const payload = await response.json().catch(() => ({}))
+        if (!response.ok) {
+          const error = (payload && (payload.error || payload.message)) || `HTTP ${response.status}`
+          throw new Error(String(error))
+        }
+        const packs = Array.isArray(payload?.packs) ? payload.packs : []
+        return packs.filter((pack: CreditPack) => pack && typeof pack.price_id === 'string' && pack.price_id.trim().length > 0)
+      })
+      .then((packs) => {
+        if (!cancelled) {
+          setCreditPacks(packs)
+        }
+      })
+      .catch((err) => {
+        if (cancelled) return
+        if (err?.message === 'unauthorized') {
+          setCreditPacks([])
+          return
+        }
+        console.warn('Unable to load credit packs', err)
+        setCreditPacks([])
+      })
+      .finally(() => {
+        if (!cancelled) {
+          setCreditPacksLoading(false)
+        }
+      })
+
+    return () => {
+      cancelled = true
+      controller.abort()
+    }
+  }, [token])
+
   const updateSearchLanguage = useCallback((lang: string, manual = false) => {
-    const normalized = (lang || '').split('-')[0].toLowerCase() || 'en'
+    const normalized = (lang || '').split('-')[0].toLowerCase() || DEFAULT_LANGUAGE
     setSearchLanguageState((prev) => (prev === normalized ? prev : normalized))
     try {
       localStorage.setItem('lw_search_lang', normalized)
@@ -304,6 +477,9 @@ export default function App() {
   const aiCreditsLabel = useMemo(() => getTranslated('entitlements.sidebar.ai_credits', 'AI credits'), [getTranslated])
   const upgradeCtaLabel = useMemo(() => getTranslated('entitlements.actions.upgrade', 'Upgrade plan'), [getTranslated])
   const buyCreditsCtaLabel = useMemo(() => getTranslated('entitlements.actions.buy_credits', 'Get AI credits'), [getTranslated])
+  const buyCreditsRequiresSigninLabel = useMemo(() => getTranslated('billing.error.buy_credits_signin', 'Sign in to buy AI credits.'), [getTranslated])
+  const buyCreditsUnavailableLabel = useMemo(() => getTranslated('billing.error.buy_credits_unavailable', 'AI credit purchase is unavailable right now. Please contact support.'), [getTranslated])
+  const loadingCreditPacksLabel = useMemo(() => getTranslated('billing.status.loading_credit_packs', 'Loading credit packs…'), [getTranslated])
   const upgradeUnavailableLabel = useMemo(() => getTranslated('billing.error.upgrade_unavailable', 'Upgrade is currently unavailable. Please contact support.'), [getTranslated])
   const upgradeRequiresSigninLabel = useMemo(() => getTranslated('billing.error.signin_required', 'Please sign in to upgrade.'), [getTranslated])
   const checkoutLaunchingLabel = useMemo(() => getTranslated('billing.status.launching_checkout', 'Opening checkout…'), [getTranslated])
@@ -333,13 +509,122 @@ export default function App() {
       }
     })
   }, [normalizedUpgradeUrl, token, billingLoading, setBillingLoading, setError, setShowSignin, upgradeUnavailableLabel, upgradeRequiresSigninLabel, checkoutFailedLabel])
+    const primaryCreditPack = useMemo(() => creditPacks.find((pack) => typeof pack?.price_id === 'string' && pack.price_id.trim().length > 0) || null, [creditPacks])
+    const formatCreditPackPrice = useCallback((pack: CreditPack | null) => {
+      if (!pack) return null
+      const amount = typeof pack.unit_amount === 'number' ? pack.unit_amount / 100 : null
+      if (amount === null) return null
+      const currency = (pack.currency || 'EUR').toUpperCase()
+      const localeCandidates = [
+        language === 'nl' ? 'nl-NL' : null,
+        language === 'en' ? 'en-US' : null,
+        `${DEFAULT_LANGUAGE}-${DEFAULT_LANGUAGE.toUpperCase()}`,
+        language ? `${language}-${language.toUpperCase()}` : null,
+        language || DEFAULT_LANGUAGE,
+        undefined
+      ].filter((candidate): candidate is string | undefined => Boolean(candidate) || candidate === undefined)
+
+      for (const locale of localeCandidates) {
+        try {
+          return new Intl.NumberFormat(locale, { style: 'currency', currency }).format(amount)
+        } catch {
+          continue
+        }
+      }
+
+      return `${amount.toFixed(2)} ${currency}`
+    }, [language])
+    const primaryCreditPackPrice = useMemo(() => formatCreditPackPrice(primaryCreditPack), [formatCreditPackPrice, primaryCreditPack])
+    const buyCreditsButtonText = useMemo(() => {
+      if (creditPacksLoading) {
+        return loadingCreditPacksLabel
+      }
+      if (creditCheckoutLoading) {
+        return checkoutLaunchingLabel
+      }
+      if (primaryCreditPackPrice) {
+        return `${buyCreditsCtaLabel} · ${primaryCreditPackPrice}`
+      }
+      return buyCreditsCtaLabel
+    }, [buyCreditsCtaLabel, checkoutLaunchingLabel, creditCheckoutLoading, creditPacksLoading, loadingCreditPacksLabel, primaryCreditPackPrice])
+    const handleBuyCreditsClick = useCallback(async () => {
+      if (!token) {
+        setShowSignin(true)
+        setError(buyCreditsRequiresSigninLabel)
+        return
+      }
+      if (billingLoading || creditCheckoutLoading) {
+        return
+      }
+      if (!primaryCreditPack?.price_id) {
+        setError(buyCreditsUnavailableLabel)
+        return
+      }
+
+      setBillingLoading(true)
+      setCreditCheckoutLoading(true)
+      setError(null)
+
+      try {
+        const response = await fetch('/api/billing/credit-checkout', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`
+          },
+          body: JSON.stringify({ price_id: primaryCreditPack.price_id, quantity: 1 })
+        })
+
+        let payload: any = null
+        try {
+          payload = await response.json()
+        } catch {
+          payload = null
+        }
+
+        if (response.status === 401) {
+          setShowSignin(true)
+          setError(buyCreditsRequiresSigninLabel)
+          return
+        }
+
+        if (!response.ok || typeof payload?.url !== 'string' || !payload.url.trim()) {
+          console.error('Credit checkout failed', { status: response.status, payload })
+          setError(buyCreditsUnavailableLabel)
+          return
+        }
+
+        if (typeof window !== 'undefined' && window.location) {
+          window.location.href = payload.url
+        }
+      } catch (err) {
+        console.error('Unable to initiate credit checkout', err)
+        setError(buyCreditsUnavailableLabel)
+      } finally {
+        setCreditCheckoutLoading(false)
+        setBillingLoading(false)
+      }
+    }, [token, billingLoading, creditCheckoutLoading, primaryCreditPack, setBillingLoading, setError, setShowSignin, buyCreditsRequiresSigninLabel, buyCreditsUnavailableLabel])
   const entitlementsExpiresLabel = useMemo(() => {
     if (!entitlementsData.expires_at) return null
     const parsed = new Date(entitlementsData.expires_at)
     const formatted = Number.isNaN(parsed.getTime()) ? entitlementsData.expires_at : parsed.toLocaleDateString()
     return getTranslated('entitlements.sidebar.expires', `Renews on ${formatted}`)
   }, [entitlementsData.expires_at, getTranslated])
-  const locationUnknownLabel = useMemo(() => translate('topbar.location_unknown'), [translate])
+  const searchLoadingLabel = useMemo(() => getTranslated('search.status.loading', 'Running keyword analysis…'), [getTranslated])
+  const lowCreditsTitle = useMemo(() => getTranslated('billing.cta.low_credits.title', 'Almost out of AI credits?'), [getTranslated])
+  const lowCreditsSubtitle = useMemo(() => getTranslated('billing.cta.low_credits.subtitle', 'Top up to keep premium keyword data flowing.'), [getTranslated])
+  const signinCtaTitle = useMemo(() => getTranslated('billing.cta.signin.title', 'Unlock full keyword intelligence'), [getTranslated])
+  const signinCtaSubtitle = useMemo(() => getTranslated('billing.cta.signin.subtitle', 'Sign in to access premium searches, saved projects, and AI credits.'), [getTranslated])
+  const signinCtaEyebrow = useMemo(() => getTranslated('billing.cta.signin.eyebrow', 'Lucy World account'), [getTranslated])
+  const stickyCtaDismissLabel = useMemo(() => getTranslated('billing.cta.dismiss', 'Hide this message'), [getTranslated])
+  const lowCreditsCounterLabel = useMemo(() => {
+    const raw = translate('billing.cta.low_credits.counter', { amount: entitlementsData.ai_credits })
+    if (!raw || raw === 'billing.cta.low_credits.counter') {
+      return `Remaining credits: ${entitlementsData.ai_credits}`
+    }
+    return raw
+  }, [entitlementsData.ai_credits, translate])
   const openNavigationLabel = useMemo(() => translate('aria.open_navigation'), [translate])
   const myProjectsLabel = useMemo(() => translate('projects.button.my_projects'), [translate])
   const saveProjectLabel = useMemo(() => translate('projects.button.save'), [translate])
@@ -348,12 +633,42 @@ export default function App() {
   const signInDescription = useMemo(() => translate('auth.signin.description'), [translate])
   const signInPlaceholder = useMemo(() => translate('auth.signin.placeholder'), [translate])
   const sendLinkLabel = useMemo(() => translate('auth.signin.submit'), [translate])
+  const sendingLinkLabel = useMemo(() => translate('auth.magic_link.sending'), [translate])
+  const LOW_CREDITS_THRESHOLD = 25
+  const isLowCredits = isSignedIn && typeof entitlementsData.ai_credits === 'number' && entitlementsData.ai_credits >= 0 && entitlementsData.ai_credits < LOW_CREDITS_THRESHOLD
+  const showStickyCta = (!isSignedIn || isLowCredits) && !stickyCtaDismissed
+  const stickyCtaButtonLabel = isLowCredits ? buyCreditsButtonText : signInTitle
+  const stickyCtaDisabled = isLowCredits ? (billingLoading || creditCheckoutLoading) : false
+  const handleStickyCtaClick = useCallback(() => {
+    if (isLowCredits) {
+      void handleBuyCreditsClick()
+    } else {
+      setShowSignin(true)
+    }
+  }, [isLowCredits, handleBuyCreditsClick, setShowSignin])
+  const dismissStickyCta = useCallback(() => {
+    setStickyCtaDismissed(true)
+    try {
+      sessionStorage.setItem('lw_sticky_cta_dismissed', '1')
+    } catch {
+      /* ignore */
+    }
+  }, [])
+  useEffect(() => {
+    if (isLowCredits && stickyCtaDismissed) {
+      setStickyCtaDismissed(false)
+      try {
+        sessionStorage.removeItem('lw_sticky_cta_dismissed')
+      } catch {
+        /* ignore */
+      }
+    }
+  }, [isLowCredits, stickyCtaDismissed])
   const projectsTitle = useMemo(() => translate('projects.modal.title'), [translate])
   const projectsEmptyMessage = useMemo(() => translate('projects.modal.empty', { save: saveProjectLabel }), [translate, saveProjectLabel])
   const openLabel = useMemo(() => translate('projects.modal.open'), [translate])
   const renameLabel = useMemo(() => translate('projects.modal.rename'), [translate])
   const deleteLabel = useMemo(() => translate('projects.modal.delete'), [translate])
-  const getCountryAriaLabel = useCallback((code: string) => translate('aria.country_label', { code: code.toUpperCase() }), [translate])
 
   // Priority countries (mix of major regions + active marketplace coverage - no bias)
   const priorityCountries = useMemo(() => {
@@ -385,7 +700,7 @@ export default function App() {
       try {
         const ctor: any = (Intl as any).DisplayNames
         if (ctor) {
-          const dn = new ctor(['en'], { type: 'region' })
+      const dn = new ctor([DEFAULT_LANGUAGE], { type: 'region' })
           const name = dn?.of?.(cc)?.toLowerCase() || cc.toLowerCase()
           return name.includes(term) || cc.toLowerCase().includes(term)
         }
@@ -401,7 +716,7 @@ export default function App() {
     try {
       const ctor: any = (Intl as any).DisplayNames
       if (ctor) {
-        const dn = new ctor([ui?.lang || 'en'], { type: 'region' })
+  const dn = new ctor([ui?.lang || DEFAULT_LANGUAGE], { type: 'region' })
         return dn?.of?.(code) || code
       }
       return code
@@ -432,7 +747,7 @@ export default function App() {
     try {
       const ctor: any = (Intl as any).DisplayNames
       if (ctor) {
-        const dn = new ctor([ui?.lang || language || 'en'], { type: 'language' })
+  const dn = new ctor([ui?.lang || language || DEFAULT_LANGUAGE], { type: 'language' })
         const localized = dn?.of?.(normalized)
         if (localized && typeof localized === 'string') {
           const titleCased = localized.charAt(0).toUpperCase() + localized.slice(1)
@@ -452,26 +767,123 @@ export default function App() {
 
   const currentLangLabel = useMemo(() => getLanguageLabel(language), [getLanguageLabel, language])
 
-  // Localized country display name for the topbar pill
-  const displayCountryName = useMemo(() => {
-    if (!detectedCountry) {
-      // Return "Unknown location" in current UI language
-      return ui?.strings?.unknown_location || 'Unknown location'
+  const renderPlanSummary = (variant: 'desktop' | 'mobile') => {
+    const compact = variant === 'mobile'
+    const containerStyle: React.CSSProperties = {
+      display: 'grid',
+      gap: compact ? 4 : 6,
+      padding: compact ? '8px 10px' : '10px 12px',
+      borderRadius: 12,
+      border: '1px solid var(--line)',
+      background: 'rgba(15,18,27,0.72)',
+      color: 'var(--text)',
+      minWidth: compact ? 0 : 210,
+      flex: compact ? '1 1 auto' : '0 0 auto'
     }
-    try {
-      const cc = detectedCountry.toUpperCase()
-      const langCode = (ui?.lang || language || 'en').toLowerCase()
-      const ctor: any = (Intl as any).DisplayNames
-      if (ctor) {
-        const dn = new ctor([langCode], { type: 'region' })
-        const name = dn?.of?.(cc)
-        return name || cc
-      }
-      return cc
-    } catch {
-      return detectedCountry.toUpperCase()
+    const labelStyle: React.CSSProperties = {
+      fontSize: compact ? 10 : 11,
+      textTransform: 'uppercase',
+      letterSpacing: '0.08em',
+      color: 'var(--text-secondary)',
+      fontWeight: 600
     }
-  }, [detectedCountry, ui?.lang, ui?.strings, language])
+
+    if (entitlementsStatus === 'loading' || entitlementsStatus === 'idle') {
+      return (
+        <div style={containerStyle}>
+          <div style={labelStyle}>{entitlementsPlanLabel}</div>
+          <div style={{ fontSize: compact ? 12 : 13, color: 'var(--text-secondary)' }}>{entitlementsLoadingLabel}</div>
+        </div>
+      )
+    }
+
+    if (entitlementsStatus === 'error') {
+      return (
+        <div style={containerStyle}>
+          <div style={labelStyle}>{entitlementsPlanLabel}</div>
+          <div style={{ fontSize: compact ? 12 : 13, color: '#ffb3b3' }}>{entitlementsErrorLabel}</div>
+        </div>
+      )
+    }
+
+    const credits = Number(entitlementsData.ai_credits) || 0
+    const hasCredits = credits > 0
+
+    return (
+      <div style={containerStyle}>
+        <div style={labelStyle}>{entitlementsPlanLabel}</div>
+        <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: 8 }}>
+          <span style={{ fontSize: compact ? 16 : 18, fontWeight: 700 }}>{entitlementsTierLabel}</span>
+          {entitlementsExpiresLabel ? (
+            <span style={{ fontSize: compact ? 11 : 12, color: 'var(--text-secondary)' }}>{entitlementsExpiresLabel}</span>
+          ) : null}
+        </div>
+        <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: compact ? 12 : 13, color: 'var(--text-secondary)' }}>
+          <span>{aiCreditsLabel}</span>
+          <span style={{ fontWeight: 600, color: 'var(--text)' }}>{credits}</span>
+        </div>
+        <div style={{ display: 'inline-flex', alignItems: 'center', gap: 6, fontSize: compact ? 11 : 12, color: 'var(--text-secondary)' }}>
+          <span aria-hidden>{hasCredits ? '✨' : '⚡'}</span>
+          <span>{hasCredits ? aiUnlockedLabel : aiLockedLabel}</span>
+        </div>
+      </div>
+    )
+  }
+
+  const renderBillingActions = (variant: 'desktop' | 'mobile') => {
+    const compact = variant === 'mobile'
+    const containerStyle: React.CSSProperties = {
+      display: 'inline-flex',
+      alignItems: 'center',
+      gap: compact ? 6 : 8,
+      flexWrap: 'wrap',
+      justifyContent: 'flex-end'
+    }
+    const buttonStyle: React.CSSProperties = {
+      display: 'inline-flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      gap: 6,
+      padding: compact ? '6px 10px' : '8px 12px',
+      borderRadius: 10,
+      border: '1px solid var(--line)',
+      background: 'transparent',
+      color: 'var(--text)',
+      fontSize: compact ? 12 : 13
+    }
+
+    return (
+      <div style={containerStyle}>
+        <button
+          type="button"
+          onClick={handleUpgradeClick}
+          disabled={billingLoading}
+          style={{ ...buttonStyle, cursor: billingLoading ? 'wait' : 'pointer' }}
+        >
+          ⬆️ {billingLoading ? checkoutLaunchingLabel : upgradeCtaLabel}
+        </button>
+        {primaryCreditPack ? (
+          <button
+            type="button"
+            onClick={handleBuyCreditsClick}
+            disabled={billingLoading || creditPacksLoading}
+            style={{ ...buttonStyle, cursor: billingLoading || creditPacksLoading ? 'wait' : 'pointer' }}
+          >
+            💡 {buyCreditsButtonText}
+          </button>
+        ) : entitlementsData.buy_credits_url ? (
+          <a
+            href={entitlementsData.buy_credits_url}
+            target="_blank"
+            rel="noreferrer"
+            style={{ ...buttonStyle, textDecoration: 'none' }}
+          >
+            💡 {buyCreditsCtaLabel}
+          </a>
+        ) : null}
+      </div>
+    )
+  }
 
   const locationControls = (
     <>
@@ -666,15 +1078,37 @@ export default function App() {
     const email = signinEmail.trim().toLowerCase()
     if (!email) return
     try {
+      setSigninStatus('sending')
+      const pendingMessage = sendingLinkLabel === 'auth.magic_link.sending'
+        ? 'Sending link…'
+        : sendingLinkLabel
+      setSigninFeedback(pendingMessage)
       const res = await fetch('/api/auth/request', {
         method: 'POST', headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email })
       })
-      if (!res.ok) throw new Error(translate('auth.magic_link.failed'))
-      alert(translate('auth.magic_link.sent'))
-      setShowSignin(false)
+      let payload: any = null
+      try {
+        payload = await res.json()
+      } catch {
+        payload = null
+      }
+      if (!res.ok) {
+        const message = (payload && (payload.message || payload.error)) || translate('auth.magic_link.failed')
+        throw new Error(message)
+      }
+      const successMessage = (payload && (payload.message || payload.detail)) || translate('auth.magic_link.sent')
+      const normalized = successMessage === 'auth.magic_link.sent'
+        ? 'Sign-in link sent. Check your inbox.'
+        : successMessage
+      setSigninStatus('sent')
+      setSigninFeedback(normalized)
+      setSigninEmail('')
     } catch (err: any) {
-      alert(err?.message || translate('auth.magic_link.error'))
+      const fallback = translate('auth.magic_link.error')
+      const message = err?.message || fallback
+      setSigninStatus('error')
+      setSigninFeedback(message === 'auth.magic_link.error' ? 'We could not send the link. Please try again later.' : message)
     }
   }
 
@@ -852,7 +1286,7 @@ export default function App() {
           if (mapped.length) setLanguagesList(mapped)
         }
         if (typeof data?.default === 'string' && !localStorage.getItem('lw_lang')) {
-          setLanguage((urlLang || data.default || 'en').toLowerCase())
+          setLanguage((urlLang || data.default || DEFAULT_LANGUAGE).toLowerCase())
         }
       })
       .catch(() => {
@@ -953,10 +1387,6 @@ export default function App() {
         .then((det) => {
           const detLang = (det?.language || '').toString().toLowerCase()
           const detCountry = (det?.country || '').toString().toUpperCase()
-          // Always capture detected country for topbar indicator
-          if (detCountry && detCountry.length === 2) {
-            setDetectedCountry(detCountry)
-          }
           if (!hasSavedLang && !pathHasLangPrefix && detLang) {
             setLanguage(detLang)
             try { localStorage.setItem('lw_lang', detLang) } catch {}
@@ -980,95 +1410,6 @@ export default function App() {
       <div className="layout">
         <aside id="sidebar" className={`sidebar ${sidebarOpen ? 'open' : ''}`} aria-hidden={!sidebarOpen}>
           <div className="sidebar-brand">Lucy <span>World</span></div>
-          <div
-            className="sidebar-plan-card"
-            style={{
-              marginTop: 16,
-              marginBottom: 16,
-              padding: 16,
-              borderRadius: 12,
-              border: '1px solid var(--line)',
-              background: 'rgba(255,255,255,0.04)',
-              display: 'grid',
-              gap: 10
-            }}
-          >
-            <div style={{ fontSize: 12, textTransform: 'uppercase', letterSpacing: 0.6, fontWeight: 600, color: 'var(--text-secondary)' }}>
-              {entitlementsPlanLabel}
-            </div>
-            {entitlementsStatus === 'loading' ? (
-              <div style={{ fontSize: 14, color: 'var(--text-secondary)' }}>{entitlementsLoadingLabel}</div>
-            ) : entitlementsStatus === 'error' ? (
-              <div style={{ fontSize: 14, color: '#ffb3b3' }}>{entitlementsErrorLabel}</div>
-            ) : (
-              <>
-                <div style={{ fontSize: 20, fontWeight: 700, color: 'var(--text)' }}>{entitlementsTierLabel}</div>
-                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 13, color: 'var(--text-secondary)' }}>
-                  <span>{aiCreditsLabel}</span>
-                  <span style={{ fontWeight: 600, color: 'var(--text)' }}>{entitlementsData.ai_credits}</span>
-                </div>
-                {entitlementsExpiresLabel && (
-                  <div style={{ fontSize: 12, color: 'var(--text-secondary)' }}>{entitlementsExpiresLabel}</div>
-                )}
-                <RequireEntitlement
-                  group="ai"
-                  minimumAiCredits={1}
-                  fallback={(
-                    <div style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: 13, color: 'var(--text-secondary)' }}>
-                      <span aria-hidden>⚡</span>
-                      <span>{aiLockedLabel}</span>
-                    </div>
-                  )}
-                >
-                  <div style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: 13, color: 'var(--text)' }}>
-                    <span aria-hidden>✨</span>
-                    <span>{aiUnlockedLabel}</span>
-                  </div>
-                </RequireEntitlement>
-              </>
-            )}
-            <div style={{ display: 'grid', gap: 8, marginTop: 4 }}>
-              <button
-                type="button"
-                onClick={handleUpgradeClick}
-                disabled={billingLoading}
-                style={{
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  gap: 8,
-                  padding: '8px 12px',
-                  borderRadius: 8,
-                  border: '1px solid var(--line)',
-                  color: 'var(--text)',
-                  background: 'transparent',
-                  fontSize: 13,
-                  cursor: billingLoading ? 'wait' : 'pointer'
-                }}
-              >
-                ⬆️ {billingLoading ? checkoutLaunchingLabel : upgradeCtaLabel}
-              </button>
-              <a
-                href={entitlementsData.buy_credits_url}
-                target="_blank"
-                rel="noreferrer"
-                style={{
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  gap: 8,
-                  padding: '8px 12px',
-                  borderRadius: 8,
-                  border: '1px solid var(--line)',
-                  color: 'var(--text)',
-                  textDecoration: 'none',
-                  fontSize: 13
-                }}
-              >
-                💡 {buyCreditsCtaLabel}
-              </a>
-            </div>
-          </div>
           <PlatformSidebar
           title={translate('platforms.sidebar.title')}
           platforms={visiblePlatforms}
@@ -1080,130 +1421,105 @@ export default function App() {
         />
         <div className="sidebar-footer">
           <span className="sidebar-footer-copy">© {new Date().getFullYear()} Lucy World</span>
-          <div className="sidebar-footer-actions">
-            <button
-              type="button"
-              className="sidebar-signin"
-              disabled={isSignedIn}
-              onClick={() => {
-                if (!isSignedIn) {
-                  setShowSignin(true)
-                }
-              }}
-            >
-              {isSignedIn ? (ui?.strings['footer.premium'] || 'Premium account') : (ui?.strings['footer.signin'] || 'Sign in for Premium')}
-            </button>
-          </div>
         </div>
       </aside>
       <div className={`overlay ${sidebarOpen ? 'show' : ''}`} onClick={() => setSidebarOpen(false)} />
 
       <div className="content">
         {/* Desktop header bar */}
-        <div className="desktopbar" style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '12px 14px', borderBottom: '1px solid var(--line)', position: 'sticky', top: 0, zIndex: 9, background: 'rgba(11,13,16,0.6)', backdropFilter: 'saturate(180%) blur(10px)' }}>
+  <div className="desktopbar" style={{ display: 'flex', alignItems: 'center', gap: 12, flexWrap: 'wrap', padding: '12px 14px', borderBottom: '1px solid var(--line)', position: 'sticky', top: 0, zIndex: 9, background: 'rgba(11,13,16,0.6)', backdropFilter: 'saturate(180%) blur(10px)' }}>
           <div className="brand">Lucy <span>World</span></div>
-          <div style={{ marginLeft: 'auto', display: 'inline-flex', alignItems: 'center', gap: 8, position: 'relative' }}>
-            {/* Country indicator (shows detected location or unknown) */}
-            {detectedCountry ? (
-              <div
-                className="country-pill"
-                title={detectedCountry.toUpperCase()}
-                aria-label={getCountryAriaLabel(detectedCountry)}
+          <div
+            style={{
+              marginLeft: 'auto',
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: 10,
+              flexWrap: 'wrap',
+              justifyContent: 'flex-end',
+              width: '100%'
+            }}
+          >
+            {renderPlanSummary('desktop')}
+            {renderBillingActions('desktop')}
+            {!isSignedIn ? (
+              <button
+                type="button"
+                onClick={() => setShowSignin(true)}
                 style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: 'transparent', color: 'var(--text)', border: '1px solid var(--line)', padding: '8px 10px', borderRadius: 10 }}
               >
-                <span aria-hidden style={{ fontSize: 14 }}>{flagEmoji(detectedCountry.toUpperCase())}</span>
-                <span style={{ fontWeight: 600 }}>{displayCountryName}</span>
-              </div>
+                � {signInTitle}
+              </button>
             ) : (
-              <div
-                className="country-pill"
-                title={locationUnknownLabel}
-                aria-label={locationUnknownLabel}
-                style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: 'transparent', color: 'var(--text-secondary)', border: '1px solid var(--line)', padding: '8px 10px', borderRadius: 10 }}
-              >
-                <span aria-hidden style={{ fontSize: 14 }}>🌍</span>
-                <span style={{ fontWeight: 600 }}>{displayCountryName}</span>
-              </div>
-            )}
-            {/* Project features only for signed-in users */}
-            {isSignedIn && (
-              <>
+              <div style={{ display: 'inline-flex', alignItems: 'center', gap: 8, flexWrap: 'wrap' }}>
                 <button
                   type="button"
                   onClick={loadProjects}
                   style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: 'transparent', color: 'var(--text)', border: '1px solid var(--line)', padding: '8px 10px', borderRadius: 10 }}
                 >
-                  📁 {myProjectsLabel}
+                  � {myProjectsLabel}
                 </button>
                 <button
                   type="button"
                   onClick={saveProject}
                   style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: 'transparent', color: 'var(--text)', border: '1px solid var(--line)', padding: '8px 10px', borderRadius: 10 }}
                 >
-                  💾 {saveProjectLabel}
+                  � {saveProjectLabel}
                 </button>
-              </>
-            )}
-            {!isSignedIn && (
-              <button
-                type="button"
-                onClick={() => setShowSignin(true)}
-                style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: 'transparent', color: 'var(--text)', border: '1px solid var(--line)', padding: '8px 10px', borderRadius: 10 }}
-              >
-                🔐 {signInTitle}
-              </button>
-            )}
-            {/* Language switch button (always visible) */}
-            <button
-              type="button"
-              className="lang-btn"
-              aria-haspopup="listbox"
-              aria-expanded={langMenuAnchor === 'desktop'}
-              onClick={() => toggleLangMenu('desktop')}
-              style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: 'transparent', color: 'var(--text)', border: '1px solid var(--line)', padding: '8px 10px', borderRadius: 10 }}
-              title={language.toUpperCase()}
-            >
-              <span aria-hidden>🌐</span>
-              <span style={{ fontWeight: 600 }}>{currentLangLabel}</span>
-            </button>
-            {langMenuAnchor === 'desktop' && (
-              <div
-                className="lang-menu"
-                role="listbox"
-                style={{
-                  position: 'absolute', right: 0, top: 'calc(100% + 6px)',
-                  background: '#0e1217', border: '1px solid var(--line)', borderRadius: 10,
-                  minWidth: 220, maxHeight: '50vh', overflow: 'auto', zIndex: 25,
-                }}
-              >
-                {languagesList.map((l) => (
-                  <button
-                    key={l.code}
-                    role="option"
-                    aria-selected={l.code === language}
-                    onClick={() => {
-                      closeLangMenu()
-                      const newLang = l.code.toLowerCase()
-                      localStorage.setItem('lw_lang', newLang)
-                      if (typeof window !== 'undefined') {
-                        window.location.href = `/${newLang}/`
-                      } else {
-                        setLanguage(newLang)
-                      }
-                    }}
-                    className={`lang-item ${l.code === language ? 'active' : ''}`}
-                    style={{
-                      display: 'flex', width: '100%', textAlign: 'left',
-                      gap: 10, padding: '10px 12px', background: 'transparent', color: 'var(--text)',
-                      border: 0, cursor: 'pointer'
-                    }}
-                  >
-                    <span style={{ width: 22, textAlign: 'center' }}>{/* No pure language flags; show code */}</span>
-                    <span style={{ flex: 1 }}>{l.label || l.code.toUpperCase()}</span>
-                  </button>
-                ))}
               </div>
             )}
+            <div style={{ position: 'relative' }}>
+              <button
+                type="button"
+                className="lang-btn"
+                aria-haspopup="listbox"
+                aria-expanded={langMenuAnchor === 'desktop'}
+                onClick={() => toggleLangMenu('desktop')}
+                style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: 'transparent', color: 'var(--text)', border: '1px solid var(--line)', padding: '8px 10px', borderRadius: 10 }}
+                title={language.toUpperCase()}
+              >
+                <span aria-hidden>{getLanguageFlag(language)}</span>
+                <span style={{ fontWeight: 600 }}>{currentLangLabel}</span>
+              </button>
+              {langMenuAnchor === 'desktop' && (
+                <div
+                  className="lang-menu"
+                  role="listbox"
+                  style={{
+                    position: 'absolute', right: 0, top: 'calc(100% + 6px)',
+                    background: '#0e1217', border: '1px solid var(--line)', borderRadius: 10,
+                    minWidth: 220, maxHeight: '50vh', overflow: 'auto', zIndex: 25,
+                  }}
+                >
+                  {languagesList.map((l) => (
+                    <button
+                      key={l.code}
+                      role="option"
+                      aria-selected={l.code === language}
+                      onClick={() => {
+                        closeLangMenu()
+                        const newLang = l.code.toLowerCase()
+                        localStorage.setItem('lw_lang', newLang)
+                        if (typeof window !== 'undefined') {
+                          window.location.href = `/${newLang}/`
+                        } else {
+                          setLanguage(newLang)
+                        }
+                      }}
+                      className={`lang-item ${l.code === language ? 'active' : ''}`}
+                      style={{
+                        display: 'flex', width: '100%', textAlign: 'left',
+                        gap: 10, padding: '10px 12px', background: 'transparent', color: 'var(--text)',
+                        border: 0, cursor: 'pointer'
+                      }}
+                    >
+                      <span style={{ width: 22, textAlign: 'center' }} aria-hidden>{getLanguageFlag(l.code)}</span>
+                      <span style={{ flex: 1 }}>{l.label || l.code.toUpperCase()}</span>
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
           </div>
         </div>
         {/* Mobile top bar */}
@@ -1221,30 +1537,75 @@ export default function App() {
             <span />
           </button>
           <div className="brand">Lucy <span>World</span></div>
-          <div className="topbar-actions" style={{ marginLeft: 'auto', display: 'inline-flex', alignItems: 'center', gap: 8 }}>
+          <div
+            className="topbar-actions"
+            style={{
+              marginLeft: 'auto',
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: 8,
+              flexWrap: 'wrap',
+              justifyContent: 'flex-end'
+            }}
+          >
+            {renderPlanSummary('mobile')}
+            {renderBillingActions('mobile')}
+            {!isSignedIn ? (
+              <button
+                type="button"
+                onClick={() => setShowSignin(true)}
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: 8,
+                  background: 'transparent',
+                  color: 'var(--text)',
+                  border: '1px solid var(--line)',
+                  padding: '8px 10px',
+                  borderRadius: 10
+                }}
+              >
+                🔐 {signInTitle}
+              </button>
+            ) : (
+              <div style={{ display: 'inline-flex', alignItems: 'center', gap: 8, flexWrap: 'wrap' }}>
+                <button
+                  type="button"
+                  onClick={loadProjects}
+                  aria-label={myProjectsLabel}
+                  style={{
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: 6,
+                    background: 'transparent',
+                    color: 'var(--text)',
+                    border: '1px solid var(--line)',
+                    padding: '8px 10px',
+                    borderRadius: 10
+                  }}
+                >
+                  📁
+                </button>
+                <button
+                  type="button"
+                  onClick={saveProject}
+                  aria-label={saveProjectLabel}
+                  style={{
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: 6,
+                    background: 'transparent',
+                    color: 'var(--text)',
+                    border: '1px solid var(--line)',
+                    padding: '8px 10px',
+                    borderRadius: 10
+                  }}
+                >
+                  💾
+                </button>
+              </div>
+            )}
             <div className="lang-switch" style={{ position: 'relative', zIndex: 30 }}>
-              {/* Country indicator (shows detected location or unknown) */}
-              {detectedCountry ? (
-                <div
-                  className="country-pill"
-                  title={detectedCountry.toUpperCase()}
-                  aria-label={getCountryAriaLabel(detectedCountry)}
-                  style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: 'transparent', color: 'var(--text)', border: '1px solid var(--line)', padding: '8px 10px', borderRadius: 10, marginRight: 8 }}
-                >
-                  <span aria-hidden style={{ fontSize: 14 }}>{flagEmoji(detectedCountry.toUpperCase())}</span>
-                  <span style={{ fontWeight: 600 }}>{displayCountryName}</span>
-                </div>
-              ) : (
-                <div
-                  className="country-pill"
-                  title={locationUnknownLabel}
-                  aria-label={locationUnknownLabel}
-                  style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: 'transparent', color: 'var(--text-secondary)', border: '1px solid var(--line)', padding: '8px 10px', borderRadius: 10, marginRight: 8 }}
-                >
-                  <span aria-hidden style={{ fontSize: 14 }}>🌍</span>
-                  <span style={{ fontWeight: 600 }}>{displayCountryName}</span>
-                </div>
-              )}
               <button
                 type="button"
                 className="lang-btn"
@@ -1252,42 +1613,34 @@ export default function App() {
                 aria-expanded={langMenuAnchor === 'mobile'}
                 onClick={() => toggleLangMenu('mobile')}
                 style={{
-                  display: 'inline-flex', alignItems: 'center', gap: 8,
-                  background: 'transparent', color: 'var(--text)',
-                  border: '1px solid var(--line)', padding: '8px 10px', borderRadius: 10,
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: 8,
+                  background: 'transparent',
+                  color: 'var(--text)',
+                  border: '1px solid var(--line)',
+                  padding: '8px 10px',
+                  borderRadius: 10
                 }}
                 title={language.toUpperCase()}
               >
-                <span aria-hidden>🌐</span>
+                <span aria-hidden>{getLanguageFlag(language)}</span>
                 <span style={{ fontWeight: 600 }}>{currentLangLabel}</span>
               </button>
-              {!isSignedIn && (
-                <button
-                  type="button"
-                  onClick={() => setShowSignin(true)}
-                  style={{
-                    display: 'inline-flex', alignItems: 'center', gap: 8,
-                    background: 'transparent', color: 'var(--text)',
-                    border: '1px solid var(--line)', padding: '8px 10px', borderRadius: 10,
-                  }}
-                >
-                  🔐 {signInTitle}
-                </button>
-              )}
               {langMenuAnchor === 'mobile' && (
                 <div
                   className="lang-menu"
                   role="listbox"
                   style={{
-                    position: 'absolute', 
-                    right: 0, 
+                    position: 'absolute',
+                    right: 0,
                     top: 'calc(100% + 6px)',
-                    background: '#0e1217', 
-                    border: '1px solid var(--line)', 
+                    background: '#0e1217',
+                    border: '1px solid var(--line)',
                     borderRadius: 10,
-                    minWidth: 280, 
-                    maxHeight: 'min(60vh, 400px)', 
-                    overflow: 'auto', 
+                    minWidth: 280,
+                    maxHeight: 'min(60vh, 400px)',
+                    overflow: 'auto',
                     zIndex: 1000,
                     boxShadow: '0 8px 32px rgba(0,0,0,0.3)'
                   }}
@@ -1299,7 +1652,6 @@ export default function App() {
                       aria-selected={l.code === language}
                       onClick={() => {
                         closeLangMenu()
-                        // Persist and navigate to language route for proper i18n + SEO
                         const newLang = l.code.toLowerCase()
                         localStorage.setItem('lw_lang', newLang)
                         if (typeof window !== 'undefined') {
@@ -1310,12 +1662,18 @@ export default function App() {
                       }}
                       className={`lang-item ${l.code === language ? 'active' : ''}`}
                       style={{
-                        display: 'flex', width: '100%', textAlign: 'left',
-                        gap: 10, padding: '10px 12px', background: 'transparent', color: 'var(--text)',
-                        border: 0, cursor: 'pointer'
+                        display: 'flex',
+                        width: '100%',
+                        textAlign: 'left',
+                        gap: 10,
+                        padding: '10px 12px',
+                        background: 'transparent',
+                        color: 'var(--text)',
+                        border: 0,
+                        cursor: 'pointer'
                       }}
                     >
-                      <span style={{ width: 22, textAlign: 'center' }}>{/* No pure language flags; show code */}</span>
+                      <span style={{ width: 22, textAlign: 'center' }} aria-hidden>{getLanguageFlag(l.code)}</span>
                       <span style={{ flex: 1 }}>{l.label || l.code.toUpperCase()}</span>
                     </button>
                   ))}
@@ -1326,16 +1684,117 @@ export default function App() {
         </div>
         <div className="content-inner">
         {showSignin && (
-          <div style={{ position: 'fixed', inset: 0 as any, background: 'rgba(0,0,0,0.5)', display: 'grid', placeItems: 'center', zIndex: 50 }} onClick={() => setShowSignin(false)}>
-            <div style={{ background: '#0e1217', border: '1px solid var(--line)', borderRadius: 12, padding: 16, width: 'min(420px, 92vw)' }} onClick={e => e.stopPropagation()}>
-              <h3 style={{ marginTop: 0 }}>{signInTitle}</h3>
-              <p>{signInDescription}</p>
-              <form onSubmit={requestMagicLink} style={{ display: 'flex', gap: 8 }}>
-                <input type="email" placeholder={signInPlaceholder} value={signinEmail} onChange={e => setSigninEmail(e.target.value)} required />
-                <button type="submit">{sendLinkLabel}</button>
+          <div
+            style={{ position: 'fixed', inset: 0 as any, background: 'rgba(0,0,0,0.5)', display: 'grid', placeItems: 'center', zIndex: 50, padding: '16px' }}
+            onClick={closeSigninModal}
+          >
+            <div
+              role="dialog"
+              aria-modal="true"
+              aria-labelledby="signin-modal-title"
+              style={{ background: '#0e1217', border: '1px solid var(--line)', borderRadius: 16, padding: 20, width: 'min(440px, 100%)', display: 'grid', gap: 16, boxShadow: '0 12px 32px rgba(0,0,0,0.35)' }}
+              onClick={e => e.stopPropagation()}
+            >
+              <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 12 }}>
+                <h3 id="signin-modal-title" style={{ margin: 0 }}>{signInTitle}</h3>
+                <button
+                  type="button"
+                  onClick={closeSigninModal}
+                  aria-label={closeLabel}
+                  style={{ background: 'transparent', border: 0, color: 'var(--text)', fontSize: 20, cursor: 'pointer', lineHeight: 1 }}
+                >
+                  ✕
+                </button>
+              </div>
+              <p style={{ margin: 0, opacity: 0.85 }}>{signInDescription}</p>
+              <form onSubmit={requestMagicLink} style={{ display: 'grid', gap: 12 }}>
+                <label style={{ display: 'grid', gap: 6 }}>
+                  <span style={{ fontSize: 13, textTransform: 'uppercase', letterSpacing: '0.08em', color: 'var(--muted)' }}>{signInPlaceholder}</span>
+                  <input
+                    type="email"
+                    placeholder={signInPlaceholder}
+                    value={signinEmail}
+                    onChange={e => setSigninEmail(e.target.value)}
+                    required
+                    style={{ width: '100%' }}
+                    autoFocus
+                  />
+                </label>
+                <button
+                  type="submit"
+                  disabled={signinStatus === 'sending'}
+                  style={{ justifyContent: 'center', display: 'inline-flex', alignItems: 'center', gap: 8 }}
+                >
+                  {signinStatus === 'sending'
+                    ? (sendingLinkLabel === 'auth.magic_link.sending' ? 'Sending…' : sendingLinkLabel)
+                    : sendLinkLabel}
+                </button>
               </form>
+              {signinFeedback && (
+                <div
+                  role="status"
+                  aria-live="assertive"
+                  style={{
+                    marginTop: 4,
+                    padding: '10px 12px',
+                    borderRadius: 12,
+                    border: signinStatus === 'error' ? '1px solid rgba(248,113,113,0.35)' : '1px solid rgba(74,222,128,0.35)',
+                    background: signinStatus === 'error' ? 'rgba(248,113,113,0.12)' : 'rgba(74,222,128,0.12)',
+                    color: signinStatus === 'error' ? '#fca5a5' : '#bbf7d0',
+                    fontSize: 14,
+                    display: 'flex',
+                    gap: 8,
+                    alignItems: 'flex-start'
+                  }}
+                >
+                  <span aria-hidden="true">{signinStatus === 'error' ? '⚠️' : '✅'}</span>
+                  <span>{signinFeedback}</span>
+                </div>
+              )}
             </div>
           </div>
+        )}
+
+        {loading && (
+          <div className="search-status" role="status" aria-live="polite">
+            <span className="search-status__spinner" aria-hidden="true" />
+            <span>{searchLoadingLabel}</span>
+          </div>
+        )}
+
+        {showStickyCta && (
+          <aside
+            className={`sticky-cta ${isLowCredits ? 'sticky-cta--warning' : 'sticky-cta--signin'}`}
+            role="complementary"
+            aria-live="polite"
+          >
+            <button
+              type="button"
+              className="sticky-cta__close"
+              onClick={dismissStickyCta}
+              aria-label={stickyCtaDismissLabel}
+            >
+              ✕
+            </button>
+            <div className="sticky-cta__content">
+              <span className="sticky-cta__eyebrow">{isLowCredits ? aiCreditsLabel : signinCtaEyebrow}</span>
+              <h2 className="sticky-cta__title">{isLowCredits ? lowCreditsTitle : signinCtaTitle}</h2>
+              <p className="sticky-cta__subtitle">{isLowCredits ? lowCreditsSubtitle : signinCtaSubtitle}</p>
+              {isLowCredits && (
+                <div className="sticky-cta__counter">{lowCreditsCounterLabel}</div>
+              )}
+            </div>
+            <div className="sticky-cta__actions">
+              <button
+                type="button"
+                onClick={handleStickyCtaClick}
+                disabled={stickyCtaDisabled}
+                className="sticky-cta__button"
+              >
+                {stickyCtaButtonLabel}
+              </button>
+            </div>
+          </aside>
         )}
 
         {showProjects && (
