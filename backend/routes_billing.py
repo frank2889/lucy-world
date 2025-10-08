@@ -1,9 +1,10 @@
 from __future__ import annotations
 
 import json
+import secrets
 import os
 from decimal import Decimal
-from typing import Any, Dict, Optional
+from typing import Any, Dict, List, Optional
 
 import stripe  # type: ignore
 from flask import Blueprint, current_app, jsonify, request
@@ -19,6 +20,30 @@ bp = Blueprint("billing", __name__, url_prefix="/api/billing")
 
 class StripeConfigurationError(RuntimeError):
     """Raised when Stripe is not configured correctly."""
+
+
+def _ensure_customer(user: User) -> str:
+    _ensure_stripe_api()
+    customer_id = (user.stripe_customer_id or "").strip()
+    if customer_id:
+        try:
+            stripe.Customer.modify(customer_id, metadata={"user_id": str(user.id)})
+        except Exception as exc:  # pragma: no cover - defensive
+            current_app.logger.warning("Stripe customer modify failed for %s: %s", user.email, exc)
+        return customer_id
+
+    try:
+        customer = stripe.Customer.create(
+            email=user.email,
+            name=user.name or user.email,
+            metadata={"user_id": str(user.id)},
+        )
+    except Exception as exc:  # pragma: no cover - Stripe runtime failures
+        raise StripeConfigurationError(f"Unable to create Stripe customer: {exc}") from exc
+
+    user.stripe_customer_id = customer.id
+    db.session.commit()
+    return customer.id
 
 
 def _set_subscription_expiry(meta: Dict[str, Any], period_end: Any) -> None:
@@ -59,6 +84,87 @@ def _price_ids() -> Dict[str, str]:
     if usage_price:
         payload["usage"] = usage_price
     return payload
+
+
+def _credit_catalog() -> List[Dict[str, Any]]:
+    """Return configured credit packs augmented with Stripe price metadata."""
+    raw = (os.getenv("STRIPE_CREDIT_PACKS") or "").strip()
+    packs: List[Dict[str, Any]] = []
+
+    if raw:
+        try:
+            data = json.loads(raw)
+        except Exception as exc:  # pragma: no cover - invalid JSON caught during deploy
+            current_app.logger.error("Invalid STRIPE_CREDIT_PACKS JSON: %s", exc)
+            data = []
+        if isinstance(data, list):
+            packs.extend([entry for entry in data if isinstance(entry, dict)])
+
+    if not packs:
+        # Fallback to usage-based billing configuration when dedicated packs are unset
+        usage_price = (os.getenv("STRIPE_PRICE_PRO_USAGE") or "").strip()
+        credits_per_unit_env = os.getenv("STRIPE_AI_CREDITS_PER_UNIT") or "100"
+        try:
+            credits_per_unit = max(int(credits_per_unit_env), 0)
+        except ValueError:
+            credits_per_unit = 0
+        if usage_price and credits_per_unit:
+            packs.append(
+                {
+                    "price_id": usage_price,
+                    "credits": credits_per_unit,
+                    "nickname": "AI credit pack",
+                    "mode": "usage",
+                }
+            )
+
+    if not packs:
+        return []
+
+    enriched: List[Dict[str, Any]] = []
+    try:
+        _ensure_stripe_api()
+    except StripeConfigurationError as exc:
+        current_app.logger.warning("Stripe not configured for credit packs: %s", exc)
+        for entry in packs:
+            enriched.append({
+                "price_id": entry.get("price_id"),
+                "credits": entry.get("credits", 0),
+                "currency": entry.get("currency", ""),
+                "unit_amount": entry.get("amount") or entry.get("unit_amount"),
+                "nickname": entry.get("nickname") or entry.get("name"),
+                "mode": entry.get("mode", "payment"),
+                "description": entry.get("description"),
+            })
+        return enriched
+
+    for entry in packs:
+        price_id = (entry.get("price_id") or "").strip()
+        if not price_id:
+            continue
+        try:
+            price = stripe.Price.retrieve(price_id, expand=["product"])  # type: ignore[arg-type]
+        except Exception as exc:  # pragma: no cover - Stripe runtime
+            current_app.logger.error("Unable to load Stripe price %s: %s", price_id, exc)
+            continue
+        product = price.get("product")
+        nickname = entry.get("nickname") or entry.get("name")
+        if not nickname and isinstance(product, dict):
+            nickname = product.get("name") or product.get("metadata", {}).get("display_name")
+        enriched.append(
+            {
+                "price_id": price_id,
+                "credits": int(entry.get("credits") or 0),
+                "currency": (price.get("currency") or entry.get("currency") or "").upper(),
+                "unit_amount": price.get("unit_amount") or entry.get("amount") or entry.get("unit_amount"),
+                "nickname": nickname or price.get("nickname") or "AI credit pack",
+                "mode": entry.get("mode", "payment"),
+                "description": entry.get("description") or (isinstance(product, dict) and product.get("description")),
+            }
+        )
+
+    enriched.sort(key=lambda item: item.get("credits") or 0)
+    return enriched
 
 
 def _find_user_by_stripe(
@@ -102,25 +208,12 @@ def stripe_config() -> Any:
 def create_checkout_session() -> Any:
     user = get_current_user()
     try:
-        _ensure_stripe_api()
         price_ids = _price_ids()
     except StripeConfigurationError as exc:
         return jsonify({"error": str(exc)}), 500
 
-    customer_id = user.stripe_customer_id
     try:
-        if not customer_id:
-            customer = stripe.Customer.create(
-                email=user.email,
-                name=user.name or user.email,
-                metadata={"user_id": str(user.id)},
-            )
-            customer_id = customer.id
-            user.stripe_customer_id = customer_id
-            db.session.commit()
-        else:
-            # Ensure the Stripe customer still exists
-            stripe.Customer.modify(customer_id, metadata={"user_id": str(user.id)})
+        customer_id = _ensure_customer(user)
     except Exception as exc:  # pragma: no cover - Stripe errors are runtime
         current_app.logger.error("Failed to initialize Stripe customer: %s", exc)
         return jsonify({"error": "Unable to create customer with Stripe."}), 502
@@ -160,6 +253,65 @@ def create_checkout_session() -> Any:
         return jsonify({"error": "Unable to create Stripe checkout session."}), 502
 
     return jsonify({"url": session.url})
+
+
+@bp.route("/credit-checkout", methods=["POST"])
+@auth_required
+def create_credit_checkout_session() -> Any:
+    payload = request.get_json(silent=True) or {}
+    price_id = (payload.get("price_id") or "").strip()
+    if not price_id:
+        return jsonify({"error": "price_id_required"}), 400
+
+    packs = _credit_catalog()
+    pack = next((p for p in packs if p.get("price_id") == price_id), None)
+    if not pack:
+        return jsonify({"error": "unknown_price"}), 400
+
+    user = get_current_user()
+
+    try:
+        customer_id = _ensure_customer(user)
+    except StripeConfigurationError as exc:
+        current_app.logger.error("Credit checkout failed (customer): %s", exc)
+        return jsonify({"error": "stripe_not_configured"}), 500
+
+    base_url = _public_base_url()
+    success_url = f"{base_url}/billing/credits?status=success"
+    cancel_url = f"{base_url}/billing/credits?status=cancelled"
+
+    try:
+        session = stripe.checkout.Session.create(  # type: ignore[call-arg]
+            mode="payment",
+            customer=customer_id,
+            line_items=[
+                {
+                    "price": price_id,
+                    "quantity": int(payload.get("quantity") or 1),
+                }
+            ],
+            success_url=success_url + "&session_id={CHECKOUT_SESSION_ID}",
+            cancel_url=cancel_url,
+            automatic_tax={"enabled": True},
+            metadata={
+                "user_id": str(user.id),
+                "type": "credit_pack",
+                "credits": str(pack.get("credits") or 0),
+                "price_id": price_id,
+            },
+        )
+    except Exception as exc:  # pragma: no cover - Stripe runtime failures
+        current_app.logger.error("Failed to create credit checkout session: %s", exc)
+        return jsonify({"error": "unable_to_create_session"}), 502
+
+    return jsonify({"url": session.url})
+
+
+@bp.route("/credit-packs", methods=["GET"])
+@auth_required
+def list_credit_packs() -> Any:
+    packs = _credit_catalog()
+    return jsonify({"packs": packs, "count": len(packs)})
 
 
 @bp.route("/customer-portal", methods=["POST"])
@@ -229,6 +381,62 @@ def _handle_checkout_completed(session: Dict[str, Any]) -> bool:
     )
     if not user:
         return False
+
+    mode = session.get("mode") or "subscription"
+    metadata = session.get("metadata") or {}
+
+    if mode == "payment" and metadata.get("type") == "credit_pack":
+        credits_raw = metadata.get("credits")
+        try:
+            credits = max(int(credits_raw or 0), 0)
+        except (TypeError, ValueError):
+            credits = 0
+        if credits <= 0:
+            current_app.logger.warning("Credit checkout completed without positive credits: %s", session.get("id"))
+            return True
+
+        grant_ai_credits(
+            user,
+            credits,
+            source="stripe_credit_checkout",
+            reference=session.get("id"),
+        )
+
+        amount_total = Decimal(session.get("amount_total", 0) or 0) / Decimal(100)
+        currency = (session.get("currency") or "usd").upper()
+        payment = Payment.query.filter_by(order_id=session.get("id") or "").first()
+        if payment is None:
+            payment = Payment(
+                user_id=user.id,
+                processor="stripe",
+                order_id=session.get("id") or secrets.token_urlsafe(16),
+                status=session.get("payment_status", "completed").upper(),
+                amount=amount_total,
+                net_amount=amount_total,
+                tax_amount=Decimal("0"),
+                currency=currency,
+                payer_email=session.get("customer_details", {}).get("email") or user.email,
+                metadata_payload={"stripe": session},
+            )
+            db.session.add(payment)
+        else:
+            payment.status = session.get("payment_status", payment.status)
+            payment.amount = amount_total
+            payment.net_amount = amount_total
+            payment.currency = currency
+            payment.metadata_payload = {"stripe": session}
+
+        ensure_plan_metadata(user)
+        structured_log(
+            "entitlement_change",
+            action="credit_pack_purchase",
+            user_id=user.id,
+            credits=credits,
+            checkout_session=session.get("id"),
+            amount=float(amount_total),
+            currency=currency,
+        )
+        return True
 
     customer_details = session.get("customer_details") or {}
     address = customer_details.get("address") or {}

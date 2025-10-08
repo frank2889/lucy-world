@@ -1,5 +1,24 @@
 # Lucy.world Changelog
 
+## 2025-10-07 (UX & CRO sweep)
+
+### Added — Conversion surfaces
+
+- Documented the `/pricing` page contract, Premium overlay, sticky sidebar CTA, and localized copy requirements in `ARCHITECTURE.md`.
+- Captured the CRO deployment ritual and route verification steps in `DEPLOYMENT-GUIDE.md`.
+- Logged analytics + experimentation expectations (Optimizely/VWO) and Sentry locale tagging strategy in the architecture blueprint.
+
+### Changed — Documentation
+
+- `docs/README.md` now surfaces the CRO checklist so every deploy captures UX learnings.
+- Refreshed localization docs (`languages/README.md`, `markets/README.md`, `languages/nl/README.md`) to emphasise Dutch defaults without regressing other locales.
+- Added support notes for Stripe credit packs + pricing redirects to `docs/support/entitlements.md`.
+
+### Testing — Pending
+
+- Browser smoke tests for `/pricing`, `/billing/credits`, loader animation, and Premium overlay planned (add to QA pipeline).
+- Optimizely/VWO integration and analytics schema validation TODO before release cut.
+
 ## 2025-10-07
 
 ### Added — Observability

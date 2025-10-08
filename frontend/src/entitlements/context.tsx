@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useMemo } from 'react'
+import { createContext, useContext, useMemo } from 'react'
 import type { ReactNode } from 'react'
 import type { SidebarGroupKey, SubscriptionTier } from './types'
 import type { UseEntitlementsResult } from './useEntitlements'

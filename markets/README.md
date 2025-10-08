@@ -8,6 +8,7 @@ code (for example `US/`, `NL/`). Inside that folder you will find:
 
 - `hreflang.json` — locale and alternate URL configuration.
 - `payments.json` — optional include/exclude lists for payment providers.
+- `defaults.json` — (optional) market-specific overrides for initial language selection, pricing tier emphasis, and CRO messaging (for example, Netherlands favouring Dutch copy and local pricing).
 
 `hreflang.json` uses the following structure:
 
@@ -40,6 +41,7 @@ code (for example `US/`, `NL/`). Inside that folder you will find:
   language-only route (`/en`, `/nl`, etc.) that the frontend already serves.
 - `alternate` — additional hreflang entries. Keep this to `x-default` when no
   cross-market links are required.
+- `cro` — optional CRO hints (sticky CTA copy, overlay headline) used by the frontend when a visitor arrives with this market fingerprint.
 
 `payments.json` uses this structure:
 
@@ -56,3 +58,9 @@ code (for example `US/`, `NL/`). Inside that folder you will find:
 An index file (`index.json`) enumerates all available markets alongside their
 canonical locale so that clients can pre-load configuration without scanning
 the directory.
+
+## CRO testing guidance (Oct 2025)
+
+- Validate `/pricing` and `/billing/credits` against the top markets (NL, US, DE) after each deployment.
+- Ensure market files include localized pricing currency info where applicable.
+- Keep Optimizely/VWO targeting rules in sync with market folders to avoid misaligned experiments.

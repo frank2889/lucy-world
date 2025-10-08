@@ -37,6 +37,9 @@ from .routes_growth import bp as growth_bp
 from .utils import correlation_id, to_utc_isoformat, utc_today, utcnow
 
 
+DEFAULT_LANGUAGE = 'nl'
+
+
 def create_app() -> Flask:
 	base_dir = os.path.dirname(os.path.abspath(__file__))
 	project_root = os.path.dirname(base_dir)
@@ -143,7 +146,7 @@ def create_app() -> Flask:
 						primary.append(code)
 			if primary:
 				return primary
-		return ['en','nl']
+		return [DEFAULT_LANGUAGE, 'en']
 
 	def _locale_json_path(lang: str) -> str | None:
 		lang = (lang or '').split('-')[0].lower()
@@ -392,7 +395,7 @@ def create_app() -> Flask:
 			if c in supported:
 				return c
 		# Final fallback with no geo inference
-		return 'en'
+		return DEFAULT_LANGUAGE
 
 	def _detect_country() -> str:
 		"""Detect ISO country code from headers or GeoIP lookup."""
@@ -439,9 +442,14 @@ def create_app() -> Flask:
 		browser_lang = _detect_lang()
 		if browser_lang in available:
 			return browser_lang
+		if DEFAULT_LANGUAGE in available:
+			return DEFAULT_LANGUAGE
+		for candidate in sorted(available):
+			if candidate != 'en':
+				return candidate
 		if 'en' in available:
 			return 'en'
-		return sorted(available)[0] if available else 'en'
+		return DEFAULT_LANGUAGE
 
 	def _vite_manifest():
 		manifest_path = os.path.join(static_folder, 'app', '.vite', 'manifest.json')
@@ -891,7 +899,7 @@ def create_app() -> Flask:
 		now = utcnow().strftime('%Y-%m-%d')
 		langs = _available_locales()
 		if not langs:
-			langs = ['en']
+			langs = [DEFAULT_LANGUAGE]
 		urls = [{"loc": f"{base}/{lang}/", "priority": "1.0"} for lang in langs]
 		items = "".join(
 			f"<url><loc>{u['loc']}</loc><lastmod>{now}</lastmod><changefreq>daily</changefreq><priority>{u['priority']}</priority></url>"
@@ -1052,14 +1060,14 @@ def create_app() -> Flask:
 				'country': country,
 			})
 		except Exception:
-			return jsonify({'language': 'en', 'country': 'US'})
+			return jsonify({'language': DEFAULT_LANGUAGE, 'country': 'US'})
 
 	@app.route('/meta/content/<lang>.json')
 	def meta_content_lang(lang: str):
 		"""Serve UI content JSON only for exact available locales; no fallback."""
 		lang = (lang or '').split('-')[0].lower()
 		content_path = _locale_json_path(lang)
-		if not os.path.exists(content_path):
+		if not content_path or not os.path.exists(content_path):
 			abort(404)
 		try:
 			with open(content_path, 'r', encoding='utf-8') as f:
@@ -1078,9 +1086,9 @@ def create_app() -> Flask:
 	@app.route('/meta/locales.json')
 	def meta_locales():
 		"""List available locale codes from locales/ (Shopify-style), with default locale."""
-		default_code = 'en'
+		default_code = DEFAULT_LANGUAGE
 		codes = _available_locales()
-		if 'en' not in codes:
+		if DEFAULT_LANGUAGE not in codes:
 			# attempt to read default from languages.json if present
 			try:
 				with open(os.path.join(project_root, 'languages', 'languages.json'), 'r', encoding='utf-8') as f:
@@ -1090,6 +1098,8 @@ def create_app() -> Flask:
 						default_code = (str(langs[0]).split('-')[0]).lower()
 			except Exception:
 				pass
+		if default_code not in codes and codes:
+			default_code = codes[0]
 		return jsonify({ 'locales': codes, 'default': default_code })
 
 	@app.route('/meta/languages.json')
@@ -1099,7 +1109,7 @@ def create_app() -> Flask:
 			langs = _available_locales()
 			return jsonify({"languages": langs})
 		except Exception:
-			return jsonify({"languages": ['en']})
+			return jsonify({"languages": [DEFAULT_LANGUAGE]})
 
 	@app.route('/meta/countries.json')
 	def meta_countries():
@@ -1211,7 +1221,7 @@ def create_app() -> Flask:
 
 			if not language:
 				# Prefer detected browser language; fallback to tool default
-				language = _detect_lang() or getattr(premium_tool, 'default_language', 'en')
+				language = _detect_lang() or getattr(premium_tool, 'default_language', DEFAULT_LANGUAGE)
 
 			if not country:
 				country = _detect_country()
@@ -1327,7 +1337,7 @@ def create_app() -> Flask:
 			'client': 'firefox',
 			'ds': 'yt',
 			'q': keyword,
-			'hl': lang or 'en'
+				'hl': lang or DEFAULT_LANGUAGE
 		}
 		try:
 			resp = requests.get(
@@ -1684,7 +1694,7 @@ def create_app() -> Flask:
 			return jsonify({'error': 'Geen zoekwoord opgegeven'}), 400
 
 		country = request.args.get('country', '').strip().lower() or (_detect_country() or 'US').lower()
-		language = request.args.get('lang', '').strip().lower() or request.args.get('language', '').strip().lower() or (_detect_lang() or 'en').lower()
+		language = request.args.get('lang', '').strip().lower() or request.args.get('language', '').strip().lower() or (_detect_lang() or DEFAULT_LANGUAGE).lower()
 		limit_param = request.args.get('limit', '').strip() or '10'
 		try:
 			limit = max(1, min(int(limit_param), 20))
@@ -2277,7 +2287,7 @@ def create_app() -> Flask:
 
 		language = request.args.get('lang', '').strip().lower() or request.args.get('language', '').strip().lower()
 		if not language:
-			language = (_detect_lang() or 'en').lower()
+			language = (_detect_lang() or DEFAULT_LANGUAGE).lower()
 		language = language.split('-')[0]
 		language = re.sub(r'[^a-z]', '', language)[:2] or None
 
@@ -2433,7 +2443,7 @@ def create_app() -> Flask:
 
 		language = request.args.get('lang', '').strip().lower() or request.args.get('language', '').strip().lower()
 		if not language:
-			language = (_detect_lang() or 'en').lower()
+			language = (_detect_lang() or DEFAULT_LANGUAGE).lower()
 		language = language.split('-')[0]
 		language = re.sub(r'[^a-z]', '', language)[:2] or None
 
@@ -2629,6 +2639,16 @@ def create_app() -> Flask:
 				'premium': premium_tool is not None
 			}
 		})
+
+	@app.route('/billing/upgrade')
+	def billing_upgrade_page():
+		"""Serve a lightweight upgrade hand-off page."""
+		return render_template('billing/upgrade.html')
+
+	@app.route('/billing/credits')
+	def billing_credits_page():
+		"""Serve a lightweight credits hand-off page."""
+		return render_template('billing/credits.html')
 
 	@app.errorhandler(404)
 	def not_found(error):

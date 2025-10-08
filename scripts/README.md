@@ -76,6 +76,14 @@ This directory contains maintenance and validation scripts for the Lucy World lo
   - SEO-optimized description length (140-160 characters)
 - Usage: `python3 scripts/validate_enhanced_locales.py`
 
+### 🆕 `run_cro_smoke.py`
+
+**Status:** Planned (Oct 2025)
+
+- Headless browser smoke suite that visits `/pricing`, `/billing/credits`, and executes a search to verify loaders, overlays, and CTA analytics events.
+- Emits a JSON report consumed by the deployment checklist.
+- Usage (once implemented): `python3 scripts/run_cro_smoke.py --base-url https://staging.lucy.world`
+
 ## Current Localization Status
 
 The Lucy World platform has **89 fully localized languages** with:
@@ -94,6 +102,7 @@ The Lucy World platform has **89 fully localized languages** with:
 4. **Generate basic assets only**: `python3 scripts/generate_site_assets.py`
    - This will preserve all enhanced structured.json files
    - Only generates robots.txt and sitemap.xml for new languages
+5. **Run CRO smoke tests**: `python3 scripts/run_cro_smoke.py --base-url <env>` (once available) to confirm search loaders, pricing page, and overlays operate across locales.
 
 ## Dangerous Operations
 
@@ -111,3 +120,4 @@ The Lucy World platform has **89 fully localized languages** with:
 4. Manually translate the new locale.json file
 5. Create enhanced structured.json with localized content
 6. Run: `python3 scripts/validate_enhanced_locales.py` to verify
+7. Update CRO translation keys (CTA copy, overlays) and re-run `scripts/run_cro_smoke.py` once implemented.

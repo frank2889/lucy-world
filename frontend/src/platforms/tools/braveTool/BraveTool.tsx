@@ -1,10 +1,11 @@
-import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import type { FC } from 'react'
 import type { PlatformToolProps } from '../../types'
 import PlatformToolLayout, { type PlatformResultItem } from '../common/PlatformToolLayout'
 import { createTranslator } from '../../../i18n/translate'
 
-const BraveTool: React.FC<PlatformToolProps> = (props) => {
-  const { keyword, setKeyword, searchLanguage, country, ui, uiFallback } = props
+const BraveTool: FC<PlatformToolProps> = (props) => {
+  const { keyword, setKeyword, searchLanguage, ui, uiFallback } = props
   const normalizedKeyword = keyword ?? ''
   const [source, setSource] = useState<string>('web')
   const [results, setResults] = useState<PlatformResultItem[]>([])

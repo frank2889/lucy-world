@@ -96,6 +96,10 @@ Supported (from `languages/languages.json`):
 - Sidebar includes platforms (Google, Yahoo, Brave, YouTube, App Store, Amazon, etc.).  
 - Built with Vite, hashed asset filenames in `manifest.json`.  
 - Metadata and UI localized via `locale.json`.
+- First-search defaults favour Dutch visitors (language `nl`, market `NL`) while preserving persisted preferences for returning users.
+- Search execution renders in-page loaders, never blank states; live results respond for Google, Bing, DuckDuckGo, and the other supported engines with the same component pipeline.
+- Result cards are interactive: the primary keyword row opens a detail drawer that exposes search volume, AI cluster data, and export shortcuts.
+- Error messaging is contextual—successful searches never leak the Dutch fallback `“Zoeken mislukt”` string.
 - Premium search requests abort after 20 seconds via `fetchWithTimeout`, displaying localized timeout messaging when exceeded.
 
 ### DoD — Frontend
@@ -107,6 +111,11 @@ Supported (from `languages/languages.json`):
 - [x] UI vs market picker independent.  
 - [x] Structured data emitted per locale.  
 - [x] Manifest.json synced with build.  
+- [ ] Search loader animation covers each query until results or errors resolve; no blank-page regressions under network latency.
+- [ ] Search error copy differentiates “no results” vs transport failures for every locale (including RTL).
+- [ ] Result cards expose a detail drawer with localized metrics and export controls; keyboard navigation works across languages.
+- [ ] CTA ribbon sticks within the sidebar and mirrors translations for “Upgrade”, “Koop AI-credits”, etc.
+- [ ] Default locale detection seeds Dutch visitors with `nl-NL` while falling back correctly for other markets.
 
 ### UX Experience Baseline (Marketing + Product Surface Area)
 
@@ -158,6 +167,11 @@ Supported (from `languages/languages.json`):
 - Logging via journalctl, curl probes, Certbot renewals.  
 - `scripts/monitor_gunicorn_service.py` performs systemd and HTTP smoke checks.  
 - `scripts/renew_tls.sh` runs certbot renewals and reloads Nginx/Gunicorn.  
+- Billing blueprint powers `/billing/credits` (Stripe credit packs) and `/billing/upgrade` (redirects to the localized `/pricing` page or creates a Checkout session when direct URLs are absent).
+- Search providers respond through a single dispatcher; Google, Bing, DuckDuckGo, Brave, Qwant, etc. must always round-trip successfully or surface localized transport errors.
+- API responses adhere to a shared schema (Camel case payloads avoided; HTTP status codes follow REST conventions).
+- Error reporting streams to Sentry (or equivalent) with correlation IDs for every failure branch.
+- Redis (or Flask-Caching drop-in) fronts repeated search responses to keep response latency < 600 ms for identical queries.
 
 ### DoD — Backend
 
@@ -166,6 +180,12 @@ Supported (from `languages/languages.json`):
 - [x] Auto-deploy works on push.  
 - [x] Health check `/meta/detect.json` = 200.  
 - [x] TLS auto-renewed.  
+- [ ] `/billing/credits` serves localized copy + Stripe purchase URLs (no JSON 404s) and records credit grants.  
+- [ ] `/billing/upgrade` redirects to `/pricing` (localized) or launches Stripe Checkout when entitlements omit a hosted URL.  
+- [ ] Search dispatcher integration tests cover Google/Bing/DuckDuckGo happy paths and the blank-page regression no longer reproduces.  
+- [ ] API responses validated against jsonschema (`docs/contracts/*.json`) and rejected responses log structured errors.  
+- [ ] Sentry (or chosen APM) receives error events with correlation IDs in staging + production.  
+- [ ] Redis caching reduces repeated identical query latency and is covered by integration tests.  
 
 ---
 
@@ -256,6 +276,22 @@ Supported (from `languages/languages.json`):
 - [ ] Enterprise gates advanced connectors and RBAC features.  
 - [ ] Billing hooks validated across subscription + credit purchases.  
 
+#### CRO pricing surfaces (2025-10 refresh)
+
+- `/pricing` route presents the four-tier table (Free, Starter, Pro, Enterprise) with localized copy, FAQ anchors, and matching CTA buttons.
+- Sidebar hosts a sticky “Upgrade to Premium” CTA that scrolls independently of search results and reflects localization (`Upgrade`, `Upgrade naar Premium`, etc.).
+- First successful search triggers an overlay that highlights Premium benefits, includes the `Try Premium free for 7 days` CTA, and respects both keyboard dismissal and locale strings.
+- Login modal surfaces SSO sign-in buttons (Google, LinkedIn) alongside the magic-link form when providers are configured.
+- All premium CTAs share the same color token and hover/focus rules to keep conversion messaging consistent.
+
+##### DoD — CRO pricing surfaces
+
+- [ ] `/pricing` renders for every locale in staging, including RTL layouts, and links back to checkout or Stripe Portal as appropriate.  
+- [ ] Sticky sidebar CTA tracks scroll depth, emits analytics events (`cta_upgrade_click`, `cta_upgrade_impression`), and never obscures content at ≤ 768 px.  
+- [ ] Premium benefits overlay fires once per session (localStorage flag) and localizes headline + CTA string.  
+- [ ] SSO buttons degrade gracefully when provider env vars are absent (hidden, no broken UI).  
+- [ ] CTA components pull color + copy from the design token system rather than hardcoded values.  
+
 #### Backend roadmap — plan & credit state
 
 - Extend `users.plan_metadata` (or create `user_entitlements`) to store `{ tier: "free" | "pro" | "enterprise", ai_credits: int, expires_at }`; write an Alembic migration that defaults new accounts to `free` with zero credits.  
@@ -287,6 +323,7 @@ Supported (from `languages/languages.json`):
 - [x] Route guards block direct navigation to gated pages when entitlements are missing (E2E test) — logic implemented via `<RequireEntitlement>`, Cypress coverage pending _(Covered by `RequireEntitlement.test.tsx`; replace with Cypress once suite lands)._  
 - [x] Tier/credit badge displays accurate values pulled from the API in Storybook or visual tests (sidebar plan card).  
 - [x] Upgrade and buy-credit CTAs open the correct Stripe URLs verified in integration tests — links now source from the entitlements payload; add automated verification _(Validated via `checkoutLauncher.test.ts` exercising the `/api/billing/checkout-session` fallback)._  
+- [ ] Real-time AI credit balance updates (websocket or polling fallback) refresh the sidebar without requiring a full page load.  
 
 #### Account lifecycle & upgrade flows
 
@@ -312,6 +349,8 @@ Supported (from `languages/languages.json`):
 - Build integration tests that simulate webhook payloads end-to-end and assert database entitlements match the expected state.  
 - Document a support runbook linking entitlement IDs to Stripe customers, with remediation steps when discrepancies occur.  
 - Backfill a nightly audit job that reconciles Stripe subscriptions, credit balances, and local entitlements, emitting discrepancies to Slack or Opsgenie.  
+- Funnel all unhandled exceptions (frontend + backend) into Sentry with locale, entitlement tier, and correlation ID tags so UX regression triage stays localized.  
+- Track CTA performance, login conversion, and credit purchase attempts via the analytics event grid; feed the events into the experimentation platform for CRO tests.  
 
 ##### DoD — Observability & support
 
@@ -320,8 +359,24 @@ Supported (from `languages/languages.json`):
 - [x] Webhook replay integration test is part of CI and passes.  
 - [x] Support runbook published in `docs/support/entitlements.md` and linked from this section.  
 - [ ] Nightly audit job produces a clean report (no unresolved discrepancies) for seven consecutive days.  
+- [ ] Sentry (or chosen APM) shows zero missing locale tags for error events across a 7-day window.  
+- [ ] Analytics events for CTA clicks, overlays, and login attempts pass schema validation and flow into experimentation dashboards.  
 
 See [`docs/support/entitlements.md`](support/entitlements.md) for the full support playbook.  
+
+#### Experimentation & CRO analytics
+
+- Optimizely (or VWO) snippet loads asynchronously on every `/xx/` page, gated behind consent where required.
+- Experiments target CTA colour/position, text variants (`Buy AI credits` vs `Activate Premium`), layout density, and onboarding overlays.
+- Experiment assignments emit events with locale, tier, and session metadata so downstream analysis can segment by market.
+- Guardrails ensure experimentation never blocks core rendering or introduces FOUC; provide toggles in `.env` (`EXPERIMENTATION_PROVIDER`, `OPTIMIZELY_SDK_KEY`, etc.).
+
+##### DoD — Experimentation
+
+- [ ] Optimizely/VWO SDK configured in staging and production with kill-switch env vars.  
+- [ ] Experiment events (`experiment_impression`, `experiment_conversion`) accepted by the analytics pipeline with schema tests.  
+- [ ] Frontend integration test ensures experiments fallback gracefully when the provider script fails to load.  
+- [ ] CRO dashboards segment conversion by locale, tier, and acquisition channel.  
 
 #### Entitlements data contract
 

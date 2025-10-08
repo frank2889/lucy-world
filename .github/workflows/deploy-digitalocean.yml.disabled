@@ -1,0 +1,125 @@
+# Disabled workflow: rename back to deploy-digitalocean.yml to re-enable automatic DigitalOcean deployments.
+# Last known working configuration is preserved below for convenience.
+name: Deploy to DigitalOcean App Platform
+
+on:
+  push:
+    branches: [ main ]
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    name: Architecture validation
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Verify enhanced locale metadata
+        run: python scripts/enhance_locale_metadata.py --check
+
+      - name: Enforce no inline locale strings
+        run: python scripts/check_locales.py --enforce-no-inline
+
+      - name: Regenerate locale assets
+        run: python scripts/generate_site_assets.py --all
+
+      - name: Validate enhanced locales
+        run: python scripts/validate_enhanced_locales.py --strict
+
+      - name: Validate locale key coverage
+        run: python scripts/validate_locale_keys.py --strict
+
+      - name: Validate hreflang reciprocity
+        run: python scripts/validate_hreflang.py --markets markets/index.json
+
+      - name: Smoke meta endpoints
+        run: python scripts/smoke_meta_endpoints.py
+
+      - name: Smoke public APIs
+        run: python scripts/smoke_public_api.py
+
+      - name: Ensure repository clean after generation
+        run: git diff --exit-code
+
+  deploy:
+    name: Deploy
+    needs: validate
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install doctl
+        uses: digitalocean/action-doctl@v2
+        with:
+          token: ${{ secrets.DO_API_TOKEN }}
+
+      - name: Install jq
+        run: sudo apt-get update && sudo apt-get install -y jq
+
+      - name: Create or update App from spec
+        id: do-app
+        env:
+          DO_APP_ID: ${{ secrets.DO_APP_ID }}
+        run: |
+          set -e
+          if [ -n "${DO_APP_ID}" ]; then
+            echo "Updating existing App: ${DO_APP_ID}"
+            doctl apps update "${DO_APP_ID}" --spec .do/app.yaml
+            echo "APP_ID=${DO_APP_ID}" >> $GITHUB_ENV
+          else
+            echo "Creating new App from spec (.do/app.yaml)"
+            APP_JSON=$(doctl apps create --spec .do/app.yaml -o json)
+            # Try parsing as object, then as array; support both response shapes
+            NEW_ID=$(echo "$APP_JSON" | jq -r '.id // .[0].id // empty')
+            if [ -z "$NEW_ID" ] || [ "$NEW_ID" = "null" ]; then
+              echo "Failed to parse new App ID from DigitalOcean response" >&2
+              echo "$APP_JSON" | jq '.' || echo "$APP_JSON"
+              exit 1
+            fi
+            echo "Created App with ID: $NEW_ID"
+            echo "APP_ID=${NEW_ID}" >> $GITHUB_ENV
+          fi
+
+      - name: Trigger deployment
+        env:
+          APP_ID: ${{ env.APP_ID }}
+        run: |
+          set -e
+          echo "Triggering deployment for App: ${APP_ID}"
+          DEPLOY_JSON=$(doctl apps create-deployment "$APP_ID" -o json)
+          DEPLOY_ID=$(echo "$DEPLOY_JSON" | jq -r '.id // .[0].id // empty')
+          if [ -z "$DEPLOY_ID" ] || [ "$DEPLOY_ID" = "null" ]; then
+            echo "Failed to parse deployment ID from DigitalOcean response" >&2
+            echo "$DEPLOY_JSON" | jq '.' || echo "$DEPLOY_JSON"
+            exit 1
+          fi
+          echo "Deployment created: $DEPLOY_ID"
+          echo "DEPLOY_ID=${DEPLOY_ID}" >> $GITHUB_ENV
+
+      - name: Show deployment status (non-blocking)
+        env:
+          APP_ID: ${{ env.APP_ID }}
+          DEPLOY_ID: ${{ env.DEPLOY_ID }}
+        run: |
+          echo "Fetch latest deployment status for $APP_ID / $DEPLOY_ID"
+          doctl apps deployments get "$APP_ID" "$DEPLOY_ID" -o json | jq '.'
+
+      - name: Summary
+        run: |
+          echo "DigitalOcean App deployment triggered." >> $GITHUB_STEP_SUMMARY
+          echo "App ID: ${APP_ID}" >> $GITHUB_STEP_SUMMARY
+          echo "Deployment ID: ${DEPLOY_ID}" >> $GITHUB_STEP_SUMMARY

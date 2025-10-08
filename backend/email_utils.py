@@ -5,6 +5,10 @@ import os
 import smtplib
 from email.message import EmailMessage
 
+
+class EmailDeliveryError(RuntimeError):
+    """Raised when an email cannot be handed off to an SMTP provider."""
+
 logger = logging.getLogger(__name__)
 
 
@@ -34,9 +38,8 @@ def send_email(to_email: str, subject: str, body: str) -> None:
     msg.set_content(body)
 
     if not host:
-        logger.warning('SMTP_HOST is not configured; logging email instead of sending')
-        print(f"[EMAIL:MISSING_CONFIG] To: {to_email}\nSubject: {subject}\n\n{body}")
-        return
+        logger.error('SMTP_HOST is not configured; unable to send email to %s', to_email)
+        raise EmailDeliveryError('Email delivery is not configured yet.')
 
     try:
         if use_ssl:
@@ -54,4 +57,4 @@ def send_email(to_email: str, subject: str, body: str) -> None:
         logger.info('Sent email to %s via SMTP server %s:%s', to_email, host, port)
     except Exception as exc:  # pragma: no cover - network dependent
         logger.exception('Failed to deliver email to %s via SMTP', to_email)
-        print(f"[EMAIL:FAILED:{exc}] To: {to_email}\nSubject: {subject}\n\n{body}")
+        raise EmailDeliveryError('Unable to send email right now. Please try again in a moment.') from exc

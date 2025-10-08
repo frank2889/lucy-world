@@ -191,7 +191,7 @@ class AIBlogPipeline:
             "summary": summary,
             "outline": outline,
             "markdown": markdown_content,
-            "language": candidate.language or "en",
+            "language": candidate.language or "nl",
             "country": candidate.country,
             "tags": tags,
             "author": "Lucy Growth Team",
@@ -238,7 +238,7 @@ class AIBlogPipeline:
         )
         description = (draft.summary or "").replace('"', "'")
         doc = f"""<!doctype html>
-<html lang=\"{draft.language or 'en'}\">
+    <html lang=\"{draft.language or 'nl'}\">
 <head>
   <meta charset=\"utf-8\" />
   <title>{draft.title}</title>
@@ -302,7 +302,7 @@ class AIBlogPipeline:
         summary = payload.get("summary")
         outline = payload.get("outline") if isinstance(payload.get("outline"), list) else None
         tags = payload.get("tags") if isinstance(payload.get("tags"), list) else None
-        language = (payload.get("language") or candidate.language or "en").split("-")[0].lower()
+        language = (payload.get("language") or candidate.language or "nl").split("-")[0].lower()
         country_value = payload.get("country") or candidate.country
         country = country_value.strip().upper() if isinstance(country_value, str) and country_value else None
 

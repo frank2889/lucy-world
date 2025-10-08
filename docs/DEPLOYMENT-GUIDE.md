@@ -55,6 +55,14 @@ Lucy World Search runs as a Flask application that serves a Vite-built React SPA
    This confirms search-result pages emit `noindex, nofollow` and the entitlements API keeps expiry metadata stable.
 6. (Optional) Create a git tag or archive for the release so you can trace what is live.
 
+7. **Run the CRO/UX acceptance pass** (new Oct 2025 ritual):
+
+    - Load the staging build in Chrome, Safari, and Edge at `/nl/` and ensure the hero defaults to Dutch language + Netherlands market.
+    - Execute searches on Google, Bing, and DuckDuckGo and confirm the loader animation, result drawer, and analytics events (`search_submitted`, `search_result_opened`) fire without blank screens.
+    - Trigger the first-search Premium overlay, sticky sidebar CTA, and `/pricing` page, verifying translations and CTA copy (`Upgrade`, `Koop AI-credits`) are localized.
+    - Open `/billing/credits` and `/billing/upgrade`; the former must surface localized credit packs via Stripe, the latter must redirect to `/pricing` (or open Stripe Checkout when configured).
+    - Capture any UX findings in `CHANGELOG.md` and update the relevant Markdown playbooks before shipping.
+
 ## 2. Ship code to the server
 
 **Preferred:** push to GitHub (or your chosen remote) and pull on the server. The webhook service (`webhook.py`) is built for this flow.
@@ -64,6 +72,8 @@ git add .
 git commit -m "Deploy: privacy-first locale rollout"
 git push origin main
 ```
+
+> **Note:** The legacy DigitalOcean App Platform workflow has been parked at `.github/workflows/deploy-digitalocean.yml.disabled` to avoid failure emails. Rename it back to `deploy-digitalocean.yml` (and configure the `DO_API_TOKEN`/`DO_APP_ID` secrets) if you want GitHub Actions to manage that deployment again.
 
 **Alternative:** package and copy manually.
 
@@ -242,9 +252,21 @@ curl -I https://lucy.world
 curl -s https://lucy.world/meta/detect.json -H 'Accept-Language: fr'
 curl -s https://lucy.world/api/free/search -X POST -H 'Content-Type: application/json' \
   -d '{"keyword":"marketing","language":"fr","country":"FR"}' | jq '.language'
+curl -s https://lucy.world/pricing | head -n 20
+curl -s https://lucy.world/billing/credits | head -n 20
 ```
 
 Confirm that `language` in the response matches the request, and that `trends.trend_direction` is present. Visit `https://lucy.world/` in a browser with Dutch and German `Accept-Language` headers to ensure the redirect and UI strings behave as expected.
+
+### UX & CRO smoke checks (post-deploy)
+
+- Run the staging CRO checklist on production immediately after deployment:
+    - `/pricing` renders localized tiers and the sticky sidebar CTA logs impressions.
+    - First search displays the Premium overlay once per session and respects keyboard interaction.
+    - SSO buttons appear (or hide cleanly) in the login modal based on provider configuration.
+    - `Zoeken mislukt` never appears on successful searches; “no results” states render localized guidance.
+- Verify Sentry receives at least one test breadcrumb (`logger.info("deployment smoke")`) with locale tags.
+- Export analytics events for the release window (`cta_upgrade_click`, `search_result_opened`) and attach them to the release note.
 
 ### Ongoing health monitoring
 
@@ -360,3 +382,4 @@ Keeping the UI strings in sync is now a two-step process. Run these checks local
 - Consider creating a dedicated deploy user with limited permissions instead of running everything as `root`/`www-data`.
 - Add health probes for `/meta/detect.json` and `/api/free/search` to DigitalOcean monitoring once production is cut over.
 - Document rollback steps (e.g., keep the previous git commit hash handy and restart the service after `git checkout`).
+- Automate the CRO smoke script (headless browser) so `/pricing`, `/billing/credits`, search loaders, and overlays are validated on every release.

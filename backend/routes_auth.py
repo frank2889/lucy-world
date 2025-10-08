@@ -5,7 +5,7 @@ import secrets
 from datetime import timedelta
 from urllib.parse import urlencode
 
-from flask import Blueprint, jsonify, request
+from flask import Blueprint, current_app, jsonify, request
 
 from .extensions import db
 from .models import DailyUsage, LoginToken, User
@@ -17,7 +17,7 @@ def _plan_snapshot(user: User) -> dict:
     usage = DailyUsage.for_day(user, today)
     queries_used = usage.query_count if usage else 0
     return user.plan_payload(include_usage=True, queries_used_today=queries_used)
-from .email_utils import send_email
+from .email_utils import EmailDeliveryError, send_email
 
 
 bp = Blueprint('auth', __name__, url_prefix='/api/auth')
@@ -52,8 +52,16 @@ def request_magic_link():
         f"{verify_url}\n\n"
         f"If you did not request this, you can ignore this email.\n"
     )
-    send_email(email, subject, body)
-    return jsonify({'ok': True})
+    try:
+        send_email(email, subject, body)
+    except EmailDeliveryError as exc:
+        current_app.logger.error("Magic link delivery failed for %s: %s", email, exc)
+        return jsonify({'error': 'email_delivery_failed', 'message': str(exc)}), 503
+    except Exception as exc:  # pragma: no cover - defensive logging
+        current_app.logger.exception("Unexpected failure while sending magic link to %s", email)
+        return jsonify({'error': 'email_delivery_failed', 'message': 'Unable to send email right now.'}), 502
+
+    return jsonify({'ok': True, 'message': 'Magic link sent. Check your inbox.'})
 
 
 @bp.route('/verify', methods=['GET', 'POST'])
@@ -89,7 +97,7 @@ def verify_magic_link():
         # The page reads lw_lang from localStorage to pick the UI language.
         page = """
 <!doctype html>
-<html lang="en"><head>
+<html lang="nl"><head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Signing you in…</title>
@@ -99,8 +107,8 @@ def verify_magic_link():
   <script>
     try {
       localStorage.setItem('lw_token', '__TOKEN__');
-      var lang = (localStorage.getItem('lw_lang') || 'en').toLowerCase();
-      if (!/^[a-z]{2}$/.test(lang)) lang = 'en';
+    var lang = (localStorage.getItem('lw_lang') || 'nl').toLowerCase();
+    if (!/^[a-z]{2}$/.test(lang)) lang = 'nl';
       location.replace('/' + lang + '/');
     } catch (e) {
       location.replace('/');
