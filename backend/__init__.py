@@ -36,8 +36,29 @@ from .routes_entitlements import bp as entitlements_bp
 from .routes_growth import bp as growth_bp
 from .utils import correlation_id, to_utc_isoformat, utc_today, utcnow
 
+# Sentry integration for error tracking
+try:
+    import sentry_sdk
+    from sentry_sdk.integrations.flask import FlaskIntegration
+    SENTRY_AVAILABLE = True
+except ImportError:
+    SENTRY_AVAILABLE = False
+
 
 DEFAULT_LANGUAGE = 'nl'
+
+
+def _enrich_sentry_event(event, hint):
+    """Add correlation ID and user context to Sentry events."""
+    if hasattr(g, 'correlation_id'):
+        event.setdefault('tags', {})['correlation_id'] = g.correlation_id
+    
+    # Add request context if available
+    if request:
+        event.setdefault('tags', {})['locale'] = request.headers.get('Accept-Language', 'unknown').split(',')[0]
+        event.setdefault('tags', {})['endpoint'] = request.endpoint or 'unknown'
+    
+    return event
 
 
 def create_app() -> Flask:
@@ -50,11 +71,31 @@ def create_app() -> Flask:
 	logging.basicConfig(level=logging.INFO)
 	logger = logging.getLogger(__name__)
 
+	# Initialize Sentry for error tracking
+	sentry_dsn = os.getenv('SENTRY_DSN', '').strip()
+	environment = os.getenv('FLASK_ENV', 'production')
+	if SENTRY_AVAILABLE and sentry_dsn:
+		sentry_sdk.init(
+			dsn=sentry_dsn,
+			integrations=[FlaskIntegration()],
+			environment=environment,
+			traces_sample_rate=0.1,  # 10% performance monitoring
+			profiles_sample_rate=0.1,
+			send_default_pii=False,
+			before_send=lambda event, hint: _enrich_sentry_event(event, hint),
+		)
+		logger.info(f"Sentry initialized for environment: {environment}")
+
 	app = Flask(__name__, static_folder=static_folder, template_folder=templates_folder)
 
 	@app.before_request
 	def _assign_correlation_id() -> None:
 		correlation_id()
+		# Add correlation ID to Sentry scope
+		if SENTRY_AVAILABLE and sentry_dsn:
+			with sentry_sdk.configure_scope() as scope:
+				scope.set_tag("correlation_id", g.correlation_id)
+				scope.set_tag("locale", request.headers.get('Accept-Language', 'unknown').split(',')[0])
 
 	@app.after_request
 	def _propagate_request_id(response):

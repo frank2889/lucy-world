@@ -203,8 +203,8 @@ Supported (from `languages/languages.json`):
 - [x] `/billing/upgrade` redirects to `/pricing` (localized) or launches Stripe Checkout when entitlements omit a hosted URL.  
 - [ ] Search dispatcher integration tests cover Google/Bing/DuckDuckGo happy paths and the blank-page regression no longer reproduces.  
 - [ ] API responses validated against jsonschema (`docs/contracts/*.json`) and rejected responses log structured errors.  
-- [ ] Sentry (or chosen APM) receives error events with correlation IDs in staging + production.  
-- [ ] Redis caching reduces repeated identical query latency and is covered by integration tests.  
+- [x] Sentry (or chosen APM) receives error events with correlation IDs in staging + production.  
+- [x] Redis caching reduces repeated identical query latency and is covered by integration tests.  
 
 ---
 
