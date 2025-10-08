@@ -3,172 +3,120 @@
 ## Core Principles
 
 ### Professional & Clean
-Lucy World is a **daily-use business tool**, not a flashy marketing site. The design prioritizes:
+- Daily-use business tool, not flashy marketing site
+- Clarity over cleverness
+- Consistency over novelty
+- Utility over decoration
+- Every element serves a purpose
 
-- **Clarity over cleverness** - Users should immediately understand functionality
-- **Consistency over novelty** - Familiar patterns build confidence
-- **Utility over decoration** - Every element serves a purpose
+### Prohibited Elements
+- Gradients
+- Animations (except loading states)
+- Shadows (except minimal elevation)
+- Trendy effects
+- Marketing-style hero sections
+- Decorative illustrations
 
-### No Flashy Elements
+### Required Elements
+- Flat, clean surfaces
+- Clear typography hierarchy
+- Consistent spacing system
+- Functional iconography
+- Data-first layouts
+- Instant, predictable interactions
 
-**Avoid:**
-- ❌ Gradients (unless extremely subtle for depth perception)
-- ❌ Animations (except essential loading states)
-- ❌ Shadows (only minimal, functional shadows for elevation)
-- ❌ Trendy effects that age poorly
-- ❌ Marketing-style hero sections
-- ❌ Decorative illustrations
+## Visual Standards
 
-**Prefer:**
-- ✅ Flat, clean surfaces
-- ✅ Clear typography hierarchy
-- ✅ Consistent spacing system
-- ✅ Functional iconography
-- ✅ Data-first layouts
-- ✅ Instant, predictable interactions
-
-## Visual Guidelines
-
-### Color Palette
-- **Dark theme** - Current implementation correct
-- **Accent color** - Teal/green for CTAs (current)
-- **Text contrast** - Must meet WCAG AA minimum (4.5:1 for body text)
-- **Status colors** - Error (red), Success (green), Warning (yellow) - reserved for feedback only
+### Color
+- Dark theme required
+- Teal/green accent for CTAs
+- WCAG AA minimum (4.5:1 body text contrast)
+- Status colors (error/success/warning) for feedback only
 
 ### Typography
-- **Hierarchy** - 3-4 font sizes maximum
-- **Weight** - Regular and medium/semibold only
-- **Line height** - 1.5 for body text, tighter for headings
-- **Alignment** - Left-aligned for readability
+- Maximum 3-4 font sizes
+- Regular and medium/semibold weights only
+- 1.5 line height for body text
+- Left-aligned text
 
 ### Spacing
-- **Grid system** - 8px base unit
-- **Consistent margins** - Use multiples of 8px (8, 16, 24, 32)
-- **White space** - Generous but not excessive
-- **Density** - Information-dense without feeling cramped
+- 8px base unit grid
+- Use multiples of 8px only
+- Generous but not excessive white space
+- Information-dense layouts
 
 ### Components
+- Buttons: Solid or outlined, simple state changes only
+- Cards: 1px border or minimal shadow
+- Forms: Visible labels, simple borders
+- Tables: Striped OR bordered, not both
+- Lists: Clean and scannable
 
-#### Buttons
-- **Primary** - Solid teal/green, white text
-- **Secondary** - Outlined or ghost style
-- **States** - Hover, active, disabled - subtle changes only
-- **No fancy hover effects** - Simple opacity or border change
-
-#### Cards
-- **Minimal elevation** - 1px border or very subtle shadow
-- **Clean backgrounds** - Solid colors, no patterns
-- **Padding** - Consistent internal spacing
-
-#### Forms
-- **Clear labels** - Always visible, not floating
-- **Input styling** - Simple borders, focus states
-- **Error states** - Red border + message below field
-
-#### Data Display
-- **Tables** - Striped or bordered, not both
-- **Lists** - Clean, scannable
-- **Metrics** - Large numbers, small labels
-- **Charts** (future) - Simple line/bar charts, no 3D effects
-
-## Interaction Patterns
+## Interaction Standards
 
 ### Loading States
-- **Skeleton loaders** - Show structure, not spinners
-- **Progress indicators** - Only when wait time > 2 seconds
-- **Instant feedback** - Button state changes immediately on click
+- Skeleton loaders only
+- Progress indicators for waits > 2 seconds
+- Instant button feedback
 
 ### Navigation
-- **Persistent sidebar** - Platform selection always visible
-- **Breadcrumbs** (future) - For deep navigation only
-- **Top nav** (planned) - Product, Pricing, Resources, Support
+- Persistent sidebar
+- Breadcrumbs for deep navigation only
+- Top nav: Product, Pricing, Resources, Support
 
 ### Micro-interactions
-- **Minimal** - Only where they aid comprehension
-- **Fast** - < 200ms duration
-- **Subtle** - Fade, slide - never bounce or elastic
+- Minimal, aids comprehension only
+- < 200ms duration
+- Fade or slide only, no bounce/elastic
 
-## Enterprise Considerations
+## Accessibility Requirements
 
-### Trust Signals
-- **Compliance badges** - GDPR, ISO - simple logos, no marketing copy
-- **Client logos** - Small, monochrome, in footer
-- **Case studies** - Separate page, not homepage clutter
+- WCAG AA minimum
+- Visible focus indicators always
+- Semantic HTML with ARIA labels
+- No reliance on color alone
+- Keyboard navigation support
 
-### Accessibility
-- **WCAG AA minimum** - Color contrast, keyboard navigation
-- **Focus indicators** - Always visible
-- **Screen reader** - Semantic HTML, ARIA labels where needed
-- **No reliance on color alone** - Use icons + text
+## Performance Standards
 
-### Performance
-- **Fast load times** - < 2s initial paint
-- **Responsive** - Mobile-first, works on all devices
-- **No bloat** - Minimal dependencies, tree-shaking enabled
+- < 2s initial paint
+- Mobile-first responsive
+- Minimal dependencies
+- Tree-shaking enabled
 
-## What Makes It "Enterprise"
+## Enterprise Requirements
 
-Not fancy design - but:
-- ✅ Reliability - No bugs, predictable behavior
-- ✅ Speed - Fast load, instant interactions
-- ✅ Clarity - Obvious next steps
-- ✅ Consistency - Same patterns throughout
-- ✅ Data density - Show more, do more
-- ✅ Professional copy - Concise, benefit-oriented
-- ✅ Security - Visible trust signals
-- ✅ Support - Easy to contact help
+- Reliability: No bugs, predictable behavior
+- Speed: Fast load, instant interactions
+- Clarity: Obvious next steps
+- Consistency: Same patterns throughout
+- Data density: Show more, do more
+- Professional copy: Concise, benefit-oriented
+- Security: Visible trust signals
+- Support: Easy contact
 
-## Design Anti-Patterns to Avoid
+## Prohibited Patterns
 
-1. **Consumer app styling** - We're not Instagram
-2. **Marketing site landing pages** - We're a tool, not selling a dream
-3. **Trendy effects** - Neumorphism, glassmorphism, etc.
-4. **Over-animation** - Every click doesn't need fireworks
-5. **Decorative elements** - No abstract shapes or blobs
-6. **Gamification** - No badges, streaks, or confetti
-7. **Modal overuse** - Keep users in flow
-8. **Hidden navigation** - Everything should be discoverable
-
-## Future Design Roadmap
-
-### Phase 1: Polish Current UI
-- Remove any remaining flashy elements
-- Ensure WCAG AA compliance
-- Add skeleton loaders
-- Fix any layout inconsistencies
-
-### Phase 2: Information Architecture
-- Top navigation bar
-- Pricing page
-- Help/documentation section
-- User dashboard (for saved projects)
-
-### Phase 3: Enterprise Features
-- Multi-user workspaces
-- Export functionality
-- Advanced filtering
-- Custom reports
-
-### Phase 4: Data Visualization
-- Simple trend charts (line graphs only)
-- Comparison views
-- Historical data tables
+- Consumer app styling
+- Marketing landing pages
+- Trendy visual effects
+- Over-animation
+- Decorative elements
+- Gamification
+- Modal overuse
+- Hidden navigation
 
 ## Design Review Checklist
 
-Before any UI change ships, verify:
+Every UI change must verify:
 
-- [ ] No gradients (except 1-2px subtle depth cues)
-- [ ] No animations (except loading states)
-- [ ] No shadows (except minimal elevation)
-- [ ] Meets WCAG AA contrast ratios
-- [ ] Uses 8px spacing grid
+- [ ] No gradients
+- [ ] No animations except loading
+- [ ] No shadows except minimal elevation
+- [ ] WCAG AA contrast ratios
+- [ ] 8px spacing grid
 - [ ] Typography hierarchy maintained
 - [ ] Mobile-responsive
 - [ ] Keyboard accessible
-- [ ] Loads in < 2 seconds
-- [ ] Looks professional, not playful
-
----
-
-**Remember:** Lucy World is a **productivity tool used daily by professionals**. Design should get out of the way and let users do their work efficiently.
+- [ ] Loads < 2 seconds
+- [ ] Professional appearance

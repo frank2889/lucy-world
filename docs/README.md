@@ -1,72 +1,71 @@
 # Lucy.world Documentation Index
 
-Lucy.world is a multilingual, privacy-first keyword intelligence SaaS.
+Multilingual, privacy-first keyword intelligence SaaS.
 
 ## Current Status (Oct 8, 2025)
 
-### ✅ Completed
-- **Language equality system** - All languages self-contained, no fallbacks. Missing translations show `[MISSING: key]`
-- **Billing UI integration** - Plan cards, upgrade/credits buttons, sticky CTA
-- **SMTP email** - Gmail configured for magic link authentication
-- **Clean design philosophy** - Professional, daily-use tool aesthetic (see DESIGN.md)
-- **Frontend bundle** - All 18 platform tools updated, no language fallbacks
+### Completed
+- Language equality system: All languages self-contained, no fallbacks
+- Billing UI integration: Plan cards, upgrade/credits buttons, sticky CTA
+- SMTP email: Gmail configured for magic link authentication
+- Design philosophy: Professional, daily-use tool aesthetic
+- Frontend bundle: All 18 platform tools updated
 
-### 🔄 In Progress
-- **Translation completion** - Dutch locale has some `[MISSING: *]` keys to fill
-- **Email testing** - SMTP deployment verification pending
+### In Progress
+- Translation completion: Fill missing Dutch locale keys
+- Email testing: SMTP deployment verification
 
-### 📋 Planned (from CRO audit)
+### Planned
 - Fix "Zoeken mislukt" error state bug
 - Make search results interactive/clickable
-- Add search metrics (volume, trends, CPC)
-- Skeleton loaders for loading states
-- Top navigation (Product, Pricing, Resources, Support)
+- Add search metrics
+- Skeleton loaders
+- Top navigation
 - Pricing page
 - Enterprise trust signals
 
-## Documentation Structure
+## Documentation Files
 
-- 🎨 **Design philosophy:** `DESIGN.md` — Clean, professional, daily-use tool principles. No flashy effects, gradients, or marketing-style elements
-- 📐 **System design:** `ARCHITECTURE.md` — Single source of truth for domains, locales, APIs, SEO, and Definition of Done checklists
-- 🚀 **Infrastructure:** `DEPLOYMENT-GUIDE.md` — Droplet bootstrap, Gunicorn/Nginx, automation flow
-- 💳 **Billing:** `BILLING-INTEGRATION.md` — Stripe integration, entitlements system, checkout flows
-- 📝 **Release notes:** `CHANGELOG.md` — Engineering updates, observability, automation with dates
-- 📧 **Email setup:** `SMTP_SETUP.md` — Gmail SMTP configuration for magic links
+- `DESIGN.md` — Design philosophy and standards
+- `ARCHITECTURE.md` — System design, APIs, SEO, Definition of Done
+- `DEPLOYMENT-GUIDE.md` — Infrastructure, Gunicorn/Nginx, automation
+- `BILLING-INTEGRATION.md` — Stripe integration, entitlements, checkout
+- `CHANGELOG.md` — Release notes, updates, dates
+- `SMTP_SETUP.md` — Email configuration
 
-## Development Standards
+## Development Rules
 
-### Translation Rules
-- ✅ **Every user-facing string** must be in `languages/{lang}/locale.json`
-- ❌ **No hardcoded text** in frontend components
-- ✅ **No fallbacks** - each language is complete or shows `[MISSING: key]`
-- ✅ **Language equality** - English, Dutch, etc. all treated the same
+### Translation
+- Every user-facing string must be in `languages/{lang}/locale.json`
+- No hardcoded text in frontend components
+- No fallbacks between languages
+- Each language complete or shows `[MISSING: key]`
 
-### Design Standards (see DESIGN.md)
-- ✅ **Clean and flat** - No gradients (except subtle depth cues)
-- ✅ **Minimal animation** - Loading states only
-- ✅ **Professional** - Business tool, not consumer app
-- ✅ **Accessible** - WCAG AA minimum (4.5:1 contrast)
-- ✅ **8px spacing grid** - Consistent layout system
+### Design
+- No gradients
+- No animations except loading states
+- No shadows except minimal elevation
+- WCAG AA minimum contrast
+- 8px spacing grid
+- Professional appearance
 
-### Code Quality
-- ✅ **TypeScript strict mode** - Type safety enforced
-- ✅ **No console.error in production** - Use structured logging
-- ✅ **Mobile-first responsive** - Works on all devices
-- ✅ **Performance** - < 2s initial load
+### Code
+- TypeScript strict mode
+- No console.error in production
+- Mobile-first responsive
+- Performance < 2s initial load
 
-## UX & CRO Release Ritual
+## Release Checklist
 
-Every deployment includes:
+1. CRO worksheet documented
+2. Journey verification in staging
+3. Language sweep, no `[MISSING: *]` in production
+4. Accessibility check: WCAG AA, keyboard, screen reader
+5. Analytics verification
 
-1. **CRO worksheet** - Document findings in relevant .md files
-2. **Journey verification** - Test billing flows, login, premium features in staging
-3. **Language sweep** - Verify all locales render correctly, no `[MISSING: *]` in production
-4. **Accessibility check** - WCAG AA contrast, keyboard navigation, screen reader support
-5. **Analytics verification** - CTA clicks emit correct events
+## References
 
-## Quick Links
-
-- **Latest status:** See CHANGELOG.md for Oct 8, 2025 updates
-- **Billing reference:** Stripe samples at [github.com/stripe-samples](https://github.com/stripe-samples)
-- **Design decisions:** All in DESIGN.md - keep UI clean and professional
-- **Translation files:** `languages/{lang}/locale.json` for each supported language
+- Latest status: CHANGELOG.md
+- Billing reference: github.com/stripe-samples
+- Design rules: DESIGN.md
+- Translations: `languages/{lang}/locale.json`
