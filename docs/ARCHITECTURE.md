@@ -78,6 +78,13 @@ Supported (from `languages/languages.json`):
 **Authenticated APIs**  
 
 - `POST /api/projects` → save project with `name, description, language, country, data`
+- `POST /api/auth/request` → send magic link email
+- `POST /api/auth/verify` → verify magic link token
+- `GET /api/entitlements` → get user plan, tier, AI credits, sidebar groups, upgrade/buy URLs
+- `GET /api/billing/credit-packs` → fetch available credit pack offerings with pricing
+- `POST /api/billing/upgrade-checkout` → create Stripe checkout session for plan upgrade
+- `POST /api/billing/credit-checkout` → create Stripe checkout session for credit purchase
+- `POST /api/premium/search` → authenticated premium search with AI analysis
 
 ### DoD — APIs
 
@@ -85,7 +92,10 @@ Supported (from `languages/languages.json`):
 - [x] Free search supports all languages + countries.  
 - [x] Invalid ISO codes rejected with 400.  
 - [x] Projects API persists securely.  
-- [x] Health probes (`/meta/detect.json`, `/api/free/search`) return 200.  
+- [x] Health probes (`/meta/detect.json`, `/api/free/search`) return 200.
+- [x] Entitlements API returns tier, credits, expiry, and feature flags.
+- [x] Billing APIs create valid Stripe checkout sessions with proper line items.
+- [x] All authenticated endpoints validate Bearer token and return 401 on expiry.  
 
 ---
 
@@ -100,7 +110,30 @@ Supported (from `languages/languages.json`):
 - Search execution renders in-page loaders, never blank states; live results respond for Google, Bing, DuckDuckGo, and the other supported engines with the same component pipeline.
 - Result cards are interactive: the primary keyword row opens a detail drawer that exposes search volume, AI cluster data, and export shortcuts.
 - Error messaging is contextual—successful searches never leak the Dutch fallback `“Zoeken mislukt”` string.
-- Premium search requests abort after 20 seconds via `fetchWithTimeout`, displaying localized timeout messaging when exceeded.
+- - Premium search requests abort after 20 seconds via `fetchWithTimeout`, displaying localized timeout messaging when exceeded.
+- **Plan summary cards** display in both desktop header bar and mobile top bar showing current tier, AI credits, renewal date, and workspace unlock status.
+- **Billing CTAs** (Upgrade plan, Get AI credits) render inline with plan summary using credit pack pricing from backend.
+- **Sticky CTA banner** appears for non-signed-in users and low-credit users (<25 credits) with session-based dismissal.
+
+### DoD — Frontend
+
+- [x] All `/xx/` routes render.  
+- [x] Sidebar platforms load dynamically.  
+- [x] Sidebar options derive from plan entitlements returned by the API.  
+- [x] Sidebar surfaces the active plan status, AI credits, and upgrade paths.  
+- [x] UI vs market picker independent.  
+- [x] Structured data emitted per locale.  
+- [x] Manifest.json synced with build.
+- [x] Plan summary cards render in desktop and mobile layouts with proper responsive styling.
+- [x] Billing action buttons launch Stripe checkout flows for upgrades and credit purchases.
+- [x] Sticky CTA shows for anonymous and low-credit users with dismissal persisted to sessionStorage.
+- [x] Credit pack pricing formatted per user's UI locale (nl-NL, en-US, etc.).
+- [x] Loading states prevent double-submission during checkout initiation.
+- [ ] Search loader animation covers each query until results or errors resolve; no blank-page regressions under network latency.
+- [ ] Search error copy differentiates "no results" vs transport failures for every locale (including RTL).
+- [ ] Result cards expose a detail drawer with localized metrics and export controls; keyboard navigation works across languages.
+- [ ] CTA ribbon sticks within the sidebar and mirrors translations for "Upgrade", "Koop AI-credits", etc.
+- [ ] Default locale detection seeds Dutch visitors with `nl-NL` while falling back correctly for other markets.
 
 ### DoD — Frontend
 

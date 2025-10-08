@@ -1,5 +1,43 @@
 # Lucy.world Changelog
 
+## 2025-10-08 (Frontend-Backend Integration & Billing UX)
+
+### Added — Billing & Entitlements UI
+
+- **Inline plan summary cards** in both desktop header and mobile topbar showing tier, AI credits, renewal date, and workspace unlock status.
+- **Billing action buttons** (Upgrade plan, Get AI credits) displayed in both desktop and mobile layouts with proper loading states.
+- **Sticky CTA component** that appears for non-signed-in users and users with low credits (<25), with session-based dismissal.
+- **Credit pack pricing integration** from `/api/billing/credit-packs` endpoint with formatted prices in user's locale.
+- **Checkout flow handlers** for both plan upgrades (`/api/billing/upgrade-checkout`) and credit purchases (`/api/billing/credit-checkout`).
+- **Top-bar layout refactor** consolidating plan/billing controls into consistent mobile and desktop UX.
+
+### Changed — Frontend Architecture
+
+- `App.tsx` now renders `renderPlanSummary()` and `renderBillingActions()` helper functions for both mobile and desktop contexts.
+- Entitlements hook (`useEntitlements`) integrated throughout the component tree with proper loading/error states.
+- Session storage used for sticky CTA dismissal to avoid localStorage pollution.
+- Credit pack price formatting respects user's UI language for currency display (nl-NL, en-US, etc.).
+- Low credits threshold set to 25 AI credits with automatic CTA re-showing when threshold crossed.
+
+### Fixed — Payment Integration
+
+- Credit checkout now properly validates `price_id` before initiating Stripe session.
+- Upgrade checkout handles missing `upgrade_url` gracefully with localized error messages.
+- Both checkout flows set proper loading states to prevent double-clicks.
+- Token expiry handling improved for 401 responses from billing endpoints.
+
+### Documentation — Current Session
+
+- Updated CHANGELOG.md with comprehensive billing UI integration details.
+- Documented frontend-backend contract for `/api/billing/credit-packs` and checkout endpoints.
+- Added session state management patterns for CTA dismissal and checkout flows.
+
+### Technical Debt Identified
+
+- Frontend bundle may not be rebuilt after recent App.tsx changes - requires `npm run build` in `frontend/` directory.
+- Backend deployment may need restart to serve updated static assets from `static/app/`.
+- GitHub Actions deployment workflow may require manual trigger or new commit to deploy latest changes.
+
 ## 2025-10-07 (UX & CRO sweep)
 
 ### Added — Conversion surfaces

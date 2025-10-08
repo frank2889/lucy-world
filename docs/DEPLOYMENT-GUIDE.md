@@ -1,6 +1,32 @@
 # Lucy World Search – Deployment Guide (October 2025)
 
-Lucy World Search runs as a Flask application that serves a Vite-built React SPA and exposes `/api/*` endpoints. Locale handling is done on the server—`/` redirects to `/&lt;lang&gt;/` based on `Accept-Language`—so the web server must proxy *all* non-static requests to the Flask app. The steps below describe how to get a droplet ready, ship a new release, and keep deployments repeatable.
+Lu7. **Run the CRO/UX acceptance pass** (new Oct 2025 ritual):
+
+    - Load the staging build in Chrome, Safari, and Edge at `/nl/` and ensure the hero defaults to Dutch language + Netherlands market.
+    - Execute searches on Google, Bing, and DuckDuckGo and confirm the loader animation, result drawer, and analytics events (`search_submitted`, `search_result_opened`) fire without blank screens.
+    - Trigger the first-search Premium overlay, sticky sidebar CTA, and `/pricing` page, verifying translations and CTA copy (`Upgrade`, `Koop AI-credits`) are localized.
+    - Open `/billing/credits` and `/billing/upgrade`; the former must surface localized credit packs via Stripe, the latter must redirect to `/pricing` (or open Stripe Checkout when configured).
+    - **Verify plan summary cards** appear in both desktop header and mobile topbar showing tier, AI credits, and expiry.
+    - **Test billing flows**: Click "Upgrade plan" and "Get AI credits" buttons, confirm Stripe checkout launches correctly.
+    - **Validate sticky CTA**: Sign out, confirm sticky CTA appears, dismiss it, verify sessionStorage persistence.
+    - **Test low credits warning**: Reduce AI credits below 25, confirm sticky CTA reappears with correct messaging.
+    - Capture any UX findings in `CHANGELOG.md` and update the relevant Markdown playbooks before shipping.
+
+8. **Rebuild frontend if App.tsx changed**:
+
+    ```bash
+    cd frontend
+    npm install  # if package.json changed
+    npm run build
+    cd ..
+    ```
+
+    This updates `static/app/` with the latest compiled React bundle. Commit these changes:
+
+    ```bash
+    git add static/app
+    git commit -m "chore: rebuild frontend bundle with billing UI updates"
+    ```d Search runs as a Flask application that serves a Vite-built React SPA and exposes `/api/*` endpoints. Locale handling is done on the server—`/` redirects to `/&lt;lang&gt;/` based on `Accept-Language`—so the web server must proxy *all* non-static requests to the Flask app. The steps below describe how to get a droplet ready, ship a new release, and keep deployments repeatable.
 
 > **⚠️ Heads-up:** `deploy.sh` and `quick-deploy.sh` are legacy helpers. They still assume a `/search` homepage and refer to `requirements-prod.txt`, which no longer exists. Treat them as templates and update them before running in production. `auto-deploy.sh` **is maintained** and now powers the automated workflow described below.
 
@@ -354,7 +380,65 @@ TLS certificates are handled by Certbot. The repository includes `scripts/renew_
 
 The timer ensures certificates renew automatically and Nginx/Gunicorn pick up the new chain without manual intervention.
 
-## 7. Localization workflow
+## 7. Troubleshooting Frontend-Backend Disconnects
+
+**Symptom**: Recent UI changes (plan summary cards, billing buttons, sticky CTA) don't appear on the deployed site even after git push.
+
+**Root Causes & Solutions**:
+
+1. **Frontend bundle not rebuilt**:
+   
+   ```bash
+   cd frontend
+   npm run build
+   cd ..
+   git add static/app
+   git commit -m "chore: rebuild frontend with latest UI changes"
+   git push
+   ```
+
+2. **Backend not serving updated static files**:
+   
+   - On the server, restart gunicorn:
+     
+     ```bash
+     sudo systemctl restart lucy-world-search
+     ```
+   
+   - Or if using webhook deployment, trigger the restart hook:
+     
+     ```bash
+     curl -X POST https://lucy.world/webhook/deploy
+     ```
+
+3. **Browser cache serving old bundle**:
+   
+   - Hard refresh: `Cmd+Shift+R` (Mac) or `Ctrl+Shift+R` (Windows/Linux)
+   - Check Network tab in DevTools: verify `app-*.js` has recent timestamp
+   - Verify manifest.json has latest hash values
+
+4. **GitHub Actions deployment not triggered**:
+   
+   - Check Actions tab in GitHub repository
+   - Verify workflow is enabled (not disabled)
+   - Check for failed workflow runs and review logs
+   - Manually trigger workflow if needed
+
+5. **DigitalOcean App Platform not rebuilding**:
+   
+   - Check if `.github/workflows/deploy-digitalocean.yml.disabled` needs to be re-enabled
+   - Verify `DO_API_TOKEN` and `DO_APP_ID` secrets are configured
+   - Manually trigger deployment from DigitalOcean console
+
+**Verification Checklist**:
+
+- [ ] `static/app/manifest.json` has recent timestamp in git
+- [ ] `git log --oneline -5` shows frontend build commit
+- [ ] Server logs show recent restart: `sudo journalctl -u lucy-world-search -n 50`
+- [ ] Browser DevTools Network tab shows `app-*.js` loaded with 200 status
+- [ ] React DevTools shows latest component structure
+
+## 8. Localization workflow
 
 Keeping the UI strings in sync is now a two-step process. Run these checks locally before opening a pull request, and they also execute in CI:
 
