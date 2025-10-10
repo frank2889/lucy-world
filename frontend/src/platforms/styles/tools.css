@@ -73,7 +73,7 @@
 }
 
 .platform-tool__results li {
-  background: rgba(255, 255, 255, 0.03);
+  background: color-mix(in srgb, var(--color-bg-surface) 8%, transparent);
   border: 1px solid var(--line);
   border-radius: 12px;
   padding: 12px 14px;

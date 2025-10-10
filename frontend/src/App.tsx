@@ -270,14 +270,6 @@ export default function App() {
   const [creditPacks, setCreditPacks] = useState<CreditPack[]>([])
   const [creditPacksLoading, setCreditPacksLoading] = useState(false)
   const [creditCheckoutLoading, setCreditCheckoutLoading] = useState(false)
-  const [stickyCtaDismissed, setStickyCtaDismissed] = useState<boolean>(() => {
-    if (typeof window === 'undefined') return false
-    try {
-      return sessionStorage.getItem('lw_sticky_cta_dismissed') === '1'
-    } catch {
-      return false
-    }
-  })
 
   useEffect(() => {
     if (showSignin) {
@@ -594,19 +586,6 @@ export default function App() {
     return getTranslated('entitlements.sidebar.expires', `Renews on ${formatted}`)
   }, [entitlementsData.expires_at, getTranslated])
   const searchLoadingLabel = useMemo(() => getTranslated('search.status.loading', 'Running keyword analysis…'), [getTranslated])
-  const lowCreditsTitle = useMemo(() => getTranslated('billing.cta.low_credits.title', 'Almost out of AI credits?'), [getTranslated])
-  const lowCreditsSubtitle = useMemo(() => getTranslated('billing.cta.low_credits.subtitle', 'Top up to keep premium keyword data flowing.'), [getTranslated])
-  const signinCtaTitle = useMemo(() => getTranslated('billing.cta.signin.title', 'Unlock full keyword intelligence'), [getTranslated])
-  const signinCtaSubtitle = useMemo(() => getTranslated('billing.cta.signin.subtitle', 'Sign in to access premium searches, saved projects, and AI credits.'), [getTranslated])
-  const signinCtaEyebrow = useMemo(() => getTranslated('billing.cta.signin.eyebrow', 'Lucy World account'), [getTranslated])
-  const stickyCtaDismissLabel = useMemo(() => getTranslated('billing.cta.dismiss', 'Hide this message'), [getTranslated])
-  const lowCreditsCounterLabel = useMemo(() => {
-    const raw = translate('billing.cta.low_credits.counter', { amount: entitlementsData.ai_credits })
-    if (!raw || raw === 'billing.cta.low_credits.counter') {
-      return `Remaining credits: ${entitlementsData.ai_credits}`
-    }
-    return raw
-  }, [entitlementsData.ai_credits, translate])
   const openNavigationLabel = useMemo(() => translate('aria.open_navigation'), [translate])
   const myProjectsLabel = useMemo(() => translate('projects.button.my_projects'), [translate])
   const saveProjectLabel = useMemo(() => translate('projects.button.save'), [translate])
@@ -616,36 +595,6 @@ export default function App() {
   const signInPlaceholder = useMemo(() => translate('auth.signin.placeholder'), [translate])
   const sendLinkLabel = useMemo(() => translate('auth.signin.submit'), [translate])
   const sendingLinkLabel = useMemo(() => translate('auth.magic_link.sending'), [translate])
-  const LOW_CREDITS_THRESHOLD = 25
-  const isLowCredits = isSignedIn && typeof entitlementsData.ai_credits === 'number' && entitlementsData.ai_credits >= 0 && entitlementsData.ai_credits < LOW_CREDITS_THRESHOLD
-  const showStickyCta = (!isSignedIn || isLowCredits) && !stickyCtaDismissed
-  const stickyCtaButtonLabel = isLowCredits ? buyCreditsButtonText : signInTitle
-  const stickyCtaDisabled = isLowCredits ? (billingLoading || creditCheckoutLoading) : false
-  const handleStickyCtaClick = useCallback(() => {
-    if (isLowCredits) {
-      void handleBuyCreditsClick()
-    } else {
-      setShowSignin(true)
-    }
-  }, [isLowCredits, handleBuyCreditsClick, setShowSignin])
-  const dismissStickyCta = useCallback(() => {
-    setStickyCtaDismissed(true)
-    try {
-      sessionStorage.setItem('lw_sticky_cta_dismissed', '1')
-    } catch {
-      /* ignore */
-    }
-  }, [])
-  useEffect(() => {
-    if (isLowCredits && stickyCtaDismissed) {
-      setStickyCtaDismissed(false)
-      try {
-        sessionStorage.removeItem('lw_sticky_cta_dismissed')
-      } catch {
-        /* ignore */
-      }
-    }
-  }, [isLowCredits, stickyCtaDismissed])
   const projectsTitle = useMemo(() => translate('projects.modal.title'), [translate])
   const projectsEmptyMessage = useMemo(() => translate('projects.modal.empty', { save: saveProjectLabel }), [translate, saveProjectLabel])
   const openLabel = useMemo(() => translate('projects.modal.open'), [translate])
@@ -757,7 +706,7 @@ export default function App() {
       padding: compact ? '8px 10px' : '10px 12px',
       borderRadius: 12,
       border: '1px solid var(--line)',
-      background: 'rgba(15,18,27,0.72)',
+      background: 'color-mix(in srgb, var(--scrim-base) 72%, transparent)',
       color: 'var(--text)',
       minWidth: compact ? 0 : 210,
       flex: compact ? '1 1 auto' : '0 0 auto'
@@ -892,7 +841,7 @@ export default function App() {
               maxHeight: 300,
               overflow: 'hidden',
               zIndex: 1000,
-              boxShadow: '0 4px 20px rgba(0,0,0,0.3)'
+              boxShadow: '0 calc(var(--space-unit) * 0.5 * var(--scale)) calc(var(--space-unit) * 2.5 * var(--scale)) color-mix(in srgb, black 30%, transparent)'
             }}
           >
             <input
@@ -943,7 +892,7 @@ export default function App() {
                     background: cc === country ? 'var(--accent)' : 'transparent',
                     color: cc === country ? '#fff' : 'var(--text)'
                   }}
-                  onMouseEnter={(e) => (e.currentTarget.style.background = cc === country ? 'var(--accent)' : 'rgba(255,255,255,0.1)')}
+                  onMouseEnter={(e) => (e.currentTarget.style.background = cc === country ? 'var(--accent)' : 'color-mix(in srgb, var(--color-bg-surface) 18%, transparent)')}
                   onMouseLeave={(e) => (e.currentTarget.style.background = cc === country ? 'var(--accent)' : 'transparent')}
                 >
                   <span style={{ fontSize: 16 }}>{flagEmoji(cc)}</span>
@@ -1447,7 +1396,7 @@ export default function App() {
 
       <div className="content">
         {/* Desktop header bar */}
-  <div className="desktopbar" style={{ display: 'flex', alignItems: 'center', gap: 12, flexWrap: 'wrap', padding: '12px 14px', borderBottom: '1px solid var(--line)', position: 'sticky', top: 0, zIndex: 9, background: 'rgba(11,13,16,0.6)', backdropFilter: 'saturate(180%) blur(10px)' }}>
+  <div className="desktopbar" style={{ display: 'flex', alignItems: 'center', gap: 12, flexWrap: 'wrap', padding: '12px 14px', borderBottom: '1px solid var(--line)', position: 'sticky', top: 0, zIndex: 9, background: 'color-mix(in srgb, var(--scrim-base) 60%, transparent)', backdropFilter: 'saturate(180%) blur(10px)' }}>
           <div className="brand">Lucy <span>World</span></div>
           <div
             style={{
@@ -1662,7 +1611,7 @@ export default function App() {
                     maxHeight: 'min(60vh, 400px)',
                     overflow: 'auto',
                     zIndex: 1000,
-                    boxShadow: '0 8px 32px rgba(0,0,0,0.3)'
+                    boxShadow: '0 calc(var(--space-unit) * 1 * var(--scale)) calc(var(--space-unit) * 4 * var(--scale)) color-mix(in srgb, black 30%, transparent)'
                   }}
                 >
                   {languagesList.map((l) => (
@@ -1705,14 +1654,14 @@ export default function App() {
         <div className="content-inner">
         {showSignin && (
           <div
-            style={{ position: 'fixed', inset: 0 as any, background: 'rgba(0,0,0,0.5)', display: 'grid', placeItems: 'center', zIndex: 50, padding: '16px' }}
+            style={{ position: 'fixed', inset: 0 as any, background: 'color-mix(in srgb, var(--scrim-base) 50%, transparent)', display: 'grid', placeItems: 'center', zIndex: 50, padding: '16px' }}
             onClick={closeSigninModal}
           >
             <div
               role="dialog"
               aria-modal="true"
               aria-labelledby="signin-modal-title"
-              style={{ background: '#0e1217', border: '1px solid var(--line)', borderRadius: 16, padding: 20, width: 'min(440px, 100%)', display: 'grid', gap: 16, boxShadow: '0 12px 32px rgba(0,0,0,0.35)' }}
+              style={{ background: '#0e1217', border: '1px solid var(--line)', borderRadius: 16, padding: 20, width: 'min(440px, 100%)', display: 'grid', gap: 16, boxShadow: '0 calc(var(--space-unit) * 1.5 * var(--scale)) calc(var(--space-unit) * 4 * var(--scale)) color-mix(in srgb, black 35%, transparent)' }}
               onClick={e => e.stopPropagation()}
             >
               <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 12 }}>
@@ -1758,9 +1707,15 @@ export default function App() {
                     marginTop: 4,
                     padding: '10px 12px',
                     borderRadius: 12,
-                    border: signinStatus === 'error' ? '1px solid rgba(248,113,113,0.35)' : '1px solid rgba(74,222,128,0.35)',
-                    background: signinStatus === 'error' ? 'rgba(248,113,113,0.12)' : 'rgba(74,222,128,0.12)',
-                    color: signinStatus === 'error' ? '#fca5a5' : '#bbf7d0',
+                    border: signinStatus === 'error'
+                      ? '1px solid color-mix(in srgb, var(--color-error) 35%, transparent)'
+                      : '1px solid color-mix(in srgb, var(--color-success) 35%, transparent)',
+                    background: signinStatus === 'error'
+                      ? 'color-mix(in srgb, var(--color-error) 12%, transparent)'
+                      : 'color-mix(in srgb, var(--color-success) 12%, transparent)',
+                    color: signinStatus === 'error'
+                      ? 'color-mix(in srgb, var(--color-error) 70%, transparent)'
+                      : 'color-mix(in srgb, var(--color-success) 70%, transparent)',
                     fontSize: 14,
                     display: 'flex',
                     gap: 8,
@@ -1782,43 +1737,8 @@ export default function App() {
           </div>
         )}
 
-        {showStickyCta && (
-          <aside
-            className={`sticky-cta ${isLowCredits ? 'sticky-cta--warning' : 'sticky-cta--signin'}`}
-            role="complementary"
-            aria-live="polite"
-          >
-            <button
-              type="button"
-              className="sticky-cta__close"
-              onClick={dismissStickyCta}
-              aria-label={stickyCtaDismissLabel}
-            >
-              ✕
-            </button>
-            <div className="sticky-cta__content">
-              <span className="sticky-cta__eyebrow">{isLowCredits ? aiCreditsLabel : signinCtaEyebrow}</span>
-              <h2 className="sticky-cta__title">{isLowCredits ? lowCreditsTitle : signinCtaTitle}</h2>
-              <p className="sticky-cta__subtitle">{isLowCredits ? lowCreditsSubtitle : signinCtaSubtitle}</p>
-              {isLowCredits && (
-                <div className="sticky-cta__counter">{lowCreditsCounterLabel}</div>
-              )}
-            </div>
-            <div className="sticky-cta__actions">
-              <button
-                type="button"
-                onClick={handleStickyCtaClick}
-                disabled={stickyCtaDisabled}
-                className="sticky-cta__button"
-              >
-                {stickyCtaButtonLabel}
-              </button>
-            </div>
-          </aside>
-        )}
-
         {showProjects && (
-          <div style={{ position: 'fixed', inset: 0 as any, background: 'rgba(0,0,0,0.5)', display: 'grid', placeItems: 'center', zIndex: 50 }} onClick={() => setShowProjects(false)}>
+          <div style={{ position: 'fixed', inset: 0 as any, background: 'color-mix(in srgb, var(--scrim-base) 50%, transparent)', display: 'grid', placeItems: 'center', zIndex: 50 }} onClick={() => setShowProjects(false)}>
             <div style={{ background: '#0e1217', border: '1px solid var(--line)', borderRadius: 12, padding: 16, width: 'min(720px, 92vw)' }} onClick={e => e.stopPropagation()}>
               <div style={{ display: 'flex', alignItems: 'center' }}>
                 <h3 style={{ margin: 0, flex: 1 }}>{projectsTitle}</h3>

@@ -29,6 +29,9 @@ This document is the **single source of truth**. It defines languages, markets, 
 
 ## 2. Languages (ISO-639-1 Codes)
 
+Refer to [`docs/languages.md`](languages.md) for the full translation enforcement
+playbook (no English fallback, per-locale status logs, CI gates).
+
 > **AI Agent TODO (Always Enforce)**
 
 Supported (from `languages/languages.json`):

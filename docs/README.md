@@ -26,7 +26,8 @@ Multilingual, privacy-first keyword intelligence SaaS.
 
 ## Documentation Files
 
-- `DESIGN.md` — Design philosophy and standards
+- `design/design.md` — Canonical design specification and automation
+  rules
 - `ARCHITECTURE.md` — System design, APIs, SEO, Definition of Done
 - `DEPLOYMENT-GUIDE.md` — Infrastructure, Gunicorn/Nginx, automation
 - `BILLING-INTEGRATION.md` — Stripe integration, entitlements, checkout
@@ -67,5 +68,5 @@ Multilingual, privacy-first keyword intelligence SaaS.
 
 - Latest status: CHANGELOG.md
 - Billing reference: github.com/stripe-samples
-- Design rules: DESIGN.md
+- Design rules: design/design.md (canonical spec)
 - Translations: `languages/{lang}/locale.json`

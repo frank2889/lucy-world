@@ -1,3 +1,5 @@
+@import url("design-tokens.css");
+
 @font-face {
     font-family: 'OskariG2';
     src: local('Oskari G2'), local('OskariG2');
@@ -9,10 +11,30 @@
 }
 
 :root {
-    --canva-dark: #1f2021;
-    --canva-accent: #304254;
-    --canva-light: #e8e8e8;
-    --form-bg: rgba(25, 27, 29, 0.75);
+    --canva-dark: color-mix(in srgb, var(--scrim-base) 92%, transparent);
+    --canva-accent: color-mix(in srgb, var(--color-accent-primary) 35%, var(--color-bg-surface) 65%);
+    --canva-light: var(--color-text-inverse);
+    --form-bg: color-mix(in srgb, var(--scrim-base) 75%, transparent);
+    --canva-light-10: color-mix(in srgb, var(--color-text-inverse) 10%, transparent);
+    --canva-light-30: color-mix(in srgb, var(--color-text-inverse) 30%, transparent);
+    --canva-light-34: color-mix(in srgb, var(--color-text-inverse) 34%, transparent);
+    --canva-light-35: color-mix(in srgb, var(--color-text-inverse) 35%, transparent);
+    --canva-light-40: color-mix(in srgb, var(--color-text-inverse) 40%, transparent);
+    --canva-light-45: color-mix(in srgb, var(--color-text-inverse) 45%, transparent);
+    --canva-light-50: color-mix(in srgb, var(--color-text-inverse) 50%, transparent);
+    --canva-light-55: color-mix(in srgb, var(--color-text-inverse) 55%, transparent);
+    --canva-light-60: color-mix(in srgb, var(--color-text-inverse) 60%, transparent);
+    --canva-light-72: color-mix(in srgb, var(--color-text-inverse) 72%, transparent);
+    --canva-light-85: color-mix(in srgb, var(--color-text-inverse) 85%, transparent);
+    --canva-light-88: color-mix(in srgb, var(--color-text-inverse) 88%, transparent);
+    --canva-light-90: color-mix(in srgb, var(--color-text-inverse) 90%, transparent);
+    --canva-glass-start: color-mix(in srgb, var(--scrim-base) 78%, transparent);
+    --canva-glass-end: color-mix(in srgb, var(--scrim-base) 62%, transparent);
+    --canva-border-soft: color-mix(in srgb, var(--color-text-inverse) 12%, transparent);
+    --canva-border-strong: color-mix(in srgb, var(--color-text-inverse) 45%, transparent);
+    --canva-shadow-strong: 0 calc(var(--space-unit) * 3.75) calc(var(--space-unit) * 8.75) color-mix(in srgb, black 45%, transparent);
+    --canva-accent-wash: color-mix(in srgb, var(--canva-accent) 22%, transparent);
+    --canva-deep-panel: color-mix(in srgb, var(--scrim-base) 90%, transparent);
 }
 
 * {
@@ -36,8 +58,8 @@ body {
     align-items: center;
     justify-content: center;
     padding: 80px 24px;
-    background: radial-gradient(circle at top left, rgba(232, 232, 232, 0.1), rgba(232, 232, 232, 0) 50%),
-                radial-gradient(circle at bottom right, rgba(48, 66, 84, 0.4), rgba(48, 66, 84, 0) 50%),
+    background: radial-gradient(circle at top left, var(--canva-light-10), transparent 50%),
+                radial-gradient(circle at bottom right, color-mix(in srgb, var(--canva-accent) 40%, transparent), transparent 50%),
                 var(--canva-dark);
 }
 
@@ -89,7 +111,7 @@ body {
     font-weight: 400;
     letter-spacing: 0.3em;
     text-transform: uppercase;
-    color: rgba(232, 232, 232, 0.13);
+    color: color-mix(in srgb, var(--color-text-inverse) 13%, transparent);
     position: relative;
     margin: 0;
     line-height: 0.84;
@@ -99,7 +121,7 @@ body {
     content: 'scale';
     position: absolute;
     inset: 0;
-    color: rgba(232, 232, 232, 0.6);
+    color: color-mix(in srgb, var(--color-text-inverse) 60%, transparent);
     letter-spacing: 0.18em;
     transform: translateY(14px);
     filter: blur(0.5px);
@@ -110,7 +132,7 @@ body {
     font-size: clamp(1.25rem, 3vw, 2.5rem);
     letter-spacing: 0.18em;
     text-transform: uppercase;
-    color: rgba(232, 232, 232, 0.72);
+    color: var(--canva-light-72);
 }
 
 .search-card {
@@ -118,9 +140,9 @@ body {
     padding: clamp(28px, 4vw, 40px);
     border-radius: 24px;
     backdrop-filter: blur(18px);
-    background: linear-gradient(135deg, rgba(25, 30, 35, 0.78), rgba(31, 32, 33, 0.65));
-    border: 1px solid rgba(232, 232, 232, 0.12);
-    box-shadow: 0 30px 70px rgba(0, 0, 0, 0.45);
+    background: linear-gradient(135deg, var(--canva-glass-start), var(--canva-glass-end));
+    border: 1px solid var(--canva-border-soft);
+    box-shadow: var(--canva-shadow-strong);
 }
 
 .search-card h2 {
@@ -128,7 +150,7 @@ body {
     font-size: clamp(1.25rem, 2.5vw, 1.75rem);
     text-transform: uppercase;
     letter-spacing: 0.2em;
-    color: rgba(232, 232, 232, 0.85);
+    color: var(--canva-light-85);
 }
 
 .search-input-group {
@@ -139,8 +161,8 @@ body {
     width: 100%;
     padding: 18px 56px 18px 26px;
     border-radius: 16px;
-    border: 1px solid rgba(232, 232, 232, 0.15);
-    background: rgba(15, 17, 18, 0.82);
+    border: 1px solid color-mix(in srgb, var(--color-text-inverse) 15%, transparent);
+    background: color-mix(in srgb, var(--scrim-base) 82%, transparent);
     color: var(--canva-light);
     font-size: 1.1rem;
     font-family: 'CodecPro', 'Segoe UI', sans-serif;
@@ -149,14 +171,14 @@ body {
 }
 
 .search-input::placeholder {
-    color: rgba(232, 232, 232, 0.35);
+    color: var(--canva-light-35);
     letter-spacing: 0.08em;
 }
 
 .search-input:focus {
     outline: none;
-    border-color: rgba(232, 232, 232, 0.45);
-    box-shadow: 0 0 0 3px rgba(232, 232, 232, 0.12);
+    border-color: color-mix(in srgb, var(--color-text-inverse) 45%, transparent);
+    box-shadow: 0 0 0 calc(var(--space-unit) * 0.375) var(--canva-border-soft);
 }
 
 .search-button {
@@ -171,15 +193,15 @@ body {
     cursor: pointer;
     font-weight: 600;
     color: var(--canva-light);
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.18), rgba(232, 232, 232, 0.05));
-    border: 1px solid rgba(232, 232, 232, 0.3);
+    background: linear-gradient(135deg, color-mix(in srgb, var(--color-text-inverse) 18%, transparent), color-mix(in srgb, var(--color-text-inverse) 5%, transparent));
+    border: 1px solid color-mix(in srgb, var(--color-text-inverse) 30%, transparent);
     transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
 }
 
 .search-button:hover {
     transform: translateY(-2px);
-    box-shadow: 0 14px 30px rgba(0, 0, 0, 0.35);
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.34), rgba(232, 232, 232, 0.1));
+    box-shadow: 0 calc(var(--space-unit) * 1.75) calc(var(--space-unit) * 3.75) color-mix(in srgb, black 35%, transparent);
+    background: linear-gradient(135deg, var(--canva-light-34), var(--canva-light-10));
 }
 
 .search-button:active {
@@ -199,7 +221,7 @@ body {
     right: 36px;
     width: 18px;
     height: 18px;
-    border: 2px solid rgba(232, 232, 232, 0.45);
+    border: 2px solid var(--canva-light-45);
     border-top-color: transparent;
     border-radius: 50%;
     animation: spin 0.8s linear infinite;
@@ -219,7 +241,7 @@ body {
     font-size: 0.85rem;
     letter-spacing: 0.4em;
     text-transform: uppercase;
-    color: rgba(232, 232, 232, 0.3);
+    color: var(--canva-light-30);
 }
 
 .hero__footer img {
@@ -230,7 +252,7 @@ body {
 .results-container {
     position: fixed;
     inset: 0;
-    background: rgba(10, 12, 14, 0.92);
+    background: color-mix(in srgb, var(--scrim-base) 92%, transparent);
     z-index: 10;
     display: none;
     padding: clamp(32px, 6vw, 64px) clamp(18px, 6vw, 80px);
@@ -238,8 +260,8 @@ body {
 }
 
 .results-content {
-    background: rgba(18, 20, 22, 0.9);
-    border: 1px solid rgba(232, 232, 232, 0.08);
+    background: var(--canva-deep-panel);
+    border: 1px solid var(--canva-border-soft);
     border-radius: 28px;
     padding: clamp(28px, 4vw, 48px);
     color: var(--canva-light);
@@ -252,7 +274,7 @@ body {
     right: 18px;
     background: none;
     border: none;
-    color: rgba(232, 232, 232, 0.55);
+    color: var(--canva-light-55);
     font-size: 1.8rem;
     cursor: pointer;
 }
@@ -269,13 +291,13 @@ body {
 }
 
 .summary-card {
-    background: linear-gradient(135deg, rgba(48, 66, 84, 0.35), rgba(24, 26, 28, 0.85));
-    border: 1px solid rgba(232, 232, 232, 0.14);
+    background: linear-gradient(135deg, var(--canva-accent-wash), color-mix(in srgb, var(--scrim-base) 85%, transparent));
+    border: 1px solid color-mix(in srgb, var(--color-text-inverse) 14%, transparent);
     border-radius: 24px;
     padding: clamp(24px, 4vw, 36px);
     display: grid;
     gap: 24px;
-    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.28);
+    box-shadow: 0 calc(var(--space-unit) * 2.25) calc(var(--space-unit) * 5) color-mix(in srgb, black 28%, transparent);
 }
 
 .summary-header h3 {
@@ -287,7 +309,7 @@ body {
 
 .summary-header p {
     margin: 0;
-    color: rgba(232, 232, 232, 0.6);
+    color: var(--canva-light-60);
     letter-spacing: 0.08em;
 }
 
@@ -295,7 +317,7 @@ body {
     text-transform: uppercase;
     letter-spacing: 0.28em;
     font-size: 0.75rem;
-    color: rgba(232, 232, 232, 0.5);
+    color: var(--canva-light-50);
 }
 
 .summary-metrics {
@@ -308,8 +330,8 @@ body {
     display: flex;
     flex-direction: column;
     gap: 6px;
-    background: rgba(15, 18, 20, 0.58);
-    border: 1px solid rgba(232, 232, 232, 0.08);
+    background: color-mix(in srgb, var(--scrim-base) 58%, transparent);
+    border: 1px solid var(--canva-border-soft);
     border-radius: 16px;
     padding: 14px 18px;
 }
@@ -318,13 +340,13 @@ body {
     font-size: 0.75rem;
     text-transform: uppercase;
     letter-spacing: 0.18em;
-    color: rgba(232, 232, 232, 0.55);
+    color: var(--canva-light-55);
 }
 
 .metric-value {
     font-size: 1.1rem;
     letter-spacing: 0.06em;
-    color: rgba(232, 232, 232, 0.9);
+    color: var(--canva-light-90);
 }
 
 .results-grid {
@@ -334,8 +356,8 @@ body {
 }
 
 .result-section {
-    background: rgba(48, 66, 84, 0.22);
-    border: 1px solid rgba(232, 232, 232, 0.08);
+    background: color-mix(in srgb, var(--canva-accent) 22%, transparent);
+    border: 1px solid var(--canva-border-soft);
     border-radius: 20px;
     padding: 24px;
 }
@@ -351,9 +373,9 @@ body {
     flex-direction: column;
     gap: 16px;
     padding: 16px 0;
-    border-bottom: 1px solid rgba(232, 232, 232, 0.08);
+    border-bottom: 1px solid var(--canva-border-soft);
     letter-spacing: 0.02em;
-    color: rgba(232, 232, 232, 0.85);
+    color: var(--canva-light-85);
 }
 
 .keyword-item:last-child {
@@ -375,7 +397,7 @@ body {
     font-size: 0.75rem;
     text-transform: uppercase;
     letter-spacing: 0.18em;
-    color: rgba(232, 232, 232, 0.4);
+    color: var(--canva-light-40);
 }
 
 .keyword-metrics {
@@ -388,8 +410,8 @@ body {
     display: flex;
     flex-direction: column;
     gap: 4px;
-    background: rgba(15, 18, 20, 0.45);
-    border: 1px solid rgba(232, 232, 232, 0.07);
+    background: color-mix(in srgb, var(--scrim-base) 45%, transparent);
+    border: 1px solid color-mix(in srgb, var(--color-text-inverse) 7%, transparent);
     border-radius: 12px;
     padding: 10px 12px;
 }
@@ -398,20 +420,20 @@ body {
     font-size: 0.7rem;
     letter-spacing: 0.16em;
     text-transform: uppercase;
-    color: rgba(232, 232, 232, 0.5);
+    color: var(--canva-light-50);
 }
 
 .keyword-metric-value {
     font-size: 0.95rem;
     letter-spacing: 0.04em;
-    color: rgba(232, 232, 232, 0.88);
+    color: var(--canva-light-88);
 }
 
 .results-empty {
     padding: 32px;
     border-radius: 20px;
-    background: rgba(15, 18, 20, 0.6);
-    border: 1px solid rgba(232, 232, 232, 0.08);
+    background: color-mix(in srgb, var(--scrim-base) 60%, transparent);
+    border: 1px solid var(--canva-border-soft);
     text-align: center;
     letter-spacing: 0.08em;
 }

@@ -1,0 +1,90 @@
+/* Auto-generated from design/design.md — do not edit manually. */
+export const designTokens = {
+  "dark": {
+    "--color-bg-canvas": "#1E2A36",
+    "--color-bg-surface": "rgba(44, 60, 79, 0.92)",
+    "--color-border-strong": "rgba(88, 223, 255, 0.35)",
+    "--color-border-subtle": "rgba(232, 246, 255, 0.06)",
+    "--color-text-primary": "#E8F6FF",
+    "--color-text-secondary": "#A0A6AD",
+    "--elevation-1": "-2px 2px 6px rgba(255, 255, 255, 0.08)",
+    "--elevation-2": "-4px 4px 12px rgba(255, 255, 255, 0.12)",
+    "--elevation-3": "-6px 6px 18px rgba(255, 255, 255, 0.16)",
+    "--elevation-4": "-8px 8px 24px rgba(255, 255, 255, 0.20)",
+    "--focus-ring-color": "rgba(88, 223, 255, 0.7)"
+  },
+  "light": {
+    "--color-accent-glow": "#58DFFF",
+    "--color-accent-pressed": "#0092C4",
+    "--color-accent-primary": "#00B8F4",
+    "--color-bg-canvas": "#F8FAFC",
+    "--color-bg-surface": "rgba(255, 255, 255, 0.92)",
+    "--color-border-strong": "rgba(0, 184, 244, 0.25)",
+    "--color-border-subtle": "rgba(84, 106, 130, 0.10)",
+    "--color-error": "#FF6767",
+    "--color-success": "#54E1B1",
+    "--color-text-inverse": "#E8F6FF",
+    "--color-text-primary": "#1E2A36",
+    "--color-text-secondary": "#4A637D",
+    "--color-warning": "#F6B56A",
+    "--easing-emphasis": "cubic-bezier(0.4, 0, 0.2, 1)",
+    "--easing-standard": "cubic-bezier(0.2, 0.8, 0.4, 1)",
+    "--elevation-0": "none",
+    "--elevation-1": "-2px 2px 6px rgba(0, 0, 0, 0.15)",
+    "--elevation-2": "-4px 4px 12px rgba(0, 0, 0, 0.22)",
+    "--elevation-3": "-6px 6px 18px rgba(0, 0, 0, 0.30)",
+    "--elevation-4": "-8px 8px 24px rgba(0, 0, 0, 0.38)",
+    "--focus-ring-color": "rgba(88, 223, 255, 0.5)",
+    "--focus-ring-width": "4px",
+    "--font-body-size": "1rem",
+    "--font-family-base": "\"Inter\", \"Helvetica Neue\", sans-serif",
+    "--font-family-numeric": "\"Roboto Mono\", monospace",
+    "--font-h1-size": "1.75rem",
+    "--font-h2-size": "1.5rem",
+    "--font-h3-size": "1.25rem",
+    "--font-label-size": "0.8125rem",
+    "--font-numeric-size": "0.875rem",
+    "--glow-inner-radius": "6px",
+    "--line-height-base": "1.6",
+    "--line-height-tight": "1.25",
+    "--motion-fast": "100ms",
+    "--motion-medium": "180ms",
+    "--motion-slow": "240ms",
+    "--radius-lg": "16px",
+    "--radius-md": "12px",
+    "--radius-sm": "8px",
+    "--radius-xs": "4px",
+    "--scrim-base": "#050B14",
+    "--scrim-strong": "color-mix(in srgb, var(--scrim-base) 80%, transparent)",
+    "--space-unit": "8px"
+  },
+  "modes": {
+    "atlantis": {
+      "--color-accent-glow": "#7AE1FF",
+      "--color-accent-primary": "#19B5E8",
+      "--color-bg-surface": "rgba(255, 255, 255, 0.94)",
+      "--color-border-strong": "rgba(25, 181, 232, 0.28)",
+      "--color-text-primary": "#1E2734",
+      "--reflection-tint": "rgba(108, 124, 142, 0.22)"
+    },
+    "atlantisDark": {
+      "--color-accent-glow": "#58DFFF",
+      "--color-accent-primary": "#00B8F4",
+      "--color-bg-surface": "rgba(36, 48, 64, 0.94)",
+      "--color-text-primary": "#E6F4FF"
+    }
+  }
+} as const;
+
+export type DesignTokenCategory = keyof typeof designTokens;
+export type DesignTokenName = keyof typeof designTokens.light;
+
+export const designMetadata = {
+  "compliance": "Enterprise Light Mode Standard",
+  "last_evaluated": "2025-10-09",
+  "source": "design/design.md",
+  "version": "1.0.0"
+} as const;
+
+export const VISUAL_MODE_ATTRIBUTE = 'data-visual-mode';
+export const VISUAL_MODES = ['atlantis'] as const;

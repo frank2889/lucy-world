@@ -42,13 +42,13 @@
 
 .platform-sidebar__item:hover,
 .platform-sidebar__item:focus {
-  background: rgba(255, 255, 255, 0.05);
+  background: color-mix(in srgb, var(--color-bg-surface) 12%, transparent);
   border-color: var(--line);
   outline: none;
 }
 
 .platform-sidebar__item--active {
-  background: rgba(110, 231, 183, 0.12);
+  background: color-mix(in srgb, var(--color-success) 12%, transparent);
   border-color: var(--accent);
   color: var(--accent);
 }
@@ -60,7 +60,7 @@
   align-items: center;
   justify-content: center;
   border-radius: 6px;
-  background: rgba(255, 255, 255, 0.08);
+  background: color-mix(in srgb, var(--color-bg-surface) 16%, transparent);
 }
 
 .platform-sidebar__icon img {
@@ -83,7 +83,7 @@
   padding: 14px 16px;
   border: 1px solid var(--line);
   border-radius: 12px;
-  background: rgba(255, 255, 255, 0.04);
+  background: color-mix(in srgb, var(--color-bg-surface) 10%, transparent);
 }
 
 .sidebar-entitlements__heading {
@@ -131,7 +131,7 @@
   font-weight: 600;
   transition: background 0.2s ease, opacity 0.2s ease;
   background: var(--accent);
-  color: #0b0d10;
+  color: var(--text-on-accent);
 }
 
 .sidebar-entitlements__cta:hover,
@@ -153,5 +153,5 @@
 
 .sidebar-entitlements__error {
   font-size: 12px;
-  color: #f87171;
+  color: var(--color-error);
 }

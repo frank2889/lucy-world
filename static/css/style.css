@@ -1,3 +1,5 @@
+@import url("design-tokens.css");
+
 /* ========================================
     PREMIUM KEYWORD RESEARCH TOOL - MAIN STYLES
     ======================================== */
@@ -9,11 +11,34 @@
     box-sizing: border-box;
 }
 
+:root {
+    --legacy-hero-accent: color-mix(in srgb, var(--color-accent-primary) 65%, var(--color-accent-glow) 35%);
+    --legacy-hero-accent-strong: color-mix(in srgb, var(--color-accent-primary) 78%, var(--color-accent-glow) 22%);
+    --legacy-hero-shadow: 0 calc(var(--space-unit) * 1.5) calc(var(--space-unit) * 4.375) color-mix(in srgb, var(--color-accent-primary) 38%, transparent);
+    --legacy-hero-shadow-strong: 0 calc(var(--space-unit) * 2.25) calc(var(--space-unit) * 5.625) color-mix(in srgb, var(--color-accent-primary) 50%, transparent);
+    --legacy-panel-surface: color-mix(in srgb, var(--color-bg-surface) 92%, transparent);
+    --legacy-panel-border: color-mix(in srgb, var(--color-border-strong) 40%, transparent);
+    --legacy-panel-glass: color-mix(in srgb, var(--color-bg-surface) 85%, transparent);
+    --legacy-panel-glass-soft: color-mix(in srgb, var(--color-bg-surface) 80%, transparent);
+    --legacy-deep-space: color-mix(in srgb, var(--scrim-base) 90%, transparent);
+    --legacy-text-soft: color-mix(in srgb, var(--color-text-inverse) 75%, transparent);
+    --legacy-text-subtle: color-mix(in srgb, var(--color-text-inverse) 70%, transparent);
+    --legacy-text-faint: color-mix(in srgb, var(--color-text-inverse) 60%, transparent);
+    --legacy-divider: color-mix(in srgb, var(--color-border-strong) 18%, transparent);
+    --legacy-divider-light: color-mix(in srgb, var(--color-border-strong) 12%, transparent);
+    --legacy-panel-bright: color-mix(in srgb, var(--color-bg-surface) 96%, transparent);
+    --legacy-shadow-medium: 0 calc(var(--space-unit) * 2.5) calc(var(--space-unit) * 5) color-mix(in srgb, black 30%, transparent);
+    --legacy-shadow-light: 0 calc(var(--space-unit) * 1.25) calc(var(--space-unit) * 3.75) color-mix(in srgb, black 18%, transparent);
+    --legacy-accent-shadow-soft: 0 calc(var(--space-unit) * 0.75) calc(var(--space-unit) * 3.125) color-mix(in srgb, var(--color-accent-primary) 30%, transparent);
+    --legacy-accent-shadow-medium: 0 calc(var(--space-unit) * 1) calc(var(--space-unit) * 2.5) color-mix(in srgb, var(--color-accent-primary) 32%, transparent);
+    --legacy-accent-glow: color-mix(in srgb, var(--color-accent-primary) 25%, transparent);
+}
+
 body {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    line-height: 1.6;
-    color: #e8e8e8;
-    background: #1f2021 url('../img/scale-background.svg') no-repeat center center fixed;
+    font-family: var(--font-family-base);
+    line-height: var(--line-height-base);
+    color: var(--color-text-inverse);
+    background: var(--scrim-base) url('../img/scale-background.svg') no-repeat center center fixed;
     background-size: cover;
     min-height: 100vh;
     margin: 0;
@@ -25,7 +50,7 @@ body {
    ======================================== */
 
 .hero-section {
-    background: #1f2021 url('../img/scale-background.svg') no-repeat center center;
+    background: var(--scrim-base) url('../img/scale-background.svg') no-repeat center center;
     background-size: cover;
     min-height: 100vh;
     position: relative;
@@ -48,7 +73,7 @@ body {
 }
 
 .hero-left {
-    color: #e8e8e8;
+    color: var(--color-text-inverse);
 }
 
 .hero-subtitle {
@@ -60,7 +85,7 @@ body {
 .hero-subtitle h6 {
     font-size: 1.1em;
     font-weight: 400;
-    color: #bbb;
+    color: var(--legacy-text-soft);
     margin: 0;
     text-transform: uppercase;
     letter-spacing: 1px;
@@ -94,7 +119,7 @@ body {
 
 .text-line:nth-child(2) {
     animation-delay: 0.6s;
-    color: #ff0037;
+    color: var(--legacy-hero-accent);
 }
 
 .hero-buttons {
@@ -110,15 +135,15 @@ body {
 
 .btn-primary {
     padding: 18px 35px;
-    background: linear-gradient(135deg, #ff0037 0%, #ff0037 100%);
-    color: #e8e8e8;
+    background: linear-gradient(135deg, var(--legacy-hero-accent) 0%, var(--legacy-hero-accent-strong) 100%);
+    color: var(--color-text-inverse);
     border: none;
     border-radius: 12px;
     font-size: 16px;
     font-weight: 600;
     cursor: pointer;
     transition: all 0.3s ease;
-    box-shadow: 0 8px 25px rgba(255, 107, 53, 0.4);
+    box-shadow: var(--legacy-hero-shadow);
     text-decoration: none;
     display: inline-flex;
     align-items: center;
@@ -127,12 +152,12 @@ body {
 
 .btn-primary:hover {
     transform: translateY(-3px);
-    box-shadow: 0 12px 35px rgba(255, 107, 53, 0.5);
-    background: linear-gradient(135deg, #ff0037 0%, #ff0037 100%);
+    box-shadow: var(--legacy-hero-shadow-strong);
+    background: linear-gradient(135deg, var(--legacy-hero-accent) 0%, var(--legacy-hero-accent-strong) 100%);
 }
 
 .scroll-button {
-    color: #ff0037;
+    color: var(--legacy-hero-accent);
     text-decoration: none;
     font-weight: 600;
     font-size: 16px;
@@ -142,7 +167,7 @@ body {
 }
 
 .scroll-button:hover {
-    color: #ff0037;
+    color: var(--legacy-hero-accent-strong);
 }
 
 .scroll-button::after {
@@ -152,7 +177,7 @@ body {
     left: 0;
     width: 100%;
     height: 2px;
-    background: #ff0037;
+    background: var(--legacy-hero-accent);
     transform: scaleX(0);
     transition: transform 0.3s ease;
 }
@@ -195,20 +220,22 @@ body {
     max-width: 1200px;
     margin: 0 auto;
     padding: 20px;
-    background: rgba(232, 232, 232, 0.95);
+    background: var(--legacy-panel-bright);
+    color: var(--color-text-primary);
     backdrop-filter: blur(10px);
     border-radius: 20px;
-    box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+    box-shadow: var(--legacy-shadow-medium);
     position: relative;
     z-index: 2;
 }
 
 .data-sources-bar {
-    background: rgba(232, 232, 232, 0.95);
-    color: #1f2021;
+    background: var(--legacy-panel-bright);
+    color: var(--color-text-primary);
     padding: 20px;
     border-radius: 15px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    box-shadow: var(--legacy-shadow-light);
+    border: 1px solid var(--legacy-divider);
     margin: -30px 20px 30px 20px;
     position: relative;
     z-index: 3;
@@ -224,33 +251,33 @@ body {
    ======================================== */
 
 .premium-badge {
-    background: #ff0037;
-    color: #e8e8e8;
+    background: var(--legacy-hero-accent-strong);
+    color: var(--color-text-inverse);
     padding: 5px 15px;
     border-radius: 20px;
     font-weight: bold;
     display: inline-block;
     margin-bottom: 15px;
     animation: pulse 2s infinite;
-    box-shadow: 0 4px 15px rgba(255, 107, 53, 0.3);
+    box-shadow: var(--legacy-accent-shadow-soft);
 }
 
 .data-sources {
-    background: rgba(255,255,255,0.1);
+    background: color-mix(in srgb, var(--color-text-inverse) 12%, transparent);
     padding: 15px;
     border-radius: 10px;
-    color: #e8e8e8;
+    color: var(--color-text-inverse);
     text-align: center;
 }
 
 .premium-indicator {
-    background: #ff0037;
-    color: #e8e8e8;
+    background: var(--legacy-hero-accent);
+    color: var(--color-text-inverse);
     padding: 3px 8px;
     border-radius: 12px;
     font-size: 0.7em;
     font-weight: bold;
-    box-shadow: 0 2px 8px rgba(255, 107, 53, 0.3);
+    box-shadow: var(--legacy-accent-shadow-medium);
 }
 
 /* ========================================
@@ -258,10 +285,11 @@ body {
    ======================================== */
 
 .search-section {
-    background: #e8e8e8;
+    background: var(--legacy-panel-bright);
     padding: 30px;
     border-radius: 15px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    box-shadow: var(--legacy-shadow-light);
+    border: 1px solid var(--legacy-divider);
     margin-bottom: 30px;
 }
 
@@ -272,37 +300,40 @@ body {
     margin-bottom: 20px;
 }
 
+
 .search-input {
     flex: 1;
     padding: 15px;
     font-size: 16px;
-    border: 2px solid #e0e0e0;
+    border: 2px solid var(--legacy-panel-border);
     border-radius: 10px;
     transition: all 0.3s ease;
+    background: var(--color-bg-surface);
+    color: var(--color-text-primary);
 }
 
 .search-input:focus {
     outline: none;
-    border-color: #ff0037;
-    box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.1);
+    border-color: var(--color-accent-primary);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-accent-primary) 18%, transparent);
 }
 
 .search-btn {
     padding: 15px 30px;
-    background: linear-gradient(135deg, #ff0037 0%, #ff0037 100%);
-    color: #e8e8e8;
+    background: linear-gradient(135deg, var(--legacy-hero-accent) 0%, var(--legacy-hero-accent-strong) 100%);
+    color: var(--color-text-inverse);
     border: none;
     border-radius: 10px;
     font-size: 16px;
     cursor: pointer;
     transition: all 0.3s ease;
-    box-shadow: 0 4px 15px rgba(255, 107, 53, 0.3);
+    box-shadow: var(--legacy-accent-shadow-soft);
 }
 
 .search-btn:hover {
     transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(255, 107, 53, 0.4);
-    background: linear-gradient(135deg, #ff0037 0%, #ff0037 100%);
+    box-shadow: var(--legacy-accent-shadow-medium);
+    background: linear-gradient(135deg, var(--legacy-hero-accent) 0%, var(--legacy-hero-accent-strong) 100%);
 }
 
 .search-btn:disabled {
@@ -319,15 +350,15 @@ body {
     display: none;
     text-align: center;
     padding: 40px;
-    color: #ff0037;
+    color: var(--legacy-hero-accent-strong);
 }
 
 .spinner {
     display: inline-block;
     width: 40px;
     height: 40px;
-    border: 4px solid #f3f3f3;
-    border-top: 4px solid #ff0037;
+    border: 4px solid var(--legacy-panel-glass);
+    border-top: 4px solid var(--legacy-hero-accent-strong);
     border-radius: 50%;
     animation: spin 1s linear infinite;
     margin-bottom: 20px;
@@ -342,14 +373,14 @@ body {
 }
 
 .trends-info {
-    background: linear-gradient(135deg, #1f2021 0%, #1f2021 100%);
-    color: #e8e8e8;
+    background: linear-gradient(135deg, var(--scrim-base) 0%, var(--scrim-strong) 100%);
+    color: var(--color-text-inverse);
     padding: 20px;
     border-radius: 15px;
     margin-bottom: 20px;
     text-align: center;
-    border: 1px solid rgba(255, 107, 53, 0.2);
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    border: 1px solid color-mix(in srgb, var(--legacy-hero-accent) 35%, transparent);
+    box-shadow: var(--legacy-shadow-light);
 }
 
 .trends-info h3 {
@@ -363,23 +394,27 @@ body {
     margin-bottom: 30px;
 }
 
+
 .stat-card {
-    background: #e8e8e8;
+    background: var(--legacy-panel-bright);
     padding: 20px;
     border-radius: 10px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    box-shadow: var(--legacy-shadow-light);
     text-align: center;
+    border: 1px solid var(--legacy-divider-light);
 }
+
 
 .stat-number {
     font-size: 1.8em;
     font-weight: bold;
-    color: #1f2021;
+    color: var(--color-text-primary);
     display: block;
 }
 
+
 .stat-label {
-    color: #666;
+    color: var(--color-text-secondary);
     font-size: 0.85em;
 }
 
@@ -394,41 +429,47 @@ body {
     margin-bottom: 30px;
 }
 
+
 .category-card {
-    background: #e8e8e8;
+    background: var(--legacy-panel-bright);
     border-radius: 10px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    box-shadow: var(--legacy-shadow-light);
     overflow: hidden;
+    border: 1px solid var(--legacy-divider-light);
 }
 
+
 .category-header {
-    background: linear-gradient(135deg, #1f2021 0%, #1f2021 100%);
-    color: #e8e8e8;
+    background: linear-gradient(135deg, var(--scrim-base) 0%, var(--scrim-strong) 100%);
+    color: var(--color-text-inverse);
     padding: 20px;
     font-weight: 600;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-bottom: 3px solid #ff0037;
+    border-bottom: 3px solid var(--legacy-hero-accent-strong);
 }
 
+
 .real-data-badge {
-    background: rgba(255,255,255,0.2);
+    background: color-mix(in srgb, var(--color-text-inverse) 18%, transparent);
     padding: 2px 8px;
     border-radius: 10px;
     font-size: 0.8em;
+    color: var(--color-text-inverse);
 }
 
 .category-content {
     padding: 20px;
 }
 
+
 .keyword-item {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 12px 0;
-    border-bottom: 1px solid #f0f0f0;
+    border-bottom: 1px solid var(--legacy-divider);
 }
 
 .keyword-item:last-child {
@@ -465,41 +506,44 @@ body {
 }
 
 .source-real {
-    background: #ff0037;
-    color: #e8e8e8;
+    background: var(--legacy-hero-accent);
+    color: var(--color-text-inverse);
 }
 
 .source-generated {
-    background: #1f2021;
-    color: #e8e8e8;
+    background: var(--scrim-base);
+    color: var(--color-text-inverse);
 }
 
 /* ========================================
    METRIC COLORS
    ======================================== */
 
-.volume-high { color: #e74c3c; }
-.volume-medium { color: #f39c12; }
-.volume-low { color: #95a5a6; }
+.volume-high { color: var(--color-error); }
+.volume-medium { color: var(--color-warning); }
+.volume-low { color: var(--color-text-secondary); }
 
-.difficulty-low { color: #28a745; }
-.difficulty-medium { color: #f39c12; }
-.difficulty-high { color: #e74c3c; }
+.difficulty-low { color: var(--color-success); }
+.difficulty-medium { color: var(--color-warning); }
+.difficulty-high { color: var(--color-error); }
 
 /* ========================================
    OPPORTUNITIES SECTION
    ======================================== */
 
+
 .opportunities {
-    background: #e8e8e8;
+    background: var(--legacy-panel-bright);
     border-radius: 10px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    box-shadow: var(--legacy-shadow-light);
+    border: 1px solid var(--legacy-divider-light);
     padding: 20px;
     margin-bottom: 20px;
 }
 
+
 .opportunities h3 {
-    color: #1f2021;
+    color: var(--color-text-primary);
     margin-bottom: 20px;
     text-align: center;
     font-weight: 600;
@@ -511,11 +555,12 @@ body {
     gap: 20px;
 }
 
+
 .opp-section h4 {
-    color: #1f2021;
+    color: var(--color-text-primary);
     margin-bottom: 10px;
     padding-bottom: 5px;
-    border-bottom: 2px solid #ff0037;
+    border-bottom: 2px solid var(--legacy-hero-accent);
     font-weight: 600;
 }
 
@@ -530,45 +575,50 @@ body {
 
 .export-btn {
     padding: 12px 25px;
-    background: linear-gradient(135deg, #1f2021 0%, #1f2021 100%);
-    color: #e8e8e8;
-    border: 2px solid #ff0037;
+    background: linear-gradient(135deg, var(--scrim-base) 0%, var(--scrim-strong) 100%);
+    color: var(--color-text-inverse);
+    border: 2px solid var(--legacy-hero-accent);
     border-radius: 8px;
     cursor: pointer;
     font-size: 14px;
     font-weight: 600;
     transition: all 0.3s ease;
+    box-shadow: var(--legacy-shadow-light);
 }
 
 .export-btn:hover {
-    background: linear-gradient(135deg, #ff0037 0%, #ff0037 100%);
-    border-color: #ff0037;
+    background: linear-gradient(135deg, var(--legacy-hero-accent) 0%, var(--legacy-hero-accent-strong) 100%);
+    border-color: var(--legacy-hero-accent-strong);
     transform: translateY(-2px);
-    box-shadow: 0 4px 15px rgba(255, 107, 53, 0.3);
+    box-shadow: var(--legacy-accent-shadow-medium);
 }
 
 /* ========================================
    ERROR HANDLING
    ======================================== */
 
+
 .error {
-    background: #e74c3c;
-    color: #e8e8e8;
+    background: var(--color-error);
+    color: var(--color-text-inverse);
     padding: 15px;
     border-radius: 8px;
     margin: 20px 0;
     display: none;
+    box-shadow: var(--legacy-shadow-light);
 }
 
+
 .cost-display {
-    background: linear-gradient(135deg, #27ae60, #2ecc71);
-    color: #e8e8e8;
+    background: linear-gradient(135deg, color-mix(in srgb, var(--color-success) 92%, transparent) 0%, var(--color-success) 100%);
+    color: var(--color-text-inverse);
     padding: 15px;
     border-radius: 10px;
     text-align: center;
     margin-bottom: 20px;
     font-weight: bold;
     font-size: 1.2em;
+    box-shadow: var(--legacy-shadow-light);
 }
 
 /* ========================================

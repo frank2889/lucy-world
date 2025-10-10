@@ -1,4 +1,43 @@
 # Lucy.world Changelog
+<!-- markdownlint-disable MD013 -->
+
+## 2025-10-10 (Legacy CSS Tokenization)
+
+### Changed — Static Premium Tool Styling
+
+- Completed the migration of `static/css/style.css` to the canonical
+  design tokens, replacing all literal HEX/RGB values with derived
+  helpers and palette references.
+- Introduced reusable legacy helpers (hero accents, panel surfaces,
+  shadow presets) that mix existing tokens to support the static tool
+  layout while we retire legacy selectors.
+
+### Documentation — Design Governance
+
+- Updated `design/design.md` with a "Legacy Surface Adoption" section
+  outlining the approved helper variables and the requirement to import
+  the compiler-synchronized `static/css/design-tokens.css` in every
+  static asset.
+
+## 2025-10-09 (Design Governance Consolidation)
+
+### Changed — Design System Source of Truth
+
+- Relocated the canonical design specification to `design/design.md`
+  and established `/design` as the automation workspace.
+- Replaced `docs/DESIGN.md` with a pointer file so legacy links now
+  forward to the canonical spec without duplicating content.
+- Generated the derived artefacts (`tokens.json`, `variables.css`,
+  `theme.ts`, and `renderer.config.json`) via `python3
+  design/compile_design.py` to verify the new pipeline.
+
+### Added — Automation & Governance
+
+- Authored `design/compile_design.py`, a parser that produces the
+  required artefacts, tracks legacy exemptions, and logs build steps.
+- Captured compilation outputs and governance metadata under
+  `/design`, including `build.log` and `legacy_exemptions.yaml`.
+
 
 ## 2025-10-08 (Language Equality & Clean Design Philosophy)
 
@@ -26,7 +65,8 @@
 
 ### Documentation — Design Philosophy
 
-- **NEW:** Created `docs/DESIGN.md` with Lucy World's clean, professional design philosophy
+- **NEW:** Created the design philosophy spec (initially `docs/DESIGN.md`,
+  now relocated to `design/design.md` as the canonical source)
 - **Core principle:** Daily-use business tool, not flashy marketing site
 - **Guidelines:** No gradients, minimal animations, flat surfaces, data-first layouts
 - **Enterprise focus:** Reliability, clarity, consistency over novelty

@@ -1,6 +1,18 @@
 # DoD Implementation Plan - October 8, 2025
+<!-- markdownlint-disable MD013 MD031 MD009 MD040 -->
 
 ## Status: 2/70 Complete
+
+### 🎨 Design Governance Gate (Applies to Every Task)
+- The canonical specification lives at `design/design.md`; treat it as the
+  single source of truth for any visual, motion, or spectral change.
+- Before marking any DoD item ✅, run
+  `python3 design/compile_design.py` to regenerate
+  `design/tokens.json`, `design/variables.css`, `design/theme.ts`, and
+  `design/renderer.config.json`, then include the regenerated artefacts in
+  the commit.
+- Direct edits to generated artefacts are prohibited—update
+  `design/design.md`, recompile, and verify.
 
 ### ✅ Completed
 1. Search error differentiation (network/timeout/no-results)

@@ -1,0 +1,71 @@
+{
+  "ambient_response": {
+    "Ambient vignette": "radial 15\u00b0, 0.08 opacity",
+    "Bloom radius": "12\u202fpx",
+    "Bloom threshold": "0.72",
+    "Reflection tint": "`#6C7C8E` @ 0.18"
+  },
+  "edge_seams": [
+    "Draw 1\u202fpx cyan seams (`rgba(0, 184, 244, 0.2)`) along card, modal,",
+    "Animate seams on interaction with a 6\u202fs travelling highlight at 15%",
+    "Keep the light direction locked to the global vector (25\u00b0 NE).",
+    "Merge overlapping seams additively but clamp combined opacity at 0.3.",
+    "Limit each component to a single active seam animation at a time."
+  ],
+  "energy_logic": {
+    "field_state": {
+      "active": {
+        "emission": 0.18,
+        "pulse_rate": "0.6hz"
+      },
+      "disabled": {
+        "emission": 0.02
+      },
+      "focus": {
+        "emission": 0.12,
+        "pulse_rate": "0.3hz"
+      },
+      "idle": {
+        "emission": 0.06,
+        "pulse_rate": 0
+      }
+    }
+  },
+  "execution_guidelines": [
+    "Synchronize all pulses via a shared `phase_alignment` derived from",
+    "Quantize luminance and opacity shifts to 0.01 increments to avoid",
+    "Clamp emission values within `[0.00, 0.22]`; higher readings",
+    "Integrate light changes over 200\u202fms windows to eliminate flicker and",
+    "Mute emission whenever the logical subsystem reports idle or"
+  ],
+  "field_origin": {
+    "energy_origin": {
+      "coordinate_system": "top-left \u2192 bottom-right",
+      "directionality": "25deg NE",
+      "emission_center": "component centroid",
+      "phase_alignment": "global_time * 0.3hz"
+    }
+  },
+  "interaction_feedback": {
+    "Focus": "apply a 12\u202fpx halo (`rgba(88, 223, 255, 0.25)`) with a",
+    "Hover": "raise elevation by one level and brighten the edge seam to",
+    "Press": "compress elevation by one level and shrink the cyan halo by",
+    "Success/Error": "overlay a 0.5\u202fs pulse using mint or coral at 0.18"
+  },
+  "limits": {
+    "emission_max": 0.22,
+    "glow_coverage_max": 0.12
+  },
+  "metadata": {
+    "compliance": "Enterprise Light Mode Standard",
+    "last_evaluated": "2025-10-09",
+    "source": "design/design.md",
+    "version": "1.0.0"
+  },
+  "visual_modes": {
+    "attribute": "data-visual-mode",
+    "modes": [
+      "atlantis"
+    ]
+  }
+}
