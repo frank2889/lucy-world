@@ -1,8 +1,12 @@
 # Gunicorn configuration file - Optimized for DigitalOcean App Platform
 import os
+from pathlib import Path
+
+PROJECT_ROOT = Path(__file__).resolve().parent.parent
 
 bind = f"0.0.0.0:{os.environ.get('PORT', 8080)}"
 wsgi_app = "scripts.wsgi:app"
+chdir = str(PROJECT_ROOT)
 workers = 2  # Good for App Platform basic tier
 worker_class = "sync"
 worker_connections = 500
