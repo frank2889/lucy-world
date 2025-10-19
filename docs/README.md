@@ -1,72 +1,39 @@
-# Lucy.world Documentation Index
+# Documentation Hub
 
-Multilingual, privacy-first keyword intelligence SaaS.
+The project overview, status, and quick-start instructions now live in the
+repository root `README.md`. This file tracks documentation conventions and
+provides pointers for maintaining the guides under `docs/`.
 
-## Current Status (Oct 8, 2025)
+## Authoring Guidelines
 
-### Completed
-- Language equality system: All languages self-contained, no fallbacks
-- Billing UI integration: Plan cards, upgrade/credits buttons, sticky CTA
-- SMTP email: Gmail configured for magic link authentication
-- Design philosophy: Professional, daily-use tool aesthetic
-- Frontend bundle: All 18 platform tools updated
+- Keep lines under 80 characters and format fenced code blocks with blank lines
+  above and below.
+- Reference source files with relative paths (for example,
+  `scripts/auto-deploy.sh`).
+- When instructions duplicate across guides, push the canonical wording into
+  the root `README.md` or a single markdown file and link to it here.
+- Include change dates in headings when adding new operational rituals or
+  processes.
 
-### In Progress
-- Translation completion: Fill missing Dutch locale keys
-- Email testing: SMTP deployment verification
+## Filing Content
 
-### Planned
-- Fix "Zoeken mislukt" error state bug
-- Make search results interactive/clickable
-- Add search metrics
-- Skeleton loaders
-- Top navigation
-- Pricing page
-- Enterprise trust signals
+- Architecture, APIs, observability, and Definition of Done:
+  `docs/ARCHITECTURE.md`.
+- Deployment workflows, automation, and troubleshooting:
+  `docs/DEPLOYMENT-GUIDE.md`.
+- Billing and Stripe onboarding: `docs/BILLING-INTEGRATION.md`.
+- Release notes: `docs/CHANGELOG.md`.
+- DoD plan and session tracking: `docs/ARCHITECTURE.md` and `docs/PROGRESS.md`.
+- Localization standards: `docs/TRANSLATION_RULES.md` (with supporting
+  workflows in `scripts/README.md`).
+- SMTP setup and credential rotation: `docs/SMTP_SETUP.md`.
+- Support runbooks: `docs/support/entitlements.md` (add more under
+  `docs/support/` as needed).
 
-## Documentation Files
+## Updating Status Sections
 
-- `design/design.md` — Canonical design specification and automation
-  rules
-- `ARCHITECTURE.md` — System design, APIs, SEO, Definition of Done
-- `DEPLOYMENT-GUIDE.md` — Infrastructure, Gunicorn/Nginx, automation
-- `BILLING-INTEGRATION.md` — Stripe integration, entitlements, checkout
-- `CHANGELOG.md` — Release notes, updates, dates
-- `SMTP_SETUP.md` — Email configuration
-
-## Development Rules
-
-### Translation
-- Every user-facing string must be in `languages/{lang}/locale.json`
-- No hardcoded text in frontend components
-- No fallbacks between languages
-- Each language complete or shows `[MISSING: key]`
-
-### Design
-- No gradients
-- No animations except loading states
-- No shadows except minimal elevation
-- WCAG AA minimum contrast
-- 8px spacing grid
-- Professional appearance
-
-### Code
-- TypeScript strict mode
-- No console.error in production
-- Mobile-first responsive
-- Performance < 2s initial load
-
-## Release Checklist
-
-1. CRO worksheet documented
-2. Journey verification in staging
-3. Language sweep, no `[MISSING: *]` in production
-4. Accessibility check: WCAG AA, keyboard, screen reader
-5. Analytics verification
-
-## References
-
-- Latest status: CHANGELOG.md
-- Billing reference: github.com/stripe-samples
-- Design rules: design/design.md (canonical spec)
-- Translations: `languages/{lang}/locale.json`
+- Refresh the high-level project status in `README.md` after major milestones.
+- Append dated entries to `docs/CHANGELOG.md` rather than creating new summary
+  files.
+- When creating new documentation, add a brief pointer here so contributors can
+  discover it quickly.
