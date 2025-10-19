@@ -21,6 +21,8 @@ services:
     value: "1"
   - key: GUNICORN_CMD_ARGS
     value: "--config scripts/gunicorn.conf.py"
+  - key: APP_MODULE
+    value: "scripts.wsgi:app"
   - key: PUBLIC_BASE_URL
     value: "https://lucy.world"
   - key: DATABASE_URL
