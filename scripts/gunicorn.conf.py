@@ -14,10 +14,10 @@ preload_app = True
 reload = False
 
 # Logging
-accesslog = "-"
+# Disable Gunicorn access logs to reduce DigitalOcean runtime log volume.
+accesslog = None
 errorlog = "-"
 loglevel = "info"
-access_log_format = '%(h)s %(l)s %(u)s %(t)s "%(r)s" %(s)s %(b)s "%(f)s" "%(a)s" %(D)s'
 
 # Process naming
 proc_name = "lucy-world-search"
