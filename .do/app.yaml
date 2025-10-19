@@ -21,6 +21,8 @@ services:
     value: "1"
   - key: CACHE_DISABLED
     value: "true"
+  - key: APP_MODULE
+    value: "scripts.wsgi:app"
   - key: PUBLIC_BASE_URL
     value: "https://lucy.world"
   - key: DATABASE_URL
