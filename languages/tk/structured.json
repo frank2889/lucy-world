@@ -12,7 +12,7 @@
       "name": "Açar söz gözlegi - Lucy World",
       "url": "https://lucy.world/tk/",
       "inLanguage": "tk",
-      "description": "Lucy World tracks live search demand and AI clustering for Turkmen audiences so teams plan weekly campaigns and sustainable growth with confidence.",
+      "description": "Lucy World",
       "keywords": "açar söz gözlegi, SEO türkmen, Google Trends, teklipnamalar, gözleg göwrümi",
       "publisher": {
         "@type": "Organization",
@@ -21,11 +21,6 @@
       "author": {
         "@type": "Organization",
         "name": "Lucy World"
-      },
-      "potentialAction": {
-        "@type": "SearchAction",
-        "target": "https://lucy.world/tk/?q={search_term_string}",
-        "query-input": "required name=search_term_string"
       }
     },
     {
@@ -37,15 +32,14 @@
         "@type": "WebSite",
         "url": "https://lucy.world/tk/"
       },
-      "description": "Lucy World tracks live search demand and AI clustering for Turkmen audiences so teams plan weekly campaigns and sustainable growth with confidence.",
+      "description": "Lucy World",
       "keywords": "açar söz gözlegi, SEO türkmen, Google Trends, teklipnamalar, gözleg göwrümi",
       "aiSemantic": [
-        "Turkmen keyword research",
-        "Turkmen SEO insights",
-        "search trends platform",
-        "AI content planning",
-        "Turkmen market analysis",
-        "Lucy World intelligence"
+        "açar söz gözlegi",
+        "SEO türkmen",
+        "Google Trends",
+        "teklipnamalar",
+        "gözleg göwrümi"
       ]
     }
   ]

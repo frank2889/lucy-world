@@ -1,53 +1,8 @@
-# Lucy World Design System — Machine-Executable Specification
+# Design Specification – Enterprise Light Mode Dashboard
 
-Version: 1.0.0  
-Compliance: Enterprise Light Mode Standard  
-Last Evaluated: 2025-10-09
-
-> ⚙️ System Directive  
-> `design.md` is the **authoritative specification** for all derived
-> files. Any change to JSON, CSS, HTML, TS, shaders, or renderer
-> configuration must be **recompiled** from this document. Direct edits
-> outside this file are prohibited and void the design license.
-
-> 🛡️ Governance  
-> `design.md` holds design supremacy. Any file, module, or subsystem not
-> visually derived from this document must be altered, replaced, or
-> removed before deployment unless an approved legacy exemption is noted
-> below.
-
-> 📋 Delivery Integration  
-> The DoD Implementation Plan references this specification as a
-> mandatory gate. Before closing any DoD checklist item, teams must run
-> `python3 design/compile_design.py`, commit regenerated artefacts, and
-> document compliance in the plan.
-
-```css
-/* === COLOR TOKENS (LOCKED) === */
---color-bg-base: #F9FAFB;
---color-bg-surface: #FFFFFF;
---color-border-neutral: #D0D0D0;
---color-text-primary: #172B4D;
---color-text-secondary: #44546A;
---color-accent-primary: #007BC1;
---color-accent-hover: #0064A3;
---color-semantic-error: #D32F2F;
---color-semantic-success: #388E3C;
---color-semantic-warning: #FBC02D;
---color-shadow: rgba(0, 0, 0, 0.12);
-
-/* Derived system values */
---color-accent-disabled: color-mix(in srgb, var(--color-accent-primary) 40%, white);
---color-border-hover: color-mix(in srgb, var(--color-border-neutral) 60%, var(--color-accent-primary));
---color-focus-ring: var(--color-accent-primary);
-```
-
-All visual components must reference these tokens only.  
-Direct HEX or RGB values are prohibited.
-
-This specification defines the Enterprise Light Mode palette.  
-Any dark mode conversion must follow luminance inversion mapping:  
-base ↔ text-secondary, surface ↔ text-primary, accent-primary ↔ #58C7F2.
+> Canonical source for Lucy World 2025 light-mode experience.
+> Regenerate `tokens.json`, `variables.css`, `theme.ts`,
+> and `renderer.config.json` after any edit.
 
 ## Authority & Derivation
 

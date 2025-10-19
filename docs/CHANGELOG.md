@@ -115,7 +115,7 @@
 ### Technical Debt Identified
 
 - Frontend bundle may not be rebuilt after recent App.tsx changes - requires `npm run build` in `frontend/` directory.
-- Backend deployment may need restart to serve updated static assets from `static/app/`.
+- Backend deployment may need restart to serve updated frontend assets from `app/`.
 - GitHub Actions deployment workflow may require manual trigger or new commit to deploy latest changes.
 
 ## 2025-10-07 (UX & CRO sweep)

@@ -12,7 +12,7 @@
       "name": "Lucy World – ગુજરાત માટે સ્થાનિક શોધ વિશ્લેષણ",
       "url": "https://lucy.world/gu/",
       "inLanguage": "gu",
-      "description": "Lucy World tracks live search demand and AI clustering for Gujarati audiences so teams plan weekly campaigns and sustainable growth with confidence.",
+      "description": "Lucy World ઇંગલિશ પ્રેક્ષકો માટે ક્લસ્ટરીંગ અને AI ક્લસ્ટરીંગને ટ્ર cks ક્સ કરે છે જેથી ટીમો સાપ્તાહિક અભિયાનની યોજના બનાવે છે અને આત્મવિશ્વાસ સાથે ટકાઉ વિકાસ કરે છે.",
       "keywords": "ગુજરાતી કીવર્ડ્સ, SEO ગુજરાત, Google વલણો, શોધ વોલ્યુમ, AI વિશ્લેષણ, સ્થાનિક સામગ્રી વ્યૂહરચના",
       "publisher": {
         "@type": "Organization",
@@ -21,11 +21,6 @@
       "author": {
         "@type": "Organization",
         "name": "Lucy World"
-      },
-      "potentialAction": {
-        "@type": "SearchAction",
-        "target": "https://lucy.world/gu/?q={search_term_string}",
-        "query-input": "required name=search_term_string"
       }
     },
     {
@@ -37,15 +32,15 @@
         "@type": "WebSite",
         "url": "https://lucy.world/gu/"
       },
-      "description": "Lucy World tracks live search demand and AI clustering for Gujarati audiences so teams plan weekly campaigns and sustainable growth with confidence.",
+      "description": "Lucy World ઇંગલિશ પ્રેક્ષકો માટે ક્લસ્ટરીંગ અને AI ક્લસ્ટરીંગને ટ્ર cks ક્સ કરે છે જેથી ટીમો સાપ્તાહિક અભિયાનની યોજના બનાવે છે અને આત્મવિશ્વાસ સાથે ટકાઉ વિકાસ કરે છે.",
       "keywords": "ગુજરાતી કીવર્ડ્સ, SEO ગુજરાત, Google વલણો, શોધ વોલ્યુમ, AI વિશ્લેષણ, સ્થાનિક સામગ્રી વ્યૂહરચના",
       "aiSemantic": [
-        "Gujarati keyword research",
-        "Gujarati SEO insights",
-        "search trends platform",
-        "AI content planning",
-        "Gujarati market analysis",
-        "Lucy World intelligence"
+        "ગુજરાતી કીવર્ડ્સ",
+        "SEO ગુજરાત",
+        "Google વલણો",
+        "શોધ વોલ્યુમ",
+        "AI વિશ્લેષણ",
+        "સ્થાનિક સામગ્રી વ્યૂહરચના"
       ]
     }
   ]

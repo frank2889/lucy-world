@@ -21,11 +21,6 @@
       "author": {
         "@type": "Organization",
         "name": "Lucy World"
-      },
-      "potentialAction": {
-        "@type": "SearchAction",
-        "target": "https://lucy.world/mi/?q={search_term_string}",
-        "query-input": "required name=search_term_string"
       }
     },
     {
@@ -40,12 +35,12 @@
       "description": "Tirohia nga raraunga Google Māori me nga whakataki, ahuatanga me nga tātaritanga AI hei whakakaha i nga whakatau ihirangi me te tipu pakihi taiao.",
       "keywords": "kupu matua Māori, SEO Aotearoa, Google Trends, rahi rapu, tātaritanga AI, rautaki ihirangi taiao",
       "aiSemantic": [
-        "Maori keyword research",
-        "Maori SEO insights",
-        "search trends platform",
-        "AI content planning",
-        "Maori market analysis",
-        "Lucy World intelligence"
+        "kupu matua Māori",
+        "SEO Aotearoa",
+        "Google Trends",
+        "rahi rapu",
+        "tātaritanga AI",
+        "rautaki ihirangi taiao"
       ]
     }
   ]

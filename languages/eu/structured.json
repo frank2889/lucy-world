@@ -9,11 +9,11 @@
     },
     {
       "@type": "WebSite",
-      "name": "Lucy World – Euskal Herriko bilaketa-analisia",
+      "name": "Lucy World - Bilatu ingelesez adimena",
       "url": "https://lucy.world/eu/",
       "inLanguage": "eu",
-      "description": "Lucy World tracks live search demand and AI clustering for Basque audiences so teams plan weekly campaigns and sustainable growth with confidence.",
-      "keywords": "euskal gako-hitzak, SEO Euskadi, Google joerak, bilaketa-bolumena, AI analisia, tokiko eduki-estrategia",
+      "description": "Lucy World Pistak Live Search Eskaria eta AI ingeleseko ikusleen klusterizazioa, beraz, taldeek astero kanpainak eta hazkunde iraunkorra konfiantzarekin planifikatzen dute.",
+      "keywords": "Hitz gakoak, SEO, Google Joerak, AI Bilatu, Bilaketa lokala, Iradokizunak, Edukien estrategia",
       "publisher": {
         "@type": "Organization",
         "name": "Lucy World"
@@ -21,31 +21,27 @@
       "author": {
         "@type": "Organization",
         "name": "Lucy World"
-      },
-      "potentialAction": {
-        "@type": "SearchAction",
-        "target": "https://lucy.world/eu/?q={search_term_string}",
-        "query-input": "required name=search_term_string"
       }
     },
     {
       "@type": "WebPage",
-      "name": "Lucy World – Euskal Herriko bilaketa-analisia",
+      "name": "Lucy World - Bilatu ingelesez adimena",
       "url": "https://lucy.world/eu/",
       "inLanguage": "eu",
       "isPartOf": {
         "@type": "WebSite",
         "url": "https://lucy.world/eu/"
       },
-      "description": "Lucy World tracks live search demand and AI clustering for Basque audiences so teams plan weekly campaigns and sustainable growth with confidence.",
-      "keywords": "euskal gako-hitzak, SEO Euskadi, Google joerak, bilaketa-bolumena, AI analisia, tokiko eduki-estrategia",
+      "description": "Lucy World Pistak Live Search Eskaria eta AI ingeleseko ikusleen klusterizazioa, beraz, taldeek astero kanpainak eta hazkunde iraunkorra konfiantzarekin planifikatzen dute.",
+      "keywords": "Hitz gakoak, SEO, Google Joerak, AI Bilatu, Bilaketa lokala, Iradokizunak, Edukien estrategia",
       "aiSemantic": [
-        "Basque keyword research",
-        "Basque SEO insights",
-        "search trends platform",
-        "AI content planning",
-        "Basque market analysis",
-        "Lucy World intelligence"
+        "Hitz gakoak",
+        "SEO",
+        "Google Joerak",
+        "AI Bilatu",
+        "Bilaketa lokala",
+        "Iradokizunak",
+        "Edukien estrategia"
       ]
     }
   ]

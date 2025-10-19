@@ -12,7 +12,7 @@
       "name": "Lucy World – ለኢትዮጵያ ገቢያ የተስተካከለ የፍለጋ እይታ",
       "url": "https://lucy.world/am/",
       "inLanguage": "am",
-      "description": "Lucy World tracks live search demand and AI clustering for Amharic audiences so teams plan weekly campaigns and sustainable growth with confidence.",
+      "description": "Lucy World   / ች",
       "keywords": "አማርኛ ቁልፍ ቃላት, ኢትዮጵያ SEO, Google ትርኢቶች, Bing የፍለጋ ውጤት, AI ትንታኔ መሳሪያ, አዲስ አበባ ማርኬቲንግ, የይዘት ስትራቴጂ",
       "publisher": {
         "@type": "Organization",
@@ -21,11 +21,6 @@
       "author": {
         "@type": "Organization",
         "name": "Lucy World"
-      },
-      "potentialAction": {
-        "@type": "SearchAction",
-        "target": "https://lucy.world/am/?q={search_term_string}",
-        "query-input": "required name=search_term_string"
       }
     },
     {
@@ -37,15 +32,16 @@
         "@type": "WebSite",
         "url": "https://lucy.world/am/"
       },
-      "description": "Lucy World tracks live search demand and AI clustering for Amharic audiences so teams plan weekly campaigns and sustainable growth with confidence.",
+      "description": "Lucy World   / ች",
       "keywords": "አማርኛ ቁልፍ ቃላት, ኢትዮጵያ SEO, Google ትርኢቶች, Bing የፍለጋ ውጤት, AI ትንታኔ መሳሪያ, አዲስ አበባ ማርኬቲንግ, የይዘት ስትራቴጂ",
       "aiSemantic": [
-        "Amharic keyword research",
-        "Amharic SEO insights",
-        "search trends platform",
-        "AI content planning",
-        "Amharic market analysis",
-        "Lucy World intelligence"
+        "አማርኛ ቁልፍ ቃላት",
+        "ኢትዮጵያ SEO",
+        "Google ትርኢቶች",
+        "Bing የፍለጋ ውጤት",
+        "AI ትንታኔ መሳሪያ",
+        "አዲስ አበባ ማርኬቲንግ",
+        "የይዘት ስትራቴጂ"
       ]
     }
   ]

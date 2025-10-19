@@ -12,7 +12,7 @@
       "name": "Lucy World – Vietējā meklēšanas analīze Latvijai",
       "url": "https://lucy.world/lv/",
       "inLanguage": "lv",
-      "description": "Lucy World tracks live search demand and AI clustering for Latvian audiences so teams plan weekly campaigns and sustainable growth with confidence.",
+      "description": "Lucy World izseko tiešraides meklēšanas pieprasījumam un AI angļu auditorijai klasterizāciju, lai komandas plānotu iknedēļas kampaņas un ilgtspējīgu izaugsmi.",
       "keywords": "latviešu atslēgvārdi, SEO Latvija, Google tendences, meklēšanas apjoms, AI analīze, vietējā satura stratēģija",
       "publisher": {
         "@type": "Organization",
@@ -21,11 +21,6 @@
       "author": {
         "@type": "Organization",
         "name": "Lucy World"
-      },
-      "potentialAction": {
-        "@type": "SearchAction",
-        "target": "https://lucy.world/lv/?q={search_term_string}",
-        "query-input": "required name=search_term_string"
       }
     },
     {
@@ -37,15 +32,15 @@
         "@type": "WebSite",
         "url": "https://lucy.world/lv/"
       },
-      "description": "Lucy World tracks live search demand and AI clustering for Latvian audiences so teams plan weekly campaigns and sustainable growth with confidence.",
+      "description": "Lucy World izseko tiešraides meklēšanas pieprasījumam un AI angļu auditorijai klasterizāciju, lai komandas plānotu iknedēļas kampaņas un ilgtspējīgu izaugsmi.",
       "keywords": "latviešu atslēgvārdi, SEO Latvija, Google tendences, meklēšanas apjoms, AI analīze, vietējā satura stratēģija",
       "aiSemantic": [
-        "Latvian keyword research",
-        "Latvian SEO insights",
-        "search trends platform",
-        "AI content planning",
-        "Latvian market analysis",
-        "Lucy World intelligence"
+        "latviešu atslēgvārdi",
+        "SEO Latvija",
+        "Google tendences",
+        "meklēšanas apjoms",
+        "AI analīze",
+        "vietējā satura stratēģija"
       ]
     }
   ]

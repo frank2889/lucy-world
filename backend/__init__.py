@@ -65,6 +65,7 @@ def create_app() -> Flask:
 	base_dir = os.path.dirname(os.path.abspath(__file__))
 	project_root = os.path.dirname(base_dir)
 	static_folder = os.path.join(project_root, 'static')
+	frontend_build_dir = os.path.join(project_root, 'app')
 	templates_folder = os.path.join(project_root, 'templates')
 
 	# Configure logging for production
@@ -493,16 +494,44 @@ def create_app() -> Flask:
 		return DEFAULT_LANGUAGE
 
 	def _vite_manifest():
-		manifest_path = os.path.join(static_folder, 'app', '.vite', 'manifest.json')
-		# Vite 5 default manifest is in outDir/manifest.json
-		if not os.path.exists(manifest_path):
-			manifest_path = os.path.join(static_folder, 'app', 'manifest.json')
-		if os.path.exists(manifest_path):
-			try:
-				with open(manifest_path, 'r') as f:
-					return json.load(f)
-			except Exception:
+		manifest_candidates = [
+			os.path.join(frontend_build_dir, 'manifest.json'),
+			os.path.join(frontend_build_dir, '.vite', 'manifest.json'),
+			os.path.join(static_folder, 'app', '.vite', 'manifest.json'),
+			os.path.join(static_folder, 'app', 'manifest.json'),
+		]
+		for manifest_path in manifest_candidates:
+			if not manifest_path:
+				continue
+			if os.path.exists(manifest_path):
+				try:
+					with open(manifest_path, 'r', encoding='utf-8') as f:
+						return json.load(f)
+				except Exception:
+					return None
+		return None
+
+	def _build_asset_url(relative_path: str | None) -> str | None:
+		if not relative_path:
+			return None
+		rel = str(relative_path).lstrip('/')
+		return f"/app/{rel}" if rel else None
+
+	def _find_latest_asset(pattern: str) -> str | None:
+		try:
+			base_path = Path(frontend_build_dir)
+			if not base_path.exists():
 				return None
+			matches = sorted(
+				[p for p in base_path.glob(pattern) if p.is_file()],
+				key=lambda p: p.stat().st_mtime,
+				reverse=True,
+			)
+			if matches:
+				rel_path = matches[0].relative_to(base_path).as_posix()
+				return _build_asset_url(rel_path)
+		except Exception:
+			return None
 		return None
 
 	def _spa_response(lang: str):
@@ -511,10 +540,14 @@ def create_app() -> Flask:
 		entry = manifest.get('index.html') or manifest.get('src/main.tsx') or {}
 		css_files = entry.get('css') if isinstance(entry, dict) else None
 		js_file = entry.get('file') if isinstance(entry, dict) else None
-		manifest_css = None
-		if css_files and len(css_files) > 0:
-			manifest_css = f"/static/app/{css_files[0]}" if not css_files[0].startswith('/static/app/') else css_files[0]
-		manifest_js = f"/static/app/{js_file}" if js_file and not str(js_file).startswith('/static/app/') else js_file
+		manifest_css = _build_asset_url(css_files[0]) if css_files else None
+		manifest_js = _build_asset_url(js_file)
+		if not manifest_css:
+			manifest_css = _find_latest_asset('**/index-*.css')
+		if not manifest_js:
+			manifest_js = _find_latest_asset('**/index-*.js')
+		if not manifest_js:
+			manifest_js = '/app/index.js'
 
 		def _derive_meta_from_strings(strings: dict[str, Any] | None) -> tuple[str | None, str | None, str | None, str | None]:
 			"""Return sensible localized fallbacks for meta title/description/keywords/robots."""
@@ -703,7 +736,7 @@ def create_app() -> Flask:
 			dir=page_dir,
 			manifest=True if manifest else False,
 			manifest_css=manifest_css,
-			manifest_js=(manifest_js or '/static/app/assets/index.js'),
+			manifest_js=(manifest_js or '/app/index.js'),
 			canonical_url=canonical,
 			hreflangs=hreflangs,
 			structured_json=structured,
@@ -911,7 +944,11 @@ def create_app() -> Flask:
 	# Serve built React assets under /app/* (convenience)
 	@app.route('/app/<path:filename>')
 	def app_assets(filename):
-		return send_from_directory(os.path.join(app.static_folder or 'static', 'app'), filename)
+		return send_from_directory(frontend_build_dir, filename)
+
+	@app.route('/static/app/<path:filename>')
+	def legacy_app_assets(filename):
+		return send_from_directory(frontend_build_dir, filename)
 
 	# ========================================================================
 	# META ENDPOINTS (/meta/*)
@@ -962,12 +999,13 @@ def create_app() -> Flask:
 	# Favicon (avoid 404s); serve project logo as fallback
 	@app.route('/favicon.ico')
 	def favicon():
-		try:
-			return send_from_directory(os.path.join(app.static_folder or 'static', 'img', 'canva'), 'logo-text.png')
-		except Exception:
-			# 1x1 transparent gif
-			gif = b"GIF89a\x01\x00\x01\x00\x80\x00\x00\x00\x00\x00\xff\xff\xff!\xf9\x04\x01\x00\x00\x00\x00,\x00\x00\x00\x00\x01\x00\x01\x00\x00\x02\x02D\x01\x00;"
-			return send_file(io.BytesIO(gif), mimetype='image/gif')
+		asset_dir = os.path.join(frontend_build_dir, 'img', 'canva')
+		logo_path = os.path.join(asset_dir, 'logo-text.png')
+		if os.path.exists(logo_path):
+			return send_from_directory(asset_dir, 'logo-text.png')
+		# 1x1 transparent gif fallback
+		gif = b"GIF89a\x01\x00\x01\x00\x80\x00\x00\x00\x00\x00\xff\xff\xff!\xf9\x04\x01\x00\x00\x00\x00,\x00\x00\x00\x00\x01\x00\x01\x00\x00\x02\x02D\x01\x00;"
+		return send_file(io.BytesIO(gif), mimetype='image/gif')
 
 	@app.route('/meta/feeds.xml')
 	def meta_feed():

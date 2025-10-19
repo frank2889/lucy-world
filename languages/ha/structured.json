@@ -9,11 +9,11 @@
     },
     {
       "@type": "WebSite",
-      "name": "Lucy World – Nazarin bincike na gida don Najeriya",
+      "name": "Lucy World - Binciken Search don Turanci",
       "url": "https://lucy.world/ha/",
       "inLanguage": "ha",
       "description": "Gano bayanan Hausa Google tare da shawarwari, yanayin zamani da nazarin AI da ke ƙarfafa yanke shawara game da abun ciki da ci gaban kasuwanci.",
-      "keywords": "kalmomin muhimmi na Hausa, SEO Najeriya, yanayin zamani na Google, girman bincike, nazarin AI, dabarun abun ciki na gida",
+      "keywords": "Binciken Keyword, Seo, Google Trends, AI Binciken, dabarun da aka yi",
       "publisher": {
         "@type": "Organization",
         "name": "Lucy World"
@@ -21,16 +21,11 @@
       "author": {
         "@type": "Organization",
         "name": "Lucy World"
-      },
-      "potentialAction": {
-        "@type": "SearchAction",
-        "target": "https://lucy.world/ha/?q={search_term_string}",
-        "query-input": "required name=search_term_string"
       }
     },
     {
       "@type": "WebPage",
-      "name": "Lucy World – Nazarin bincike na gida don Najeriya",
+      "name": "Lucy World - Binciken Search don Turanci",
       "url": "https://lucy.world/ha/",
       "inLanguage": "ha",
       "isPartOf": {
@@ -38,14 +33,13 @@
         "url": "https://lucy.world/ha/"
       },
       "description": "Gano bayanan Hausa Google tare da shawarwari, yanayin zamani da nazarin AI da ke ƙarfafa yanke shawara game da abun ciki da ci gaban kasuwanci.",
-      "keywords": "kalmomin muhimmi na Hausa, SEO Najeriya, yanayin zamani na Google, girman bincike, nazarin AI, dabarun abun ciki na gida",
+      "keywords": "Binciken Keyword, Seo, Google Trends, AI Binciken, dabarun da aka yi",
       "aiSemantic": [
-        "Hausa keyword research",
-        "Hausa SEO insights",
-        "search trends platform",
-        "AI content planning",
-        "Hausa market analysis",
-        "Lucy World intelligence"
+        "Binciken Keyword",
+        "Seo",
+        "Google Trends",
+        "AI Binciken",
+        "dabarun da aka yi"
       ]
     }
   ]

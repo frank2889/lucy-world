@@ -12,7 +12,7 @@
       "name": "Lucy World – Lokal søkeanalyse for Norge",
       "url": "https://lucy.world/no/",
       "inLanguage": "no",
-      "description": "Lucy World tracks live search demand and AI clustering for Norwegian audiences so teams plan weekly campaigns and sustainable growth with confidence.",
+      "description": "Lucy World Sporer live søk etterspørsel og AI clustering for engelske målgrupper slik at team planlegger ukentlige kampanjer og bærekraftig vekst med tillit.",
       "keywords": "norske nøkkelord, SEO Norge, Google Trends, søkevolum, AI-analyse, lokal innholdsstrategi",
       "publisher": {
         "@type": "Organization",
@@ -21,11 +21,6 @@
       "author": {
         "@type": "Organization",
         "name": "Lucy World"
-      },
-      "potentialAction": {
-        "@type": "SearchAction",
-        "target": "https://lucy.world/no/?q={search_term_string}",
-        "query-input": "required name=search_term_string"
       }
     },
     {
@@ -37,15 +32,15 @@
         "@type": "WebSite",
         "url": "https://lucy.world/no/"
       },
-      "description": "Lucy World tracks live search demand and AI clustering for Norwegian audiences so teams plan weekly campaigns and sustainable growth with confidence.",
+      "description": "Lucy World Sporer live søk etterspørsel og AI clustering for engelske målgrupper slik at team planlegger ukentlige kampanjer og bærekraftig vekst med tillit.",
       "keywords": "norske nøkkelord, SEO Norge, Google Trends, søkevolum, AI-analyse, lokal innholdsstrategi",
       "aiSemantic": [
-        "Norwegian keyword research",
-        "Norwegian SEO insights",
-        "search trends platform",
-        "AI content planning",
-        "Norwegian market analysis",
-        "Lucy World intelligence"
+        "norske nøkkelord",
+        "SEO Norge",
+        "Google Trends",
+        "søkevolum",
+        "AI-analyse",
+        "lokal innholdsstrategi"
       ]
     }
   ]

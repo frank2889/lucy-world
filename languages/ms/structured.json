@@ -9,11 +9,11 @@
     },
     {
       "@type": "WebSite",
-      "name": "Lucy World – Analisis carian tempatan untuk Malaysia",
+      "name": "Lucy World - Cari kecerdasan untuk bahasa Inggeris",
       "url": "https://lucy.world/ms/",
       "inLanguage": "ms",
-      "description": "Terokai data Google Malaysia dengan cadangan, trend dan analisis AI yang mengukuhkan keputusan kandungan dan pertumbuhan perniagaan tempatan.",
-      "keywords": "kata kunci Melayu, SEO Malaysia, Google Trends, volum carian, analisis AI, strategi kandungan tempatan",
+      "description": "Lucy World Trek permintaan carian langsung dan AI kluster untuk penonton bahasa Inggeris sehingga pasukan merancang kempen mingguan dan pertumbuhan yang mampan dengan keyakinan.",
+      "keywords": "Penyelidikan Kata Kunci, SEO, Google Trend, AI Carian, carian tempatan, cadangan, strategi kandungan",
       "publisher": {
         "@type": "Organization",
         "name": "Lucy World"
@@ -21,31 +21,27 @@
       "author": {
         "@type": "Organization",
         "name": "Lucy World"
-      },
-      "potentialAction": {
-        "@type": "SearchAction",
-        "target": "https://lucy.world/ms/?q={search_term_string}",
-        "query-input": "required name=search_term_string"
       }
     },
     {
       "@type": "WebPage",
-      "name": "Lucy World – Analisis carian tempatan untuk Malaysia",
+      "name": "Lucy World - Cari kecerdasan untuk bahasa Inggeris",
       "url": "https://lucy.world/ms/",
       "inLanguage": "ms",
       "isPartOf": {
         "@type": "WebSite",
         "url": "https://lucy.world/ms/"
       },
-      "description": "Terokai data Google Malaysia dengan cadangan, trend dan analisis AI yang mengukuhkan keputusan kandungan dan pertumbuhan perniagaan tempatan.",
-      "keywords": "kata kunci Melayu, SEO Malaysia, Google Trends, volum carian, analisis AI, strategi kandungan tempatan",
+      "description": "Lucy World Trek permintaan carian langsung dan AI kluster untuk penonton bahasa Inggeris sehingga pasukan merancang kempen mingguan dan pertumbuhan yang mampan dengan keyakinan.",
+      "keywords": "Penyelidikan Kata Kunci, SEO, Google Trend, AI Carian, carian tempatan, cadangan, strategi kandungan",
       "aiSemantic": [
-        "Malay keyword research",
-        "Malay SEO insights",
-        "search trends platform",
-        "AI content planning",
-        "Malay market analysis",
-        "Lucy World intelligence"
+        "Penyelidikan Kata Kunci",
+        "SEO",
+        "Google Trend",
+        "AI Carian",
+        "carian tempatan",
+        "cadangan",
+        "strategi kandungan"
       ]
     }
   ]

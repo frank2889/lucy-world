@@ -12,7 +12,7 @@
       "name": "Lucy World – Локална анализа на пребарување за Македонија",
       "url": "https://lucy.world/mk/",
       "inLanguage": "mk",
-      "description": "Lucy World tracks live search demand and AI clustering for Macedonian audiences so teams plan weekly campaigns and sustainable growth with confidence.",
+      "description": "Lucy World Патеки за пребарување во живо и AI Кластерирање за англиска публика, така што тимовите планираат неделни кампањи и одржлив раст со доверба.",
       "keywords": "македонски клучни зборови, SEO Македонија, Google трендови, волумен на пребарување, AI анализа, локална стратегија за содржина",
       "publisher": {
         "@type": "Organization",
@@ -21,11 +21,6 @@
       "author": {
         "@type": "Organization",
         "name": "Lucy World"
-      },
-      "potentialAction": {
-        "@type": "SearchAction",
-        "target": "https://lucy.world/mk/?q={search_term_string}",
-        "query-input": "required name=search_term_string"
       }
     },
     {
@@ -37,15 +32,15 @@
         "@type": "WebSite",
         "url": "https://lucy.world/mk/"
       },
-      "description": "Lucy World tracks live search demand and AI clustering for Macedonian audiences so teams plan weekly campaigns and sustainable growth with confidence.",
+      "description": "Lucy World Патеки за пребарување во живо и AI Кластерирање за англиска публика, така што тимовите планираат неделни кампањи и одржлив раст со доверба.",
       "keywords": "македонски клучни зборови, SEO Македонија, Google трендови, волумен на пребарување, AI анализа, локална стратегија за содржина",
       "aiSemantic": [
-        "Macedonian keyword research",
-        "Macedonian SEO insights",
-        "search trends platform",
-        "AI content planning",
-        "Macedonian market analysis",
-        "Lucy World intelligence"
+        "македонски клучни зборови",
+        "SEO Македонија",
+        "Google трендови",
+        "волумен на пребарување",
+        "AI анализа",
+        "локална стратегија за содржина"
       ]
     }
   ]

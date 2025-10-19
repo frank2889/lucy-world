@@ -9,11 +9,11 @@
     },
     {
       "@type": "WebSite",
-      "name": "Lucy World – Plaaslike soekinsigte vir Suid-Afrika",
+      "name": "Lucy World - Soek intelligensie vir Engels",
       "url": "https://lucy.world/af/",
       "inLanguage": "af",
-      "description": "Ontsluit Google- en Bing-data vir Suid-Afrikaanse markte met Afrikaans-gefokusde neigings, voorstelle en AI-analise wat beter inhoud- en groeibesluite dryf.",
-      "keywords": "Suid-Afrika sleutelwoordnavorsing, Afrikaans SEO, Google-neigings, Bing-soek, AI-soek hulpmiddel, plaaslike inhoudstrategie",
+      "description": "Lucy World spoor live soekvraag en AI groepering vir Engelse gehore, sodat spanne weeklikse veldtogte beplan en volhoubare groei met vertroue.",
+      "keywords": "Sleutelwoordnavorsing, SEO, Google Trends, AI Soek, plaaslike soektog, voorstelle, inhoudstrategie",
       "publisher": {
         "@type": "Organization",
         "name": "Lucy World"
@@ -21,31 +21,27 @@
       "author": {
         "@type": "Organization",
         "name": "Lucy World"
-      },
-      "potentialAction": {
-        "@type": "SearchAction",
-        "target": "https://lucy.world/af/?q={search_term_string}",
-        "query-input": "required name=search_term_string"
       }
     },
     {
       "@type": "WebPage",
-      "name": "Lucy World – Plaaslike soekinsigte vir Suid-Afrika",
+      "name": "Lucy World - Soek intelligensie vir Engels",
       "url": "https://lucy.world/af/",
       "inLanguage": "af",
       "isPartOf": {
         "@type": "WebSite",
         "url": "https://lucy.world/af/"
       },
-      "description": "Ontsluit Google- en Bing-data vir Suid-Afrikaanse markte met Afrikaans-gefokusde neigings, voorstelle en AI-analise wat beter inhoud- en groeibesluite dryf.",
-      "keywords": "Suid-Afrika sleutelwoordnavorsing, Afrikaans SEO, Google-neigings, Bing-soek, AI-soek hulpmiddel, plaaslike inhoudstrategie",
+      "description": "Lucy World spoor live soekvraag en AI groepering vir Engelse gehore, sodat spanne weeklikse veldtogte beplan en volhoubare groei met vertroue.",
+      "keywords": "Sleutelwoordnavorsing, SEO, Google Trends, AI Soek, plaaslike soektog, voorstelle, inhoudstrategie",
       "aiSemantic": [
-        "Afrikaans keyword research",
-        "Afrikaans SEO insights",
-        "search trends platform",
-        "AI content planning",
-        "Afrikaans market analysis",
-        "Lucy World intelligence"
+        "Sleutelwoordnavorsing",
+        "SEO",
+        "Google Trends",
+        "AI Soek",
+        "plaaslike soektog",
+        "voorstelle",
+        "inhoudstrategie"
       ]
     }
   ]

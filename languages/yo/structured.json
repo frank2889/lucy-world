@@ -12,7 +12,7 @@
       "name": "Iwadi ọrọ-koko - Lucy World",
       "url": "https://lucy.world/yo/",
       "inLanguage": "yo",
-      "description": "Lucy World tracks live search demand and AI clustering for Yoruba audiences so teams plan weekly campaigns and sustainable growth with confidence.",
+      "description": "Lucy World tracks live search demand and AI clustering for English audiences so teams plan weekly campaigns and sustainable growth with confidence.",
       "keywords": "iwadi ọrọ-koko, SEO Yoruba, Google Trends, awọn iṣeduro, iwọn wiwa",
       "publisher": {
         "@type": "Organization",
@@ -21,11 +21,6 @@
       "author": {
         "@type": "Organization",
         "name": "Lucy World"
-      },
-      "potentialAction": {
-        "@type": "SearchAction",
-        "target": "https://lucy.world/yo/?q={search_term_string}",
-        "query-input": "required name=search_term_string"
       }
     },
     {
@@ -37,15 +32,14 @@
         "@type": "WebSite",
         "url": "https://lucy.world/yo/"
       },
-      "description": "Lucy World tracks live search demand and AI clustering for Yoruba audiences so teams plan weekly campaigns and sustainable growth with confidence.",
+      "description": "Lucy World tracks live search demand and AI clustering for English audiences so teams plan weekly campaigns and sustainable growth with confidence.",
       "keywords": "iwadi ọrọ-koko, SEO Yoruba, Google Trends, awọn iṣeduro, iwọn wiwa",
       "aiSemantic": [
-        "Yoruba keyword research",
-        "Yoruba SEO insights",
-        "search trends platform",
-        "AI content planning",
-        "Yoruba market analysis",
-        "Lucy World intelligence"
+        "iwadi ọrọ-koko",
+        "SEO Yoruba",
+        "Google Trends",
+        "awọn iṣeduro",
+        "iwọn wiwa"
       ]
     }
   ]

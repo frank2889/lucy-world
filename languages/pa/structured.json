@@ -12,7 +12,7 @@
       "name": "Lucy World – ਪੰਜਾਬ ਲਈ ਸਥਾਨਕ ਖੋਜ ਵਿਸ਼ਲੇਸ਼ਣ",
       "url": "https://lucy.world/pa/",
       "inLanguage": "pa",
-      "description": "Lucy World tracks live search demand and AI clustering for Punjabi audiences so teams plan weekly campaigns and sustainable growth with confidence.",
+      "description": ".",
       "keywords": "ਪੰਜਾਬੀ ਕੀਵਰਡ, SEO ਪੰਜਾਬ, Google ਰੁਝਾਨ, ਖੋਜ ਵਾਲਿਊਮ, AI ਵਿਸ਼ਲੇਸ਼ਣ, ਸਥਾਨਕ ਸਮੱਗਰੀ ਰਣਨੀਤੀ",
       "publisher": {
         "@type": "Organization",
@@ -21,11 +21,6 @@
       "author": {
         "@type": "Organization",
         "name": "Lucy World"
-      },
-      "potentialAction": {
-        "@type": "SearchAction",
-        "target": "https://lucy.world/pa/?q={search_term_string}",
-        "query-input": "required name=search_term_string"
       }
     },
     {
@@ -37,15 +32,15 @@
         "@type": "WebSite",
         "url": "https://lucy.world/pa/"
       },
-      "description": "Lucy World tracks live search demand and AI clustering for Punjabi audiences so teams plan weekly campaigns and sustainable growth with confidence.",
+      "description": ".",
       "keywords": "ਪੰਜਾਬੀ ਕੀਵਰਡ, SEO ਪੰਜਾਬ, Google ਰੁਝਾਨ, ਖੋਜ ਵਾਲਿਊਮ, AI ਵਿਸ਼ਲੇਸ਼ਣ, ਸਥਾਨਕ ਸਮੱਗਰੀ ਰਣਨੀਤੀ",
       "aiSemantic": [
-        "Punjabi keyword research",
-        "Punjabi SEO insights",
-        "search trends platform",
-        "AI content planning",
-        "Punjabi market analysis",
-        "Lucy World intelligence"
+        "ਪੰਜਾਬੀ ਕੀਵਰਡ",
+        "SEO ਪੰਜਾਬ",
+        "Google ਰੁਝਾਨ",
+        "ਖੋਜ ਵਾਲਿਊਮ",
+        "AI ਵਿਸ਼ਲੇਸ਼ਣ",
+        "ਸਥਾਨਕ ਸਮੱਗਰੀ ਰਣਨੀਤੀ"
       ]
     }
   ]

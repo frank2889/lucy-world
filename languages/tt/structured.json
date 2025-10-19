@@ -12,7 +12,7 @@
       "name": "Ачкыч сүзләр тикшеренүе - Lucy World",
       "url": "https://lucy.world/tt/",
       "inLanguage": "tt",
-      "description": "Lucy World tracks live search demand and AI clustering for Tatar audiences so teams plan weekly campaigns and sustainable growth with confidence.",
+      "description": "Lucy World Треклар Тере эзләү Тәртип һәм ББ",
       "keywords": "ачкыч сүзләр тикшеренүе, SEO татар, Google Trends, тәкъдимнәр, эзләү күләме",
       "publisher": {
         "@type": "Organization",
@@ -21,11 +21,6 @@
       "author": {
         "@type": "Organization",
         "name": "Lucy World"
-      },
-      "potentialAction": {
-        "@type": "SearchAction",
-        "target": "https://lucy.world/tt/?q={search_term_string}",
-        "query-input": "required name=search_term_string"
       }
     },
     {
@@ -37,15 +32,14 @@
         "@type": "WebSite",
         "url": "https://lucy.world/tt/"
       },
-      "description": "Lucy World tracks live search demand and AI clustering for Tatar audiences so teams plan weekly campaigns and sustainable growth with confidence.",
+      "description": "Lucy World Треклар Тере эзләү Тәртип һәм ББ",
       "keywords": "ачкыч сүзләр тикшеренүе, SEO татар, Google Trends, тәкъдимнәр, эзләү күләме",
       "aiSemantic": [
-        "Tatar keyword research",
-        "Tatar SEO insights",
-        "search trends platform",
-        "AI content planning",
-        "Tatar market analysis",
-        "Lucy World intelligence"
+        "ачкыч сүзләр тикшеренүе",
+        "SEO татар",
+        "Google Trends",
+        "тәкъдимнәр",
+        "эзләү күләме"
       ]
     }
   ]

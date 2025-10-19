@@ -12,7 +12,7 @@
       "name": "Lucy World – Lokálna analýza vyhľadávania pre Slovensko",
       "url": "https://lucy.world/sk/",
       "inLanguage": "sk",
-      "description": "Lucy World tracks live search demand and AI clustering for Slovak audiences so teams plan weekly campaigns and sustainable growth with confidence.",
+      "description": "Lucy World Skladby na živé vyhľadávanie dopyt a AI Zoskupenie pre anglické publikum, takže tímy plánujú týždenné kampane a trvalo udržateľný rast s dôverou.",
       "keywords": "slovenské kľúčové slová, SEO Slovensko, Google Trends, objem vyhľadávania, AI analýza, lokálna stratégia obsahu",
       "publisher": {
         "@type": "Organization",
@@ -21,11 +21,6 @@
       "author": {
         "@type": "Organization",
         "name": "Lucy World"
-      },
-      "potentialAction": {
-        "@type": "SearchAction",
-        "target": "https://lucy.world/sk/?q={search_term_string}",
-        "query-input": "required name=search_term_string"
       }
     },
     {
@@ -37,15 +32,15 @@
         "@type": "WebSite",
         "url": "https://lucy.world/sk/"
       },
-      "description": "Lucy World tracks live search demand and AI clustering for Slovak audiences so teams plan weekly campaigns and sustainable growth with confidence.",
+      "description": "Lucy World Skladby na živé vyhľadávanie dopyt a AI Zoskupenie pre anglické publikum, takže tímy plánujú týždenné kampane a trvalo udržateľný rast s dôverou.",
       "keywords": "slovenské kľúčové slová, SEO Slovensko, Google Trends, objem vyhľadávania, AI analýza, lokálna stratégia obsahu",
       "aiSemantic": [
-        "Slovak keyword research",
-        "Slovak SEO insights",
-        "search trends platform",
-        "AI content planning",
-        "Slovak market analysis",
-        "Lucy World intelligence"
+        "slovenské kľúčové slová",
+        "SEO Slovensko",
+        "Google Trends",
+        "objem vyhľadávania",
+        "AI analýza",
+        "lokálna stratégia obsahu"
       ]
     }
   ]

@@ -12,7 +12,7 @@
       "name": "Lucy World – Vietinė paieškos analizė Lietuvai",
       "url": "https://lucy.world/lt/",
       "inLanguage": "lt",
-      "description": "Lucy World tracks live search demand and AI clustering for Lithuanian audiences so teams plan weekly campaigns and sustainable growth with confidence.",
+      "description": "Lucy World LIVO PATIKIMO PASLAUGOS IR AI klasteriai anglų auditorijai, taigi komandos planuoja savaitines kampanijas ir tvarų augimą pasitikėdami savimi.",
       "keywords": "lietuviški raktažodžiai, SEO Lietuva, Google tendencijos, paieškos kiekis, AI analizė, vietinė turinio strategija",
       "publisher": {
         "@type": "Organization",
@@ -21,11 +21,6 @@
       "author": {
         "@type": "Organization",
         "name": "Lucy World"
-      },
-      "potentialAction": {
-        "@type": "SearchAction",
-        "target": "https://lucy.world/lt/?q={search_term_string}",
-        "query-input": "required name=search_term_string"
       }
     },
     {
@@ -37,15 +32,15 @@
         "@type": "WebSite",
         "url": "https://lucy.world/lt/"
       },
-      "description": "Lucy World tracks live search demand and AI clustering for Lithuanian audiences so teams plan weekly campaigns and sustainable growth with confidence.",
+      "description": "Lucy World LIVO PATIKIMO PASLAUGOS IR AI klasteriai anglų auditorijai, taigi komandos planuoja savaitines kampanijas ir tvarų augimą pasitikėdami savimi.",
       "keywords": "lietuviški raktažodžiai, SEO Lietuva, Google tendencijos, paieškos kiekis, AI analizė, vietinė turinio strategija",
       "aiSemantic": [
-        "Lithuanian keyword research",
-        "Lithuanian SEO insights",
-        "search trends platform",
-        "AI content planning",
-        "Lithuanian market analysis",
-        "Lucy World intelligence"
+        "lietuviški raktažodžiai",
+        "SEO Lietuva",
+        "Google tendencijos",
+        "paieškos kiekis",
+        "AI analizė",
+        "vietinė turinio strategija"
       ]
     }
   ]

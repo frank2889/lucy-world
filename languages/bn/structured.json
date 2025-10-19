@@ -12,7 +12,7 @@
       "name": "Lucy World – বাংলাদেশের জন্য স্থানীয় সার্চ অন্তর্দৃষ্টি",
       "url": "https://lucy.world/bn/",
       "inLanguage": "bn",
-      "description": "Lucy World tracks live search demand and AI clustering for Bengali audiences so teams plan weekly campaigns and sustainable growth with confidence.",
+      "description": "Lucy World ট্র্যাক লাইভ অনুসন্ধানের চাহিদা এবং AI ইংরেজি শ্রোতাদের জন্য ক্লাস্টারিং যাতে দলগুলি সাপ্তাহিক প্রচার এবং কনফিডেন্সের সাথে টেকসই বৃদ্ধির পরিকল্পনা করে।",
       "keywords": "বাংলা কীওয়ার্ড গবেষণা, বাংলাদেশ SEO, Google প্রবণতা, Bing অনুসন্ধান, AI বিশ্লেষণ, স্থানীয় কন্টেন্ট কৌশল",
       "publisher": {
         "@type": "Organization",
@@ -21,11 +21,6 @@
       "author": {
         "@type": "Organization",
         "name": "Lucy World"
-      },
-      "potentialAction": {
-        "@type": "SearchAction",
-        "target": "https://lucy.world/bn/?q={search_term_string}",
-        "query-input": "required name=search_term_string"
       }
     },
     {
@@ -37,15 +32,15 @@
         "@type": "WebSite",
         "url": "https://lucy.world/bn/"
       },
-      "description": "Lucy World tracks live search demand and AI clustering for Bengali audiences so teams plan weekly campaigns and sustainable growth with confidence.",
+      "description": "Lucy World ট্র্যাক লাইভ অনুসন্ধানের চাহিদা এবং AI ইংরেজি শ্রোতাদের জন্য ক্লাস্টারিং যাতে দলগুলি সাপ্তাহিক প্রচার এবং কনফিডেন্সের সাথে টেকসই বৃদ্ধির পরিকল্পনা করে।",
       "keywords": "বাংলা কীওয়ার্ড গবেষণা, বাংলাদেশ SEO, Google প্রবণতা, Bing অনুসন্ধান, AI বিশ্লেষণ, স্থানীয় কন্টেন্ট কৌশল",
       "aiSemantic": [
-        "Bengali keyword research",
-        "Bengali SEO insights",
-        "search trends platform",
-        "AI content planning",
-        "Bengali market analysis",
-        "Lucy World intelligence"
+        "বাংলা কীওয়ার্ড গবেষণা",
+        "বাংলাদেশ SEO",
+        "Google প্রবণতা",
+        "Bing অনুসন্ধান",
+        "AI বিশ্লেষণ",
+        "স্থানীয় কন্টেন্ট কৌশল"
       ]
     }
   ]

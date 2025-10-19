@@ -8,7 +8,7 @@ const baseDir = fileURLToPath(new URL('.', import.meta.url));
 export default defineConfig({
   plugins: [react()],
   root: '.',
-  base: '/static/app/',
+  base: '/app/',
   server: {
     port: 5173,
     proxy: {
@@ -18,7 +18,7 @@ export default defineConfig({
     }
   },
   build: {
-    outDir: resolve(baseDir, '../static/app'),
+    outDir: resolve(baseDir, '../app'),
     emptyOutDir: true,
     manifest: true,
   },

@@ -12,7 +12,7 @@
       "name": "Lucy World – Lokální analýza vyhledávání pro Českou republiku",
       "url": "https://lucy.world/cs/",
       "inLanguage": "cs",
-      "description": "Lucy World tracks live search demand and AI clustering for Czech audiences so teams plan weekly campaigns and sustainable growth with confidence.",
+      "description": "Lucy World skladby Live Search Poptávka a AI shlukování pro anglické publikum, takže týmy plánují týdenní kampaně a udržitelný růst s důvěrou.",
       "keywords": "česká klíčová slova, SEO Česko, trendy Google, vyhledávání Seznam, AI analýza, strategie místního obsahu",
       "publisher": {
         "@type": "Organization",
@@ -21,11 +21,6 @@
       "author": {
         "@type": "Organization",
         "name": "Lucy World"
-      },
-      "potentialAction": {
-        "@type": "SearchAction",
-        "target": "https://lucy.world/cs/?q={search_term_string}",
-        "query-input": "required name=search_term_string"
       }
     },
     {
@@ -37,15 +32,15 @@
         "@type": "WebSite",
         "url": "https://lucy.world/cs/"
       },
-      "description": "Lucy World tracks live search demand and AI clustering for Czech audiences so teams plan weekly campaigns and sustainable growth with confidence.",
+      "description": "Lucy World skladby Live Search Poptávka a AI shlukování pro anglické publikum, takže týmy plánují týdenní kampaně a udržitelný růst s důvěrou.",
       "keywords": "česká klíčová slova, SEO Česko, trendy Google, vyhledávání Seznam, AI analýza, strategie místního obsahu",
       "aiSemantic": [
-        "Czech keyword research",
-        "Czech SEO insights",
-        "search trends platform",
-        "AI content planning",
-        "Czech market analysis",
-        "Lucy World intelligence"
+        "česká klíčová slova",
+        "SEO Česko",
+        "trendy Google",
+        "vyhledávání Seznam",
+        "AI analýza",
+        "strategie místního obsahu"
       ]
     }
   ]

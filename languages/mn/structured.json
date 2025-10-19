@@ -12,7 +12,7 @@
       "name": "Lucy World – Монгол орны орон нутгийн хайлтын шинжилгээ",
       "url": "https://lucy.world/mn/",
       "inLanguage": "mn",
-      "description": "Lucy World tracks live search demand and AI clustering for Mongolian audiences so teams plan weekly campaigns and sustainable growth with confidence.",
+      "description": "Lucy WorldAI.Эр нь долоо хоногийн кампанит ажил,",
       "keywords": "монгол түлхүүр үгс, SEO Монгол, Google чиг хандлага, хайлтын эзлэхүүн, AI шинжилгээ, орон нутгийн контент стратеги",
       "publisher": {
         "@type": "Organization",
@@ -21,11 +21,6 @@
       "author": {
         "@type": "Organization",
         "name": "Lucy World"
-      },
-      "potentialAction": {
-        "@type": "SearchAction",
-        "target": "https://lucy.world/mn/?q={search_term_string}",
-        "query-input": "required name=search_term_string"
       }
     },
     {
@@ -37,15 +32,15 @@
         "@type": "WebSite",
         "url": "https://lucy.world/mn/"
       },
-      "description": "Lucy World tracks live search demand and AI clustering for Mongolian audiences so teams plan weekly campaigns and sustainable growth with confidence.",
+      "description": "Lucy WorldAI.Эр нь долоо хоногийн кампанит ажил,",
       "keywords": "монгол түлхүүр үгс, SEO Монгол, Google чиг хандлага, хайлтын эзлэхүүн, AI шинжилгээ, орон нутгийн контент стратеги",
       "aiSemantic": [
-        "Mongolian keyword research",
-        "Mongolian SEO insights",
-        "search trends platform",
-        "AI content planning",
-        "Mongolian market analysis",
-        "Lucy World intelligence"
+        "монгол түлхүүр үгс",
+        "SEO Монгол",
+        "Google чиг хандлага",
+        "хайлтын эзлэхүүн",
+        "AI шинжилгээ",
+        "орон нутгийн контент стратеги"
       ]
     }
   ]

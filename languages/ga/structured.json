@@ -12,7 +12,7 @@
       "name": "Lucy World – Anailís cuardaigh áitiúil d'Éirinn",
       "url": "https://lucy.world/ga/",
       "inLanguage": "ga",
-      "description": "Lucy World tracks live search demand and AI clustering for Irish audiences so teams plan weekly campaigns and sustainable growth with confidence.",
+      "description": "Lucy World Rianta Éileamh Cuardaigh Beo agus AI Cnuasach do lucht féachana Shasana ionas go bpleanálann foirne feachtais sheachtainiúla agus fás inbhuanaithe le muinín.",
       "keywords": "eochairfhocail Gaeilge, SEO Éire, treochtaí Google, toirt cuardaigh, anailís AI, straitéis ábhair áitiúil",
       "publisher": {
         "@type": "Organization",
@@ -21,11 +21,6 @@
       "author": {
         "@type": "Organization",
         "name": "Lucy World"
-      },
-      "potentialAction": {
-        "@type": "SearchAction",
-        "target": "https://lucy.world/ga/?q={search_term_string}",
-        "query-input": "required name=search_term_string"
       }
     },
     {
@@ -37,15 +32,15 @@
         "@type": "WebSite",
         "url": "https://lucy.world/ga/"
       },
-      "description": "Lucy World tracks live search demand and AI clustering for Irish audiences so teams plan weekly campaigns and sustainable growth with confidence.",
+      "description": "Lucy World Rianta Éileamh Cuardaigh Beo agus AI Cnuasach do lucht féachana Shasana ionas go bpleanálann foirne feachtais sheachtainiúla agus fás inbhuanaithe le muinín.",
       "keywords": "eochairfhocail Gaeilge, SEO Éire, treochtaí Google, toirt cuardaigh, anailís AI, straitéis ábhair áitiúil",
       "aiSemantic": [
-        "Irish keyword research",
-        "Irish SEO insights",
-        "search trends platform",
-        "AI content planning",
-        "Irish market analysis",
-        "Lucy World intelligence"
+        "eochairfhocail Gaeilge",
+        "SEO Éire",
+        "treochtaí Google",
+        "toirt cuardaigh",
+        "anailís AI",
+        "straitéis ábhair áitiúil"
       ]
     }
   ]

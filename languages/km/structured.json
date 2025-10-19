@@ -12,7 +12,7 @@
       "name": "Lucy World – ការវិភាគស្វែងរកក្នុងស្រុកសម្រាប់កម្ពុជា",
       "url": "https://lucy.world/km/",
       "inLanguage": "km",
-      "description": "Lucy World tracks live search demand and AI clustering for Khmer audiences so teams plan weekly campaigns and sustainable growth with confidence.",
+      "description": "Lucy World តាមដានតម្រូវការស្វែងរកបន្តផ្ទាល់និងតាមដានតម្រូវការស្វែងរកបន្តផ្ទាល់និង AI ការដាក់លក់បន្តសម្រាប់ក្រុមទស្សនិកជនជនជាតិអង់គ្លេសនិងការរីកចម្រើនប្រកបដោយចីរភាពដោយមានទំនុកចិត្ត។",
       "keywords": "ពាក្យគន្លឹះខ្មែរ, SEO កម្ពុជា, និន្នាការ Google, បរិមាណស្វែងរក, ការវិភាគ AI, យុទ្ធសាស្ត្រមាតិកាក្នុងស្រុក",
       "publisher": {
         "@type": "Organization",
@@ -21,11 +21,6 @@
       "author": {
         "@type": "Organization",
         "name": "Lucy World"
-      },
-      "potentialAction": {
-        "@type": "SearchAction",
-        "target": "https://lucy.world/km/?q={search_term_string}",
-        "query-input": "required name=search_term_string"
       }
     },
     {
@@ -37,15 +32,15 @@
         "@type": "WebSite",
         "url": "https://lucy.world/km/"
       },
-      "description": "Lucy World tracks live search demand and AI clustering for Khmer audiences so teams plan weekly campaigns and sustainable growth with confidence.",
+      "description": "Lucy World តាមដានតម្រូវការស្វែងរកបន្តផ្ទាល់និងតាមដានតម្រូវការស្វែងរកបន្តផ្ទាល់និង AI ការដាក់លក់បន្តសម្រាប់ក្រុមទស្សនិកជនជនជាតិអង់គ្លេសនិងការរីកចម្រើនប្រកបដោយចីរភាពដោយមានទំនុកចិត្ត។",
       "keywords": "ពាក្យគន្លឹះខ្មែរ, SEO កម្ពុជា, និន្នាការ Google, បរិមាណស្វែងរក, ការវិភាគ AI, យុទ្ធសាស្ត្រមាតិកាក្នុងស្រុក",
       "aiSemantic": [
-        "Khmer keyword research",
-        "Khmer SEO insights",
-        "search trends platform",
-        "AI content planning",
-        "Khmer market analysis",
-        "Lucy World intelligence"
+        "ពាក្យគន្លឹះខ្មែរ",
+        "SEO កម្ពុជា",
+        "និន្នាការ Google",
+        "បរិមាណស្វែងរក",
+        "ការវិភាគ AI",
+        "យុទ្ធសាស្ត្រមាតិកាក្នុងស្រុក"
       ]
     }
   ]

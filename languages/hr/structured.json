@@ -9,10 +9,10 @@
     },
     {
       "@type": "WebSite",
-      "name": "Lucy World – Lokalna analiza pretrage za Hrvatsku",
+      "name": "Lucy World - Inteligencija pretraživanja engleskog jezika",
       "url": "https://lucy.world/hr/",
       "inLanguage": "hr",
-      "description": "Lucy World tracks live search demand and AI clustering for Croatian audiences so teams plan weekly campaigns and sustainable growth with confidence.",
+      "description": "Lucy WorldAI NA Klasteri za englesku publiku, tako da timovi planiraju tjedne kampanje i održivi rast s povjerenjem.",
       "keywords": "hrvatske ključne riječi, SEO Hrvatska, Google trendovi, volumen pretrage, AI analiza, strategija lokalnog sadržaja",
       "publisher": {
         "@type": "Organization",
@@ -21,31 +21,26 @@
       "author": {
         "@type": "Organization",
         "name": "Lucy World"
-      },
-      "potentialAction": {
-        "@type": "SearchAction",
-        "target": "https://lucy.world/hr/?q={search_term_string}",
-        "query-input": "required name=search_term_string"
       }
     },
     {
       "@type": "WebPage",
-      "name": "Lucy World – Lokalna analiza pretrage za Hrvatsku",
+      "name": "Lucy World - Inteligencija pretraživanja engleskog jezika",
       "url": "https://lucy.world/hr/",
       "inLanguage": "hr",
       "isPartOf": {
         "@type": "WebSite",
         "url": "https://lucy.world/hr/"
       },
-      "description": "Lucy World tracks live search demand and AI clustering for Croatian audiences so teams plan weekly campaigns and sustainable growth with confidence.",
+      "description": "Lucy WorldAI NA Klasteri za englesku publiku, tako da timovi planiraju tjedne kampanje i održivi rast s povjerenjem.",
       "keywords": "hrvatske ključne riječi, SEO Hrvatska, Google trendovi, volumen pretrage, AI analiza, strategija lokalnog sadržaja",
       "aiSemantic": [
-        "Croatian keyword research",
-        "Croatian SEO insights",
-        "search trends platform",
-        "AI content planning",
-        "Croatian market analysis",
-        "Lucy World intelligence"
+        "hrvatske ključne riječi",
+        "SEO Hrvatska",
+        "Google trendovi",
+        "volumen pretrage",
+        "AI analiza",
+        "strategija lokalnog sadržaja"
       ]
     }
   ]

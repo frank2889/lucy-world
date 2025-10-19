@@ -12,7 +12,7 @@
       "name": "Lucy World – Lokal sökanalys för Sverige",
       "url": "https://lucy.world/sv/",
       "inLanguage": "sv",
-      "description": "Lucy World tracks live search demand and AI clustering for Swedish audiences so teams plan weekly campaigns and sustainable growth with confidence.",
+      "description": "Lucy World Spårar live -sökbehov och AI Clustering för engelska publik så lag planerar varje vecka kampanjer och hållbar tillväxt med förtroende.",
       "keywords": "svenska sökord, SEO Sverige, Google Trends, sökvolym, AI-analys, lokal innehållsstrategi",
       "publisher": {
         "@type": "Organization",
@@ -21,11 +21,6 @@
       "author": {
         "@type": "Organization",
         "name": "Lucy World"
-      },
-      "potentialAction": {
-        "@type": "SearchAction",
-        "target": "https://lucy.world/sv/?q={search_term_string}",
-        "query-input": "required name=search_term_string"
       }
     },
     {
@@ -37,15 +32,15 @@
         "@type": "WebSite",
         "url": "https://lucy.world/sv/"
       },
-      "description": "Lucy World tracks live search demand and AI clustering for Swedish audiences so teams plan weekly campaigns and sustainable growth with confidence.",
+      "description": "Lucy World Spårar live -sökbehov och AI Clustering för engelska publik så lag planerar varje vecka kampanjer och hållbar tillväxt med förtroende.",
       "keywords": "svenska sökord, SEO Sverige, Google Trends, sökvolym, AI-analys, lokal innehållsstrategi",
       "aiSemantic": [
-        "Swedish keyword research",
-        "Swedish SEO insights",
-        "search trends platform",
-        "AI content planning",
-        "Swedish market analysis",
-        "Lucy World intelligence"
+        "svenska sökord",
+        "SEO Sverige",
+        "Google Trends",
+        "sökvolym",
+        "AI-analys",
+        "lokal innehållsstrategi"
       ]
     }
   ]

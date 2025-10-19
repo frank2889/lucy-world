@@ -12,7 +12,7 @@
       "name": "关键词研究 - Lucy World",
       "url": "https://lucy.world/zh/",
       "inLanguage": "zh",
-      "description": "Lucy World tracks live search demand and AI clustering for Chinese audiences so teams plan weekly campaigns and sustainable growth with confidence.",
+      "description": "Lucy World 跟踪英语受众的实时搜索需求和 AI 聚类，以便团队充满信心地计划每周活动和可持续增长。",
       "keywords": "关键词研究, 中文SEO, Google Trends, 建议, 搜索量",
       "publisher": {
         "@type": "Organization",
@@ -21,11 +21,6 @@
       "author": {
         "@type": "Organization",
         "name": "Lucy World"
-      },
-      "potentialAction": {
-        "@type": "SearchAction",
-        "target": "https://lucy.world/zh/?q={search_term_string}",
-        "query-input": "required name=search_term_string"
       }
     },
     {
@@ -37,15 +32,14 @@
         "@type": "WebSite",
         "url": "https://lucy.world/zh/"
       },
-      "description": "Lucy World tracks live search demand and AI clustering for Chinese audiences so teams plan weekly campaigns and sustainable growth with confidence.",
+      "description": "Lucy World 跟踪英语受众的实时搜索需求和 AI 聚类，以便团队充满信心地计划每周活动和可持续增长。",
       "keywords": "关键词研究, 中文SEO, Google Trends, 建议, 搜索量",
       "aiSemantic": [
-        "Chinese keyword research",
-        "Chinese SEO insights",
-        "search trends platform",
-        "AI content planning",
-        "Chinese market analysis",
-        "Lucy World intelligence"
+        "关键词研究",
+        "中文SEO",
+        "Google Trends",
+        "建议",
+        "搜索量"
       ]
     }
   ]

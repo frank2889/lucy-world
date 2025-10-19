@@ -74,21 +74,23 @@ def needs_translation(value: str, en_value: str) -> bool:
 
 
 def protect_tokens(text: str):
-    # Protect placeholders and brands by replacing them with tokens
+    """Protect placeholders and brands by swapping them for stable tokens."""
     tokens = {}
 
-    # Protect placeholders {{...}}
-    for i, m in enumerate(PLACEHOLDER_PATTERN.findall(text)):
-        key = f"__PH_{i}__"
-        tokens[key] = m
-        text = text.replace(m, key)
+    placeholder_index = 0
+    for placeholder in PLACEHOLDER_PATTERN.findall(text):
+        key = f"@@{placeholder_index}@@"
+        tokens[key] = placeholder
+        text = text.replace(placeholder, key)
+        placeholder_index += 1
 
-    # Protect brands
-    for b in BRANDS:
-        if b in text:
-            key = f"__BR_{abs(hash(b + str(len(tokens))))}__"
-            tokens[key] = b
-            text = text.replace(b, key)
+    brand_index = 0
+    for brand in BRANDS:
+        if brand in text:
+            key = f"##{brand_index}##"
+            tokens[key] = brand
+            text = text.replace(brand, key)
+            brand_index += 1
 
     return text, tokens
 

@@ -9,11 +9,11 @@
     },
     {
       "@type": "WebSite",
-      "name": "Lucy World – Analisis pencarian lokal untuk Indonesia",
+      "name": "Lucy World – Kecerdasan penelusuran untuk bahasa Inggris",
       "url": "https://lucy.world/id/",
       "inLanguage": "id",
-      "description": "Lucy World tracks live search demand and AI clustering for Indonesian audiences so teams plan weekly campaigns and sustainable growth with confidence.",
-      "keywords": "kata kunci Indonesia, SEO Indonesia, tren Google, volume pencarian, analisis AI, strategi konten lokal",
+      "description": "Lucy World melacak permintaan penelusuran langsung dan AI pengelompokan untuk pemirsa berbahasa Inggris sehingga tim merencanakan kampanye mingguan dan pertumbuhan berkelanjutan dengan percaya diri.",
+      "keywords": "riset kata kunci, SEO, Google Tren, AI penelusuran, penelusuran lokal, saran, strategi konten",
       "publisher": {
         "@type": "Organization",
         "name": "Lucy World"
@@ -21,31 +21,27 @@
       "author": {
         "@type": "Organization",
         "name": "Lucy World"
-      },
-      "potentialAction": {
-        "@type": "SearchAction",
-        "target": "https://lucy.world/id/?q={search_term_string}",
-        "query-input": "required name=search_term_string"
       }
     },
     {
       "@type": "WebPage",
-      "name": "Lucy World – Analisis pencarian lokal untuk Indonesia",
+      "name": "Lucy World – Kecerdasan penelusuran untuk bahasa Inggris",
       "url": "https://lucy.world/id/",
       "inLanguage": "id",
       "isPartOf": {
         "@type": "WebSite",
         "url": "https://lucy.world/id/"
       },
-      "description": "Lucy World tracks live search demand and AI clustering for Indonesian audiences so teams plan weekly campaigns and sustainable growth with confidence.",
-      "keywords": "kata kunci Indonesia, SEO Indonesia, tren Google, volume pencarian, analisis AI, strategi konten lokal",
+      "description": "Lucy World melacak permintaan penelusuran langsung dan AI pengelompokan untuk pemirsa berbahasa Inggris sehingga tim merencanakan kampanye mingguan dan pertumbuhan berkelanjutan dengan percaya diri.",
+      "keywords": "riset kata kunci, SEO, Google Tren, AI penelusuran, penelusuran lokal, saran, strategi konten",
       "aiSemantic": [
-        "Indonesian keyword research",
-        "Indonesian SEO insights",
-        "search trends platform",
-        "AI content planning",
-        "Indonesian market analysis",
-        "Lucy World intelligence"
+        "riset kata kunci",
+        "SEO",
+        "Google Tren",
+        "AI penelusuran",
+        "penelusuran lokal",
+        "saran",
+        "strategi konten"
       ]
     }
   ]

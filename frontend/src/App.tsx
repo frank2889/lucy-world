@@ -4,6 +4,7 @@ import { AMAZON_MARKETPLACE_CODES } from './platforms/data/amazonMarketplaces'
 import PlatformSidebar from './platforms/Sidebar/PlatformSidebar'
 import { usePlatformHandler } from './platforms/handlers/platformHandler'
 import { createTranslator } from './i18n/translate'
+import type { Translator } from './i18n/translate'
 import { useEntitlements } from './entitlements/useEntitlements'
 import { EntitlementsProvider } from './entitlements/context'
 import { RequireEntitlement } from './entitlements/RequireEntitlement'
@@ -47,6 +48,188 @@ type CreditPack = {
   nickname?: string | null
   mode?: string | null
   description?: string | null
+}
+
+type SamplePlatform = 'google' | 'youtube' | 'amazon'
+
+type SampleInsight = {
+  keyword: string
+  market: {
+    country: string
+    language: string
+  }
+  summary: {
+    totalVolume: number
+    totalKeywords: number
+    realDataKeywords: number
+    avgInterest: number
+  }
+  platforms: SamplePlatform[]
+  related: Array<{
+    keyword: string
+    volume: number
+    trend: string
+    platform: SamplePlatform
+  }>
+}
+
+const SAMPLE_INSIGHT: SampleInsight = {
+  keyword: 'Solar incentives Europe',
+  market: {
+    country: 'DE',
+    language: 'de'
+  },
+  summary: {
+    totalVolume: 48200,
+    totalKeywords: 38,
+    realDataKeywords: 18,
+    avgInterest: 76
+  },
+  platforms: ['google', 'youtube', 'amazon'],
+  related: [
+    {
+      keyword: 'solar subsidy germany',
+      volume: 18100,
+      trend: '+32%',
+      platform: 'google'
+    },
+    {
+      keyword: 'solar panel grants',
+      volume: 12900,
+      trend: '+18%',
+      platform: 'youtube'
+    },
+    {
+      keyword: 'home battery rebate',
+      volume: 8900,
+      trend: '+11%',
+      platform: 'amazon'
+    }
+  ]
+}
+
+function SampleInsightCard({ translate, locale }: { translate: Translator; locale: string }) {
+  const resolvedLocale = (locale && /^[a-z]{2}(-[A-Z]{2})?$/.test(locale)) ? locale : DEFAULT_LANGUAGE
+
+  const numberFormatter = useMemo(() => {
+    try {
+      return new Intl.NumberFormat(resolvedLocale)
+    } catch {
+      return new Intl.NumberFormat('en')
+    }
+  }, [resolvedLocale])
+
+  const regionName = useMemo(() => {
+    try {
+      const formatter = new Intl.DisplayNames([resolvedLocale], { type: 'region' })
+      return formatter.of(SAMPLE_INSIGHT.market.country) || SAMPLE_INSIGHT.market.country
+    } catch {
+      try {
+        const fallbackFormatter = new Intl.DisplayNames(['en'], { type: 'region' })
+        return fallbackFormatter.of(SAMPLE_INSIGHT.market.country) || SAMPLE_INSIGHT.market.country
+      } catch {
+        return SAMPLE_INSIGHT.market.country
+      }
+    }
+  }, [resolvedLocale])
+
+  const languageName = useMemo(() => {
+    try {
+      const formatter = new Intl.DisplayNames([resolvedLocale], { type: 'language' })
+      return formatter.of(SAMPLE_INSIGHT.market.language) || SAMPLE_INSIGHT.market.language
+    } catch {
+      try {
+        const fallbackFormatter = new Intl.DisplayNames(['en'], { type: 'language' })
+        return fallbackFormatter.of(SAMPLE_INSIGHT.market.language) || SAMPLE_INSIGHT.market.language
+      } catch {
+        return SAMPLE_INSIGHT.market.language
+      }
+    }
+  }, [resolvedLocale])
+
+  const platformLabels = useMemo(() => SAMPLE_INSIGHT.platforms.map((platform) => {
+    const key = `platform.${platform}.meta.name`
+    const label = translate(key)
+    return label.startsWith('[MISSING:') ? platform : label
+  }), [translate])
+
+  const formatNumber = useCallback((value: number) => numberFormatter.format(value), [numberFormatter])
+
+  return (
+    <div className="sample-insight-card">
+      <div className="sample-insight-header">
+        <span className="sample-insight-eyebrow">{translate('features.semantic.title')}</span>
+        <h3 className="sample-insight-title">{SAMPLE_INSIGHT.keyword}</h3>
+        <div className="sample-insight-meta">
+          <span className="sample-insight-meta-item">
+            <span className="sample-insight-flag" aria-hidden>{getLanguageFlag(SAMPLE_INSIGHT.market.language)}</span>
+            <span>{regionName}</span>
+          </span>
+          <span className="sample-insight-divider">•</span>
+          <span className="sample-insight-meta-item">{languageName}</span>
+          <span className="sample-insight-divider">•</span>
+          <span className="sample-insight-meta-item">{platformLabels.join(' · ')}</span>
+        </div>
+      </div>
+
+      <div className="sample-insight-metrics">
+        <div className="sample-insight-metric">
+          <span className="sample-insight-metric-label">{translate('kpi.total_volume')}</span>
+          <span className="sample-insight-metric-value">{formatNumber(SAMPLE_INSIGHT.summary.totalVolume)}</span>
+        </div>
+        <div className="sample-insight-metric">
+          <span className="sample-insight-metric-label">{translate('kpi.total_keywords')}</span>
+          <span className="sample-insight-metric-value">{formatNumber(SAMPLE_INSIGHT.summary.totalKeywords)}</span>
+        </div>
+        <div className="sample-insight-metric">
+          <span className="sample-insight-metric-label">{translate('kpi.real_data_keywords')}</span>
+          <span className="sample-insight-metric-value">{formatNumber(SAMPLE_INSIGHT.summary.realDataKeywords)}</span>
+        </div>
+        <div className="sample-insight-metric">
+          <span className="sample-insight-metric-label">{translate('kpi.avg_interest')}</span>
+          <span className="sample-insight-metric-value">{formatNumber(SAMPLE_INSIGHT.summary.avgInterest)}</span>
+        </div>
+      </div>
+
+      <div className="sample-insight-related">
+        {SAMPLE_INSIGHT.related.map((item) => {
+          const platformName = translate(`platform.${item.platform}.meta.name`)
+          const resolvedPlatformName = platformName.startsWith('[MISSING:') ? item.platform : platformName
+          return (
+            <div key={item.keyword} className="sample-insight-related-item">
+              <div className="sample-insight-related-keyword">{item.keyword}</div>
+              <div className="sample-insight-related-meta">
+                <span>{translate('metrics.search_volume')}: {formatNumber(item.volume)}</span>
+                <span>{translate('metrics.trend')}: {item.trend}</span>
+                <span>{resolvedPlatformName}</span>
+              </div>
+            </div>
+          )
+        })}
+      </div>
+
+      <div className="sample-insight-footer">
+        <button
+          type="button"
+          className="sample-insight-cta"
+          onClick={() => {
+            const searchInput = document.querySelector('input[type="text"]') as HTMLInputElement | null
+            if (searchInput) {
+              searchInput.focus()
+              searchInput.scrollIntoView({ behavior: 'smooth', block: 'center' })
+            }
+            const dl = (window as any).dataLayer
+            if (Array.isArray(dl)) {
+              dl.push({ event: 'sample_insight_cta_clicked' })
+            }
+          }}
+        >
+          {translate('hero.cta_primary')}
+        </button>
+        <span className="sample-insight-note">{translate('hero.trust_refresh')}</span>
+      </div>
+    </div>
+  )
 }
 
 const DEFAULT_LANGUAGE = 'nl' as const
@@ -1851,6 +2034,10 @@ export default function App() {
                 <p className="feature-description">{translate('features.ai_briefs.description')}</p>
               </div>
             </div>
+
+            {!data && (
+              <SampleInsightCard translate={translate} locale={language} />
+            )}
           </div>
         )}
 

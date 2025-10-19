@@ -1,6 +1,5 @@
 import React from 'react'
 import type { PlatformConfig } from '../types'
-import '../styles/sidebar.css'
 
 type PlatformSidebarProps = {
   title?: string

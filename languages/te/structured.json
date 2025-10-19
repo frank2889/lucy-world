@@ -12,7 +12,7 @@
       "name": "కీవర్డ్ పరిశోధన - Lucy World",
       "url": "https://lucy.world/te/",
       "inLanguage": "te",
-      "description": "Lucy World tracks live search demand and AI clustering for Telugu audiences so teams plan weekly campaigns and sustainable growth with confidence.",
+      "description": "Lucy World లైవ్ సెర్చ్ డిమాండ్ మరియు AI ఆంగ్ల ప్రేక్షకుల కోసం క్లస్టరింగ్ కాబట్టి జట్లు వారపు ప్రచారాలను మరియు విశ్వాసంతో స్థిరమైన వృద్ధిని ప్లాన్ చేస్తాయి.",
       "keywords": "కీవర్డ్ పరిశోధన, తెలుగు SEO, Google Trends, సూచనలు, వెతుకుట వాల్యూమ్",
       "publisher": {
         "@type": "Organization",
@@ -21,11 +21,6 @@
       "author": {
         "@type": "Organization",
         "name": "Lucy World"
-      },
-      "potentialAction": {
-        "@type": "SearchAction",
-        "target": "https://lucy.world/te/?q={search_term_string}",
-        "query-input": "required name=search_term_string"
       }
     },
     {
@@ -37,15 +32,14 @@
         "@type": "WebSite",
         "url": "https://lucy.world/te/"
       },
-      "description": "Lucy World tracks live search demand and AI clustering for Telugu audiences so teams plan weekly campaigns and sustainable growth with confidence.",
+      "description": "Lucy World లైవ్ సెర్చ్ డిమాండ్ మరియు AI ఆంగ్ల ప్రేక్షకుల కోసం క్లస్టరింగ్ కాబట్టి జట్లు వారపు ప్రచారాలను మరియు విశ్వాసంతో స్థిరమైన వృద్ధిని ప్లాన్ చేస్తాయి.",
       "keywords": "కీవర్డ్ పరిశోధన, తెలుగు SEO, Google Trends, సూచనలు, వెతుకుట వాల్యూమ్",
       "aiSemantic": [
-        "Telugu keyword research",
-        "Telugu SEO insights",
-        "search trends platform",
-        "AI content planning",
-        "Telugu market analysis",
-        "Lucy World intelligence"
+        "కీవర్డ్ పరిశోధన",
+        "తెలుగు SEO",
+        "Google Trends",
+        "సూచనలు",
+        "వెతుకుట వాల్యూమ్"
       ]
     }
   ]

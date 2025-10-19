@@ -12,7 +12,7 @@
       "name": "Тадқиқоти калимаҳои калидӣ - Lucy World",
       "url": "https://lucy.world/tg/",
       "inLanguage": "tg",
-      "description": "Lucy World tracks live search demand and AI clustering for Tajik audiences so teams plan weekly campaigns and sustainable growth with confidence.",
+      "description": "Lucy World tracks live search demand and AI clustering for English audiences so teams plan weekly campaigns and sustainable growth with confidence.",
       "keywords": "тадқиқоти калимаҳои калидӣ, SEO тоҷикӣ, Google Trends, пешниҳодҳо, ҳаҷми ҷустуҷӯ",
       "publisher": {
         "@type": "Organization",
@@ -21,11 +21,6 @@
       "author": {
         "@type": "Organization",
         "name": "Lucy World"
-      },
-      "potentialAction": {
-        "@type": "SearchAction",
-        "target": "https://lucy.world/tg/?q={search_term_string}",
-        "query-input": "required name=search_term_string"
       }
     },
     {
@@ -37,15 +32,14 @@
         "@type": "WebSite",
         "url": "https://lucy.world/tg/"
       },
-      "description": "Lucy World tracks live search demand and AI clustering for Tajik audiences so teams plan weekly campaigns and sustainable growth with confidence.",
+      "description": "Lucy World tracks live search demand and AI clustering for English audiences so teams plan weekly campaigns and sustainable growth with confidence.",
       "keywords": "тадқиқоти калимаҳои калидӣ, SEO тоҷикӣ, Google Trends, пешниҳодҳо, ҳаҷми ҷустуҷӯ",
       "aiSemantic": [
-        "Tajik keyword research",
-        "Tajik SEO insights",
-        "search trends platform",
-        "AI content planning",
-        "Tajik market analysis",
-        "Lucy World intelligence"
+        "тадқиқоти калимаҳои калидӣ",
+        "SEO тоҷикӣ",
+        "Google Trends",
+        "пешниҳодҳо",
+        "ҳаҷми ҷустуҷӯ"
       ]
     }
   ]

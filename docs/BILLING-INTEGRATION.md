@@ -320,34 +320,39 @@ curl -X POST \
 After updating billing-related frontend code:
 
 1. **Rebuild frontend**:
-   ```bash
-   cd frontend
-   npm run build
-   cd ..
-   ```
 
-2. **Commit static assets**:
-   ```bash
-   git add static/app
-   git commit -m "chore: rebuild frontend with billing UI updates"
-   ```
+  ```bash
+  cd frontend
+  npm run build
+  cd ..
+  ```
 
-3. **Deploy to server**:
-   ```bash
-   git push origin main
-   ```
+1. **Commit static assets**:
 
-4. **Restart backend** (if needed):
-   ```bash
-   ssh user@server
-   sudo systemctl restart lucy-world-search
-   ```
+  ```bash
+  git add app
+  git commit -m "chore: rebuild frontend with billing UI updates"
+  ```
 
-5. **Verify deployment**:
-   - Hard refresh browser (Cmd+Shift+R / Ctrl+Shift+R)
-   - Check Network tab for latest `app-*.js` bundle
-   - Verify plan summary and billing buttons appear
-   - Test checkout flows end-to-end
+1. **Deploy to server**:
+
+  ```bash
+  git push origin main
+  ```
+
+1. **Restart backend** (if needed):
+
+  ```bash
+  ssh user@server
+  sudo systemctl restart lucy-world-search
+  ```
+
+1. **Verify deployment**:
+
+  - Hard refresh browser (Cmd+Shift+R / Ctrl+Shift+R)
+  - Check Network tab for latest `app-*.js` bundle
+  - Verify plan summary and billing buttons appear
+  - Test checkout flows end-to-end
 
 ## Troubleshooting
 

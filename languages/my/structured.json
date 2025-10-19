@@ -21,11 +21,6 @@
       "author": {
         "@type": "Organization",
         "name": "Lucy World"
-      },
-      "potentialAction": {
-        "@type": "SearchAction",
-        "target": "https://lucy.world/my/?q={search_term_string}",
-        "query-input": "required name=search_term_string"
       }
     },
     {
@@ -40,12 +35,12 @@
       "description": "အကြံပြုချက်များ၊ လမ်းကြောင်းများနှင့် AI ခွဲခြမ်းစိတ်ဖြာမှုများဖြင့် မြန်မာ Google ဒေတာများကို စူးစမ်းလေ့လာပြီး ပြည်တွင်းလုပ်ငန်း တိုးတက်မှုကို အားဖြည့်ပါ။",
       "keywords": "မြန်မာ သော့ချက်စာလုံးများ, SEO မြန်မာ, Google လမ်းကြောင်းများ, ရှာဖွေမှု ပမာဏ, AI ခွဲခြမ်းစိတ်ဖြာမှု, ဒေသဆိုင်ရာ အကြောင်းအရာ ဗျူဟာ",
       "aiSemantic": [
-        "Burmese keyword research",
-        "Burmese SEO insights",
-        "search trends platform",
-        "AI content planning",
-        "Burmese market analysis",
-        "Lucy World intelligence"
+        "မြန်မာ သော့ချက်စာလုံးများ",
+        "SEO မြန်မာ",
+        "Google လမ်းကြောင်းများ",
+        "ရှာဖွေမှု ပမာဏ",
+        "AI ခွဲခြမ်းစိတ်ဖြာမှု",
+        "ဒေသဆိုင်ရာ အကြောင်းအရာ ဗျူဟာ"
       ]
     }
   ]

@@ -9,11 +9,11 @@
     },
     {
       "@type": "WebSite",
-      "name": "Kalit so'zlar tadqiqoti - Lucy World",
+      "name": "Lucy World - Ingliz tilini qidirish",
       "url": "https://lucy.world/uz/",
       "inLanguage": "uz",
-      "description": "Lucy World tracks live search demand and AI clustering for Uzbek audiences so teams plan weekly campaigns and sustainable growth with confidence.",
-      "keywords": "kalit so'zlar tadqiqoti, SEO o'zbek, Google Trends, takliflar, qidiruv hajmi",
+      "description": "Lucy World Tracks Live Qidiruv talab va AI Ingliz tilidagi auditoriyalar uchun, shuning uchun jamoalar haftalik kampaniyalarni rejalashtirish va barqaror o'sish uchun ishonch bilan barqaror o'sishni rejalashtirishadi.",
+      "keywords": "Kalit so'zli tadqiqotlar, SEO, GoogleAI Sayt, mahalliy qidiruv, takliflar, tarkibiy strategiya",
       "publisher": {
         "@type": "Organization",
         "name": "Lucy World"
@@ -21,31 +21,26 @@
       "author": {
         "@type": "Organization",
         "name": "Lucy World"
-      },
-      "potentialAction": {
-        "@type": "SearchAction",
-        "target": "https://lucy.world/uz/?q={search_term_string}",
-        "query-input": "required name=search_term_string"
       }
     },
     {
       "@type": "WebPage",
-      "name": "Kalit so'zlar tadqiqoti - Lucy World",
+      "name": "Lucy World - Ingliz tilini qidirish",
       "url": "https://lucy.world/uz/",
       "inLanguage": "uz",
       "isPartOf": {
         "@type": "WebSite",
         "url": "https://lucy.world/uz/"
       },
-      "description": "Lucy World tracks live search demand and AI clustering for Uzbek audiences so teams plan weekly campaigns and sustainable growth with confidence.",
-      "keywords": "kalit so'zlar tadqiqoti, SEO o'zbek, Google Trends, takliflar, qidiruv hajmi",
+      "description": "Lucy World Tracks Live Qidiruv talab va AI Ingliz tilidagi auditoriyalar uchun, shuning uchun jamoalar haftalik kampaniyalarni rejalashtirish va barqaror o'sish uchun ishonch bilan barqaror o'sishni rejalashtirishadi.",
+      "keywords": "Kalit so'zli tadqiqotlar, SEO, GoogleAI Sayt, mahalliy qidiruv, takliflar, tarkibiy strategiya",
       "aiSemantic": [
-        "Uzbek keyword research",
-        "Uzbek SEO insights",
-        "search trends platform",
-        "AI content planning",
-        "Uzbek market analysis",
-        "Lucy World intelligence"
+        "Kalit so'zli tadqiqotlar",
+        "SEO",
+        "GoogleAI Sayt",
+        "mahalliy qidiruv",
+        "takliflar",
+        "tarkibiy strategiya"
       ]
     }
   ]

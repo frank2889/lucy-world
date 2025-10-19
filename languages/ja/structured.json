@@ -12,7 +12,7 @@
       "name": "Lucy World – 日本のローカル検索分析",
       "url": "https://lucy.world/ja/",
       "inLanguage": "ja",
-      "description": "Lucy World tracks live search demand and AI clustering for Japanese audiences so teams plan weekly campaigns and sustainable growth with confidence.",
+      "description": "Lucy World はライブ検索需要を追跡し、英語の視聴者向けに AI クラスタリングを行うため、チームは毎週のキャンペーンと自信を持って持続可能な成長を計画できます。",
       "keywords": "日本語キーワード, SEO日本, Googleトレンド, 検索ボリューム, AI分析, ローカルコンテンツ戦略",
       "publisher": {
         "@type": "Organization",
@@ -21,11 +21,6 @@
       "author": {
         "@type": "Organization",
         "name": "Lucy World"
-      },
-      "potentialAction": {
-        "@type": "SearchAction",
-        "target": "https://lucy.world/ja/?q={search_term_string}",
-        "query-input": "required name=search_term_string"
       }
     },
     {
@@ -37,15 +32,15 @@
         "@type": "WebSite",
         "url": "https://lucy.world/ja/"
       },
-      "description": "Lucy World tracks live search demand and AI clustering for Japanese audiences so teams plan weekly campaigns and sustainable growth with confidence.",
+      "description": "Lucy World はライブ検索需要を追跡し、英語の視聴者向けに AI クラスタリングを行うため、チームは毎週のキャンペーンと自信を持って持続可能な成長を計画できます。",
       "keywords": "日本語キーワード, SEO日本, Googleトレンド, 検索ボリューム, AI分析, ローカルコンテンツ戦略",
       "aiSemantic": [
-        "Japanese keyword research",
-        "Japanese SEO insights",
-        "search trends platform",
-        "AI content planning",
-        "Japanese market analysis",
-        "Lucy World intelligence"
+        "日本語キーワード",
+        "SEO日本",
+        "Googleトレンド",
+        "検索ボリューム",
+        "AI分析",
+        "ローカルコンテンツ戦略"
       ]
     }
   ]

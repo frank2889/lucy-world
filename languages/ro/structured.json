@@ -12,7 +12,7 @@
       "name": "Lucy World – Analiză de căutare locală pentru România",
       "url": "https://lucy.world/ro/",
       "inLanguage": "ro",
-      "description": "Lucy World tracks live search demand and AI clustering for Romanian audiences so teams plan weekly campaigns and sustainable growth with confidence.",
+      "description": "Lucy World Urmărește cererea de căutare în direct și AI Clustering pentru publicul englez, astfel încât echipele să planifice campanii săptămânale și o creștere durabilă cu încredere.",
       "keywords": "cuvinte cheie românești, SEO România, Google Trends, volum căutare, analiză AI, strategie conținut local",
       "publisher": {
         "@type": "Organization",
@@ -21,11 +21,6 @@
       "author": {
         "@type": "Organization",
         "name": "Lucy World"
-      },
-      "potentialAction": {
-        "@type": "SearchAction",
-        "target": "https://lucy.world/ro/?q={search_term_string}",
-        "query-input": "required name=search_term_string"
       }
     },
     {
@@ -37,15 +32,15 @@
         "@type": "WebSite",
         "url": "https://lucy.world/ro/"
       },
-      "description": "Lucy World tracks live search demand and AI clustering for Romanian audiences so teams plan weekly campaigns and sustainable growth with confidence.",
+      "description": "Lucy World Urmărește cererea de căutare în direct și AI Clustering pentru publicul englez, astfel încât echipele să planifice campanii săptămânale și o creștere durabilă cu încredere.",
       "keywords": "cuvinte cheie românești, SEO România, Google Trends, volum căutare, analiză AI, strategie conținut local",
       "aiSemantic": [
-        "Romanian keyword research",
-        "Romanian SEO insights",
-        "search trends platform",
-        "AI content planning",
-        "Romanian market analysis",
-        "Lucy World intelligence"
+        "cuvinte cheie românești",
+        "SEO România",
+        "Google Trends",
+        "volum căutare",
+        "analiză AI",
+        "strategie conținut local"
       ]
     }
   ]

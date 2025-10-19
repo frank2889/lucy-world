@@ -9,11 +9,11 @@
     },
     {
       "@type": "WebSite",
-      "name": "Lucy World – Falanqaynta raadinta maxalliga ah ee Soomaaliya",
+      "name": "Lucy World - Sirdoonka raadinta Ingiriisiga",
       "url": "https://lucy.world/so/",
       "inLanguage": "so",
-      "description": "Sahami xogta Google Soomaaliyeed oo leh talooyiin, isbeddelka iyo falanqaynta AI taas oo xoojisa go'aamada waxa lagu qoro iyo kordhinta ganacsiga maxalliga ah.",
-      "keywords": "ereyada muhiimka ah ee Soomaaliga, SEO Soomaaliya, Google Trends, mugga raadinta, falanqaynta AI, istaraatiijiyada waxa lagu qoro ee maxalliga ah",
+      "description": "Lucy World Raad-raacyada raadinta tooska ah iyo AI Ku-meel-gaarka ah Dhageysiga Ingriiska ayaa qorsheynaya ololeyaal toddobaadle ah iyo koboc waara oo kalsooni ah.",
+      "keywords": "Cilmi-baarista Keyword, SEO, Google isbeddelada, AI Raadinta, Istaraatiijiyadda Mawduuca.",
       "publisher": {
         "@type": "Organization",
         "name": "Lucy World"
@@ -21,31 +21,25 @@
       "author": {
         "@type": "Organization",
         "name": "Lucy World"
-      },
-      "potentialAction": {
-        "@type": "SearchAction",
-        "target": "https://lucy.world/so/?q={search_term_string}",
-        "query-input": "required name=search_term_string"
       }
     },
     {
       "@type": "WebPage",
-      "name": "Lucy World – Falanqaynta raadinta maxalliga ah ee Soomaaliya",
+      "name": "Lucy World - Sirdoonka raadinta Ingiriisiga",
       "url": "https://lucy.world/so/",
       "inLanguage": "so",
       "isPartOf": {
         "@type": "WebSite",
         "url": "https://lucy.world/so/"
       },
-      "description": "Sahami xogta Google Soomaaliyeed oo leh talooyiin, isbeddelka iyo falanqaynta AI taas oo xoojisa go'aamada waxa lagu qoro iyo kordhinta ganacsiga maxalliga ah.",
-      "keywords": "ereyada muhiimka ah ee Soomaaliga, SEO Soomaaliya, Google Trends, mugga raadinta, falanqaynta AI, istaraatiijiyada waxa lagu qoro ee maxalliga ah",
+      "description": "Lucy World Raad-raacyada raadinta tooska ah iyo AI Ku-meel-gaarka ah Dhageysiga Ingriiska ayaa qorsheynaya ololeyaal toddobaadle ah iyo koboc waara oo kalsooni ah.",
+      "keywords": "Cilmi-baarista Keyword, SEO, Google isbeddelada, AI Raadinta, Istaraatiijiyadda Mawduuca.",
       "aiSemantic": [
-        "Somali keyword research",
-        "Somali SEO insights",
-        "search trends platform",
-        "AI content planning",
-        "Somali market analysis",
-        "Lucy World intelligence"
+        "Cilmi-baarista Keyword",
+        "SEO",
+        "Google isbeddelada",
+        "AI Raadinta",
+        "Istaraatiijiyadda Mawduuca."
       ]
     }
   ]

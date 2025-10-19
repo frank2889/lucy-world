@@ -12,7 +12,7 @@
       "name": "Lucy World – Lokal Sich-Analyse fir Lëtzebuerg",
       "url": "https://lucy.world/lb/",
       "inLanguage": "lb",
-      "description": "Lucy World tracks live search demand and AI clustering for Luxembourgish audiences so teams plan weekly campaigns and sustainable growth with confidence.",
+      "description": "Lucy WorldAI.",
       "keywords": "lëtzebuergesch Schlësselwierder, SEO Lëtzebuerg, Google-Trends, Sich-Volume, AI-Analyse, lokal Inhaltsstrategie",
       "publisher": {
         "@type": "Organization",
@@ -21,11 +21,6 @@
       "author": {
         "@type": "Organization",
         "name": "Lucy World"
-      },
-      "potentialAction": {
-        "@type": "SearchAction",
-        "target": "https://lucy.world/lb/?q={search_term_string}",
-        "query-input": "required name=search_term_string"
       }
     },
     {
@@ -37,15 +32,15 @@
         "@type": "WebSite",
         "url": "https://lucy.world/lb/"
       },
-      "description": "Lucy World tracks live search demand and AI clustering for Luxembourgish audiences so teams plan weekly campaigns and sustainable growth with confidence.",
+      "description": "Lucy WorldAI.",
       "keywords": "lëtzebuergesch Schlësselwierder, SEO Lëtzebuerg, Google-Trends, Sich-Volume, AI-Analyse, lokal Inhaltsstrategie",
       "aiSemantic": [
-        "Luxembourgish keyword research",
-        "Luxembourgish SEO insights",
-        "search trends platform",
-        "AI content planning",
-        "Luxembourgish market analysis",
-        "Lucy World intelligence"
+        "lëtzebuergesch Schlësselwierder",
+        "SEO Lëtzebuerg",
+        "Google-Trends",
+        "Sich-Volume",
+        "AI-Analyse",
+        "lokal Inhaltsstrategie"
       ]
     }
   ]

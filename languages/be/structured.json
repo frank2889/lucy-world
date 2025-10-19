@@ -21,11 +21,6 @@
       "author": {
         "@type": "Organization",
         "name": "Lucy World"
-      },
-      "potentialAction": {
-        "@type": "SearchAction",
-        "target": "https://lucy.world/be/?q={search_term_string}",
-        "query-input": "required name=search_term_string"
       }
     },
     {
@@ -40,12 +35,12 @@
       "description": "Атрымлівайце дакладныя беларускія інсайты з Google і Yandex: лакальныя прапановы, тэндэнцыі і AI-аналітыка, якія дапамагаюць росту кантэнту і бізнесу.",
       "keywords": "беларуская SEO, даследаванне ключавых слоў, тэндэнцыі Google, пошук Yandex, AI-аналітыка, лакальная стратэгія кантэнту",
       "aiSemantic": [
-        "Belarusian keyword research",
-        "Belarusian SEO insights",
-        "search trends platform",
-        "AI content planning",
-        "Belarusian market analysis",
-        "Lucy World intelligence"
+        "беларуская SEO",
+        "даследаванне ключавых слоў",
+        "тэндэнцыі Google",
+        "пошук Yandex",
+        "AI-аналітыка",
+        "лакальная стратэгія кантэнту"
       ]
     }
   ]

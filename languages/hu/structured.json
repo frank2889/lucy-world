@@ -21,11 +21,6 @@
       "author": {
         "@type": "Organization",
         "name": "Lucy World"
-      },
-      "potentialAction": {
-        "@type": "SearchAction",
-        "target": "https://lucy.world/hu/?q={search_term_string}",
-        "query-input": "required name=search_term_string"
       }
     },
     {
@@ -40,12 +35,12 @@
       "description": "Fedezze fel a magyar Google adatokat javaslatokkal, trendekkel és AI elemzéssel, amelyek erősítik a tartalmi döntéseket és az üzleti növekedést.",
       "keywords": "magyar kulcsszavak, SEO Magyarország, Google trendek, keresési forgalom, AI elemzés, helyi tartalomstratégia",
       "aiSemantic": [
-        "Hungarian keyword research",
-        "Hungarian SEO insights",
-        "search trends platform",
-        "AI content planning",
-        "Hungarian market analysis",
-        "Lucy World intelligence"
+        "magyar kulcsszavak",
+        "SEO Magyarország",
+        "Google trendek",
+        "keresési forgalom",
+        "AI elemzés",
+        "helyi tartalomstratégia"
       ]
     }
   ]

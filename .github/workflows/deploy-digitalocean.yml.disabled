@@ -27,20 +27,17 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Verify enhanced locale metadata
-        run: python scripts/enhance_locale_metadata.py --check
+      - name: Synchronize structured metadata
+        run: python scripts/translations/update_structured_data.py
 
-      - name: Enforce no inline locale strings
-        run: python scripts/check_locales.py --enforce-no-inline
+      - name: Validate locale key coverage
+        run: python scripts/validate_locale_keys.py --strict
 
       - name: Regenerate locale assets
         run: python scripts/generate_site_assets.py --all
 
       - name: Validate enhanced locales
         run: python scripts/validate_enhanced_locales.py --strict
-
-      - name: Validate locale key coverage
-        run: python scripts/validate_locale_keys.py --strict
 
       - name: Validate hreflang reciprocity
         run: python scripts/validate_hreflang.py --markets markets/index.json

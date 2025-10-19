@@ -21,11 +21,6 @@
       "author": {
         "@type": "Organization",
         "name": "Lucy World"
-      },
-      "potentialAction": {
-        "@type": "SearchAction",
-        "target": "https://lucy.world/gd/?q={search_term_string}",
-        "query-input": "required name=search_term_string"
       }
     },
     {
@@ -40,12 +35,12 @@
       "description": "Faigh a-mach dàta Gàidhlig Google le molaidhean, treandaichean agus mion-sgrùdadh AI a neartaicheas co-dhùnaidhean susbaint agus fàs gnìomhachais.",
       "keywords": "prìomh-fhaclan Gàidhlig, SEO Alba, treandaichean Google, meud rannsachaidh, mion-sgrùdadh AI, ro-innleachd susbaint ionadail",
       "aiSemantic": [
-        "Scottish Gaelic keyword research",
-        "Scottish Gaelic SEO insights",
-        "search trends platform",
-        "AI content planning",
-        "Scottish Gaelic market analysis",
-        "Lucy World intelligence"
+        "prìomh-fhaclan Gàidhlig",
+        "SEO Alba",
+        "treandaichean Google",
+        "meud rannsachaidh",
+        "mion-sgrùdadh AI",
+        "ro-innleachd susbaint ionadail"
       ]
     }
   ]

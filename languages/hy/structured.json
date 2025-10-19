@@ -9,11 +9,11 @@
     },
     {
       "@type": "WebSite",
-      "name": "Lucy World – Տեղական որոնման վերլուծություն Հայաստանի համար",
+      "name": "Lucy World - Որոնել հետախուզություն անգլերենի համար",
       "url": "https://lucy.world/hy/",
       "inLanguage": "hy",
-      "description": "Բացահայտեք հայկական Google տվյալները առաջարկություններով, միտումներով և AI վերլուծությամբ, որոնք ամրապնդում են բովանդակության որոշումները և բիզնեսի աճը:",
-      "keywords": "հայկական հիմնաբառեր, SEO Հայաստան, Google միտումներ, որոնման ծավալ, AI վերլուծություն, տեղական բովանդակության ռազմավարություն",
+      "description": "Lucy World Հետեւում է կենդանի որոնման պահանջարկը եւ AI Կլաստերինգը անգլիական լսարանների համար, ուստի թիմերը նախատեսում են շաբաթական արշավներ եւ վստահություն:",
+      "keywords": "Հիմնաբառերի հետազոտություն, SEO, Google Trends, AI Որոնում, Տեղական որոնում, առաջարկություններ, բովանդակության ռազմավարություն",
       "publisher": {
         "@type": "Organization",
         "name": "Lucy World"
@@ -21,31 +21,27 @@
       "author": {
         "@type": "Organization",
         "name": "Lucy World"
-      },
-      "potentialAction": {
-        "@type": "SearchAction",
-        "target": "https://lucy.world/hy/?q={search_term_string}",
-        "query-input": "required name=search_term_string"
       }
     },
     {
       "@type": "WebPage",
-      "name": "Lucy World – Տեղական որոնման վերլուծություն Հայաստանի համար",
+      "name": "Lucy World - Որոնել հետախուզություն անգլերենի համար",
       "url": "https://lucy.world/hy/",
       "inLanguage": "hy",
       "isPartOf": {
         "@type": "WebSite",
         "url": "https://lucy.world/hy/"
       },
-      "description": "Բացահայտեք հայկական Google տվյալները առաջարկություններով, միտումներով և AI վերլուծությամբ, որոնք ամրապնդում են բովանդակության որոշումները և բիզնեսի աճը:",
-      "keywords": "հայկական հիմնաբառեր, SEO Հայաստան, Google միտումներ, որոնման ծավալ, AI վերլուծություն, տեղական բովանդակության ռազմավարություն",
+      "description": "Lucy World Հետեւում է կենդանի որոնման պահանջարկը եւ AI Կլաստերինգը անգլիական լսարանների համար, ուստի թիմերը նախատեսում են շաբաթական արշավներ եւ վստահություն:",
+      "keywords": "Հիմնաբառերի հետազոտություն, SEO, Google Trends, AI Որոնում, Տեղական որոնում, առաջարկություններ, բովանդակության ռազմավարություն",
       "aiSemantic": [
-        "Armenian keyword research",
-        "Armenian SEO insights",
-        "search trends platform",
-        "AI content planning",
-        "Armenian market analysis",
-        "Lucy World intelligence"
+        "Հիմնաբառերի հետազոտություն",
+        "SEO",
+        "Google Trends",
+        "AI Որոնում",
+        "Տեղական որոնում",
+        "առաջարկություններ",
+        "բովանդակության ռազմավարություն"
       ]
     }
   ]

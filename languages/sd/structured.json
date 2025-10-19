@@ -12,7 +12,7 @@
       "name": "Lucy World – سنڌ لاءِ مقامي ڳولا جو تجزيو",
       "url": "https://lucy.world/sd/",
       "inLanguage": "sd",
-      "description": "Lucy World tracks live search demand and AI clustering for Sindhi audiences so teams plan weekly campaigns and sustainable growth with confidence.",
+      "description": "Lucy World ٽريڪ ريڪارڊ ۽ brb Yests ۽ پائيدار مهم.",
       "keywords": "سنڌي اهم لفظ, SEO سنڌ, Google رجحانات, ڳولا جي مقدار, AI تجزيو, مقامي مواد جي حڪمت عملي",
       "publisher": {
         "@type": "Organization",
@@ -21,11 +21,6 @@
       "author": {
         "@type": "Organization",
         "name": "Lucy World"
-      },
-      "potentialAction": {
-        "@type": "SearchAction",
-        "target": "https://lucy.world/sd/?q={search_term_string}",
-        "query-input": "required name=search_term_string"
       }
     },
     {
@@ -37,15 +32,15 @@
         "@type": "WebSite",
         "url": "https://lucy.world/sd/"
       },
-      "description": "Lucy World tracks live search demand and AI clustering for Sindhi audiences so teams plan weekly campaigns and sustainable growth with confidence.",
+      "description": "Lucy World ٽريڪ ريڪارڊ ۽ brb Yests ۽ پائيدار مهم.",
       "keywords": "سنڌي اهم لفظ, SEO سنڌ, Google رجحانات, ڳولا جي مقدار, AI تجزيو, مقامي مواد جي حڪمت عملي",
       "aiSemantic": [
-        "Sindhi keyword research",
-        "Sindhi SEO insights",
-        "search trends platform",
-        "AI content planning",
-        "Sindhi market analysis",
-        "Lucy World intelligence"
+        "سنڌي اهم لفظ",
+        "SEO سنڌ",
+        "Google رجحانات",
+        "ڳولا جي مقدار",
+        "AI تجزيو",
+        "مقامي مواد جي حڪمت عملي"
       ]
     }
   ]

@@ -1,1 +1,1 @@
-web: gunicorn wsgi:app --bind 0.0.0.0:${PORT:-8080} --workers 2 --threads 8 --timeout 120
+web: gunicorn scripts.wsgi:app --config scripts/gunicorn.conf.py --bind 0.0.0.0:${PORT:-8080} --workers 2 --threads 8 --timeout 120

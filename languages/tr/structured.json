@@ -12,7 +12,7 @@
       "name": "Anahtar Kelime Araştırması - Lucy World",
       "url": "https://lucy.world/tr/",
       "inLanguage": "tr",
-      "description": "Lucy World tracks live search demand and AI clustering for Turkish audiences so teams plan weekly campaigns and sustainable growth with confidence.",
+      "description": "Lucy World canlı arama talebini ve İngiliz izleyiciler için AI kümelenmeyi takip ederek ekiplerin haftalık kampanyaları ve sürdürülebilir büyümeyi güvenle planlamasına olanak tanır.",
       "keywords": "anahtar kelime araştırması, SEO Türkiye, Google Trends, öneriler, arama hacmi",
       "publisher": {
         "@type": "Organization",
@@ -21,11 +21,6 @@
       "author": {
         "@type": "Organization",
         "name": "Lucy World"
-      },
-      "potentialAction": {
-        "@type": "SearchAction",
-        "target": "https://lucy.world/tr/?q={search_term_string}",
-        "query-input": "required name=search_term_string"
       }
     },
     {
@@ -37,15 +32,14 @@
         "@type": "WebSite",
         "url": "https://lucy.world/tr/"
       },
-      "description": "Lucy World tracks live search demand and AI clustering for Turkish audiences so teams plan weekly campaigns and sustainable growth with confidence.",
+      "description": "Lucy World canlı arama talebini ve İngiliz izleyiciler için AI kümelenmeyi takip ederek ekiplerin haftalık kampanyaları ve sürdürülebilir büyümeyi güvenle planlamasına olanak tanır.",
       "keywords": "anahtar kelime araştırması, SEO Türkiye, Google Trends, öneriler, arama hacmi",
       "aiSemantic": [
-        "Turkish keyword research",
-        "Turkish SEO insights",
-        "search trends platform",
-        "AI content planning",
-        "Turkish market analysis",
-        "Lucy World intelligence"
+        "anahtar kelime araştırması",
+        "SEO Türkiye",
+        "Google Trends",
+        "öneriler",
+        "arama hacmi"
       ]
     }
   ]

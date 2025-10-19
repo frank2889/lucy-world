@@ -12,7 +12,7 @@
       "name": "Lucy World – ניתוח חיפוש מקומי לישראל",
       "url": "https://lucy.world/he/",
       "inLanguage": "he",
-      "description": "Lucy World tracks live search demand and AI clustering for Hebrew audiences so teams plan weekly campaigns and sustainable growth with confidence.",
+      "description": "Lucy World רצועות חיפוש חי דרישה AI אשכולות לקהלים אנגלים כך שצוותים מתכננים קמפיינים שבועיים וצמיחה בר קיימא בביטחון.",
       "keywords": "מילות מפתח עבריות, SEO ישראל, מגמות Google, נפח חיפוש, ניתוח AI, אסטרטגיית תוכן מקומית",
       "publisher": {
         "@type": "Organization",
@@ -21,11 +21,6 @@
       "author": {
         "@type": "Organization",
         "name": "Lucy World"
-      },
-      "potentialAction": {
-        "@type": "SearchAction",
-        "target": "https://lucy.world/he/?q={search_term_string}",
-        "query-input": "required name=search_term_string"
       }
     },
     {
@@ -37,15 +32,15 @@
         "@type": "WebSite",
         "url": "https://lucy.world/he/"
       },
-      "description": "Lucy World tracks live search demand and AI clustering for Hebrew audiences so teams plan weekly campaigns and sustainable growth with confidence.",
+      "description": "Lucy World רצועות חיפוש חי דרישה AI אשכולות לקהלים אנגלים כך שצוותים מתכננים קמפיינים שבועיים וצמיחה בר קיימא בביטחון.",
       "keywords": "מילות מפתח עבריות, SEO ישראל, מגמות Google, נפח חיפוש, ניתוח AI, אסטרטגיית תוכן מקומית",
       "aiSemantic": [
-        "Hebrew keyword research",
-        "Hebrew SEO insights",
-        "search trends platform",
-        "AI content planning",
-        "Hebrew market analysis",
-        "Lucy World intelligence"
+        "מילות מפתח עבריות",
+        "SEO ישראל",
+        "מגמות Google",
+        "נפח חיפוש",
+        "ניתוח AI",
+        "אסטרטגיית תוכן מקומית"
       ]
     }
   ]

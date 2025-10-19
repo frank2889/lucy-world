@@ -12,7 +12,7 @@
       "name": "Nghiên cứu từ khóa - Lucy World",
       "url": "https://lucy.world/vi/",
       "inLanguage": "vi",
-      "description": "Lucy World tracks live search demand and AI clustering for Vietnamese audiences so teams plan weekly campaigns and sustainable growth with confidence.",
+      "description": "Lucy World theo dõi nhu cầu tìm kiếm trực tiếp và AI phân cụm cho khán giả người Anh để các nhóm tự tin lên kế hoạch cho các chiến dịch hàng tuần và tăng trưởng bền vững.",
       "keywords": "nghiên cứu từ khóa, SEO Việt Nam, Google Trends, gợi ý, lưu lượng tìm kiếm",
       "publisher": {
         "@type": "Organization",
@@ -21,11 +21,6 @@
       "author": {
         "@type": "Organization",
         "name": "Lucy World"
-      },
-      "potentialAction": {
-        "@type": "SearchAction",
-        "target": "https://lucy.world/vi/?q={search_term_string}",
-        "query-input": "required name=search_term_string"
       }
     },
     {
@@ -37,15 +32,14 @@
         "@type": "WebSite",
         "url": "https://lucy.world/vi/"
       },
-      "description": "Lucy World tracks live search demand and AI clustering for Vietnamese audiences so teams plan weekly campaigns and sustainable growth with confidence.",
+      "description": "Lucy World theo dõi nhu cầu tìm kiếm trực tiếp và AI phân cụm cho khán giả người Anh để các nhóm tự tin lên kế hoạch cho các chiến dịch hàng tuần và tăng trưởng bền vững.",
       "keywords": "nghiên cứu từ khóa, SEO Việt Nam, Google Trends, gợi ý, lưu lượng tìm kiếm",
       "aiSemantic": [
-        "Vietnamese keyword research",
-        "Vietnamese SEO insights",
-        "search trends platform",
-        "AI content planning",
-        "Vietnamese market analysis",
-        "Lucy World intelligence"
+        "nghiên cứu từ khóa",
+        "SEO Việt Nam",
+        "Google Trends",
+        "gợi ý",
+        "lưu lượng tìm kiếm"
       ]
     }
   ]

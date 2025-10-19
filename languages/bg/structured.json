@@ -21,11 +21,6 @@
       "author": {
         "@type": "Organization",
         "name": "Lucy World"
-      },
-      "potentialAction": {
-        "@type": "SearchAction",
-        "target": "https://lucy.world/bg/?q={search_term_string}",
-        "query-input": "required name=search_term_string"
       }
     },
     {
@@ -40,12 +35,12 @@
       "description": "Получете български идеи от Google и Bing с локални предложения, тенденции и AI анализ, които развиват съдържанието и растежа на вашия бизнес.",
       "keywords": "ключови думи България, българско SEO, Google тенденции, Bing търсене, AI анализ, локална стратегия за съдържание",
       "aiSemantic": [
-        "Bulgarian keyword research",
-        "Bulgarian SEO insights",
-        "search trends platform",
-        "AI content planning",
-        "Bulgarian market analysis",
-        "Lucy World intelligence"
+        "ключови думи България",
+        "българско SEO",
+        "Google тенденции",
+        "Bing търсене",
+        "AI анализ",
+        "локална стратегия за съдържание"
       ]
     }
   ]

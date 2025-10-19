@@ -21,11 +21,6 @@
       "author": {
         "@type": "Organization",
         "name": "Lucy World"
-      },
-      "potentialAction": {
-        "@type": "SearchAction",
-        "target": "https://lucy.world/gl/?q={search_term_string}",
-        "query-input": "required name=search_term_string"
       }
     },
     {
@@ -40,12 +35,12 @@
       "description": "Descobre datos galegos de Google con suxerencias, tendencias e análise de IA que reforzam as decisións de contido e o crecemento empresarial.",
       "keywords": "palabras clave galegas, SEO Galicia, tendencias Google, volume de busca, análise IA, estratexia de contido local",
       "aiSemantic": [
-        "Galician keyword research",
-        "Galician SEO insights",
-        "search trends platform",
-        "AI content planning",
-        "Galician market analysis",
-        "Lucy World intelligence"
+        "palabras clave galegas",
+        "SEO Galicia",
+        "tendencias Google",
+        "volume de busca",
+        "análise IA",
+        "estratexia de contido local"
       ]
     }
   ]

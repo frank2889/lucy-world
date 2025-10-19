@@ -12,7 +12,7 @@
       "name": "שליסל ווערטער פארשונג - Lucy World",
       "url": "https://lucy.world/yi/",
       "inLanguage": "yi",
-      "description": "Lucy World tracks live search demand and AI clustering for Yiddish audiences so teams plan weekly campaigns and sustainable growth with confidence.",
+      "description": "Lucy World טראַקס לייוו זוכן פאָדערונג און b gifustering פֿאַר ענגליש אַודיאַנסינג פֿאַר ענגליש אַודיאַנסינג פֿאַר ענגליש אַודיאַנסינג וויקאַנסינג וויקלי קאַמפּיינז און סאַסטיינאַבאַל וווּקס און סאַסטיינאַבאַל וווּקס און סאַסטיינאַבאַל וווּקס און סאַסטיינאַבאַל וווּקס און סאַסטיינאַבאַל וווּקס און סאַסטיינאַבאַל וווּקס און סאַסטיינאַבאַל וווּקס און סאַסטיינאַבאַל וווּקס און סאַסטיינאַבאַל וווּקס און סאַסטיינאַבאַל וווּקס און סאַסטיינאַבאַל וווּקס און סאַסטיינאַבאַל וווּקס און סאַסטיינאַבאַל וווּקס און סאַסטיינאַבאַל וווּקס און סאַסטיינאַבאַל וווּקס און סאַסטיינאַבאַל וווּקס און סאַסטיינאַבאַל וווּקס מיט בטחון.",
       "keywords": "שליסל ווערטער פארשונג, SEO יידיש, Google Trends, פארשלאגן, זוך כמות",
       "publisher": {
         "@type": "Organization",
@@ -21,11 +21,6 @@
       "author": {
         "@type": "Organization",
         "name": "Lucy World"
-      },
-      "potentialAction": {
-        "@type": "SearchAction",
-        "target": "https://lucy.world/yi/?q={search_term_string}",
-        "query-input": "required name=search_term_string"
       }
     },
     {
@@ -37,15 +32,14 @@
         "@type": "WebSite",
         "url": "https://lucy.world/yi/"
       },
-      "description": "Lucy World tracks live search demand and AI clustering for Yiddish audiences so teams plan weekly campaigns and sustainable growth with confidence.",
+      "description": "Lucy World טראַקס לייוו זוכן פאָדערונג און b gifustering פֿאַר ענגליש אַודיאַנסינג פֿאַר ענגליש אַודיאַנסינג פֿאַר ענגליש אַודיאַנסינג וויקאַנסינג וויקלי קאַמפּיינז און סאַסטיינאַבאַל וווּקס און סאַסטיינאַבאַל וווּקס און סאַסטיינאַבאַל וווּקס און סאַסטיינאַבאַל וווּקס און סאַסטיינאַבאַל וווּקס און סאַסטיינאַבאַל וווּקס און סאַסטיינאַבאַל וווּקס און סאַסטיינאַבאַל וווּקס און סאַסטיינאַבאַל וווּקס און סאַסטיינאַבאַל וווּקס און סאַסטיינאַבאַל וווּקס און סאַסטיינאַבאַל וווּקס און סאַסטיינאַבאַל וווּקס און סאַסטיינאַבאַל וווּקס און סאַסטיינאַבאַל וווּקס און סאַסטיינאַבאַל וווּקס און סאַסטיינאַבאַל וווּקס מיט בטחון.",
       "keywords": "שליסל ווערטער פארשונג, SEO יידיש, Google Trends, פארשלאגן, זוך כמות",
       "aiSemantic": [
-        "Yiddish keyword research",
-        "Yiddish SEO insights",
-        "search trends platform",
-        "AI content planning",
-        "Yiddish market analysis",
-        "Lucy World intelligence"
+        "שליסל ווערטער פארשונג",
+        "SEO יידיש",
+        "Google Trends",
+        "פארשלאגן",
+        "זוך כמות"
       ]
     }
   ]

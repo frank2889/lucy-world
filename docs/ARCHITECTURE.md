@@ -185,7 +185,7 @@ Supported (from `languages/languages.json`):
 - Entrypoint: `backend.create_app()`.  
 - Database: SQLite (dev) / Postgres (prod).  
 - Gunicorn + Nginx + systemd orchestration.  
-- Auto-deploy via `webhook.py` + `auto-deploy.sh`.  
+- Auto-deploy via `scripts/webhook.py` + `auto-deploy.sh`.  
 - Logging via journalctl, curl probes, Certbot renewals.  
 - `scripts/monitor_gunicorn_service.py` performs systemd and HTTP smoke checks.  
 - `scripts/renew_tls.sh` runs certbot renewals and reloads Nginx/Gunicorn.  

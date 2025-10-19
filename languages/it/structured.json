@@ -9,11 +9,11 @@
     },
     {
       "@type": "WebSite",
-      "name": "Lucy World – Analisi di ricerca locale per l'Italia",
+      "name": "Lucy World – Cerca intelligence per l'inglese",
       "url": "https://lucy.world/it/",
       "inLanguage": "it",
-      "description": "Lucy World tracks live search demand and AI clustering for Italian audiences so teams plan weekly campaigns and sustainable growth with confidence.",
-      "keywords": "parole chiave italiane, SEO Italia, tendenze Google, volume di ricerca, analisi AI, strategia contenuti locali",
+      "description": "Lucy World tiene traccia della domanda di ricerca in tempo reale e AI clustering per il pubblico inglese in modo che i team pianifichino con sicurezza campagne settimanali e crescita sostenibile.",
+      "keywords": "ricerca di parole chiave, SEO, Google tendenze, AI ricerca, ricerca locale, suggerimenti, strategia dei contenuti",
       "publisher": {
         "@type": "Organization",
         "name": "Lucy World"
@@ -21,31 +21,27 @@
       "author": {
         "@type": "Organization",
         "name": "Lucy World"
-      },
-      "potentialAction": {
-        "@type": "SearchAction",
-        "target": "https://lucy.world/it/?q={search_term_string}",
-        "query-input": "required name=search_term_string"
       }
     },
     {
       "@type": "WebPage",
-      "name": "Lucy World – Analisi di ricerca locale per l'Italia",
+      "name": "Lucy World – Cerca intelligence per l'inglese",
       "url": "https://lucy.world/it/",
       "inLanguage": "it",
       "isPartOf": {
         "@type": "WebSite",
         "url": "https://lucy.world/it/"
       },
-      "description": "Lucy World tracks live search demand and AI clustering for Italian audiences so teams plan weekly campaigns and sustainable growth with confidence.",
-      "keywords": "parole chiave italiane, SEO Italia, tendenze Google, volume di ricerca, analisi AI, strategia contenuti locali",
+      "description": "Lucy World tiene traccia della domanda di ricerca in tempo reale e AI clustering per il pubblico inglese in modo che i team pianifichino con sicurezza campagne settimanali e crescita sostenibile.",
+      "keywords": "ricerca di parole chiave, SEO, Google tendenze, AI ricerca, ricerca locale, suggerimenti, strategia dei contenuti",
       "aiSemantic": [
-        "Italian keyword research",
-        "Italian SEO insights",
-        "search trends platform",
-        "AI content planning",
-        "Italian market analysis",
-        "Lucy World intelligence"
+        "ricerca di parole chiave",
+        "SEO",
+        "Google tendenze",
+        "AI ricerca",
+        "ricerca locale",
+        "suggerimenti",
+        "strategia dei contenuti"
       ]
     }
   ]

@@ -9,11 +9,11 @@
     },
     {
       "@type": "WebSite",
-      "name": "Lucy World – Ongororo yekutsvaga munharaunda yeZimbabwe",
+      "name": "Lucy World - Kutsvaga Ungwaru hweChirungu",
       "url": "https://lucy.world/sn/",
       "inLanguage": "sn",
-      "description": "Ongorora data yeGoogle yechiShona nemazano, maitiro uye ongororo yeAI inokwidziridza sarudzo dzezvinyorwa nekukura kwebhizinesi munharaunda.",
-      "keywords": "mazwi akakosha echiShona, SEO Zimbabwe, Google Trends, huwandu hwekutsvaga, ongororo yeAI, zvirongwa zvenyorwa dzenharaunda",
+      "description": "Lucy World Tracks Live Kutsvaga Kutsvaga uye AI",
+      "keywords": "Keyword Kutsvaga, Seo, Google AI Kutsvaga, Kutsvaga kwenzvimbo, mazano, mazano, zvirongwa zvemukati",
       "publisher": {
         "@type": "Organization",
         "name": "Lucy World"
@@ -21,31 +21,26 @@
       "author": {
         "@type": "Organization",
         "name": "Lucy World"
-      },
-      "potentialAction": {
-        "@type": "SearchAction",
-        "target": "https://lucy.world/sn/?q={search_term_string}",
-        "query-input": "required name=search_term_string"
       }
     },
     {
       "@type": "WebPage",
-      "name": "Lucy World – Ongororo yekutsvaga munharaunda yeZimbabwe",
+      "name": "Lucy World - Kutsvaga Ungwaru hweChirungu",
       "url": "https://lucy.world/sn/",
       "inLanguage": "sn",
       "isPartOf": {
         "@type": "WebSite",
         "url": "https://lucy.world/sn/"
       },
-      "description": "Ongorora data yeGoogle yechiShona nemazano, maitiro uye ongororo yeAI inokwidziridza sarudzo dzezvinyorwa nekukura kwebhizinesi munharaunda.",
-      "keywords": "mazwi akakosha echiShona, SEO Zimbabwe, Google Trends, huwandu hwekutsvaga, ongororo yeAI, zvirongwa zvenyorwa dzenharaunda",
+      "description": "Lucy World Tracks Live Kutsvaga Kutsvaga uye AI",
+      "keywords": "Keyword Kutsvaga, Seo, Google AI Kutsvaga, Kutsvaga kwenzvimbo, mazano, mazano, zvirongwa zvemukati",
       "aiSemantic": [
-        "Shona keyword research",
-        "Shona SEO insights",
-        "search trends platform",
-        "AI content planning",
-        "Shona market analysis",
-        "Lucy World intelligence"
+        "Keyword Kutsvaga",
+        "Seo",
+        "Google AI Kutsvaga",
+        "Kutsvaga kwenzvimbo",
+        "mazano",
+        "zvirongwa zvemukati"
       ]
     }
   ]

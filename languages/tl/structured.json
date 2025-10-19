@@ -9,11 +9,11 @@
     },
     {
       "@type": "WebSite",
-      "name": "Pananaliksik ng Keyword - Lucy World",
+      "name": "Lucy World - Paghahanap ng katalinuhan para sa Ingles",
       "url": "https://lucy.world/tl/",
       "inLanguage": "tl",
-      "description": "Lucy World tracks live search demand and AI clustering for Tagalog (Filipino) audiences so teams plan weekly campaigns and sustainable growth with confidence.",
-      "keywords": "pananaliksik ng keyword, SEO Pilipinas, Google Trends, mga mungkahi, search volume",
+      "description": "Lucy World Tracks ang live na demand sa paghahanap at AI clustering para sa mga tagapakinig ng Ingles kaya ang mga koponan ay nagplano ng lingguhang mga kampanya at napapanatiling paglago nang may kumpiyansa.",
+      "keywords": "Keyword Research, SEO, Google Trends, AI Paghahanap, Lokal na Paghahanap, Mungkahi, Diskarte sa Nilalaman",
       "publisher": {
         "@type": "Organization",
         "name": "Lucy World"
@@ -21,31 +21,27 @@
       "author": {
         "@type": "Organization",
         "name": "Lucy World"
-      },
-      "potentialAction": {
-        "@type": "SearchAction",
-        "target": "https://lucy.world/tl/?q={search_term_string}",
-        "query-input": "required name=search_term_string"
       }
     },
     {
       "@type": "WebPage",
-      "name": "Pananaliksik ng Keyword - Lucy World",
+      "name": "Lucy World - Paghahanap ng katalinuhan para sa Ingles",
       "url": "https://lucy.world/tl/",
       "inLanguage": "tl",
       "isPartOf": {
         "@type": "WebSite",
         "url": "https://lucy.world/tl/"
       },
-      "description": "Lucy World tracks live search demand and AI clustering for Tagalog (Filipino) audiences so teams plan weekly campaigns and sustainable growth with confidence.",
-      "keywords": "pananaliksik ng keyword, SEO Pilipinas, Google Trends, mga mungkahi, search volume",
+      "description": "Lucy World Tracks ang live na demand sa paghahanap at AI clustering para sa mga tagapakinig ng Ingles kaya ang mga koponan ay nagplano ng lingguhang mga kampanya at napapanatiling paglago nang may kumpiyansa.",
+      "keywords": "Keyword Research, SEO, Google Trends, AI Paghahanap, Lokal na Paghahanap, Mungkahi, Diskarte sa Nilalaman",
       "aiSemantic": [
-        "Tagalog (Filipino) keyword research",
-        "Tagalog (Filipino) SEO insights",
-        "search trends platform",
-        "AI content planning",
-        "Tagalog (Filipino) market analysis",
-        "Lucy World intelligence"
+        "Keyword Research",
+        "SEO",
+        "Google Trends",
+        "AI Paghahanap",
+        "Lokal na Paghahanap",
+        "Mungkahi",
+        "Diskarte sa Nilalaman"
       ]
     }
   ]

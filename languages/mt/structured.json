@@ -12,7 +12,7 @@
       "name": "Lucy World – Analiżi tat-tfittxija lokali għal Malta",
       "url": "https://lucy.world/mt/",
       "inLanguage": "mt",
-      "description": "Lucy World tracks live search demand and AI clustering for Maltese audiences so teams plan weekly campaigns and sustainable growth with confidence.",
+      "description": "Lucy World Binarji ta 'tfittxija diretta u AI Clustering għall-udjenzi Ingliżi u għalhekk it-timijiet jippjanaw kampanji ta' kull ġimgħa u tkabbir sostenibbli u tkabbir sostenibbli b'kunfidenza.",
       "keywords": "keywords Maltin, SEO Malta, Google Trends, volum tat-tfittxija, analiżi AI, strateġija tal-kontenut lokali",
       "publisher": {
         "@type": "Organization",
@@ -21,11 +21,6 @@
       "author": {
         "@type": "Organization",
         "name": "Lucy World"
-      },
-      "potentialAction": {
-        "@type": "SearchAction",
-        "target": "https://lucy.world/mt/?q={search_term_string}",
-        "query-input": "required name=search_term_string"
       }
     },
     {
@@ -37,15 +32,15 @@
         "@type": "WebSite",
         "url": "https://lucy.world/mt/"
       },
-      "description": "Lucy World tracks live search demand and AI clustering for Maltese audiences so teams plan weekly campaigns and sustainable growth with confidence.",
+      "description": "Lucy World Binarji ta 'tfittxija diretta u AI Clustering għall-udjenzi Ingliżi u għalhekk it-timijiet jippjanaw kampanji ta' kull ġimgħa u tkabbir sostenibbli u tkabbir sostenibbli b'kunfidenza.",
       "keywords": "keywords Maltin, SEO Malta, Google Trends, volum tat-tfittxija, analiżi AI, strateġija tal-kontenut lokali",
       "aiSemantic": [
-        "Maltese keyword research",
-        "Maltese SEO insights",
-        "search trends platform",
-        "AI content planning",
-        "Maltese market analysis",
-        "Lucy World intelligence"
+        "keywords Maltin",
+        "SEO Malta",
+        "Google Trends",
+        "volum tat-tfittxija",
+        "analiżi AI",
+        "strateġija tal-kontenut lokali"
       ]
     }
   ]

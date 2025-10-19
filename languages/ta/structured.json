@@ -12,7 +12,7 @@
       "name": "முக்கிய சொல் ஆராய்ச்சி - Lucy World",
       "url": "https://lucy.world/ta/",
       "inLanguage": "ta",
-      "description": "Lucy World tracks live search demand and AI clustering for Tamil audiences so teams plan weekly campaigns and sustainable growth with confidence.",
+      "description": "Lucy World நேரடி தேடல் தேவை மற்றும் AI ஆங்கில பார்வையாளர்களுக்கான கிளஸ்டரிங் எனவே அணிகள் வாராந்திர பிரச்சாரங்களையும் நிலையான வளர்ச்சியையும் நம்பிக்கையுடன் திட்டமிடுகின்றன.",
       "keywords": "முக்கிய சொல் ஆராய்ச்சி, தமிழ் SEO, Google Trends, பரிந்துரைகள், தேடல் அளவு",
       "publisher": {
         "@type": "Organization",
@@ -21,11 +21,6 @@
       "author": {
         "@type": "Organization",
         "name": "Lucy World"
-      },
-      "potentialAction": {
-        "@type": "SearchAction",
-        "target": "https://lucy.world/ta/?q={search_term_string}",
-        "query-input": "required name=search_term_string"
       }
     },
     {
@@ -37,15 +32,14 @@
         "@type": "WebSite",
         "url": "https://lucy.world/ta/"
       },
-      "description": "Lucy World tracks live search demand and AI clustering for Tamil audiences so teams plan weekly campaigns and sustainable growth with confidence.",
+      "description": "Lucy World நேரடி தேடல் தேவை மற்றும் AI ஆங்கில பார்வையாளர்களுக்கான கிளஸ்டரிங் எனவே அணிகள் வாராந்திர பிரச்சாரங்களையும் நிலையான வளர்ச்சியையும் நம்பிக்கையுடன் திட்டமிடுகின்றன.",
       "keywords": "முக்கிய சொல் ஆராய்ச்சி, தமிழ் SEO, Google Trends, பரிந்துரைகள், தேடல் அளவு",
       "aiSemantic": [
-        "Tamil keyword research",
-        "Tamil SEO insights",
-        "search trends platform",
-        "AI content planning",
-        "Tamil market analysis",
-        "Lucy World intelligence"
+        "முக்கிய சொல் ஆராய்ச்சி",
+        "தமிழ் SEO",
+        "Google Trends",
+        "பரிந்துரைகள்",
+        "தேடல் அளவு"
       ]
     }
   ]

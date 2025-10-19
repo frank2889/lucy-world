@@ -9,11 +9,11 @@
     },
     {
       "@type": "WebSite",
-      "name": "Lucy World – Analysis quaestionum localium pro mundo Latino",
+      "name": "Lucy World - Quaerere intelligentia enim Latina",
       "url": "https://lucy.world/la/",
       "inLanguage": "la",
-      "description": "Lucy World tracks live search demand and AI clustering for Latin audiences so teams plan weekly campaigns and sustainable growth with confidence.",
-      "keywords": "verba clavia Latina, SEO Latinum, tendentiae Google, volumen quaestionum, analysis AI, strategia contentus localis",
+      "description": "Lucy World Tracks Live Search Quaerere et AI TRANSGRAPS ad Latina audientibus ita teams Plan weekly campaigns et sustineri incrementum cum fiducia.",
+      "keywords": "Keyword Research, SEO, Google trends, AI Search, loci search, suggestiones, content belli",
       "publisher": {
         "@type": "Organization",
         "name": "Lucy World"
@@ -21,31 +21,27 @@
       "author": {
         "@type": "Organization",
         "name": "Lucy World"
-      },
-      "potentialAction": {
-        "@type": "SearchAction",
-        "target": "https://lucy.world/la/?q={search_term_string}",
-        "query-input": "required name=search_term_string"
       }
     },
     {
       "@type": "WebPage",
-      "name": "Lucy World – Analysis quaestionum localium pro mundo Latino",
+      "name": "Lucy World - Quaerere intelligentia enim Latina",
       "url": "https://lucy.world/la/",
       "inLanguage": "la",
       "isPartOf": {
         "@type": "WebSite",
         "url": "https://lucy.world/la/"
       },
-      "description": "Lucy World tracks live search demand and AI clustering for Latin audiences so teams plan weekly campaigns and sustainable growth with confidence.",
-      "keywords": "verba clavia Latina, SEO Latinum, tendentiae Google, volumen quaestionum, analysis AI, strategia contentus localis",
+      "description": "Lucy World Tracks Live Search Quaerere et AI TRANSGRAPS ad Latina audientibus ita teams Plan weekly campaigns et sustineri incrementum cum fiducia.",
+      "keywords": "Keyword Research, SEO, Google trends, AI Search, loci search, suggestiones, content belli",
       "aiSemantic": [
-        "Latin keyword research",
-        "Latin SEO insights",
-        "search trends platform",
-        "AI content planning",
-        "Latin market analysis",
-        "Lucy World intelligence"
+        "Keyword Research",
+        "SEO",
+        "Google trends",
+        "AI Search",
+        "loci search",
+        "suggestiones",
+        "content belli"
       ]
     }
   ]

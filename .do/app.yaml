@@ -6,7 +6,7 @@ services:
     repo: frank2889/lucy-world
     branch: main
     deploy_on_push: true
-  run_command: gunicorn --config gunicorn.conf.py wsgi:app
+  run_command: gunicorn --config scripts/gunicorn.conf.py scripts.wsgi:app
   environment_slug: python
   instance_count: 1
   instance_size_slug: basic-xxs
@@ -20,7 +20,7 @@ services:
   - key: PYTHONUNBUFFERED
     value: "1"
   - key: GUNICORN_CMD_ARGS
-    value: "--config gunicorn.conf.py"
+    value: "--config scripts/gunicorn.conf.py"
   - key: PUBLIC_BASE_URL
     value: "https://lucy.world"
   - key: DATABASE_URL

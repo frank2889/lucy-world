@@ -12,7 +12,7 @@
       "name": "Lucy World – Локальный анализ поиска для России",
       "url": "https://lucy.world/ru/",
       "inLanguage": "ru",
-      "description": "Lucy World tracks live search demand and AI clustering for Russian audiences so teams plan weekly campaigns and sustainable growth with confidence.",
+      "description": "Lucy World отслеживает спрос на поиск в реальном времени и AI кластеризует англоязычную аудиторию, чтобы команды могли с уверенностью планировать еженедельные кампании и устойчивый рост.",
       "keywords": "русские ключевые слова, SEO Россия, Google Trends, объём поиска, AI-анализ, локальная контент-стратегия",
       "publisher": {
         "@type": "Organization",
@@ -21,11 +21,6 @@
       "author": {
         "@type": "Organization",
         "name": "Lucy World"
-      },
-      "potentialAction": {
-        "@type": "SearchAction",
-        "target": "https://lucy.world/ru/?q={search_term_string}",
-        "query-input": "required name=search_term_string"
       }
     },
     {
@@ -37,15 +32,15 @@
         "@type": "WebSite",
         "url": "https://lucy.world/ru/"
       },
-      "description": "Lucy World tracks live search demand and AI clustering for Russian audiences so teams plan weekly campaigns and sustainable growth with confidence.",
+      "description": "Lucy World отслеживает спрос на поиск в реальном времени и AI кластеризует англоязычную аудиторию, чтобы команды могли с уверенностью планировать еженедельные кампании и устойчивый рост.",
       "keywords": "русские ключевые слова, SEO Россия, Google Trends, объём поиска, AI-анализ, локальная контент-стратегия",
       "aiSemantic": [
-        "Russian keyword research",
-        "Russian SEO insights",
-        "search trends platform",
-        "AI content planning",
-        "Russian market analysis",
-        "Lucy World intelligence"
+        "русские ключевые слова",
+        "SEO Россия",
+        "Google Trends",
+        "объём поиска",
+        "AI-анализ",
+        "локальная контент-стратегия"
       ]
     }
   ]

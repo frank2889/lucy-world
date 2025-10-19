@@ -9,11 +9,11 @@
     },
     {
       "@type": "WebSite",
-      "name": "Ucwaningo lwamagama angukhiye - Lucy World",
+      "name": "Lucy World - Sesha ubuhlakani besiNgisi",
       "url": "https://lucy.world/zu/",
       "inLanguage": "zu",
-      "description": "Lucy World tracks live search demand and AI clustering for Zulu audiences so teams plan weekly campaigns and sustainable growth with confidence.",
-      "keywords": "ucwaningo lwamagama angukhiye, SEO isiZulu, Google Trends, iziphakamiso, umthamo wosesho",
+      "description": "Lucy World Ilandela i-Live Search Demage and AI",
+      "keywords": "Ukucwaninga ngegama elingukhiye, i-SEO, Google.2AI Ukucinga, Ukusesha Kwendawo, Iziphakamiso, Isu Lokuqukethwe",
       "publisher": {
         "@type": "Organization",
         "name": "Lucy World"
@@ -21,31 +21,26 @@
       "author": {
         "@type": "Organization",
         "name": "Lucy World"
-      },
-      "potentialAction": {
-        "@type": "SearchAction",
-        "target": "https://lucy.world/zu/?q={search_term_string}",
-        "query-input": "required name=search_term_string"
       }
     },
     {
       "@type": "WebPage",
-      "name": "Ucwaningo lwamagama angukhiye - Lucy World",
+      "name": "Lucy World - Sesha ubuhlakani besiNgisi",
       "url": "https://lucy.world/zu/",
       "inLanguage": "zu",
       "isPartOf": {
         "@type": "WebSite",
         "url": "https://lucy.world/zu/"
       },
-      "description": "Lucy World tracks live search demand and AI clustering for Zulu audiences so teams plan weekly campaigns and sustainable growth with confidence.",
-      "keywords": "ucwaningo lwamagama angukhiye, SEO isiZulu, Google Trends, iziphakamiso, umthamo wosesho",
+      "description": "Lucy World Ilandela i-Live Search Demage and AI",
+      "keywords": "Ukucwaninga ngegama elingukhiye, i-SEO, Google.2AI Ukucinga, Ukusesha Kwendawo, Iziphakamiso, Isu Lokuqukethwe",
       "aiSemantic": [
-        "Zulu keyword research",
-        "Zulu SEO insights",
-        "search trends platform",
-        "AI content planning",
-        "Zulu market analysis",
-        "Lucy World intelligence"
+        "Ukucwaninga ngegama elingukhiye",
+        "i-SEO",
+        "Google.2AI Ukucinga",
+        "Ukusesha Kwendawo",
+        "Iziphakamiso",
+        "Isu Lokuqukethwe"
       ]
     }
   ]

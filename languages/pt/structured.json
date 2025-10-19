@@ -21,11 +21,6 @@
       "author": {
         "@type": "Organization",
         "name": "Lucy World"
-      },
-      "potentialAction": {
-        "@type": "SearchAction",
-        "target": "https://lucy.world/pt/?q={search_term_string}",
-        "query-input": "required name=search_term_string"
       }
     },
     {
@@ -40,12 +35,12 @@
       "description": "Explore dados do Google em português com sugestões, tendências e análise de IA que fortalecem decisões de conteúdo e crescimento empresarial.",
       "keywords": "palavras-chave português, SEO Brasil, Google Trends, volume de pesquisa, análise IA, estratégia de conteúdo local",
       "aiSemantic": [
-        "Portuguese keyword research",
-        "Portuguese SEO insights",
-        "search trends platform",
-        "AI content planning",
-        "Portuguese market analysis",
-        "Lucy World intelligence"
+        "palavras-chave português",
+        "SEO Brasil",
+        "Google Trends",
+        "volume de pesquisa",
+        "análise IA",
+        "estratégia de conteúdo local"
       ]
     }
   ]

@@ -12,7 +12,7 @@
       "name": "การวิจัยคีย์เวิร์ด - Lucy World",
       "url": "https://lucy.world/th/",
       "inLanguage": "th",
-      "description": "Lucy World tracks live search demand and AI clustering for Thai audiences so teams plan weekly campaigns and sustainable growth with confidence.",
+      "description": "Lucy World ติดตามความต้องการในการค้นหาแบบเรียลไทม์และ AI การจัดกลุ่มสำหรับผู้ชมที่เป็นภาษาอังกฤษ เพื่อให้ทีมวางแผนแคมเปญรายสัปดาห์และการเติบโตที่ยั่งยืนด้วยความมั่นใจ",
       "keywords": "การวิจัยคีย์เวิร์ด, SEO ไทย, Google Trends, คำแนะนำ, ปริมาณการค้นหา",
       "publisher": {
         "@type": "Organization",
@@ -21,11 +21,6 @@
       "author": {
         "@type": "Organization",
         "name": "Lucy World"
-      },
-      "potentialAction": {
-        "@type": "SearchAction",
-        "target": "https://lucy.world/th/?q={search_term_string}",
-        "query-input": "required name=search_term_string"
       }
     },
     {
@@ -37,15 +32,14 @@
         "@type": "WebSite",
         "url": "https://lucy.world/th/"
       },
-      "description": "Lucy World tracks live search demand and AI clustering for Thai audiences so teams plan weekly campaigns and sustainable growth with confidence.",
+      "description": "Lucy World ติดตามความต้องการในการค้นหาแบบเรียลไทม์และ AI การจัดกลุ่มสำหรับผู้ชมที่เป็นภาษาอังกฤษ เพื่อให้ทีมวางแผนแคมเปญรายสัปดาห์และการเติบโตที่ยั่งยืนด้วยความมั่นใจ",
       "keywords": "การวิจัยคีย์เวิร์ด, SEO ไทย, Google Trends, คำแนะนำ, ปริมาณการค้นหา",
       "aiSemantic": [
-        "Thai keyword research",
-        "Thai SEO insights",
-        "search trends platform",
-        "AI content planning",
-        "Thai market analysis",
-        "Lucy World intelligence"
+        "การวิจัยคีย์เวิร์ด",
+        "SEO ไทย",
+        "Google Trends",
+        "คำแนะนำ",
+        "ปริมาณการค้นหา"
       ]
     }
   ]

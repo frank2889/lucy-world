@@ -12,7 +12,7 @@
       "name": "Lucy World – تحلیل جستجوی محلی برای ایران",
       "url": "https://lucy.world/fa/",
       "inLanguage": "fa",
-      "description": "Lucy World tracks live search demand and AI clustering for Persian audiences so teams plan weekly campaigns and sustainable growth with confidence.",
+      "description": "Lucy World آهنگ های تقاضای جستجوی زنده و AI خوشه بندی برای مخاطبان انگلیسی ، بنابراین تیم ها برنامه های هفتگی و رشد پایدار را با اعتماد به نفس برنامه ریزی می کنند.",
       "keywords": "کلمات کلیدی فارسی، سئو ایران، ترندهای گوگل، حجم جستجو، تحلیل هوش مصنوعی، استراتژی محتوای محلی",
       "publisher": {
         "@type": "Organization",
@@ -21,11 +21,6 @@
       "author": {
         "@type": "Organization",
         "name": "Lucy World"
-      },
-      "potentialAction": {
-        "@type": "SearchAction",
-        "target": "https://lucy.world/fa/?q={search_term_string}",
-        "query-input": "required name=search_term_string"
       }
     },
     {
@@ -37,15 +32,10 @@
         "@type": "WebSite",
         "url": "https://lucy.world/fa/"
       },
-      "description": "Lucy World tracks live search demand and AI clustering for Persian audiences so teams plan weekly campaigns and sustainable growth with confidence.",
+      "description": "Lucy World آهنگ های تقاضای جستجوی زنده و AI خوشه بندی برای مخاطبان انگلیسی ، بنابراین تیم ها برنامه های هفتگی و رشد پایدار را با اعتماد به نفس برنامه ریزی می کنند.",
       "keywords": "کلمات کلیدی فارسی، سئو ایران، ترندهای گوگل، حجم جستجو، تحلیل هوش مصنوعی، استراتژی محتوای محلی",
       "aiSemantic": [
-        "Persian keyword research",
-        "Persian SEO insights",
-        "search trends platform",
-        "AI content planning",
-        "Persian market analysis",
-        "Lucy World intelligence"
+        "کلمات کلیدی فارسی، سئو ایران، ترندهای گوگل، حجم جستجو، تحلیل هوش مصنوعی، استراتژی محتوای محلی"
       ]
     }
   ]

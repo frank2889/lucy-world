@@ -12,7 +12,7 @@
       "name": "ئاچقۇچلۇق سۆز تەتقىقاتى - Lucy World",
       "url": "https://lucy.world/ug/",
       "inLanguage": "ug",
-      "description": "Lucy World tracks live search demand and AI clustering for Uyghur audiences so teams plan weekly campaigns and sustainable growth with confidence.",
+      "description": "Lucy World مىلادىيە خېرىدارلارنىڭ ھەپتىلىك تەشۋىقات ماھىرىنى ئىشەنچسىزلىك قىلىش ۋە ئىمكانقەدەر سىجىل تەرەققىياتنى پىلانلاش.",
       "keywords": "ئاچقۇچلۇق سۆز تەتقىقاتى, ئۇيغۇر SEO, Google Trends, تەكلىپلەر, ئىزدەش كۆلىمى",
       "publisher": {
         "@type": "Organization",
@@ -21,11 +21,6 @@
       "author": {
         "@type": "Organization",
         "name": "Lucy World"
-      },
-      "potentialAction": {
-        "@type": "SearchAction",
-        "target": "https://lucy.world/ug/?q={search_term_string}",
-        "query-input": "required name=search_term_string"
       }
     },
     {
@@ -37,15 +32,14 @@
         "@type": "WebSite",
         "url": "https://lucy.world/ug/"
       },
-      "description": "Lucy World tracks live search demand and AI clustering for Uyghur audiences so teams plan weekly campaigns and sustainable growth with confidence.",
+      "description": "Lucy World مىلادىيە خېرىدارلارنىڭ ھەپتىلىك تەشۋىقات ماھىرىنى ئىشەنچسىزلىك قىلىش ۋە ئىمكانقەدەر سىجىل تەرەققىياتنى پىلانلاش.",
       "keywords": "ئاچقۇچلۇق سۆز تەتقىقاتى, ئۇيغۇر SEO, Google Trends, تەكلىپلەر, ئىزدەش كۆلىمى",
       "aiSemantic": [
-        "Uyghur keyword research",
-        "Uyghur SEO insights",
-        "search trends platform",
-        "AI content planning",
-        "Uyghur market analysis",
-        "Lucy World intelligence"
+        "ئاچقۇچلۇق سۆز تەتقىقاتى",
+        "ئۇيغۇر SEO",
+        "Google Trends",
+        "تەكلىپلەر",
+        "ئىزدەش كۆلىمى"
       ]
     }
   ]

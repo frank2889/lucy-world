@@ -21,11 +21,6 @@
       "author": {
         "@type": "Organization",
         "name": "Lucy World"
-      },
-      "potentialAction": {
-        "@type": "SearchAction",
-        "target": "https://lucy.world/ml/?q={search_term_string}",
-        "query-input": "required name=search_term_string"
       }
     },
     {
@@ -40,12 +35,12 @@
       "description": "നിർദ്ദേശങ്ങൾ, ട്രെൻഡുകൾ, AI വിശകലനം എന്നിവയുള്ള മലയാളം Google ഡാറ്റ പര്യവേക്ഷണം ചെയ്യുക - ഉള്ളടക്ക തീരുമാനങ്ങളും ബിസിനസ് വളർച്ചയും ശക്തിപ്പെടുത്തുന്നു.",
       "keywords": "മലയാളം കീവേർഡുകൾ, SEO കേരളം, Google ട്രെൻഡുകൾ, തിരയൽ വോളിയം, AI വിശകലനം, പ്രാദേശിക ഉള്ളടക്ക തന്ത്രം",
       "aiSemantic": [
-        "Malayalam keyword research",
-        "Malayalam SEO insights",
-        "search trends platform",
-        "AI content planning",
-        "Malayalam market analysis",
-        "Lucy World intelligence"
+        "മലയാളം കീവേർഡുകൾ",
+        "SEO കേരളം",
+        "Google ട്രെൻഡുകൾ",
+        "തിരയൽ വോളിയം",
+        "AI വിശകലനം",
+        "പ്രാദേശിക ഉള്ളടക്ക തന്ത്രം"
       ]
     }
   ]

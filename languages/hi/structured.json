@@ -12,7 +12,7 @@
       "name": "Lucy World – भारत के लिए स्थानीय खोज विश्लेषण",
       "url": "https://lucy.world/hi/",
       "inLanguage": "hi",
-      "description": "Lucy World tracks live search demand and AI clustering for Hindi audiences so teams plan weekly campaigns and sustainable growth with confidence.",
+      "description": "Lucy World लाइव खोज मांग को ट्रैक करता है और AI अंग्रेजी दर्शकों के लिए क्लस्टरिंग करता है ताकि टीमें आत्मविश्वास के साथ साप्ताहिक अभियान और सतत विकास की योजना बना सकें।",
       "keywords": "हिंदी कीवर्ड, SEO भारत, Google रुझान, खोज वॉल्यूम, AI विश्लेषण, स्थानीय सामग्री रणनीति",
       "publisher": {
         "@type": "Organization",
@@ -21,11 +21,6 @@
       "author": {
         "@type": "Organization",
         "name": "Lucy World"
-      },
-      "potentialAction": {
-        "@type": "SearchAction",
-        "target": "https://lucy.world/hi/?q={search_term_string}",
-        "query-input": "required name=search_term_string"
       }
     },
     {
@@ -37,15 +32,15 @@
         "@type": "WebSite",
         "url": "https://lucy.world/hi/"
       },
-      "description": "Lucy World tracks live search demand and AI clustering for Hindi audiences so teams plan weekly campaigns and sustainable growth with confidence.",
+      "description": "Lucy World लाइव खोज मांग को ट्रैक करता है और AI अंग्रेजी दर्शकों के लिए क्लस्टरिंग करता है ताकि टीमें आत्मविश्वास के साथ साप्ताहिक अभियान और सतत विकास की योजना बना सकें।",
       "keywords": "हिंदी कीवर्ड, SEO भारत, Google रुझान, खोज वॉल्यूम, AI विश्लेषण, स्थानीय सामग्री रणनीति",
       "aiSemantic": [
-        "Hindi keyword research",
-        "Hindi SEO insights",
-        "search trends platform",
-        "AI content planning",
-        "Hindi market analysis",
-        "Lucy World intelligence"
+        "हिंदी कीवर्ड",
+        "SEO भारत",
+        "Google रुझान",
+        "खोज वॉल्यूम",
+        "AI विश्लेषण",
+        "स्थानीय सामग्री रणनीति"
       ]
     }
   ]

@@ -9,11 +9,11 @@
     },
     {
       "@type": "WebSite",
-      "name": "Lucy World – Search intelligence for Haitian Creole",
+      "name": "Lucy World - Rechèch entèlijans pou angle",
       "url": "https://lucy.world/ht/",
       "inLanguage": "ht",
-      "description": "Lucy World reveals live search demand, AI clustering, and localization guidance for Haitian Creole audiences so teams plan smarter campaigns and consistent grow",
-      "keywords": "Haitian Creole keyword research, Haitian Creole SEO insights, search trends platform, AI content planning, Haitian Creole market analysis, Lucy World intelligence",
+      "description": "Lucy World Tracks demann rechèch ap viv ak AI Clustering pou odyans angle pou ekip plan kanpay chak semèn ak kwasans dirab avèk konfyans.",
+      "keywords": "Keyword Rechèch, SEO, Google Tandans, AI Search, rechèch lokal yo, sijesyon, estrateji kontni",
       "publisher": {
         "@type": "Organization",
         "name": "Lucy World"
@@ -21,31 +21,27 @@
       "author": {
         "@type": "Organization",
         "name": "Lucy World"
-      },
-      "potentialAction": {
-        "@type": "SearchAction",
-        "target": "https://lucy.world/ht/?q={search_term_string}",
-        "query-input": "required name=search_term_string"
       }
     },
     {
       "@type": "WebPage",
-      "name": "Lucy World – Search intelligence for Haitian Creole",
+      "name": "Lucy World - Rechèch entèlijans pou angle",
       "url": "https://lucy.world/ht/",
       "inLanguage": "ht",
       "isPartOf": {
         "@type": "WebSite",
         "url": "https://lucy.world/ht/"
       },
-      "description": "Lucy World reveals live search demand, AI clustering, and localization guidance for Haitian Creole audiences so teams plan smarter campaigns and consistent grow",
-      "keywords": "Haitian Creole keyword research, Haitian Creole SEO insights, search trends platform, AI content planning, Haitian Creole market analysis, Lucy World intelligence",
+      "description": "Lucy World Tracks demann rechèch ap viv ak AI Clustering pou odyans angle pou ekip plan kanpay chak semèn ak kwasans dirab avèk konfyans.",
+      "keywords": "Keyword Rechèch, SEO, Google Tandans, AI Search, rechèch lokal yo, sijesyon, estrateji kontni",
       "aiSemantic": [
-        "Haitian Creole keyword research",
-        "Haitian Creole SEO insights",
-        "search trends platform",
-        "AI content planning",
-        "Haitian Creole market analysis",
-        "Lucy World intelligence"
+        "Keyword Rechèch",
+        "SEO",
+        "Google Tandans",
+        "AI Search",
+        "rechèch lokal yo",
+        "sijesyon",
+        "estrateji kontni"
       ]
     }
   ]

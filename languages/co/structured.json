@@ -9,11 +9,11 @@
     },
     {
       "@type": "WebSite",
-      "name": "Lucy World – Analitica di ricerca lucale per a Corsica",
+      "name": "Lucy World - Ricercessione pertrigisnu per Inglese",
       "url": "https://lucy.world/co/",
       "inLanguage": "co",
       "description": "Scopre dati lucchesi da Google è Bing cù suggerimenti lucali, tendenze è analisi d'IA chì rinfurzanu e decisioni di cuntenutu è a crescita di l'affari.",
-      "keywords": "ricerca parolle chjave corsa, SEO Corsica, tendenze Google, ricerca Bing, analisi IA, strategia di cuntenutu lucale",
+      "keywords": "Ricerca di chjave, seo, Google • Tendes, AI ricerca, search locale",
       "publisher": {
         "@type": "Organization",
         "name": "Lucy World"
@@ -21,16 +21,11 @@
       "author": {
         "@type": "Organization",
         "name": "Lucy World"
-      },
-      "potentialAction": {
-        "@type": "SearchAction",
-        "target": "https://lucy.world/co/?q={search_term_string}",
-        "query-input": "required name=search_term_string"
       }
     },
     {
       "@type": "WebPage",
-      "name": "Lucy World – Analitica di ricerca lucale per a Corsica",
+      "name": "Lucy World - Ricercessione pertrigisnu per Inglese",
       "url": "https://lucy.world/co/",
       "inLanguage": "co",
       "isPartOf": {
@@ -38,14 +33,13 @@
         "url": "https://lucy.world/co/"
       },
       "description": "Scopre dati lucchesi da Google è Bing cù suggerimenti lucali, tendenze è analisi d'IA chì rinfurzanu e decisioni di cuntenutu è a crescita di l'affari.",
-      "keywords": "ricerca parolle chjave corsa, SEO Corsica, tendenze Google, ricerca Bing, analisi IA, strategia di cuntenutu lucale",
+      "keywords": "Ricerca di chjave, seo, Google • Tendes, AI ricerca, search locale",
       "aiSemantic": [
-        "Corsican keyword research",
-        "Corsican SEO insights",
-        "search trends platform",
-        "AI content planning",
-        "Corsican market analysis",
-        "Lucy World intelligence"
+        "Ricerca di chjave",
+        "seo",
+        "Google • Tendes",
+        "AI ricerca",
+        "search locale"
       ]
     }
   ]

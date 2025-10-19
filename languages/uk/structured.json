@@ -12,7 +12,7 @@
       "name": "Дослідження ключових слів - Lucy World",
       "url": "https://lucy.world/uk/",
       "inLanguage": "uk",
-      "description": "Lucy World tracks live search demand and AI clustering for Ukrainian audiences so teams plan weekly campaigns and sustainable growth with confidence.",
+      "description": "Lucy World відстежує попит на пошук в прямому ефірі та AI Кластеризація англійської аудиторії, тому команди планують щотижневі кампанії та стійке зростання з упевненістю.",
       "keywords": "дослідження ключових слів, SEO Україна, Google Trends, пропозиції, обсяг пошуку",
       "publisher": {
         "@type": "Organization",
@@ -21,11 +21,6 @@
       "author": {
         "@type": "Organization",
         "name": "Lucy World"
-      },
-      "potentialAction": {
-        "@type": "SearchAction",
-        "target": "https://lucy.world/uk/?q={search_term_string}",
-        "query-input": "required name=search_term_string"
       }
     },
     {
@@ -37,15 +32,14 @@
         "@type": "WebSite",
         "url": "https://lucy.world/uk/"
       },
-      "description": "Lucy World tracks live search demand and AI clustering for Ukrainian audiences so teams plan weekly campaigns and sustainable growth with confidence.",
+      "description": "Lucy World відстежує попит на пошук в прямому ефірі та AI Кластеризація англійської аудиторії, тому команди планують щотижневі кампанії та стійке зростання з упевненістю.",
       "keywords": "дослідження ключових слів, SEO Україна, Google Trends, пропозиції, обсяг пошуку",
       "aiSemantic": [
-        "Ukrainian keyword research",
-        "Ukrainian SEO insights",
-        "search trends platform",
-        "AI content planning",
-        "Ukrainian market analysis",
-        "Lucy World intelligence"
+        "дослідження ключових слів",
+        "SEO Україна",
+        "Google Trends",
+        "пропозиції",
+        "обсяг пошуку"
       ]
     }
   ]

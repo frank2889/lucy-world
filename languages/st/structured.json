@@ -9,11 +9,11 @@
     },
     {
       "@type": "WebSite",
-      "name": "Lucy World – Manollo ya patlo ya lehae bakeng sa Lesotho",
+      "name": "Lucy World - bohlale ba ho batla tsa Senyesemane",
       "url": "https://lucy.world/st/",
       "inLanguage": "st",
-      "description": "Hlahloba lintlha tsa Google tsa Sesotho tse nang le dikeletso, mekhoa le manollo ya AI e matlafatsang diqeto tsa dikahare le kgolo ya kgwebo ya lehae.",
-      "keywords": "mantswe a bohlokoa a Sesotho, SEO Lesotho, Google Trends, bongata ba patlo, manollo ya AI, leano la dikahare tsa lehae",
+      "description": " BE",
+      "keywords": "Patlisiso ea senotlolo, SEO,  be",
       "publisher": {
         "@type": "Organization",
         "name": "Lucy World"
@@ -21,31 +21,23 @@
       "author": {
         "@type": "Organization",
         "name": "Lucy World"
-      },
-      "potentialAction": {
-        "@type": "SearchAction",
-        "target": "https://lucy.world/st/?q={search_term_string}",
-        "query-input": "required name=search_term_string"
       }
     },
     {
       "@type": "WebPage",
-      "name": "Lucy World – Manollo ya patlo ya lehae bakeng sa Lesotho",
+      "name": "Lucy World - bohlale ba ho batla tsa Senyesemane",
       "url": "https://lucy.world/st/",
       "inLanguage": "st",
       "isPartOf": {
         "@type": "WebSite",
         "url": "https://lucy.world/st/"
       },
-      "description": "Hlahloba lintlha tsa Google tsa Sesotho tse nang le dikeletso, mekhoa le manollo ya AI e matlafatsang diqeto tsa dikahare le kgolo ya kgwebo ya lehae.",
-      "keywords": "mantswe a bohlokoa a Sesotho, SEO Lesotho, Google Trends, bongata ba patlo, manollo ya AI, leano la dikahare tsa lehae",
+      "description": " BE",
+      "keywords": "Patlisiso ea senotlolo, SEO,  be",
       "aiSemantic": [
-        "Sesotho keyword research",
-        "Sesotho SEO insights",
-        "search trends platform",
-        "AI content planning",
-        "Sesotho market analysis",
-        "Lucy World intelligence"
+        "Patlisiso ea senotlolo",
+        "SEO",
+        "be"
       ]
     }
   ]

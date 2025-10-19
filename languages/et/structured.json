@@ -12,7 +12,7 @@
       "name": "Lucy World – Kohalik otsinguanalüüs Eesti jaoks",
       "url": "https://lucy.world/et/",
       "inLanguage": "et",
-      "description": "Lucy World tracks live search demand and AI clustering for Estonian audiences so teams plan weekly campaigns and sustainable growth with confidence.",
+      "description": "Lucy World jälgib reaalajas otsingunõudlust ja AI Inglise publikule klastrimist, nii et meeskonnad kavandavad iganädalasi kampaaniaid ja jätkusuutlikku kasvu enesekindlalt.",
       "keywords": "eesti märksõnad, SEO Eesti, Google trendid, otsingumahud, AI analüüs, kohaliku sisu strateegia",
       "publisher": {
         "@type": "Organization",
@@ -21,11 +21,6 @@
       "author": {
         "@type": "Organization",
         "name": "Lucy World"
-      },
-      "potentialAction": {
-        "@type": "SearchAction",
-        "target": "https://lucy.world/et/?q={search_term_string}",
-        "query-input": "required name=search_term_string"
       }
     },
     {
@@ -37,15 +32,15 @@
         "@type": "WebSite",
         "url": "https://lucy.world/et/"
       },
-      "description": "Lucy World tracks live search demand and AI clustering for Estonian audiences so teams plan weekly campaigns and sustainable growth with confidence.",
+      "description": "Lucy World jälgib reaalajas otsingunõudlust ja AI Inglise publikule klastrimist, nii et meeskonnad kavandavad iganädalasi kampaaniaid ja jätkusuutlikku kasvu enesekindlalt.",
       "keywords": "eesti märksõnad, SEO Eesti, Google trendid, otsingumahud, AI analüüs, kohaliku sisu strateegia",
       "aiSemantic": [
-        "Estonian keyword research",
-        "Estonian SEO insights",
-        "search trends platform",
-        "AI content planning",
-        "Estonian market analysis",
-        "Lucy World intelligence"
+        "eesti märksõnad",
+        "SEO Eesti",
+        "Google trendid",
+        "otsingumahud",
+        "AI analüüs",
+        "kohaliku sisu strateegia"
       ]
     }
   ]

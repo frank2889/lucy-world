@@ -1,4 +1,5 @@
 # Lucy World Search – Deployment Guide (October 2025)
+<!-- markdownlint-disable MD013 -->
 
 Lu7. **Run the CRO/UX acceptance pass** (new Oct 2025 ritual):
 
@@ -21,14 +22,16 @@ Lu7. **Run the CRO/UX acceptance pass** (new Oct 2025 ritual):
     cd ..
     ```
 
-    This updates `static/app/` with the latest compiled React bundle. Commit these changes:
+    This updates `app/` with the latest compiled React bundle. Commit these changes:
 
     ```bash
-    git add static/app
+    git add app
     git commit -m "chore: rebuild frontend bundle with billing UI updates"
-    ```d Search runs as a Flask application that serves a Vite-built React SPA and exposes `/api/*` endpoints. Locale handling is done on the server—`/` redirects to `/&lt;lang&gt;/` based on `Accept-Language`—so the web server must proxy *all* non-static requests to the Flask app. The steps below describe how to get a droplet ready, ship a new release, and keep deployments repeatable.
+    ```
 
-> **⚠️ Heads-up:** `deploy.sh` and `quick-deploy.sh` are legacy helpers. They still assume a `/search` homepage and refer to `requirements-prod.txt`, which no longer exists. Treat them as templates and update them before running in production. `auto-deploy.sh` **is maintained** and now powers the automated workflow described below.
+Lucy World Search runs as a Flask application that serves a Vite-built React SPA and exposes `/api/*` endpoints. Locale handling is done on the server—`/` redirects to `/&lt;lang&gt;/` based on `Accept-Language`—so the web server must proxy *all* non-static requests to the Flask app. The steps below describe how to get a droplet ready, ship a new release, and keep deployments repeatable.
+
+> **ℹ️ Cleanup (Oct 2025):** Legacy shell helpers (`deploy.sh`, `quick-deploy.sh`, `final-deploy.sh`, `deploy-with-password-change.sh`, `auto-deploy-expect.sh`, `update.sh`) have been removed from the repo to eliminate password-based flows and stale dependencies. `auto-deploy.sh` is the supported entry point for server deployments.
 
 ## 0. Prerequisites
 
@@ -48,7 +51,7 @@ Lu7. **Run the CRO/UX acceptance pass** (new Oct 2025 ritual):
     cd ..
     ```
 
-   This writes hashed assets to `static/app`. Commit or copy these files before deploying.
+    This writes hashed assets to `app/`. Commit or copy these files before deploying.
 2. Still in `frontend/`, run the Vitest suite to confirm the entitlement store and guards load correctly:
 
     ```bash
@@ -67,7 +70,7 @@ Lu7. **Run the CRO/UX acceptance pass** (new Oct 2025 ritual):
 4. Run a quick syntax check on the backend:
 
     ```bash
-    /usr/local/bin/python3 -m compileall backend free_keyword_tool.py advanced_keyword_tool.py
+    /usr/local/bin/python3 -m compileall backend scripts/free_keyword_tool.py scripts/advanced_keyword_tool.py
     ```
 
 5. (Optional) Spin up the lightweight `.pytest-venv` and run the crawl/indexing regression suite before shipping:
@@ -91,7 +94,7 @@ Lu7. **Run the CRO/UX acceptance pass** (new Oct 2025 ritual):
 
 ## 2. Ship code to the server
 
-**Preferred:** push to GitHub (or your chosen remote) and pull on the server. The webhook service (`webhook.py`) is built for this flow.
+**Preferred:** push to GitHub (or your chosen remote) and pull on the server. The webhook service (`scripts/webhook.py`) is built for this flow.
 
 ```bash
 git add .
@@ -188,7 +191,8 @@ Group=www-data
 WorkingDirectory=/var/www/lucy-world-search
 Environment="PATH=/var/www/lucy-world-search/venv/bin"
 EnvironmentFile=/var/www/lucy-world-search/.env
-ExecStart=/var/www/lucy-world-search/venv/bin/gunicorn --config gunicorn.conf.py wsgi:app
+Environment="GUNICORN_CMD_ARGS=--config scripts/gunicorn.conf.py"
+ExecStart=/var/www/lucy-world-search/venv/bin/gunicorn scripts.wsgi:app
 Restart=always
 RestartSec=3
 
@@ -241,7 +245,7 @@ server {
     }
 
     location /app/ {
-        alias /var/www/lucy-world-search/static/app/;
+    alias /var/www/lucy-world-search/app/;
         try_files $uri =404;
         expires 1w;
     }
@@ -336,7 +340,7 @@ Deployment logs appear in the Actions run and the server journal (`journalctl -u
 
 ### Webhook fallback (legacy)
 
-If you prefer to keep the self-hosted webhook (`webhook.py`), reuse steps 1–2 above, then:
+If you prefer to keep the self-hosted webhook (`scripts/webhook.py`), reuse steps 1–2 above, then:
 
 1. Create `/etc/systemd/system/lucy-webhook.service` as shown previously, enable it, and ensure the process listens on port `9000`.
 2. Add a GitHub webhook pointing to `https://lucy.world:9000/webhook` with the shared secret. The webhook also invokes `auto-deploy.sh` whenever it receives a push event.
@@ -388,28 +392,29 @@ The timer ensures certificates renew automatically and Nginx/Gunicorn pick up th
 
 1. **Frontend bundle not rebuilt**:
    
-   ```bash
-   cd frontend
-   npm run build
-   cd ..
-   git add static/app
-   git commit -m "chore: rebuild frontend with latest UI changes"
-   git push
-   ```
+    ```bash
+    cd frontend
+    npm run build
+    cd ..
+    git add app
+    git commit -m "chore: rebuild frontend with latest UI changes"
+    git push
+    ```
 
 2. **Backend not serving updated static files**:
-   
-   - On the server, restart gunicorn:
-     
-     ```bash
-     sudo systemctl restart lucy-world-search
-     ```
-   
-   - Or if using webhook deployment, trigger the restart hook:
-     
-     ```bash
-     curl -X POST https://lucy.world/webhook/deploy
-     ```
+
+   Restart Gunicorn on the server:
+
+   ```bash
+   sudo systemctl restart lucy-world-search
+   ```
+
+   Alternatively run the deploy script manually over SSH:
+
+   ```bash
+   ssh user@server
+   sudo /usr/local/bin/auto-deploy-lucy
+   ```
 
 3. **Browser cache serving old bundle**:
    
@@ -432,7 +437,7 @@ The timer ensures certificates renew automatically and Nginx/Gunicorn pick up th
 
 **Verification Checklist**:
 
-- [ ] `static/app/manifest.json` has recent timestamp in git
+- [ ] `app/.vite/manifest.json` has recent timestamp in git
 - [ ] `git log --oneline -5` shows frontend build commit
 - [ ] Server logs show recent restart: `sudo journalctl -u lucy-world-search -n 50`
 - [ ] Browser DevTools Network tab shows `app-*.js` loaded with 200 status
@@ -462,8 +467,11 @@ Keeping the UI strings in sync is now a two-step process. Run these checks local
 
 ## 7. Known gaps / TODOs
 
-- Update `deploy.sh` and `quick-deploy.sh` to reference `requirements.txt`, respect the new locale-aware routing, and drop the password-based SSH usage in `quick-deploy.sh`.
-- Consider creating a dedicated deploy user with limited permissions instead of running everything as `root`/`www-data`.
-- Add health probes for `/meta/detect.json` and `/api/free/search` to DigitalOcean monitoring once production is cut over.
-- Document rollback steps (e.g., keep the previous git commit hash handy and restart the service after `git checkout`).
-- Automate the CRO smoke script (headless browser) so `/pricing`, `/billing/credits`, search loaders, and overlays are validated on every release.
+- Consider creating a dedicated deploy user with limited permissions instead of running
+    everything as `root`/`www-data`.
+- Add health probes for `/meta/detect.json` and `/api/free/search` to DigitalOcean
+    monitoring once production is cut over.
+- Document rollback steps (e.g., keep the previous git commit hash handy and restart
+    the service after `git checkout`).
+- Automate the CRO smoke script (headless browser) so `/pricing`, `/billing/credits`,
+    search loaders, and overlays are validated on every release.

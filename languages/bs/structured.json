@@ -9,7 +9,7 @@
     },
     {
       "@type": "WebSite",
-      "name": "Lucy World – Lokalni SEO uvidi za Bosnu i Hercegovinu",
+      "name": "Lucy World - Pretražite inteligenciju za engleski jezik",
       "url": "https://lucy.world/bs/",
       "inLanguage": "bs",
       "description": "Dobijte bosanskohercegovačke uvide iz Googlea i Binga uz lokalne prijedloge, trendove i AI analitiku koji ubrzavaju odluke o sadržaju i rast poslovanja.",
@@ -21,16 +21,11 @@
       "author": {
         "@type": "Organization",
         "name": "Lucy World"
-      },
-      "potentialAction": {
-        "@type": "SearchAction",
-        "target": "https://lucy.world/bs/?q={search_term_string}",
-        "query-input": "required name=search_term_string"
       }
     },
     {
       "@type": "WebPage",
-      "name": "Lucy World – Lokalni SEO uvidi za Bosnu i Hercegovinu",
+      "name": "Lucy World - Pretražite inteligenciju za engleski jezik",
       "url": "https://lucy.world/bs/",
       "inLanguage": "bs",
       "isPartOf": {
@@ -40,12 +35,12 @@
       "description": "Dobijte bosanskohercegovačke uvide iz Googlea i Binga uz lokalne prijedloge, trendove i AI analitiku koji ubrzavaju odluke o sadržaju i rast poslovanja.",
       "keywords": "istraživanje ključnih riječi BiH, bosanski SEO, Google trendovi, Bing pretraga, AI analitika, lokalna strategija sadržaja",
       "aiSemantic": [
-        "Bosnian keyword research",
-        "Bosnian SEO insights",
-        "search trends platform",
-        "AI content planning",
-        "Bosnian market analysis",
-        "Lucy World intelligence"
+        "istraživanje ključnih riječi BiH",
+        "bosanski SEO",
+        "Google trendovi",
+        "Bing pretraga",
+        "AI analitika",
+        "lokalna strategija sadržaja"
       ]
     }
   ]

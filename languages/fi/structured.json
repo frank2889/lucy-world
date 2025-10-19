@@ -9,10 +9,10 @@
     },
     {
       "@type": "WebSite",
-      "name": "Lucy World – Paikallinen hakuanalyysi Suomelle",
+      "name": "Lucy World - Englanninkielen haku älykkyys",
       "url": "https://lucy.world/fi/",
       "inLanguage": "fi",
-      "description": "Lucy World tracks live search demand and AI clustering for Finnish audiences so teams plan weekly campaigns and sustainable growth with confidence.",
+      "description": "Lucy World seuraa live -haun kysyntää ja AI klusterointi englanninkielisille yleisöille, joten joukkueet suunnittelevat viikoittaisia ​​kampanjoita ja kestävää kasvua luottamuksella.",
       "keywords": "suomalaiset avainsanat, SEO Suomi, Google-trendit, hakuvolyymi, AI-analyysi, paikallinen sisältöstrategia",
       "publisher": {
         "@type": "Organization",
@@ -21,31 +21,26 @@
       "author": {
         "@type": "Organization",
         "name": "Lucy World"
-      },
-      "potentialAction": {
-        "@type": "SearchAction",
-        "target": "https://lucy.world/fi/?q={search_term_string}",
-        "query-input": "required name=search_term_string"
       }
     },
     {
       "@type": "WebPage",
-      "name": "Lucy World – Paikallinen hakuanalyysi Suomelle",
+      "name": "Lucy World - Englanninkielen haku älykkyys",
       "url": "https://lucy.world/fi/",
       "inLanguage": "fi",
       "isPartOf": {
         "@type": "WebSite",
         "url": "https://lucy.world/fi/"
       },
-      "description": "Lucy World tracks live search demand and AI clustering for Finnish audiences so teams plan weekly campaigns and sustainable growth with confidence.",
+      "description": "Lucy World seuraa live -haun kysyntää ja AI klusterointi englanninkielisille yleisöille, joten joukkueet suunnittelevat viikoittaisia ​​kampanjoita ja kestävää kasvua luottamuksella.",
       "keywords": "suomalaiset avainsanat, SEO Suomi, Google-trendit, hakuvolyymi, AI-analyysi, paikallinen sisältöstrategia",
       "aiSemantic": [
-        "Finnish keyword research",
-        "Finnish SEO insights",
-        "search trends platform",
-        "AI content planning",
-        "Finnish market analysis",
-        "Lucy World intelligence"
+        "suomalaiset avainsanat",
+        "SEO Suomi",
+        "Google-trendit",
+        "hakuvolyymi",
+        "AI-analyysi",
+        "paikallinen sisältöstrategia"
       ]
     }
   ]

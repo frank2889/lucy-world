@@ -1,6 +1,5 @@
 import React, { useMemo } from 'react'
 import type { Translator } from '../../../i18n/translate'
-import '../../styles/tools.css'
 
 export type PlatformResultItem = {
   title: string

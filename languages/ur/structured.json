@@ -12,7 +12,7 @@
       "name": "مطلوبہ الفاظ کی تحقیق - Lucy World",
       "url": "https://lucy.world/ur/",
       "inLanguage": "ur",
-      "description": "Lucy World tracks live search demand and AI clustering for Urdu audiences so teams plan weekly campaigns and sustainable growth with confidence.",
+      "description": "Lucy World براہ راست تلاش کی طلب اور AI انگریزی سامعین کے لئے کلسٹرنگ تاکہ ٹیمیں ہفتہ وار مہمات اور اعتماد کے ساتھ پائیدار ترقی کی منصوبہ بندی کرتی ہیں۔",
       "keywords": "مطلوبہ الفاظ کی تحقیق، SEO اردو، Google Trends، تجاویز، تلاش کا حجم",
       "publisher": {
         "@type": "Organization",
@@ -21,11 +21,6 @@
       "author": {
         "@type": "Organization",
         "name": "Lucy World"
-      },
-      "potentialAction": {
-        "@type": "SearchAction",
-        "target": "https://lucy.world/ur/?q={search_term_string}",
-        "query-input": "required name=search_term_string"
       }
     },
     {
@@ -37,15 +32,10 @@
         "@type": "WebSite",
         "url": "https://lucy.world/ur/"
       },
-      "description": "Lucy World tracks live search demand and AI clustering for Urdu audiences so teams plan weekly campaigns and sustainable growth with confidence.",
+      "description": "Lucy World براہ راست تلاش کی طلب اور AI انگریزی سامعین کے لئے کلسٹرنگ تاکہ ٹیمیں ہفتہ وار مہمات اور اعتماد کے ساتھ پائیدار ترقی کی منصوبہ بندی کرتی ہیں۔",
       "keywords": "مطلوبہ الفاظ کی تحقیق، SEO اردو، Google Trends، تجاویز، تلاش کا حجم",
       "aiSemantic": [
-        "Urdu keyword research",
-        "Urdu SEO insights",
-        "search trends platform",
-        "AI content planning",
-        "Urdu market analysis",
-        "Lucy World intelligence"
+        "مطلوبہ الفاظ کی تحقیق، SEO اردو، Google Trends، تجاویز، تلاش کا حجم"
       ]
     }
   ]

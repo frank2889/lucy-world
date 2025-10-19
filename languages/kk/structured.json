@@ -12,7 +12,7 @@
       "name": "Lucy World – Қазақстан үшін жергілікті іздеу талдауы",
       "url": "https://lucy.world/kk/",
       "inLanguage": "kk",
-      "description": "Lucy World tracks live search demand and AI clustering for Kazakh audiences so teams plan weekly campaigns and sustainable growth with confidence.",
+      "description": "Lucy World Тікелей іздеу сұранысы және AI Ағылшын аудиториясына арналған кластерлер, сондықтан командалар апта сайынғы науқандар мен тұрақты өсуді жоспарлайды.",
       "keywords": "қазақ кілт сөздері, SEO Қазақстан, Google трендтері, іздеу көлемі, AI талдауы, жергілікті контент стратегиясы",
       "publisher": {
         "@type": "Organization",
@@ -21,11 +21,6 @@
       "author": {
         "@type": "Organization",
         "name": "Lucy World"
-      },
-      "potentialAction": {
-        "@type": "SearchAction",
-        "target": "https://lucy.world/kk/?q={search_term_string}",
-        "query-input": "required name=search_term_string"
       }
     },
     {
@@ -37,15 +32,15 @@
         "@type": "WebSite",
         "url": "https://lucy.world/kk/"
       },
-      "description": "Lucy World tracks live search demand and AI clustering for Kazakh audiences so teams plan weekly campaigns and sustainable growth with confidence.",
+      "description": "Lucy World Тікелей іздеу сұранысы және AI Ағылшын аудиториясына арналған кластерлер, сондықтан командалар апта сайынғы науқандар мен тұрақты өсуді жоспарлайды.",
       "keywords": "қазақ кілт сөздері, SEO Қазақстан, Google трендтері, іздеу көлемі, AI талдауы, жергілікті контент стратегиясы",
       "aiSemantic": [
-        "Kazakh keyword research",
-        "Kazakh SEO insights",
-        "search trends platform",
-        "AI content planning",
-        "Kazakh market analysis",
-        "Lucy World intelligence"
+        "қазақ кілт сөздері",
+        "SEO Қазақстан",
+        "Google трендтері",
+        "іздеу көлемі",
+        "AI талдауы",
+        "жергілікті контент стратегиясы"
       ]
     }
   ]

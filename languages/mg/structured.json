@@ -9,11 +9,11 @@
     },
     {
       "@type": "WebSite",
-      "name": "Lucy World – Fanadihadiana fikarohana eo an-toerana ho an'i Madagasikara",
+      "name": "Lucy World - Fikarohana fikarohana ho an'ny anglisy",
       "url": "https://lucy.world/mg/",
       "inLanguage": "mg",
-      "description": "Jereo ny angon-drakitra Google Malagasy miaraka amin'ny soso-kevitra, fironana ary fanadihadiana AI izay manatanjaka ny fanapahan-kevitra votoaty sy ny fitomboa",
-      "keywords": "teny fototra Malagasy, SEO Madagasikara, Google Trends, habetsaky ny fikarohana, fanadihadiana AI, paikady votoaty eo an-toerana",
+      "description": "Lucy World dia manara-maso ny fitakiana mivantana sy ny AI mifangaro amin'ny mpihaino anglisy mba hanomezana drafi-panentanana isan-kerinandro ny ekipa.",
+      "keywords": "Keyword Research, SEO, Google Trends, AI Fikarohana, fikarohana eo an-toerana, soso-kevitra, Soso-kevitra, Strategy",
       "publisher": {
         "@type": "Organization",
         "name": "Lucy World"
@@ -21,31 +21,27 @@
       "author": {
         "@type": "Organization",
         "name": "Lucy World"
-      },
-      "potentialAction": {
-        "@type": "SearchAction",
-        "target": "https://lucy.world/mg/?q={search_term_string}",
-        "query-input": "required name=search_term_string"
       }
     },
     {
       "@type": "WebPage",
-      "name": "Lucy World – Fanadihadiana fikarohana eo an-toerana ho an'i Madagasikara",
+      "name": "Lucy World - Fikarohana fikarohana ho an'ny anglisy",
       "url": "https://lucy.world/mg/",
       "inLanguage": "mg",
       "isPartOf": {
         "@type": "WebSite",
         "url": "https://lucy.world/mg/"
       },
-      "description": "Jereo ny angon-drakitra Google Malagasy miaraka amin'ny soso-kevitra, fironana ary fanadihadiana AI izay manatanjaka ny fanapahan-kevitra votoaty sy ny fitomboa",
-      "keywords": "teny fototra Malagasy, SEO Madagasikara, Google Trends, habetsaky ny fikarohana, fanadihadiana AI, paikady votoaty eo an-toerana",
+      "description": "Lucy World dia manara-maso ny fitakiana mivantana sy ny AI mifangaro amin'ny mpihaino anglisy mba hanomezana drafi-panentanana isan-kerinandro ny ekipa.",
+      "keywords": "Keyword Research, SEO, Google Trends, AI Fikarohana, fikarohana eo an-toerana, soso-kevitra, Soso-kevitra, Strategy",
       "aiSemantic": [
-        "Malagasy keyword research",
-        "Malagasy SEO insights",
-        "search trends platform",
-        "AI content planning",
-        "Malagasy market analysis",
-        "Lucy World intelligence"
+        "Keyword Research",
+        "SEO",
+        "Google Trends",
+        "AI Fikarohana",
+        "fikarohana eo an-toerana",
+        "soso-kevitra",
+        "Strategy"
       ]
     }
   ]

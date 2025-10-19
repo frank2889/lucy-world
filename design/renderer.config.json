@@ -57,10 +57,7 @@
     "glow_coverage_max": 0.12
   },
   "metadata": {
-    "compliance": "Enterprise Light Mode Standard",
-    "last_evaluated": "2025-10-09",
-    "source": "design/design.md",
-    "version": "1.0.0"
+    "source": "design/design.md"
   },
   "visual_modes": {
     "attribute": "data-visual-mode",

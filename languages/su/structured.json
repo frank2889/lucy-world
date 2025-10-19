@@ -9,11 +9,11 @@
     },
     {
       "@type": "WebSite",
-      "name": "Lucy World – Analisis paluruhan lokal pikeun Sunda",
+      "name": "Lucy World - Istlositas Milarian kanggo basa Inggris",
       "url": "https://lucy.world/su/",
       "inLanguage": "su",
-      "description": "Lucy World tracks live search demand and AI clustering for Sundanese audiences so teams plan weekly campaigns and sustainable growth with confidence.",
-      "keywords": "kecap konci Sunda, SEO Sunda, Google Trends, volume paluruhan, analisis AI, strategi eusi lokal",
+      "description": "Lucy World Track Work Working sareng b Clustericed",
+      "keywords": "Panaliti keyword, seo, ember, ember, RGoogle",
       "publisher": {
         "@type": "Organization",
         "name": "Lucy World"
@@ -21,31 +21,24 @@
       "author": {
         "@type": "Organization",
         "name": "Lucy World"
-      },
-      "potentialAction": {
-        "@type": "SearchAction",
-        "target": "https://lucy.world/su/?q={search_term_string}",
-        "query-input": "required name=search_term_string"
       }
     },
     {
       "@type": "WebPage",
-      "name": "Lucy World – Analisis paluruhan lokal pikeun Sunda",
+      "name": "Lucy World - Istlositas Milarian kanggo basa Inggris",
       "url": "https://lucy.world/su/",
       "inLanguage": "su",
       "isPartOf": {
         "@type": "WebSite",
         "url": "https://lucy.world/su/"
       },
-      "description": "Lucy World tracks live search demand and AI clustering for Sundanese audiences so teams plan weekly campaigns and sustainable growth with confidence.",
-      "keywords": "kecap konci Sunda, SEO Sunda, Google Trends, volume paluruhan, analisis AI, strategi eusi lokal",
+      "description": "Lucy World Track Work Working sareng b Clustericed",
+      "keywords": "Panaliti keyword, seo, ember, ember, RGoogle",
       "aiSemantic": [
-        "Sundanese keyword research",
-        "Sundanese SEO insights",
-        "search trends platform",
-        "AI content planning",
-        "Sundanese market analysis",
-        "Lucy World intelligence"
+        "Panaliti keyword",
+        "seo",
+        "ember",
+        "RGoogle"
       ]
     }
   ]

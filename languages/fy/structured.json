@@ -12,7 +12,7 @@
       "name": "Lucy World – Lokale sykanalyse foar Fryslân",
       "url": "https://lucy.world/fy/",
       "inLanguage": "fy",
-      "description": "Lucy World tracks live search demand and AI clustering for Frisian audiences so teams plan weekly campaigns and sustainable growth with confidence.",
+      "description": "Lucy World tracks live sykopdracht en AI Clustering foar Ingelske publyken fan 'e Ingelske kampanjes en duorsume groei fan fertrouwen.",
       "keywords": "Fryske trefwurden, SEO Fryslân, Google-trends, sykfolume, AI-analyze, lokale ynhâldsstrategy",
       "publisher": {
         "@type": "Organization",
@@ -21,11 +21,6 @@
       "author": {
         "@type": "Organization",
         "name": "Lucy World"
-      },
-      "potentialAction": {
-        "@type": "SearchAction",
-        "target": "https://lucy.world/fy/?q={search_term_string}",
-        "query-input": "required name=search_term_string"
       }
     },
     {
@@ -37,15 +32,15 @@
         "@type": "WebSite",
         "url": "https://lucy.world/fy/"
       },
-      "description": "Lucy World tracks live search demand and AI clustering for Frisian audiences so teams plan weekly campaigns and sustainable growth with confidence.",
+      "description": "Lucy World tracks live sykopdracht en AI Clustering foar Ingelske publyken fan 'e Ingelske kampanjes en duorsume groei fan fertrouwen.",
       "keywords": "Fryske trefwurden, SEO Fryslân, Google-trends, sykfolume, AI-analyze, lokale ynhâldsstrategy",
       "aiSemantic": [
-        "Frisian keyword research",
-        "Frisian SEO insights",
-        "search trends platform",
-        "AI content planning",
-        "Frisian market analysis",
-        "Lucy World intelligence"
+        "Fryske trefwurden",
+        "SEO Fryslân",
+        "Google-trends",
+        "sykfolume",
+        "AI-analyze",
+        "lokale ynhâldsstrategy"
       ]
     }
   ]

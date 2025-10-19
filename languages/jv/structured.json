@@ -21,11 +21,6 @@
       "author": {
         "@type": "Organization",
         "name": "Lucy World"
-      },
-      "potentialAction": {
-        "@type": "SearchAction",
-        "target": "https://lucy.world/jv/?q={search_term_string}",
-        "query-input": "required name=search_term_string"
       }
     },
     {
@@ -40,12 +35,12 @@
       "description": "Lucy World tracks live search demand and AI clustering for Javanese audiences so teams plan weekly campaigns and sustainable growth with confidence.",
       "keywords": "tembung kunci Jawa, SEO Indonesia, tren Google, volume panelusuran, analisis AI, strategi konten lokal",
       "aiSemantic": [
-        "Javanese keyword research",
-        "Javanese SEO insights",
-        "search trends platform",
-        "AI content planning",
-        "Javanese market analysis",
-        "Lucy World intelligence"
+        "tembung kunci Jawa",
+        "SEO Indonesia",
+        "tren Google",
+        "volume panelusuran",
+        "analisis AI",
+        "strategi konten lokal"
       ]
     }
   ]

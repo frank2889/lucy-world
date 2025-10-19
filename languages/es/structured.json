@@ -21,11 +21,6 @@
       "author": {
         "@type": "Organization",
         "name": "Lucy World"
-      },
-      "potentialAction": {
-        "@type": "SearchAction",
-        "target": "https://lucy.world/es/?q={search_term_string}",
-        "query-input": "required name=search_term_string"
       }
     },
     {
@@ -40,12 +35,12 @@
       "description": "Descubre datos españoles de Google con sugerencias, tendencias y análisis de IA que refuerzan las decisiones de contenido y el crecimiento empresarial.",
       "keywords": "palabras clave españolas, SEO España, tendencias Google, volumen búsqueda, análisis IA, estrategia contenido local",
       "aiSemantic": [
-        "Spanish keyword research",
-        "Spanish SEO insights",
-        "search trends platform",
-        "AI content planning",
-        "Spanish market analysis",
-        "Lucy World intelligence"
+        "palabras clave españolas",
+        "SEO España",
+        "tendencias Google",
+        "volumen búsqueda",
+        "análisis IA",
+        "estrategia contenido local"
       ]
     }
   ]

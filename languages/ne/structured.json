@@ -12,7 +12,7 @@
       "name": "Lucy World – नेपालका लागि स्थानीय खोज विश्लेषण",
       "url": "https://lucy.world/ne/",
       "inLanguage": "ne",
-      "description": "Lucy World tracks live search demand and AI clustering for Nepali audiences so teams plan weekly campaigns and sustainable growth with confidence.",
+      "description": "Lucy World ट्र्याकहरू लाइभ खोज माग र : विश्वस्तताका साथ अगुवाहरू।",
       "keywords": "नेपाली कीवर्डहरू, SEO नेपाल, Google ट्रेन्डहरू, खोज भोल्युम, AI विश्लेषण, स्थानीय सामग्री रणनीति",
       "publisher": {
         "@type": "Organization",
@@ -21,11 +21,6 @@
       "author": {
         "@type": "Organization",
         "name": "Lucy World"
-      },
-      "potentialAction": {
-        "@type": "SearchAction",
-        "target": "https://lucy.world/ne/?q={search_term_string}",
-        "query-input": "required name=search_term_string"
       }
     },
     {
@@ -37,15 +32,15 @@
         "@type": "WebSite",
         "url": "https://lucy.world/ne/"
       },
-      "description": "Lucy World tracks live search demand and AI clustering for Nepali audiences so teams plan weekly campaigns and sustainable growth with confidence.",
+      "description": "Lucy World ट्र्याकहरू लाइभ खोज माग र : विश्वस्तताका साथ अगुवाहरू।",
       "keywords": "नेपाली कीवर्डहरू, SEO नेपाल, Google ट्रेन्डहरू, खोज भोल्युम, AI विश्लेषण, स्थानीय सामग्री रणनीति",
       "aiSemantic": [
-        "Nepali keyword research",
-        "Nepali SEO insights",
-        "search trends platform",
-        "AI content planning",
-        "Nepali market analysis",
-        "Lucy World intelligence"
+        "नेपाली कीवर्डहरू",
+        "SEO नेपाल",
+        "Google ट्रेन्डहरू",
+        "खोज भोल्युम",
+        "AI विश्लेषण",
+        "स्थानीय सामग्री रणनीति"
       ]
     }
   ]

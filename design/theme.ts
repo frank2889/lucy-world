@@ -80,10 +80,7 @@ export type DesignTokenCategory = keyof typeof designTokens;
 export type DesignTokenName = keyof typeof designTokens.light;
 
 export const designMetadata = {
-  "compliance": "Enterprise Light Mode Standard",
-  "last_evaluated": "2025-10-09",
-  "source": "design/design.md",
-  "version": "1.0.0"
+  "source": "design/design.md"
 } as const;
 
 export const VISUAL_MODE_ATTRIBUTE = 'data-visual-mode';

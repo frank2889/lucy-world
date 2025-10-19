@@ -9,11 +9,11 @@
     },
     {
       "@type": "WebSite",
-      "name": "Uphando lwamagama aphambili - Lucy World",
+      "name": "Lucy World - Ukukhangela ubugqwirha ngesiNgesi",
       "url": "https://lucy.world/xh/",
       "inLanguage": "xh",
-      "description": "Lucy World tracks live search demand and AI clustering for Xhosa audiences so teams plan weekly campaigns and sustainable growth with confidence.",
-      "keywords": "uphando lwamagama aphambili, SEO isiXhosa, Google Trends, iingcebiso, umthamo wokukhangela",
+      "description": "Lucy World",
+      "keywords": "keyword research, SEO, Google Trends, AI search, local search, suggestions, content strategy",
       "publisher": {
         "@type": "Organization",
         "name": "Lucy World"
@@ -21,31 +21,27 @@
       "author": {
         "@type": "Organization",
         "name": "Lucy World"
-      },
-      "potentialAction": {
-        "@type": "SearchAction",
-        "target": "https://lucy.world/xh/?q={search_term_string}",
-        "query-input": "required name=search_term_string"
       }
     },
     {
       "@type": "WebPage",
-      "name": "Uphando lwamagama aphambili - Lucy World",
+      "name": "Lucy World - Ukukhangela ubugqwirha ngesiNgesi",
       "url": "https://lucy.world/xh/",
       "inLanguage": "xh",
       "isPartOf": {
         "@type": "WebSite",
         "url": "https://lucy.world/xh/"
       },
-      "description": "Lucy World tracks live search demand and AI clustering for Xhosa audiences so teams plan weekly campaigns and sustainable growth with confidence.",
-      "keywords": "uphando lwamagama aphambili, SEO isiXhosa, Google Trends, iingcebiso, umthamo wokukhangela",
+      "description": "Lucy World",
+      "keywords": "keyword research, SEO, Google Trends, AI search, local search, suggestions, content strategy",
       "aiSemantic": [
-        "Xhosa keyword research",
-        "Xhosa SEO insights",
-        "search trends platform",
-        "AI content planning",
-        "Xhosa market analysis",
-        "Lucy World intelligence"
+        "keyword research",
+        "SEO",
+        "Google Trends",
+        "AI search",
+        "local search",
+        "suggestions",
+        "content strategy"
       ]
     }
   ]

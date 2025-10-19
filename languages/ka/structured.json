@@ -21,11 +21,6 @@
       "author": {
         "@type": "Organization",
         "name": "Lucy World"
-      },
-      "potentialAction": {
-        "@type": "SearchAction",
-        "target": "https://lucy.world/ka/?q={search_term_string}",
-        "query-input": "required name=search_term_string"
       }
     },
     {
@@ -40,12 +35,12 @@
       "description": "აღმოაჩინეთ ქართული Google მონაცემები შეთავაზებებით, ტენდენციებით და AI ანალიზით, რომლებიც აძლიერებს კონტენტის გადაწყვეტილებებს და ბიზნეს ზრდას.",
       "keywords": "ქართული საკვანძო სიტყვები, SEO საქართველო, Google ტენდენციები, ძიების მოცულობა, AI ანალიზი, ადგილობრივი კონტენტის სტრატეგია",
       "aiSemantic": [
-        "Georgian keyword research",
-        "Georgian SEO insights",
-        "search trends platform",
-        "AI content planning",
-        "Georgian market analysis",
-        "Lucy World intelligence"
+        "ქართული საკვანძო სიტყვები",
+        "SEO საქართველო",
+        "Google ტენდენციები",
+        "ძიების მოცულობა",
+        "AI ანალიზი",
+        "ადგილობრივი კონტენტის სტრატეგია"
       ]
     }
   ]

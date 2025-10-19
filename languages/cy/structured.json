@@ -9,11 +9,11 @@
     },
     {
       "@type": "WebSite",
-      "name": "Lucy World – Dadansoddiad chwilio lleol ar gyfer Cymru",
+      "name": "Lucy World - Chwilio Cudd -wybodaeth am Saesneg",
       "url": "https://lucy.world/cy/",
       "inLanguage": "cy",
-      "description": "Lucy World tracks live search demand and AI clustering for Welsh audiences so teams plan weekly campaigns and sustainable growth with confidence.",
-      "keywords": "geiriau allweddol Cymraeg, SEO Cymru, tueddiadau Google, chwilio Bing, dadansoddiad AI, strategaeth cynnwys lleol",
+      "description": "Lucy World Traciau Galw Chwilio Byw a AI Clystyru ar gyfer Cynulleidfaoedd Lloegr felly mae timau'n cynllunio ymgyrchoedd wythnosol a thwf cynaliadwy yn hyderus.",
+      "keywords": "Ymchwil Allweddair, SEO, Google Tueddiadau, AI Chwilio, Chwilio Lleol, Awgrymiadau, Awgrymiadau, Strategaeth Gynnwys",
       "publisher": {
         "@type": "Organization",
         "name": "Lucy World"
@@ -21,31 +21,27 @@
       "author": {
         "@type": "Organization",
         "name": "Lucy World"
-      },
-      "potentialAction": {
-        "@type": "SearchAction",
-        "target": "https://lucy.world/cy/?q={search_term_string}",
-        "query-input": "required name=search_term_string"
       }
     },
     {
       "@type": "WebPage",
-      "name": "Lucy World – Dadansoddiad chwilio lleol ar gyfer Cymru",
+      "name": "Lucy World - Chwilio Cudd -wybodaeth am Saesneg",
       "url": "https://lucy.world/cy/",
       "inLanguage": "cy",
       "isPartOf": {
         "@type": "WebSite",
         "url": "https://lucy.world/cy/"
       },
-      "description": "Lucy World tracks live search demand and AI clustering for Welsh audiences so teams plan weekly campaigns and sustainable growth with confidence.",
-      "keywords": "geiriau allweddol Cymraeg, SEO Cymru, tueddiadau Google, chwilio Bing, dadansoddiad AI, strategaeth cynnwys lleol",
+      "description": "Lucy World Traciau Galw Chwilio Byw a AI Clystyru ar gyfer Cynulleidfaoedd Lloegr felly mae timau'n cynllunio ymgyrchoedd wythnosol a thwf cynaliadwy yn hyderus.",
+      "keywords": "Ymchwil Allweddair, SEO, Google Tueddiadau, AI Chwilio, Chwilio Lleol, Awgrymiadau, Awgrymiadau, Strategaeth Gynnwys",
       "aiSemantic": [
-        "Welsh keyword research",
-        "Welsh SEO insights",
-        "search trends platform",
-        "AI content planning",
-        "Welsh market analysis",
-        "Lucy World intelligence"
+        "Ymchwil Allweddair",
+        "SEO",
+        "Google Tueddiadau",
+        "AI Chwilio",
+        "Chwilio Lleol",
+        "Awgrymiadau",
+        "Strategaeth Gynnwys"
       ]
     }
   ]

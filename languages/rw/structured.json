@@ -9,11 +9,11 @@
     },
     {
       "@type": "WebSite",
-      "name": "Lucy World – Isesengura ry'ishakisha mu Rwanda",
+      "name": "Lucy World - Shakisha Ubwenge bw'icyongereza",
       "url": "https://lucy.world/rw/",
       "inLanguage": "rw",
-      "description": "Shakisha amakuru ya Google y'u Rwanda hamwe n'ibyifuzo, icyerekezo n'isesengura rya AI rikomeza imyanzuro y'ibirimo n'iterambere ry'ubucuruzi.",
-      "keywords": "amagambo fatizo y'ikinyarwanda, SEO Rwanda, Google Trends, igipimo cy'ishakisha, isesengura rya AI, ingamba z'ibirimo byo mu gace",
+      "description": ".",
+      "keywords": "Ijambo ryibanze Ubushakashatsi, Seo, Google",
       "publisher": {
         "@type": "Organization",
         "name": "Lucy World"
@@ -21,31 +21,23 @@
       "author": {
         "@type": "Organization",
         "name": "Lucy World"
-      },
-      "potentialAction": {
-        "@type": "SearchAction",
-        "target": "https://lucy.world/rw/?q={search_term_string}",
-        "query-input": "required name=search_term_string"
       }
     },
     {
       "@type": "WebPage",
-      "name": "Lucy World – Isesengura ry'ishakisha mu Rwanda",
+      "name": "Lucy World - Shakisha Ubwenge bw'icyongereza",
       "url": "https://lucy.world/rw/",
       "inLanguage": "rw",
       "isPartOf": {
         "@type": "WebSite",
         "url": "https://lucy.world/rw/"
       },
-      "description": "Shakisha amakuru ya Google y'u Rwanda hamwe n'ibyifuzo, icyerekezo n'isesengura rya AI rikomeza imyanzuro y'ibirimo n'iterambere ry'ubucuruzi.",
-      "keywords": "amagambo fatizo y'ikinyarwanda, SEO Rwanda, Google Trends, igipimo cy'ishakisha, isesengura rya AI, ingamba z'ibirimo byo mu gace",
+      "description": ".",
+      "keywords": "Ijambo ryibanze Ubushakashatsi, Seo, Google",
       "aiSemantic": [
-        "Kinyarwanda keyword research",
-        "Kinyarwanda SEO insights",
-        "search trends platform",
-        "AI content planning",
-        "Kinyarwanda market analysis",
-        "Lucy World intelligence"
+        "Ijambo ryibanze Ubushakashatsi",
+        "Seo",
+        "Google"
       ]
     }
   ]

@@ -21,11 +21,6 @@
       "author": {
         "@type": "Organization",
         "name": "Lucy World"
-      },
-      "potentialAction": {
-        "@type": "SearchAction",
-        "target": "https://lucy.world/ca/?q={search_term_string}",
-        "query-input": "required name=search_term_string"
       }
     },
     {
@@ -40,12 +35,12 @@
       "description": "Descobreix dades catalanes de Google i Bing amb suggeriments, tendències i anàlisi amb IA que impulsen decisions de contingut i el creixement del teu negoci.",
       "keywords": "paraules clau catalanes, SEO Catalunya, tendències Google, cerca Bing, anàlisi IA, estratègia de contingut local",
       "aiSemantic": [
-        "Catalan keyword research",
-        "Catalan SEO insights",
-        "search trends platform",
-        "AI content planning",
-        "Catalan market analysis",
-        "Lucy World intelligence"
+        "paraules clau catalanes",
+        "SEO Catalunya",
+        "tendències Google",
+        "cerca Bing",
+        "anàlisi IA",
+        "estratègia de contingut local"
       ]
     }
   ]

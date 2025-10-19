@@ -21,11 +21,6 @@
       "author": {
         "@type": "Organization",
         "name": "Lucy World"
-      },
-      "potentialAction": {
-        "@type": "SearchAction",
-        "target": "https://lucy.world/el/?q={search_term_string}",
-        "query-input": "required name=search_term_string"
       }
     },
     {
@@ -40,12 +35,12 @@
       "description": "Ανακαλύψτε ελληνικά δεδομένα Google με προτάσεις, τάσεις και ανάλυση AI που ενισχύουν τις αποφάσεις περιεχομένου και την ανάπτυξη επιχειρήσεων.",
       "keywords": "ελληνικές λέξεις-κλειδιά, SEO Ελλάδα, τάσεις Google, όγκος αναζήτησης, ανάλυση AI, στρατηγική τοπικού περιεχομένου",
       "aiSemantic": [
-        "Greek keyword research",
-        "Greek SEO insights",
-        "search trends platform",
-        "AI content planning",
-        "Greek market analysis",
-        "Lucy World intelligence"
+        "ελληνικές λέξεις-κλειδιά",
+        "SEO Ελλάδα",
+        "τάσεις Google",
+        "όγκος αναζήτησης",
+        "ανάλυση AI",
+        "στρατηγική τοπικού περιεχομένου"
       ]
     }
   ]
