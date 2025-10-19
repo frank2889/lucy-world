@@ -31,7 +31,8 @@ sources, and deployment tooling.
 1. Install prerequisites: Node 20+, npm 10+, Python 3.11+ (project targets
     3.13), and a working virtualenv tool.
 2. Copy `env.example` to `.env` and supply required secrets (Stripe, SMTP,
-    etc.).
+   etc.). Keep `CACHE_DISABLED=true` if you want to mirror the current
+   production posture of running without in-process caches.
 3. Create a virtual environment and install backend dependencies.
 
     ```bash

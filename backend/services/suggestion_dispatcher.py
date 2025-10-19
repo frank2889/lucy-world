@@ -48,10 +48,16 @@ class _InMemoryTTLCache:
 class SuggestionDispatcher:
     """Dispatches suggestion requests to registered providers with smart caching."""
 
-    def __init__(self, cache_ttl: int = 300, cache_size: int = 2048) -> None:
+    def __init__(
+        self,
+        cache_ttl: int = 300,
+        cache_size: int = 2048,
+        cache_enabled: bool = True,
+    ) -> None:
         self._session = requests.Session()
-        self._cache = _InMemoryTTLCache(max_entries=cache_size)
-        self._default_ttl = cache_ttl
+        self._cache_enabled = cache_enabled
+        self._cache = _InMemoryTTLCache(max_entries=cache_size) if cache_enabled else None
+        self._default_ttl = cache_ttl if cache_enabled else 0
 
     def list_providers(self) -> Dict[str, Dict[str, Any]]:
         providers = {}
@@ -73,16 +79,18 @@ class SuggestionDispatcher:
 
         cache_key = (slug, request.cache_key())
         ttl = getattr(provider, 'cache_ttl', self._default_ttl)
-        cached = self._cache.get(cache_key)
-        if cached is not None:
-            return {
-                **cached,
-                'metadata': {
-                    **cached.get('metadata', {}),
-                    'cached': True,
-                    'cached_ttl': ttl,
-                },
-            }
+
+        if self._cache_enabled and self._cache:
+            cached = self._cache.get(cache_key)
+            if cached is not None:
+                return {
+                    **cached,
+                    'metadata': {
+                        **cached.get('metadata', {}),
+                        'cached': True,
+                        'cached_ttl': ttl,
+                    },
+                }
 
         result = provider.fetch(request, self._session, logger)
         if not isinstance(result, dict):
@@ -92,11 +100,11 @@ class SuggestionDispatcher:
         metadata = {
             **metadata,
             'cached': False,
-            'cache_ttl': ttl,
+            'cache_ttl': ttl if self._cache_enabled else 0,
         }
         result['metadata'] = metadata
 
-        if ttl > 0:
+        if self._cache_enabled and ttl > 0 and self._cache:
             self._cache.set(cache_key, result, ttl=ttl)
 
         return result
@@ -133,4 +141,9 @@ class SuggestionDispatcher:
 
     def close(self) -> None:
         self._session.close()
-        self._cache.clear()
+        if self._cache:
+            self._cache.clear()
+
+    def clear_cache(self) -> None:
+        if self._cache:
+            self._cache.clear()

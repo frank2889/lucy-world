@@ -27,6 +27,8 @@ from backend.services.ai_blog_pipeline import AIBlogPipeline
 from backend.services.premium_keyword_tool import PremiumKeywordTool
 from backend.providers import SuggestionRequest
 from backend.services.suggestion_dispatcher import SuggestionDispatcher
+
+CACHE_DISABLED = os.getenv("CACHE_DISABLED", "0").strip().lower() in {"1", "true", "yes"}
 from .extensions import db
 from .models import PlanConfig, QueryLog, CandidateQuery, ContentDraft, DailyUsage, User, get_plan_config
 from .routes_projects import bp as projects_bp
@@ -152,7 +154,17 @@ def create_app() -> Flask:
 		advanced_tool = None
 		premium_tool = None
 
-	dispatcher = SuggestionDispatcher()
+	dispatcher = SuggestionDispatcher(cache_enabled=not CACHE_DISABLED)
+
+	def _flush_runtime_caches() -> None:
+		"""Clear memoized helpers and dispatcher cache when caching is disabled."""
+		_clear_helper_caches()
+		geoip_cache.clear()
+		try:
+			dispatcher.clear_cache()
+		except AttributeError:
+			pass
+
 	growth_pipeline = AIBlogPipeline(project_root=project_root, logger=logger)
 	app.extensions['growth_pipeline'] = growth_pipeline
 
@@ -334,7 +346,26 @@ def create_app() -> Flask:
 		)
 
 	geoip_cache: dict[str, tuple[str, float]] = {}
-	GEOIP_CACHE_TTL = 3600  # seconds
+	GEOIP_CACHE_TTL = 0 if CACHE_DISABLED else 3600  # seconds
+
+	def _clear_helper_caches() -> None:
+		"""Flush cached helper values when caching is disabled."""
+		try:
+			_valid_language_codes.cache_clear()
+		except AttributeError:
+			pass
+		try:
+			_valid_country_codes.cache_clear()
+		except AttributeError:
+			pass
+		try:
+			_hreflang_relations.cache_clear()
+		except AttributeError:
+			pass
+		try:
+			_market_index_data.cache_clear()
+		except AttributeError:
+			pass
 
 	@functools.lru_cache(maxsize=1)
 	def _market_index_data() -> dict[str, Any] | None:
@@ -463,12 +494,13 @@ def create_app() -> Flask:
 		client_ip = _client_ip()
 		if client_ip:
 			now = time.time()
-			cached = geoip_cache.get(client_ip)
+			cached = geoip_cache.get(client_ip) if GEOIP_CACHE_TTL > 0 else None
 			if cached and (now - cached[1]) < GEOIP_CACHE_TTL:
 				return cached[0]
 			country_code = _geo_lookup_country(client_ip)
 			if country_code:
-				geoip_cache[client_ip] = (country_code, now)
+				if GEOIP_CACHE_TTL > 0:
+					geoip_cache[client_ip] = (country_code, now)
 				return country_code
 		# No fallbacks - return empty string if unknown
 		return ''
@@ -2753,6 +2785,20 @@ def create_app() -> Flask:
 		except Exception:
 			pass
 		return response
+
+	if CACHE_DISABLED:
+		_flush_runtime_caches()
+
+		@app.before_request
+		def _disable_cached_state_for_request() -> None:  # type: ignore
+			_flush_runtime_caches()
+
+		@app.after_request
+		def _disable_client_side_caching(response):  # type: ignore
+			response.headers['Cache-Control'] = 'no-store, no-cache, must-revalidate, max-age=0'
+			response.headers['Pragma'] = 'no-cache'
+			response.headers['Expires'] = '0'
+			return response
 
 	# Register blueprints
 	app.register_blueprint(projects_bp)
