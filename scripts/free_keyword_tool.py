@@ -15,7 +15,7 @@ from bs4 import BeautifulSoup
 import random
 import re
 
-from language_validator import KeywordLanguageValidator
+from scripts.language_validator import KeywordLanguageValidator
 
 
 def _normalize_language_code(language: Optional[str]) -> str:
