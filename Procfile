@@ -1,1 +1,1 @@
-web: bash start.sh
+web: gunicorn scripts.wsgi:app --config scripts/gunicorn.conf.py

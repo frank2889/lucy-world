@@ -24,7 +24,7 @@ proc_name = "lucy-world-search"
 
 # Server mechanics
 daemon = False
-pidfile = "/tmp/gunicorn.pid"
+pidfile = None
 user = None
 group = None
 tmp_upload_dir = None
@@ -32,3 +32,7 @@ tmp_upload_dir = None
 # SSL (if needed)
 # keyfile = "/path/to/keyfile"
 # certfile = "/path/to/certfile"
+
+
+def on_starting(server):
+    server.log.info("Starting Lucy World Search Gunicorn workers")
