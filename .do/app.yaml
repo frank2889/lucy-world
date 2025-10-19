@@ -6,7 +6,7 @@ services:
     repo: frank2889/lucy-world
     branch: main
     deploy_on_push: true
-  run_command: gunicorn --config scripts/gunicorn.conf.py scripts.wsgi:app
+  run_command: bash scripts/start.sh
   environment_slug: python
   instance_count: 1
   instance_size_slug: basic-xxs
