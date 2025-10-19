@@ -1,1 +1,1 @@
-web: gunicorn --config scripts/gunicorn.conf.py
+web: gunicorn scripts.wsgi:app --config scripts/gunicorn.conf.py
