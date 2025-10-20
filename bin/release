@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+# Release phase - runs before the app starts
+
+echo "========================================="
+echo "RELEASE PHASE - PRE-START DEBUG"
+echo "========================================="
+echo "Release timestamp: $(date '+%Y-%m-%d %H:%M:%S %Z')"
+echo "Git commit info:"
+git log -1 --oneline 2>/dev/null || echo "Git not available"
+echo ""
+echo "About to start with command:"
+echo "python3 -m gunicorn scripts.wsgi:app --bind 0.0.0.0:\$PORT --workers 2 --log-level info"
+echo ""
+echo "PORT variable: ${PORT:-NOT SET}"
+echo "========================================="

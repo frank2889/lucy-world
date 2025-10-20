@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+# Post-compile hook for Heroku/DigitalOcean buildpack
+# This runs after dependencies are installed
+
+echo "========================================="
+echo "POST-COMPILE HOOK - DEBUG INFO"
+echo "========================================="
+echo "Current timestamp: $(date)"
+echo "Working directory: $(pwd)"
+echo "Python version: $(python3 --version)"
+echo ""
+echo "Contents of Procfile:"
+cat Procfile
+echo ""
+echo "Contents of .do/app.yaml (first 20 lines):"
+head -20 .do/app.yaml
+echo ""
+echo "scripts/wsgi.py exists: $(test -f scripts/wsgi.py && echo 'YES' || echo 'NO')"
+echo "scripts/wsgi.py first 5 lines:"
+head -5 scripts/wsgi.py
+echo ""
+echo "Gunicorn location:"
+which gunicorn
+echo "Gunicorn version:"
+gunicorn --version
+echo ""
+echo "Testing import of scripts.wsgi:app..."
+python3 -c "import sys; sys.path.insert(0, '.'); from scripts.wsgi import app; print('✓ Import successful - app object:', app)" || echo "✗ Import FAILED"
+echo "========================================="
+echo "END POST-COMPILE HOOK"
+echo "========================================="
