@@ -1,4 +1,5 @@
 name: lucy-world-search
+# Force redeploy with start.sh diagnostics
 services:
 - name: web
   source_dir: /
@@ -6,7 +7,7 @@ services:
     repo: frank2889/lucy-world
     branch: main
     deploy_on_push: true
-  run_command: gunicorn --pythonpath . --config scripts/gunicorn.conf.py scripts.wsgi:app
+  run_command: python3 -m gunicorn scripts.wsgi:app --bind 0.0.0.0:$PORT --workers 2 --log-level info
   environment_slug: python
   instance_count: 1
   instance_size_slug: basic-xxs
@@ -15,16 +16,10 @@ services:
   envs:
   - key: FLASK_ENV
     value: production
-  - key: PORT
-    value: "8080"
   - key: PYTHONUNBUFFERED
     value: "1"
   - key: CACHE_DISABLED
     value: "true"
-  - key: APP_MODULE
-    value: "scripts.wsgi:app"
-  - key: PYTHONPATH
-    value: "."
   - key: PUBLIC_BASE_URL
     value: "https://lucy.world"
   - key: DATABASE_URL

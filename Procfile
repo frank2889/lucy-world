@@ -1,1 +1,1 @@
-web: gunicorn --pythonpath . --config scripts/gunicorn.conf.py scripts.wsgi:app
+web: python3 -m gunicorn scripts.wsgi:app --bind 0.0.0.0:$PORT --workers 2 --log-level info
