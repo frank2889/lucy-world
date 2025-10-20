@@ -7,7 +7,7 @@ services:
     repo: frank2889/lucy-world
     branch: main
     deploy_on_push: true
-  run_command: python3 -m gunicorn scripts.wsgi:app --bind 0.0.0.0:$PORT --workers 2 --log-level info
+  run_command: echo "========== DEPLOY PHASE DEBUG ==========" && echo "Deploy timestamp: $(date '+%Y-%m-%d %H:%M:%S %Z')" && echo "Working dir: $(pwd)" && echo "PORT: $PORT" && echo "Python: $(python3 --version)" && echo "Testing wsgi import..." && python3 -c "import sys; sys.path.insert(0, '.'); from scripts.wsgi import app; print('✓ Import successful')" && echo "Starting gunicorn..." && echo "========================================" && python3 -m gunicorn scripts.wsgi:app --bind 0.0.0.0:$PORT --workers 2 --log-level info
   environment_slug: python
   instance_count: 1
   instance_size_slug: basic-xxs
